@@ -1,0 +1,170 @@
+{
+    "_id": "",
+    "_version": "",
+    "type": "documentEntry",
+    "title": "",
+    "summary": "",
+    "created": "",
+    "updated": "",
+    "author": {
+        "userId": "", "name": ""
+    },
+    "contributors": [{
+        "userId": "", "name": ""
+    }],
+    "category": {
+        "term": "", "label": ""
+    },
+    "meta-data": {
+        "profileId": "",
+        "communityId": "",
+        "applicationId": "",
+        "indicatorId": "",
+        "setId": ""
+    },
+    "attachments": [{
+        "id": "", "type": "", "label": "", "href": ""    
+    }],
+    "links": [{
+        "id": "", "type": "", "label": "", "href": ""
+    }],
+    "tags": [{
+        "id": "", "type": "", "label": ""
+    }],
+    "gps": { 
+        "type": "Feature",
+        "geometry": {
+            "type": "", 
+            "coordinates": []
+        },
+        "properties": {
+            "": ""
+        }
+    },
+    "model": {
+        // Workspace
+        "pending": {
+            "seq": "",
+            "revision": "",
+            "period": {
+                "type": "",
+                "id": "",
+                "label": ""
+            },
+            "validDate": "",
+            "user": {
+                "userId": "",
+                "name": ""
+            },
+            "status": "", // Descriptive label of the pending status
+            "data": {} // Component data model goes here
+        },
+        // Authorised
+        "approved": [{
+            "seq": "",
+            "revision": "",
+            "period": {
+                "type": "",
+                "id": "",
+                "label": ""
+            },
+            "validDate": "",
+            "user": {
+                "userId": "",
+                "name": ""
+            },
+            "status": "",
+            "data": {}
+        }],
+        "rejected": [{
+            "seq": "",
+            "revision": "",
+            "period": {
+                "type": "",
+                "id": "",
+                "label": ""
+            },
+            "validDate": "",
+            "user": {
+                "userId": "",
+                "name": ""
+            },
+            "status": "",
+            "data": {}
+        }]
+    },
+    "control": {
+        "draft": true,
+        "moderation": {
+            "required": true,
+            "type": "",
+            "status": "",
+            "reviewer": {
+                "userId": "",
+                "name": "",
+                "dateTime": "",
+                "comment": ""
+            }
+        },
+        "privacy": {
+            "read": {
+                "roles": [
+                    { "id": "", "label": "" }
+                ]
+            },
+            "update": {
+                "roles": [
+                    { "id": "", "label": "" }
+                ]
+            },
+            "delete": {
+                "roles": [
+                    { "id": "", "label": "" }
+                ]
+            }
+        },
+        "active": {
+            "status": true,
+            "details": {
+                "userId": "",
+                "dateTime": ""
+            }
+        },
+        "lock": {
+            "status": false,
+            "details": {
+                "userId": "",
+                "dateTime": ""
+            },
+            "expires": ""
+        },
+        "deleted": {
+            "status": false,
+            "details": {
+                "userId": "",
+                "dateTime": ""
+            }
+        }
+    },
+    "processes": {
+        "process": [
+            {
+                "configId": "", 
+                "processId": "",
+                "subProcessId": "",
+                "stepId": "",
+                "currentSeq": "",
+                "assigned": {
+                    "type": "user",
+                    "profileId": "",
+                    "name": ""
+                },
+                "token": "",
+                "status": "",
+                "descStatus": "",
+                "lastUpdated": "",
+                "dueDate": ""
+            }
+        ]
+    }
+}

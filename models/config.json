@@ -1,5 +1,6 @@
 {
 	"_id": "",
+	"_version": "",
 	"type": "workflowConfig",
 	"title": {
 		"name": {
@@ -98,8 +99,25 @@
 					"action": [
 						{
 							"_seq": "",
-							"_type": "",
-
+							"_type": "", // Values: internal/external
+							"funct": {
+								"module": "",
+								"method": "",
+								"params": {
+									"param": []
+								}
+							},
+							"rest": {
+								"hostId": "", // Domain
+								"service": "",
+								"APIKey": "",
+								"format": "", // Values: XML/JSON
+								"collection": "",
+								"endpoint": "",
+								"params": {
+									"param": []
+								}
+							}
 						}
 					]
 				},
