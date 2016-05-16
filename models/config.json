@@ -1,0 +1,119 @@
+{
+	"_id": "",
+	"type": "workflowConfig",
+	"title": {
+		"name": {
+            "i18n": {
+                "_lang": "",
+                "value": ""
+            }
+        },
+        "description": {
+            "i18n": {
+                "_lang": "",
+                "value": ""
+            }
+        }
+	},
+	"identification": {
+		"documentation": {
+			"i18n": {
+                "_lang": "",
+                "value": ""
+            }
+		},
+		"upgradeInformation": {
+            "i18n": {
+                "_lang": "",
+                "value": ""
+            }
+        }
+	},
+	"variables": {
+		"variable": [
+			{
+				"_id": "",
+                "_dataType": "",
+                "_sessionVar": "",
+                "_default": "",
+                "_value": ""
+			}
+		]
+	},
+	"roles": {
+		"role": [
+			{
+                "_id": "",
+                "_level": "",
+                "name": {
+                    "i18n": {
+                        "_lang": "",
+                        "value": ""
+                    }
+                },
+                "roleMappings": {
+                    "roleMapping": {
+                        "_applicationId": "",
+                        "_roleId": ""
+                    }
+                },
+                "requiredRoles": {
+                    "requiredRole": {
+                        "_applicationId": "",
+                        "_roleId": ""
+                    }
+                }
+            }
+		]
+	},
+	"processes": {
+		"process": [
+			{
+				"_id": "",
+				"_seq": "",
+				"name": {
+					"i18n": {
+						"_lang": "",
+                        "value": ""
+					}
+				},
+				"help": {
+					"i18n": {
+						"_lang": "",
+                        "value": ""
+					}
+				},
+				"variables": {
+					"variable": [
+						{
+							"_id": "",
+			                "_dataType": "",
+			                "_sessionVar": "",
+			                "_default": "",
+			                "_value": ""
+						}
+					]
+				},
+				"preActions": {
+					"action": [
+						{
+							"_seq": "",
+							"_type": "",
+
+						}
+					]
+				},
+				"prerequisites": {},
+				"initiate": {},
+				"subProcesses": {
+					"subProcess": [
+						{
+							"_id": ""
+						}
+					]
+				},
+				"postActions": {}
+			}
+		]
+	}
+}
