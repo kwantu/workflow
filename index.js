@@ -204,6 +204,17 @@ Workflow.prototype.subProcess = function(subProcess){
 	return 'Implementation pending..';
 };
 
+/** 
+ * Process all the workflow pre-actions.
+ *
+ * @example 
+ * Workflow.preActions();
+ *
+ * @return Success / error message with the newly created workflow processes
+ * instance data.
+ *
+ */
+
 Workflow.prototype.preActions = function(actions){
 	var deferred = Q.defer();
 	console.log('Processing all pre-actions...');
