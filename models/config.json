@@ -121,7 +121,21 @@
 						}
 					]
 				},
-				"prerequisites": {},
+				"prerequisites": {
+					"prerequisite": [{
+                        "_seq": "",
+                        "_type": "",
+                        "_operator": "",
+                        "_parameter": "",
+                        "_reference": "",
+                        "message": {
+                        	"i18n": {
+                        		"_lang": "en",
+                        		"value": ""
+                        	}
+                        }
+                    }]
+				},
 				"initiate": {},
 				"subProcesses": {
 					"subProcess": [

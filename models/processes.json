@@ -2,42 +2,45 @@
   "_id": "", 
   "_version": "",
   "type": "workflowInstance",
-  "process": [
+  "processes": [
     { 
       "id": "", 
       "seq": 1, 
-      "subProcess": [
+      "date": { 
+        "created": "", 
+        "valid": "" 
+      },
+      "subProcesses": [
         {
           "id": "", 
           "seq": 1, 
-          "dates": { 
-            "created": "", 
-            "dateValid": "" 
+          "status": "",
+          "message": "",
+          "dates": {
+            "created": "",
+            "submitted": "",
+            "authorised": "",
+            "closed": ""
           },
-          "currentStep": {
-            "id": "", 
-            "seq": "", 
-            "finished": false, 
-            "token": 0, 
-            "assignedUserId": "", 
-            "status": "", 
-            "nodeStatus": "" 
-          },
-          "status": "", 
-          "indicator": [
-            {
-              "id": "", 
-              "complete": true, 
-              "instance": [
-                {
-                  "uuid": "", 
-                  "key": "", 
-                  "seq": 1, 
-                  "status": ""                   
-                }
-              ]
-            }
-          ]
+          "complete": false,
+          "form": {
+            "id": "",
+            "indicators": [
+              {
+                "id": "", 
+                "instances": [
+                  {
+                    "uuid": "", 
+                    "key": "", 
+                    "seq": 1, 
+                    "status": "", 
+                    "lastUpdated": "",
+                    "complete": false                  
+                  }
+                ]
+              }
+            ]
+          }
         }
       ]
     }

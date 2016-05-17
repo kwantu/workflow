@@ -146,25 +146,21 @@
             }
         }
     },
-    "processes": {
-        "process": [
-            {
-                "configId": "", 
-                "processId": "",
-                "subProcessId": "",
-                "stepId": "",
-                "currentSeq": "",
-                "assigned": {
-                    "type": "user",
-                    "profileId": "",
-                    "name": ""
-                },
-                "token": "",
-                "status": "",
-                "descStatus": "",
-                "lastUpdated": "",
-                "dueDate": ""
-            }
-        ]
-    }
+    "processes": [
+        {
+            "configId": "", 
+            "processId": "",
+            "subProcessId": "",
+            "stepId": "",
+            "assignedTo": {
+                "userId": "",
+                "name": ""
+            },
+            "token": "",
+            "status": "",
+            "statusMsg": "",
+            "lastUpdated": "",
+            "dueDate": ""
+        }
+    ]
 }
