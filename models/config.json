@@ -67,85 +67,173 @@
             }
 		]
 	},
-	"processes": {
-		"process": [
-			{
+	"processes": [{
+		"_id": "",
+		"_seq": "",
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": ""
+			}
+		},
+		"help": {
+			"i18n": {
+				"_lang": "en",
+				"value": ""
+			}
+		},
+		"variables": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}],
+		"prerequisites": [{
+			"_seq": "",
+			"_type": "",
+			"_subject": "",
+			"_operator": "",
+			"_value": "",
+			"message": {
+				"i18n": {
+					"_lang": "en",
+					"value": ""
+				}
+			}
+		}],
+		"preActions": [{
+			"_seq": "",
+			"_type": "",
+			"funct": {
+				"module": "",
+				"method": "",
+				"params": {
+					"param": []
+				}
+			},
+			"rest": {
+				"hostId": "",
+				"service": "",
+				"APIKey": "",
+				"format": "",
+				"collection": "",
+				"endpoint": "",
+				"params": {
+					"param": []
+				}
+			}
+		}],
+		"initiate": {
+			"_type": "",
+			"maxInstances": "",
+			"action": {
+				"_type": "",
+				"label": ""
+			},
+			"dates": {
+				"valid": {
+					"_type": "",
+					"message": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					}
+				},
+				"due": {
+					"_type": "",
+					"message": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					}
+				}
+			}
+		},
+		"subProcesses": [{
+			"_id": "",
+			"_seq": "",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": ""
+				}
+			},
+			"help": {
+				"i18n": {
+					"_lang": "en",
+					"value": ""
+				}
+			},
+			"form": {
 				"_id": "",
-				"_seq": "",
 				"name": {
 					"i18n": {
-						"_lang": "",
-                        "value": ""
+						"_lang": "en",
+						"value": ""
 					}
 				},
-				"help": {
+				"indicators": [{
+					"_id": "",
+					"maxInstances": "",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					}
+				}]
+			},
+			"steps": [{
+				"_id": "",
+				"_seq": "",
+				"_setStatusTo": "",
+				"_setStatusMsgTo": "",
+				"name": {
 					"i18n": {
-						"_lang": "",
-                        "value": ""
+						"_lang": "en",
+						"value": ""
 					}
 				},
-				"variables": {
-					"variable": [
-						{
-							"_id": "",
-			                "_dataType": "",
-			                "_sessionVar": "",
-			                "_default": "",
-			                "_value": ""
+				"prerequisites": [{
+					"_seq": "",
+					"_type": "",
+					"_operator": "",
+					"_subject": "",
+					"_value": "",
+					"message": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
 						}
-					]
-				},
-				"preActions": {
-					"action": [
-						{
-							"_seq": "",
-							"_type": "", // Values: internal/external
-							"funct": {
-								"module": "",
-								"method": "",
-								"params": {
-									"param": []
-								}
-							},
-							"rest": {
-								"hostId": "", // Domain
-								"service": "",
-								"APIKey": "",
-								"format": "", // Values: XML/JSON
-								"collection": "",
-								"endpoint": "",
-								"params": {
-									"param": []
-								}
+					}
+				}],
+				"actions": [{
+					"_seq": "",
+					"_type": "",
+					"funct": {
+						"module": "",
+						"method": ""
+					},
+					"transitions": [{
+						"_type": "",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": ""
 							}
-						}
-					]
-				},
-				"prerequisites": {
-					"prerequisite": [{
-                        "_seq": "",
-                        "_type": "",
-                        "_operator": "",
-                        "_parameter": "",
-                        "_reference": "",
-                        "message": {
-                        	"i18n": {
-                        		"_lang": "en",
-                        		"value": ""
-                        	}
-                        }
-                    }]
-				},
-				"initiate": {},
-				"subProcesses": {
-					"subProcess": [
-						{
-							"_id": ""
-						}
-					]
-				},
-				"postActions": {}
-			}
-		]
-	}
+						},
+						"goTo": {
+							"_type": "",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}]
+			}]
+		}],
+		"postActions": {}
+	}]
 }
