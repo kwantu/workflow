@@ -57,34 +57,6 @@ function Workflow(profile, config, instance){
 }
 
 /** 
- * Execute a workflow process / subprocess / step / action / transition. This
- * method is used as a generic way to execute any step in the workflow and 
- * should be used as the calling method via a rest API implementation.
- *
- * @param {string} profile - profile UUID
- * @param {string} config - workflow configuration file UUID
- * @param {string} process - workflow process ID
- * @param {string} subprocess - workflow subprocess ID
- * @param {string} step - workflow step ID
- * @param {string} token - current workflow generated token for the step
- * @param {string} instance - workflow process instance file UUID
- * @param {object} document - indicator set document UUID
- *
- * @example 
- * Workflow.exec();
- *
- * @return Success / error message with the newly created workflow processes
- * instance data.
- *
- */
-Workflow.prototype.exec = function(profile, config, process, subprocess, step, token, instance, document){
-	var deferred = Q.defer();
-	// Add implementation code here ...
-
-	return deferred.promise;
-};
-
-/** 
  * Create a new workflow process.
  *
  * @example 
@@ -290,104 +262,20 @@ Workflow.prototype.preRequisite = function(preRequisiteConfig, counter, preRequi
 	return deferred.promise;
 };
 
-/** 
- * Workflow initaition process. Used to process the defined initiation process
- * in the configuration file.
- *
- * @example 
- * Workflow.initaite();
- *
- * @return Success / error message with the newly created workflow processes
- * instance data.
- *
- */
 Workflow.prototype.initaite = function(initaite){
-	var deferred = Q.defer();
-	if (initaite.type === 'user') {
-		// Add implementation code here ...
-
-		deferred.resolve(initaite);
-	} else if (initaite.type === 'schedule') {
-		// Add implementation code here ...
-
-		deferred.resolve(initaite);
-	} else if (initaite.type === 'periodic') {
-		// Add implementation code here ...
-
-		deferred.resolve(initaite);
-	} else if (initaite.type === 'auto') {
-		// Add implementation code here ...
-
-		deferred.resolve(initaite);
-	} else {
-		// Return error message
-		var err = 'Workflow initiation failed. Initiate type not found.';
-		deferred.reject(err);
-	}
-	return deferred.promise;
+	return 'Implementation pending..';
 };
-
-// Workflow.prototype.assign = function(assign){
-// 	return 'Implementation pending..';
-// };
-
-// Workflow.prototype.variables = function(variables){
-// 	return 'Implementation pending..';
-// };
-
-// Workflow.prototype.roles = function(roles){
-// 	return 'Implementation pending..';
-// };
-
-// Workflow.prototype.processes = function(processes){
-// 	return 'Implementation pending..';
-// };
 
 Workflow.prototype.subProcesses = function(config, instance){
 	return 'Implementation pending..';
 };
 
-/** 
- * Workflow process, this function executes and process within a workflow
- * configuration.
- *
- * @param {object} config - the process config data
- * @param {object} instance - the process instance data
- *
- * @example 
- * Workflow.process();
- *
- * @return Success / error message with the newly created workflow processes
- * instance data.
- *
- */
 Workflow.prototype.subProcess = function(config, instance){
 	return 'Implementation pending..';
 };
 
-/** 
- * Process all the workflow pre-actions.
- *
- * @example 
- * Workflow.preActions();
- *
- * @return Success / error message with the newly created workflow processes
- * instance data.
- *
- */
-
 Workflow.prototype.preActions = function(actions){
-	var deferred = Q.defer();
-	console.log('Processing all pre-actions...');
-	for (var i = 0; i < actions.action.length; i++) {
-		var action = actions.action[i];
-		this.action(action, i).then(function(ret){
-			deferred.resolve(ret);
-		}).fail(function(err){
-			deferred.reject(err);
-		});
-	}
-	return deferred.promise;
+	return 'Implementation pending..';
 };
 
 Workflow.prototype.postActions = function(actions){
@@ -395,14 +283,6 @@ Workflow.prototype.postActions = function(actions){
 };
 
 Workflow.prototype.action = function(action, counter){
-	var deferred = Q.defer();
-	console.log('Processing action number ' + counter + '...');
-	// Add implementation code here ...
-
-	return deferred.promise;
-};
-
-Workflow.prototype.steps = function(steps){
 	return 'Implementation pending..';
 };
 
@@ -421,14 +301,6 @@ Workflow.prototype.condition = function(condition){
 Workflow.prototype.func = function(func, params){
 	return 'Implementation pending..';
 };
-
-// Workflow.prototype.error = function(code){
-// 	return 'Implementation pending..';
-// };
-
-// Workflow.prototype.success = function(message, data){
-// 	return 'Implementation pending..';
-// };
 
 Workflow.prototype.close = function(){
 	return 'Implementation pending..';
