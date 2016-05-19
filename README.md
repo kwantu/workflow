@@ -3,8 +3,12 @@
 
 To install the npm module:
 
-`npm install git+https://github.com/kwantu/workflow.git`
+`npm install git+https://github.com/kwantu/workflow.git#0.1.0`
+
+To install the bower module:
+
+`bower install https://github.com/kwantu/workflow.git#0.1.0`
 
 To generate the browser based workflow module with browserify: 
 
-`browserify index.js -o dist/workflow.js`
+`browserify index.js --standalone Workflow > dist/workflow.js`

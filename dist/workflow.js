@@ -48,8 +48,10 @@ function Workflow(profile, config, instance){
     // Workflow configuration validation checks
     if (config === '' || config === undefined) {
     	throw new Error('A workflow configuration is required.');
-    } else if (typeof(JSON.parse(config)) !== 'object') {
+    } else if (typeof(config) !== 'object') {
         throw new Error('The workflow configuration must be a javascript object');
+    } else if (typeof(config) === 'object') {
+    	_this.config = config || {};
     } else {
     	_this.config = JSON.parse(config) || {};
     }
