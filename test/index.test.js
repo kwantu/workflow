@@ -86,7 +86,7 @@ describe('# Module: Workflow', function(){
 });
 
 // Workflow: Test case #1
-describe('# Test Case (No1): Mangaung project workflow ', function(){
+describe('# Test Case (No1): Mangaung project workflow.', function(){
 	// Test the close method
 	describe('- Method: create()', function(){
 		it('Should return ')
