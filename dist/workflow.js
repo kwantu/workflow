@@ -1,7 +1,13 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function (__dirname){
 'use strict';
 
+var fs = require('fs');
+var path = require('path');
 var Q = require('q');
+
+var util = require('./lib/utility');
+var Process = require('./lib/process');
 
 /*globals */
 
@@ -10,13 +16,16 @@ var Q = require('q');
  *
  * @constructor
  * @param {string} profile - Profile UUID
- * @param {Object} [config]
+ * @param {Object} [config] - Workflow configuration
  * 	@param {string} config._id 
  *	Workflow configuration / definition ID
+ * @param {Object} [instance] - Workflow instance
+ * 	@param {string} instance._id 
+ *	Workflow instance ID
  * @author Brent Gordon
  * @version 0.1.0
  *
- * @example 
+ * @example new Workflow('1234', {})
  * 
  *
  * @return {Object} new Workflow object
@@ -25,116 +34,129 @@ var Q = require('q');
  *
  */
 
-function Workflow(profile, config){
+function Workflow(profile, config, instance){
+	//
+	var _this = this;
 	// Profile ID validation checks
 	if (profile === '' || profile === undefined) {
         throw new Error('A profile id is required.');
     } else if (typeof(profile) !== 'string') {
     	throw new Error('The profile id must be a javascript string.');
     } else {
-    	this.profile = profile || '';
+    	_this.profile = profile || '';
     }
     // Workflow configuration validation checks
     if (config === '' || config === undefined) {
     	throw new Error('A workflow configuration is required.');
-    } else if (typeof(config) !== 'object') {
+    } else if (typeof(JSON.parse(config)) !== 'object') {
         throw new Error('The workflow configuration must be a javascript object');
     } else {
-    	this.config = config || {};
+    	_this.config = JSON.parse(config) || {};
     }
+    // Workflow instance validation checks
+    if (instance === '' || instance === undefined) {
+
+    } else {
+    	_this.instance = JSON.parse(instance);
+    };
 }
 
 /** 
- * Instantiate a new workflow process.
+ * Create a new workflow process.
  *
  * @example 
- * Workflow.init();
+ * Workflow.create();
  *
  * @return Success / error message with the newly created workflow processes
  * instance data.
  *
  */
-Workflow.prototype.init = function(){
+Workflow.prototype.create = function(){
+	//
+	var _this = this;
 	var deferred = Q.defer();
-	// Process the pre-actions of the first defined process in the config.
-	var preActions = this.config.processes.process[0].preActions;
-	this.preActions(preActions).then(function(ret){
-		deferred.resolve(res);
-	}).fail(function(err){
-		deferred.reject(err);
-	});
+	if (_this.instance !== undefined) {
+		var warn = util.warn('Instance already exists.', _this.instance)
+		deferred.resolve(warn);
+	} else {
+		// Create the workflow processes instance object
+		var file = path.join(__dirname, 'models/processes.json');
+		var model = JSON.parse(fs.readFileSync(file, 'utf8'));
+		model._id = _this.profile + ':' + _this.config._id + ':processes';
+		model._version = _this.config._version;
+		_this.instance = model;
+		var success = util.success('Workflow processes instance created successfully.', _this.instance);
+		deferred.resolve(success);
+	}
 	return deferred.promise;
 };
 
-Workflow.prototype.assign = function(assign){
+/** 
+ * Workflow process, this function executes and process within a workflow
+ * configuration.
+ *
+ * @param {object} processId - the process id to process
+ *
+ * @example 
+ * Workflow.process();
+ *
+ * @return ''
+ *
+ */
+Workflow.prototype.process = function(processId, inputData){
+	// Re-assign this 
+	var _this = this;
+	// Create the deffered object
+	var deferred = Q.defer();
+	if (processId !== '' || processId !== undefined) {
+		// Get the current process config
+		var currentProcess = _this.config.processes.filter(function(objProcess){
+			if (objProcess._id === processId) {
+				return objProcess;
+			}
+		});
+		// 1. Check the process instance data, if required, update
+		Process.persistState('process', processId, '', '', '', currentProcess, _this.instance, inputData).then(function(result){
+			_this.instance = result.res;
+			// 2. Complete all the process prerequisites
+			Process.preRequisites(currentProcess[0].prerequisites).then(function(result){
+				// Check if all pre-requisites were met
+				if (result.complete) {
+					var success = util.success('Process: ' + processId + ' completed successfully.', _this.instance);
+					deferred.resolve(success);
+				} else {
+					var error = util.error('WF004');
+					deferred.reject(error);
+				}
+			}).fail(function(err){
+				var error = util.error('WF003', err);
+				deferred.reject(error);
+			});
+		}).fail(function(err){
+			var error = util.error('WF002', err);
+			deferred.reject(error);
+		});
+	} else {
+		var error = util.error('WF001');
+		deferred.reject(error);
+	}
+	// Return the deffered promise object
+	return deferred.promise;
+};
+
+Workflow.prototype.subProcess = function(){
 	return 'Implementation pending..';
 };
 
-Workflow.prototype.variables = function(variables){
+Workflow.prototype.step = function(){
 	return 'Implementation pending..';
 };
 
-Workflow.prototype.roles = function(roles){
+Workflow.prototype.assign = function(){
 	return 'Implementation pending..';
 };
 
-Workflow.prototype.processes = function(processes){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.process = function(process){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.subProcesses = function(subProcesses){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.subProcess = function(subProcess){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.preActions = function(actions){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.postActions = function(actions){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.preRequisites = function(prerequisites){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.action = function(action){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.steps = function(steps){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.step = function(step){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.transition = function(transition){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.condition = function(condition){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.func = function(func, params){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.error = function(){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.success = function(){
+Workflow.prototype.transition = function(){
 	return 'Implementation pending..';
 };
 
@@ -144,7 +166,293 @@ Workflow.prototype.close = function(){
 
 module.exports = Workflow;
 
-},{"q":2}],2:[function(require,module,exports){
+}).call(this,"/")
+},{"./lib/process":2,"./lib/utility":3,"fs":5,"path":6,"q":4}],2:[function(require,module,exports){
+'use strict';
+
+var Q = require('q');
+
+var util = require('./utility');
+
+/**
+ * Utility Module
+ *
+ * @module modules/util
+ * @author Brent Gordon
+ * @version 2.0.0
+ * @description 
+ * @copyright Kwantu Ltd RSA 2009-2015.
+ *
+ */
+
+function persistState(type, processId, subProcessId, formId, docId, config, instance, data){
+	var deferred = Q.defer();
+	switch(type) {
+		case 'process':
+			// TODO: Add logic here ...
+			var success = util.success('Process instance data persisted successfully.', instance);
+			deferred.resolve(success);
+			break;
+		case 'subProcess':
+			// TODO: Add code logic here...
+			var success = util.success('Sub-Process instance data persisted successfully.', instance);
+			deferred.resolve(success);
+			break;
+		case 'form':
+			// TODO: Add code logic here...
+			var success = util.success('Form instance data persisted successfully.', instance);
+			deferred.resolve(success);
+			break;
+		case 'indicator':
+			// TODO: Add code logic here...
+			var success = util.success('Indicator instance data persisted successfully.', instance);
+			deferred.resolve(success);
+			break;
+		default:
+			var error = util.error('WF005');
+			deferred.reject(error);
+	}
+	return deferred.promise;
+};
+
+function preRequisites(prerequisites) {
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		complete: false,
+		data: []
+	};
+	util.syncLoop(prerequisites.length, function(loop){
+		var counter = loop.iteration();
+		preRequisite(prerequisites[counter], counter).then(function(data){			
+			// Check if all pre-requisites completed successfully.
+			completed.push(data.complete);
+			result.data.push(data);
+			if (completed.every(Boolean)) {
+				result.completed = true;
+				loop.next();
+				var success = util.success('Pre-requisites completed successfully.', result);
+				deferred.resolve(success);
+			} else {
+				loop.break();
+				var error = util.error('WF007');
+				deferred.reject(error);
+			}
+		}).fail(function(err){
+			loop.break();
+			deferred.reject(err);
+		});
+	});
+	return deferred.promise;
+};
+	/** 
+ * Workflow pre-requisite, execute the pre-requisite condition.
+ *
+ * @param {object} config - the pre-requisite config data
+ * @param {object} counter - the pre-requisite count / number
+ * @param {object} instance - the process instance data
+ * @param {object} doc - the current active document
+ *
+ * @example 
+ * var config = {
+ *	    "_seq": "",
+ *	    "_type": "",
+ *		"_subject": "",
+ *	    "_operator": "",
+ *	    "_value": "",
+ *	    "_reference": "",
+ *	    "message": {
+ *	    	"i18n": {
+ *	    		"_lang": "en",
+ *	    		"value": ""
+ *	    	}
+ *	    }
+ *	};
+ * Workflow.preRequisite(config, counter, instance, doc);
+ *
+ * @return Success / error message with the newly created workflow processes
+ * instance data.
+ *
+ */
+function preRequisite(prerequisite, counter){
+	var deferred = Q.defer();
+	switch(prerequisite._type) {
+		case 'mock':
+			// Used for mock testing
+			if (util.compare(prerequisite._subject, prerequisite._operator, prerequisite._value)) {
+				var data = {};
+				var success = util.success('Mock successfull.', data);
+				deferred.resolve(success);
+			} else {
+				// console.warn('Pre-requisite ' + counter + ' not met.');
+				var error = util.error('WF006');
+				deferred.reject(error);
+			}
+			break;
+		// TODO: Add the call to the relevant methods based on the _type 
+		// attribute.
+		case 'count':
+			// TODO: Add code logic here...
+			var data = {};
+			var success = util.success('Mock count successfull.', data);
+			deferred.resolve(success);
+			break;
+		default:
+			var error = util.error('WF005');
+			deferred.reject(error);
+	}
+	return deferred.promise;
+};
+
+function initaite(){
+	return 'Implementation pending..';
+};
+
+function subProcess(){
+	return 'Implementation pending..';
+};
+
+function preActions(){
+	return 'Implementation pending..';
+};
+
+function postActions(){
+	return 'Implementation pending..';
+};
+
+function action(){
+	return 'Implementation pending..';
+};
+
+function func(){
+	return 'Implementation pending..';
+};
+
+module.exports = { 
+
+ 	persistState: persistState,
+ 	preRequisites: preRequisites
+
+}
+},{"./utility":3,"q":4}],3:[function(require,module,exports){
+'use strict';
+
+/**
+ * Utility Module
+ *
+ * @module modules/util
+ * @author Brent Gordon
+ * @version 2.0.0
+ * @description 
+ * @copyright Kwantu Ltd RSA 2009-2015.
+ *
+ */
+
+ module.exports = { 
+
+ 	success: function(message, res){
+		var data = {
+			complete: true,
+			message: message,
+			res: res
+		}
+		return data;
+	},
+
+	warn: function(message, res){
+		var data = {
+			complete: true,
+			warning: message,
+			res: res
+		}
+		return data;
+	},
+
+	error: function(code, err){
+		var data = {
+			complete: false,
+			code: code,
+			message: '',
+			stacktrace: err
+		}
+		switch (code) {
+			case 'WF001':   	 
+				data.message = '';
+				return data;
+			case 'WF002':   		 
+				data.message = '';
+				return data;
+			case 'WF003': 
+				data.message = '';
+				return data;
+			case 'WF004':  	 
+				data.message = '';
+				return data;
+			case 'WF005': 		 
+				data.message = '';
+				return data;
+			case 'WF006': 		 
+				data.message = '';
+				return data;
+			default: 		 
+				data.code = 'ERR001';
+				data.message = 'Default error message, please add a more specific error code and message. See stacktrace for more information.';
+				return data;
+		}
+	},
+
+ 	syncLoop: function(iterations, process, exit){  
+	    var index = 0,
+	        done = false,
+	        shouldExit = false;
+	    var loop = {
+	        next:function(){
+	            if(done){
+	                if(shouldExit && exit){
+	                    return exit(); // Exit if we're done
+	                }
+	            }
+	            // If we're not finished
+	            if(index < iterations){
+	                index++; // Increment our index
+	                process(loop); // Run our process, pass in the loop
+	            // Otherwise we're done
+	            } else {
+	                done = true; // Make sure we say we're done
+	                if(exit) exit(); // Call the callback on exit
+	            }
+	        },
+	        iteration:function(){
+	            return index - 1; // Return the loop number we're on
+	        },
+	        break:function(end){
+	            done = true; // End the loop
+	            shouldExit = end; // Passing end as true means we still call the exit callback
+	        }
+	    };
+	    loop.next();
+	    return loop;
+	},
+
+	compare: function(subject, operator, value) {
+	  	switch (operator) {
+	  		case 'greaterThan':   	 
+				return subject > value;
+			case 'lessThan':   		 
+				return subject < value;
+			case 'greaterThanEqual': 
+				return subject >= value;
+			case 'lessThanEqual':  	 
+				return subject <= value;
+			case 'equalTo': 		 
+				return subject === value;
+			case 'notEqualTo': 		 
+				return subject !== value;
+	  	}
+	}
+	
+ }
+},{}],4:[function(require,module,exports){
 (function (process){
 // vim:ts=4:sts=4:sw=4:
 /*!
@@ -2196,7 +2504,237 @@ return Q;
 });
 
 }).call(this,require('_process'))
-},{"_process":3}],3:[function(require,module,exports){
+},{"_process":7}],5:[function(require,module,exports){
+
+},{}],6:[function(require,module,exports){
+(function (process){
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes, empty elements, or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var last = parts[i];
+    if (last === '.') {
+      parts.splice(i, 1);
+    } else if (last === '..') {
+      parts.splice(i, 1);
+      up++;
+    } else if (up) {
+      parts.splice(i, 1);
+      up--;
+    }
+  }
+
+  // if the path is allowed to go above the root, restore leading ..s
+  if (allowAboveRoot) {
+    for (; up--; up) {
+      parts.unshift('..');
+    }
+  }
+
+  return parts;
+}
+
+// Split a filename into [root, dir, basename, ext], unix version
+// 'root' is just a slash, or nothing.
+var splitPathRe =
+    /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+var splitPath = function(filename) {
+  return splitPathRe.exec(filename).slice(1);
+};
+
+// path.resolve([from ...], to)
+// posix version
+exports.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
+
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
+
+    // Skip empty and invalid entries
+    if (typeof path !== 'string') {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
+
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path.charAt(0) === '/';
+  }
+
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
+
+  // Normalize the path
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+    return !!p;
+  }), !resolvedAbsolute).join('/');
+
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
+
+// path.normalize(path)
+// posix version
+exports.normalize = function(path) {
+  var isAbsolute = exports.isAbsolute(path),
+      trailingSlash = substr(path, -1) === '/';
+
+  // Normalize the path
+  path = normalizeArray(filter(path.split('/'), function(p) {
+    return !!p;
+  }), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+exports.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+exports.join = function() {
+  var paths = Array.prototype.slice.call(arguments, 0);
+  return exports.normalize(filter(paths, function(p, index) {
+    if (typeof p !== 'string') {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    return p;
+  }).join('/'));
+};
+
+
+// path.relative(from, to)
+// posix version
+exports.relative = function(from, to) {
+  from = exports.resolve(from).substr(1);
+  to = exports.resolve(to).substr(1);
+
+  function trim(arr) {
+    var start = 0;
+    for (; start < arr.length; start++) {
+      if (arr[start] !== '') break;
+    }
+
+    var end = arr.length - 1;
+    for (; end >= 0; end--) {
+      if (arr[end] !== '') break;
+    }
+
+    if (start > end) return [];
+    return arr.slice(start, end - start + 1);
+  }
+
+  var fromParts = trim(from.split('/'));
+  var toParts = trim(to.split('/'));
+
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
+
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
+
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
+
+  return outputParts.join('/');
+};
+
+exports.sep = '/';
+exports.delimiter = ':';
+
+exports.dirname = function(path) {
+  var result = splitPath(path),
+      root = result[0],
+      dir = result[1];
+
+  if (!root && !dir) {
+    // No dirname whatsoever
+    return '.';
+  }
+
+  if (dir) {
+    // It has a dirname, strip trailing slash
+    dir = dir.substr(0, dir.length - 1);
+  }
+
+  return root + dir;
+};
+
+
+exports.basename = function(path, ext) {
+  var f = splitPath(path)[2];
+  // TODO: make this comparison case-insensitive on windows?
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+
+exports.extname = function(path) {
+  return splitPath(path)[3];
+};
+
+function filter (xs, f) {
+    if (xs.filter) return xs.filter(f);
+    var res = [];
+    for (var i = 0; i < xs.length; i++) {
+        if (f(xs[i], i, xs)) res.push(xs[i]);
+    }
+    return res;
+}
+
+// String.prototype.substr - negative index don't work in IE8
+var substr = 'ab'.substr(-1) === 'b'
+    ? function (str, start, len) { return str.substr(start, len) }
+    : function (str, start, len) {
+        if (start < 0) start = str.length + start;
+        return str.substr(start, len);
+    }
+;
+
+}).call(this,require('_process'))
+},{"_process":7}],7:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
