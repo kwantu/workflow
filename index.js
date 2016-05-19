@@ -3,7 +3,6 @@
 var fs = require('fs');
 var path = require('path');
 var Q = require('q');
-var uuid = require('node-uuid');
 
 var util = require('./lib/utility');
 var Process = require('./lib/process');
