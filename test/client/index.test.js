@@ -3,9 +3,6 @@
 var should = chai.should();
 var expect = chai.expect;
 
-// Require the Workflow class 
-var Workflow = require("../index.js");
-
 // Get the test workflow configuration file
 var config = {}
 
