@@ -2,10 +2,12 @@ language: node_js
 node_js:
   - "6"
 before_script:
+  - npm install -g bower
+  - bower install
+  - npm install -g web-component-tester
   - 'export DISPLAY=:99.0'
   - sh -e /etc/init.d/xvfb start
   - sleep 3
-  - npm install -g web-component-tester
   - 'echo "Client based testing..."'
   - wct test/client
   - 'echo "Server based testing..."'
