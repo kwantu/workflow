@@ -8,7 +8,8 @@
       "seq": 1, 
       "date": { 
         "created": "", 
-        "valid": "" 
+        "valid": "",
+        "due": ""
       },
       "subProcesses": [
         {
