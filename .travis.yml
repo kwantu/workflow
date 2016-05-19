@@ -9,7 +9,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
   - 'echo "Client based testing..."'
-  - wct test/client
+  - wct test/client/index.test.html
   - 'echo "Server based testing..."'
 script:
   - npm test
