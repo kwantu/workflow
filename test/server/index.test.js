@@ -11,10 +11,10 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 // Require the Workflow class 
-var Workflow = require("../index.js");
+var Workflow = require("../../index.js");
 
 // Get the test workflow configuration file
-var file = path.join(__dirname, '1234:mangaungProject.json');
+var file = path.join(__dirname, '../1234:mangaungProject.json');
 var config = fs.readFileSync(file, 'utf8');
 
 // Create the workflow constrctor instance
