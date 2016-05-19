@@ -5,6 +5,8 @@ before_script:
   - npm install -g bower
   - bower install
   - npm install -g web-component-tester
+  - npm install -g browserify
+  - npm run build-js
   - 'export DISPLAY=:99.0'
   - sh -e /etc/init.d/xvfb start
   - sleep 3
