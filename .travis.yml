@@ -3,15 +3,16 @@ node_js:
   - "6"
 before_script:
   - npm install -g bower
-  - bower install
   - npm install -g web-component-tester
   - npm install -g browserify
+  - bower install
   - npm run build-js
+  - 'echo "Server based testing..."'
+script:
+  - npm test
+before_script:
   - 'export DISPLAY=:99.0'
   - sh -e /etc/init.d/xvfb start
   - sleep 3
   - 'echo "Client based testing..."'
   - wct test/client/index.test.html
-  - 'echo "Server based testing..."'
-script:
-  - npm test
