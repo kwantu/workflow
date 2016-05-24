@@ -6,11 +6,6 @@
     { 
       "id": "", 
       "seq": 1, 
-      "date": { 
-        "created": "", 
-        "valid": "",
-        "due": ""
-      },
       "subProcesses": [
         {
           "id": "", 
