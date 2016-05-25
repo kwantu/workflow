@@ -21,7 +21,9 @@
     "test",
     "tests"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "moment": "^2.13.0"
+  },
   "devDependencies": {
     "chai-as-promised": "^5.3.0",
     "web-component-tester": "Polymer/web-component-tester#^4.2.2"
