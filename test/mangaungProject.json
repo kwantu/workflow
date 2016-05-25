@@ -1,13 +1,13 @@
 {
 	"_id": "mangaungProject",
-	"_version": "1.0",
+	"version": "1.0",
 	"type": "workflowConfig",
 	"title": {
 		"name": {
-			"i18n": {
+			"i18n": [{
 				"_lang": "en",
 				"value": "Mangagung project workflow"
-			}
+			}]
 		},
 		"description": {
 			"i18n": {
@@ -18,16 +18,16 @@
 	},
 	"identification": {
 		"documentation": {
-			"i18n": {
+			"i18n": [{
 				"_lang": "",
 				"value": ""
-			}
+			}]
 		},
 		"upgradeInformation": {
-			"i18n": {
+			"i18n": [{
 				"_lang": "",
 				"value": ""
-			}
+			}]
 		}
 	},
 	"variables": {
@@ -44,10 +44,10 @@
 			"_id": "",
 			"_level": "",
 			"name": {
-				"i18n": {
+				"i18n": [{
 					"_lang": "",
 					"value": ""
-				}
+				}]
 			},
 			"roleMappings": {
 				"roleMapping": {
@@ -67,16 +67,16 @@
 		"_id": "registration",
 		"_seq": "1",
 		"name": {
-			"i18n": {
+			"i18n": [{
 				"_lang": "en",
 				"value": "Register a project"
-			}
+			}]
 		},
 		"help": {
-			"i18n": {
+			"i18n": [{
 				"_lang": "en",
 				"value": "Register a new project"
-			}
+			}]
 		},
 		"variables": [{
 			"_id": "",
@@ -92,10 +92,10 @@
 			"_operator": "equalTo",
 			"_value": "0",
 			"message": {
-				"i18n": {
+				"i18n": [{
 					"_lang": "en",
 					"value": "The project registration form can't be edited once the monthly progress process has been initiated."
-				}
+				}]
 			}
 		}],
 		"preActions": [{
@@ -124,16 +124,16 @@
 			"_id": "spRegistration",
 			"_seq": "1",
 			"name": {
-				"i18n": {
+				"i18n": [{
 					"_lang": "en",
 					"value": "Project Registration Form"
-				}
+				}]
 			},
 			"help": {
-				"i18n": {
+				"i18n": [{
 					"_lang": "en",
 					"value": "Register a new project"
-				}
+				}]
 			},
 			"initiate": {
 				"_type": "user",
@@ -146,19 +146,19 @@
 					"valid": {
 						"_type": "userSelected",
 						"message": {
-							"i18n": {
+							"i18n": [{
 								"_lang": "en",
 								"value": "Please select a valid date i.e. the monthly date that the data captured is valid for."
-							}
+							}]
 						}
 					},
 					"due": {
 						"_type": "userSelected",
 						"message": {
-							"i18n": {
+							"i18n": [{
 								"_lang": "en",
 								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-							}
+							}]
 						}
 					}
 				}
@@ -167,28 +167,28 @@
 				"_id": "projectDetail",
 				"maxInstances": "1",
 				"name": {
-					"i18n": {
+					"i18n": [{
 						"_lang": "en",
 						"value": "Project Details"
-					}
+					}]
 				}
 			}, {
 				"_id": "projectLocation",
 				"maxInstances": "-1",
 				"name": {
-					"i18n": {
+					"i18n": [{
 						"_lang": "en",
 						"value": "Project Locations"
-					}
+					}]
 				}
 			}, {
 				"_id": "developerDetail",
 				"maxInstances": "1",
 				"name": {
-					"i18n": {
+					"i18n": [{
 						"_lang": "en",
 						"value": "Developer Details"
-					}
+					}]
 				}
 			}],
 			"steps": [{
@@ -197,10 +197,10 @@
 				"_setInstanceStatusTo": "Created",
 				"_setStatusMsgTo": "Form created",
 				"name": {
-					"i18n": {
+					"i18n": [{
 						"_lang": "en",
 						"value": "Create the registration form."
-					}
+					}]
 				},
 				"prerequisites": [{
 					"_seq": "",
@@ -223,10 +223,10 @@
 						"_id": "createForm",
 						"_type": "auto",
 						"name": {
-							"i18n": {
+							"i18n": [{
 								"_lang": "en",
 								"value": ""
-							}
+							}]
 						},
 						"goTo": {
 							"_type": "nextStep",
@@ -275,10 +275,10 @@
 						"_id": "submitForm",
 						"_type": "user",
 						"name": {
-							"i18n": {
+							"i18n": [{
 								"_lang": "en",
 								"value": "Submit"
-							}
+							}]
 						},
 						"goTo": {
 							"_type": "nextStep",
@@ -293,10 +293,10 @@
 				"_setInstanceStatusTo": "awaitingAuthorisation",
 				"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
 				"name": {
-					"i18n": {
+					"i18n": [{
 						"_lang": "en",
 						"value": "Review the registration form data."
-					}
+					}]
 				},
 				"prerequisites": [{
 					"_seq": "1",
@@ -327,10 +327,10 @@
 						"_id": "authoriseForm",
 						"_type": "user",
 						"name": {
-							"i18n": {
+							"i18n": [{
 								"_lang": "en",
 								"value": "Authorise"
-							}
+							}]
 						},
 						"goTo": {
 							"_type": "nextStep",
@@ -341,10 +341,10 @@
 						"_id": "revertForm",
 						"_type": "user",
 						"name": {
-							"i18n": {
+							"i18n": [{
 								"_lang": "en",
 								"value": "Refer Back"
-							}
+							}]
 						},
 						"goTo": {
 							"_type": "stepId",
@@ -359,10 +359,10 @@
 				"_setInstanceStatusTo": "Complete",
 				"_setStatusMsgTo": "Form locked",
 				"name": {
-					"i18n": {
+					"i18n": [{
 						"_lang": "en",
 						"value": "Close the registration form."
-					}
+					}]
 				},
 				"actions": [{
 					"_seq": "1",
@@ -374,10 +374,10 @@
 					"transition": [{
 						"_type": "auto",
 						"name": {
-							"i18n": {
+							"i18n": [{
 								"_lang": "en",
 								"value": ""
-							}
+							}]
 						},
 						"goTo": {
 							"_type": "",
