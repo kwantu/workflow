@@ -252,14 +252,14 @@
 				},
 				"prerequisites": [{
 					"_seq": "1",
-					"_type": "checkRole",
-					"_subject": "profileRole",
+					"_type": "readyToSubmit",
+					"_subject": "indicators.complete",
 					"_operator": "equalTo",
-					"_value": "capturer",
+					"_value": "true",
 					"message": {
 						"i18n": {
 							"_lang": "en",
-							"value": "You have to be a data capturer on the project to open the form for editing."
+							"value": "All form indicators have to be marked as complete before submission."
 						}
 					}
 				}],
@@ -276,6 +276,7 @@
 						"action": "editForm"
 					},
 					"transitions": [{
+						"_id": "submitForm",
 						"_type": "user",
 						"name": {
 							"i18n": {
@@ -327,6 +328,7 @@
 						"action": "editForm"
 					},
 					"transitions": [{
+						"_id": "authoriseForm",
 						"_type": "user",
 						"name": {
 							"i18n": {
@@ -340,6 +342,7 @@
 						},
 						"_stop": false
 					}, {
+						"_id": "revertForm",
 						"_type": "user",
 						"name": {
 							"i18n": {
@@ -371,14 +374,6 @@
 					"funct": {
 						"module": "form",
 						"method": "authorise"
-					},
-					"transition": []
-				}, {
-					"_seq": "2",
-					"_type": "internal",
-					"funct": {
-						"module": "process",
-						"method": "closeSubprocess"
 					},
 					"transition": [{
 						"_type": "auto",
