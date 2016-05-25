@@ -7,12 +7,9 @@ before_script:
   - npm install -g browserify
   - bower install
   - npm run build-js
-  - 'echo "Server based testing..."'
-script:
-  - npm test
-after_script:
   - 'export DISPLAY=:99.0'
   - sh -e /etc/init.d/xvfb start
   - sleep 3
-  - 'echo "Client based testing..."'
+script:
+  - npm test
   - wct test/client/index.test.html
