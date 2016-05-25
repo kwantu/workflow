@@ -220,6 +220,7 @@
 					"_seq": "1",
 					"_type": "newSequence",
 					"transitions": [{
+						"_id": "createForm",
 						"_type": "auto",
 						"name": {
 							"i18n": {
@@ -237,7 +238,7 @@
 			}, {
 				"_id": "captureForm",
 				"_seq": "2",
-				"_setStatusTo": "InProgress",
+				"_setInstanceStatusTo": "InProgress",
 				"_setStatusMsgTo": "User assigned and data capture in progress",
 				"name": {
 					"i18n": {
