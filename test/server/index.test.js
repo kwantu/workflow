@@ -40,7 +40,7 @@ describe('# Module: Workflow', function(){
 				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Workflow processes instance created successfully.');
 				expect(workflow.instance).to.be.an('object');
-				expect(workflow.instance._id).to.equal(workflow.profile + ':' + workflow.app + ':' + workflow.config._id + ':processes');
+				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
 				expect(workflow.instance._version).to.equal(workflow.config._version);
 			}).should.notify(done);
 		})
@@ -61,7 +61,7 @@ describe('# Module: Workflow', function(){
 				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Process: ' + processId + ' initialized successfully.');
 				expect(workflow.instance).to.be.an('object');
-				expect(workflow.instance._id).to.equal(workflow.profile + ':' + workflow.app + ':' + workflow.config._id + ':processes');
+				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
 				expect(workflow.instance._version).to.equal(workflow.config._version);
 				// Process instance data checks
 				expect(workflow.instance.processes[0].id).to.equal(workflow.config.processes[0]._id);
@@ -119,8 +119,8 @@ describe('# Test Case (No1): Mangaung project workflow.', function(){
 				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Workflow processes instance created successfully.');
 				expect(workflow.instance).to.be.an('object');
-				expect(workflow.instance._id).to.equal(workflow.profile + ':' + workflow.app + ':' + workflow.config._id + ':processes');
-				expect(workflow.instance._version).to.equal(workflow.config._version);
+				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
+				expect(workflow.instance.version).to.equal(workflow.config.version);
 				expect(workflow.instance.processes.length).to.equal(0);
 			}).should.notify(done);
 		})
@@ -141,8 +141,8 @@ describe('# Test Case (No1): Mangaung project workflow.', function(){
 				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Process: ' + processId + ' initialized successfully.');
 				expect(workflow.instance).to.be.an('object');
-				expect(workflow.instance._id).to.equal(workflow.profile + ':' + workflow.app + ':' + workflow.config._id + ':processes');
-				expect(workflow.instance._version).to.equal(workflow.config._version);
+				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
+				expect(workflow.instance.version).to.equal(workflow.config.version);
 				// Process instance data checks
 				expect(workflow.instance.processes[0].id).to.equal(workflow.config.processes[0]._id);
 				expect(workflow.instance.processes[0].seq).to.equal(1);
@@ -198,9 +198,10 @@ describe('# Test Case (No1): Mangaung project workflow.', function(){
 		
 	});
 	describe('- Step 4. User ( capturer ) clicks on the workflow form UI submit button.', function(){
-		it('Should return ')
-		// Onclick of form 'Submit' button: workflow.transition('submitForm')
+		it('Should return a success message and update the processes instance and related indicator sets.', function(done){
+			// Onclick of form 'Submit' button: workflow.transition('submitForm')
 
+		})
 	});
 	describe('- Step 5. User ( authoriser ) reviews the form indicators data and refers it back to the captures, with a message, to fix data capture errors.', function(){
 		it('Should return ')

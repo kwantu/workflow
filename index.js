@@ -84,8 +84,11 @@ Workflow.prototype.create = function(){
 	} else {
 		// Create the workflow processes instance object
 		var model = models.instance();
-		model._id = _this.profile + ':' + _this.app + ':' +_this.config._id + ':processes';
-		model._version = _this.config._version;
+		model._id = _this.profile + ':processes';
+		model.version = _this.config.version;
+		// Update the processes and subProcesses sections with defaults
+		// model.processes[0].id = _this.config.processes[0]._id;
+		// model.processes[0].seq = 1;
 		_this.instance = model;
 		var success = util.success('Workflow processes instance created successfully.', _this.instance);
 		deferred.resolve(success);
@@ -196,8 +199,38 @@ Workflow.prototype.saveIndicator = function(){
 	return 'Implementation pending..';
 };
 
-Workflow.prototype.transition = function(){
-	return 'Implementation pending..';
+Workflow.prototype.transition = function(processId, subProcessId, stepId, transitionId, subProcessModel, nextStep, workflow){
+	// Re-assign this 
+	var _this = this;
+	// Create the deffered object
+	var deferred = Q.defer();
+	Process.transition(processId, subProcessId, stepId, transitionId, subProcessModel, nextStep, workflow).then(function(result){
+		var success = util.success('Workflow transitioned to the next step successfully.', subProcessModel);
+		deferred.resolve(success);
+	}).fail(function(err){
+		var error = util.error('WF003', err);
+		console.log(err);
+		deferred.reject(error);
+	});	
+	// Return the deffered promise object
+	return deferred.promise;
 };
 
 module.exports = Workflow;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
