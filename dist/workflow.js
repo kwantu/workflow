@@ -34,7 +34,7 @@ var models = require('./lib/models');
  *
  */
 
-function Workflow(profile, config, instance){
+function Workflow(profile, app, config, instance){
 	//
 	var _this = this;
 	// Profile ID validation checks
@@ -44,6 +44,14 @@ function Workflow(profile, config, instance){
     	throw new Error('The profile id must be a javascript string.');
     } else {
     	_this.profile = profile || '';
+    }
+    // App ID validation checks
+	if (app === '' || app === undefined) {
+        throw new Error('A app id is required.');
+    } else if (typeof(app) !== 'string') {
+    	throw new Error('The app id must be a javascript string.');
+    } else {
+    	_this.app = app || '';
     }
     // Workflow configuration validation checks
     if (config === '' || config === undefined) {
@@ -77,7 +85,7 @@ Workflow.prototype.create = function(){
 	} else {
 		// Create the workflow processes instance object
 		var model = models.instance();
-		model._id = _this.profile + ':' + _this.config._id + ':processes';
+		model._id = _this.profile + ':' + _this.app + ':' +_this.config._id + ':processes';
 		model._version = _this.config._version;
 		_this.instance = model;
 		var success = util.success('Workflow processes instance created successfully.', _this.instance);
@@ -138,15 +146,15 @@ Workflow.prototype.initialize = function(processId, inputData){
 	processModel.seq = processSeq;
 	_this.instance.processes.push(processModel);
 	// 2. Complete all the process prerequisites
-	Process.preRequisites(configProcess[0].prerequisites).then(function(result){
+	Process.preRequisites(configProcess[0].prerequisites, _this).then(function(result){
 		// Check if all pre-requisites were met
 		if (result.complete === true) {
 			// 3. Complete all the process pre-actions
-			Process.preActions(configProcess[0].preActions).then(function(result){
+			Process.preActions(configProcess[0].preActions, _this).then(function(result){
 				// Check if all pre-actions were met
 				if (result.complete) {
 					// 4. Initialise the first sub-process
-					Process.subProcess(configProcess[0].subProcesses[0], inputData).then(function(result){
+					Process.subProcess(processId, configProcess[0].subProcesses[0], inputData, _this).then(function(result){
 						// Check if sub-process initialisation was successfull
 						if (result.complete) {
 							// 5. Update the subProcess section details in the processes model
@@ -195,7 +203,112 @@ Workflow.prototype.transition = function(){
 
 module.exports = Workflow;
 
-},{"./lib/models":2,"./lib/process":3,"./lib/utility":4,"fs":7,"path":8,"q":6}],2:[function(require,module,exports){
+},{"./lib/models":3,"./lib/process":4,"./lib/utility":5,"fs":8,"path":9,"q":7}],2:[function(require,module,exports){
+'use strict';
+
+var Q = require('q');
+var moment = require('moment');
+
+var util = require('./utility');
+
+/**
+ * Form Module
+ *
+ * @module lib/form
+ * @author Brent Gordon
+ * @version 2.0.0
+ * @description 
+ * @copyright Kwantu Ltd RSA 2009-2015.
+ *
+ */
+
+function create(formDef, workflow){
+	var deferred = Q.defer();
+	var indicators = [];
+	util.syncLoop(formDef.indicators.length, function(loop){
+		var counter = loop.iteration();
+		var indicatorId = formDef.indicators[counter]._id;
+		var indicatorName = formDef.indicators[counter].name.i18n.value;
+		// TODO: Add the call to the gatekeeper method here to create an instance of the
+		// indicator set
+		var uuid = workflow.profile + ':' + workflow.app + ':' + indicatorId + ':0'; // replace this with gatekeeper call and return the uuid
+		var indicator = {
+			id: indicatorId,
+			uuid: uuid,
+			category: {
+				term: indicatorId,
+				label: indicatorName
+			},
+			"processes": []
+		};
+		indicators.push(indicator);
+		loop.next();
+	}, function(){
+	    // console.log('done');
+	});
+	var success = util.success('Form created successfully.', indicators);
+	deferred.resolve(success);
+	return deferred.promise;
+};
+
+function save(indicator){
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		complete: true,
+		data: []
+	};
+	var success = util.success('Form created successfully.', result);
+	deferred.resolve(success);
+	return deferred.promise;
+};
+
+function submit(form){
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		complete: true,
+		data: []
+	};
+	var success = util.success('Form created successfully.', result);
+	deferred.resolve(success);
+	return deferred.promise;
+};
+
+function authorise(form){
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		complete: true,
+		data: []
+	};
+	var success = util.success('Form created successfully.', result);
+	deferred.resolve(success);
+	return deferred.promise;
+};
+
+function close(form){
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		complete: true,
+		data: []
+	};
+	var success = util.success('Form created successfully.', result);
+	deferred.resolve(success);
+	return deferred.promise;
+};
+
+module.exports = { 
+
+ 	create: create,
+ 	save: save,
+ 	submit: submit,
+ 	authorise: authorise,
+ 	close: close
+
+}
+},{"./utility":5,"moment":6,"q":7}],3:[function(require,module,exports){
 'use strict';
 
 var Q = require('q');
@@ -646,77 +759,135 @@ function process(){
 
 function mangaungProject(){
 	var model = {
-		"_id": "1234:mangaungProject",
-		"_version": "1.0",
-		"type": "workflowConfig",
-		"title": {
+	"_id": "1234:mangaungProject",
+	"_version": "1.0",
+	"type": "workflowConfig",
+	"title": {
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Mangagung project workflow"
+			}
+		},
+		"description": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Mangagung project workflow used to manage housing development."
+			}
+		}
+	},
+	"identification": {
+		"documentation": {
+			"i18n": {
+				"_lang": "",
+				"value": ""
+			}
+		},
+		"upgradeInformation": {
+			"i18n": {
+				"_lang": "",
+				"value": ""
+			}
+		}
+	},
+	"variables": {
+		"variable": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}]
+	},
+	"roles": {
+		"role": [{
+			"_id": "",
+			"_level": "",
 			"name": {
 				"i18n": {
-					"_lang": "en",
-					"value": "Mangagung project workflow"
-				}
-			},
-			"description": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Mangagung project workflow used to manage housing development."
-				}
-			}
-		},
-		"identification": {
-			"documentation": {
-				"i18n": {
 					"_lang": "",
 					"value": ""
 				}
 			},
-			"upgradeInformation": {
-				"i18n": {
-					"_lang": "",
-					"value": ""
+			"roleMappings": {
+				"roleMapping": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			},
+			"requiredRoles": {
+				"requiredRole": {
+					"_applicationId": "",
+					"_roleId": ""
 				}
 			}
+		}]
+	},
+	"processes": [{
+		"_id": "registration",
+		"_seq": "1",
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a project"
+			}
 		},
-		"variables": {
-			"variable": [{
-				"_id": "",
-				"_dataType": "",
-				"_sessionVar": "",
-				"_default": "",
-				"_value": ""
-			}]
+		"help": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a new project"
+			}
 		},
-		"roles": {
-			"role": [{
-				"_id": "",
-				"_level": "",
-				"name": {
-					"i18n": {
-						"_lang": "",
-						"value": ""
-					}
-				},
-				"roleMappings": {
-					"roleMapping": {
-						"_applicationId": "",
-						"_roleId": ""
-					}
-				},
-				"requiredRoles": {
-					"requiredRole": {
-						"_applicationId": "",
-						"_roleId": ""
-					}
+		"variables": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}],
+		"prerequisites": [{
+			"_seq": "1",
+			"_type": "count",
+			"_subject": "monthlyProgress.instance",
+			"_operator": "equalTo",
+			"_value": "0",
+			"message": {
+				"i18n": {
+					"_lang": "en",
+					"value": "The project registration form can't be edited once the monthly progress process has been initiated."
 				}
-			}]
-		},
-		"processes": [{
-			"_id": "registration",
+			}
+			// Not allowed to create another instance if there is one open
+		}],
+		"preActions": [{
+			"_seq": "",
+			"_type": "",
+			"funct": {
+				"module": "",
+				"method": "",
+				"params": {
+					"param": []
+				}
+			},
+			"rest": {
+				"hostId": "",
+				"service": "",
+				"APIKey": "",
+				"format": "",
+				"collection": "",
+				"endpoint": "",
+				"params": {
+					"param": []
+				}
+			}
+		}],
+		"subProcesses": [{
+			"_id": "spRegistration",
 			"_seq": "1",
 			"name": {
 				"i18n": {
 					"_lang": "en",
-					"value": "Register a project"
+					"value": "Project Registration Form"
 				}
 			},
 			"help": {
@@ -725,323 +896,261 @@ function mangaungProject(){
 					"value": "Register a new project"
 				}
 			},
-			"variables": [{
-				"_id": "",
-				"_dataType": "",
-				"_sessionVar": "",
-				"_default": "",
-				"_value": ""
-			}],
-			"prerequisites": [{
-				"_seq": "1",
-				"_type": "count",
-				"_subject": "monthlyProgress.instance",
-				"_operator": "equalTo",
-				"_value": "0",
-				"message": {
-					"i18n": {
-						"_lang": "en",
-						"value": "The project registration form can't be edited once the monthly progress process has been initiated."
-					}
-				}
-				// Not allowed to create another instance if there is one open
-			}],
-			"preActions": [{
-				"_seq": "",
-				"_type": "",
-				"funct": {
-					"module": "",
-					"method": "",
-					"params": {
-						"param": []
-					}
+			"initiate": {
+				"_type": "user",
+				"maxInstances": "-1",
+				"action": {
+					"_type": "button",
+					"label": "Create"
 				},
-				"rest": {
-					"hostId": "",
-					"service": "",
-					"APIKey": "",
-					"format": "",
-					"collection": "",
-					"endpoint": "",
-					"params": {
-						"param": []
+				"dates": {
+					"valid": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a valid date i.e. the monthly date that the data captured is valid for."
+							}
+						}
+					},
+					"due": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}
+						}
 					}
 				}
-			}],
-			"subProcesses": [{
-				"_id": "spRegistration",
-				"_seq": "1",
+			},
+			"indicators": [{
+				"_id": "projectDetail",
+				"maxInstances": "1",
 				"name": {
 					"i18n": {
 						"_lang": "en",
-						"value": "Project Registration Form"
+						"value": "Project Details"
 					}
-				},
-				"help": {
+				}
+			}, {
+				"_id": "projectLocation",
+				"maxInstances": "-1",
+				"name": {
 					"i18n": {
 						"_lang": "en",
-						"value": "Register a new project"
+						"value": "Project Locations"
+					}
+				}
+			}, {
+				"_id": "developerDetail",
+				"maxInstances": "1",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Developer Details"
+					}
+				}
+			}],
+			"steps": [{
+				"_id": "createForm",
+				"_seq": "1",
+				"_setInstanceStatusTo": "Created",
+				"_setStatusMsgTo": "Form created",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Create the registration form."
 					}
 				},
-				"initiate": {
-					"_type": "user",
-					"maxInstances": "-1",
-					"action": {
-						"_type": "button",
-						"label": "Create"
-					},
-					"dates": {
-						"valid": {
-							"_type": "userSelected",
-							"message": {
-								"i18n": {
-									"_lang": "en",
-									"value": "Please select a valid date i.e. the monthly date that the data captured is valid for."
-								}
-							}
-						},
-						"due": {
-							"_type": "userSelected",
-							"message": {
-								"i18n": {
-									"_lang": "en",
-									"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-								}
-							}
-						}
-					}
-				},
-				"indicators": [{
-					"_id": "projectDetail",
-					"maxInstances": "1",
-					"name": {
+				"prerequisites": [{
+					"_seq": "",
+					"_type": "",
+					"_operator": "",
+					"_subject": "",
+					"_value": "",
+					"message": {
 						"i18n": {
 							"_lang": "en",
-							"value": "Project Details"
-						}
-					}
-				}, {
-					"_id": "projectLocation",
-					"maxInstances": "-1",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Project Locations"
-						}
-					}
-				}, {
-					"_id": "developerDetail",
-					"maxInstances": "1",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Developer Details"
+							"value": ""
 						}
 					}
 				}],
-				"steps": [{
+				"actions": [{
 					"_id": "createForm",
 					"_seq": "1",
-					"_setInstanceStatusTo": "Created",
-					"_setStatusMsgTo": "Form created",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Create the registration form."
-						}
-					},
-					"prerequisites": [{
-						"_seq": "",
-						"_type": "",
-						"_operator": "",
-						"_subject": "",
-						"_value": "",
-						"message": {
+					"_type": "newSequence",
+					"transitions": [{
+						"_type": "auto",
+						"name": {
 							"i18n": {
 								"_lang": "en",
 								"value": ""
 							}
-						}
-					}],
-					"actions": [{
-						"_seq": "1",
-						"_type": "internal",
-						"funct": {
-							"module": "form",
-							"method": "create",
-							"type": "newSequence" 
 						},
-						"transitions": [{
-							"_type": "auto",
-							"name": {
-								"i18n": {
-									"_lang": "en",
-									"value": ""
-								}
-							},
-							"goTo": {
-								"_type": "nextStep",
-								"_stepId": ""
-							},
-							"_stop": false
-						}]
-					}]
-				}, {
-					"_id": "captureForm",
-					"_seq": "2",
-					"_setStatusTo": "InProgress",
-					"_setStatusMsgTo": "User assigned and data capture in progress",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Capture"
-						}
-					},
-					"prerequisites": [{
-						"_seq": "1",
-						"_type": "readyToSubmit",
-						"_subject": "indicators.complete",
-						"_operator": "equalTo",
-						"_value": "true",
-						"message": {
-							"i18n": {
-								"_lang": "en",
-								"value": "All form indicators have to be marked as complete before submission."
-							}
-						}
-					}],
-					"actions": [],
-					"task": {
-						"assign": {
-							"profileRole": {
-								"profile": "current",
-								"role": "capturer"
-							},
-							"default": ""
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
 						},
-						"work": {
-							"action": "editForm"
-						},
-						"transitions": [{
-							"_id": "submitForm",
-							"_type": "user",
-							"name": {
-								"i18n": {
-									"_lang": "en",
-									"value": "Submit"
-								}
-							},
-							"goTo": {
-								"_type": "nextStep",
-								"_stepId": ""
-							},
-							"_stop": false
-						}]
-					}
-				}, {
-					"_id": "authoriseForm",
-					"_seq": "3",
-					"_setInstanceStatusTo": "awaitingAuthorisation",
-					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Review the registration form data."
-						}
-					},
-					"prerequisites": [{
-						"_seq": "1",
-						"_type": "checkRole",
-						"_subject": "profileRole",
-						"_operator": "equalTo",
-						"_value": "authoriser",
-						"message": {
-							"i18n": {
-								"_lang": "en",
-								"value": "You have to be an authoriser on the project to approve the form data that has been captured or refer back for further editing."
-							}
-						}
-					}],
-					"actions": [],
-					"task": {
-						"assign": {
-							"profileRole": {
-								"profile": "current",
-								"role": "authoriser"
-							},
-							"default": ""
-						},
-						"work": {
-							"action": "editForm"
-						},
-						"transitions": [{
-							"_id": "authoriseForm",
-							"_type": "user",
-							"name": {
-								"i18n": {
-									"_lang": "en",
-									"value": "Authorise"
-								}
-							},
-							"goTo": {
-								"_type": "nextStep",
-								"_stepId": ""
-							},
-							"_stop": false
-						}, {
-							"_id": "revertForm",
-							"_type": "user",
-							"name": {
-								"i18n": {
-									"_lang": "en",
-									"value": "Refer Back"
-								}
-							},
-							"goTo": {
-								"_type": "stepId",
-								"_stepId": "captureForm"
-							},
-							"_stop": false
-						}]
-					}
-				}, {
-					"_id": "closeForm",
-					"_seq": "5",
-					"_setInstanceStatusTo": "Complete",
-					"_setStatusMsgTo": "Form locked",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Close the registration form."
-						}
-					},
-					"actions": [{
-						"_seq": "1",
-						"_type": "internal",
-						"funct": {
-							"module": "form",
-							"method": "authorise"
-						},
-						"transition": [{
-							"_type": "auto",
-							"name": {
-								"i18n": {
-									"_lang": "en",
-									"value": ""
-								}
-							},
-							"goTo": {
-								"_type": "",
-								"_stepId": ""
-							},
-							"_stop": true
-						}]
+						"_stop": false
 					}]
 				}]
-			}],
-			"postActions": {}
-		}]
-	}
+			}, {
+				"_id": "captureForm",
+				"_seq": "2",
+				"_setStatusTo": "InProgress",
+				"_setStatusMsgTo": "User assigned and data capture in progress",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Capture"
+					}
+				},
+				"prerequisites": [{
+					"_seq": "1",
+					"_type": "readyToSubmit",
+					"_subject": "indicators.complete",
+					"_operator": "equalTo",
+					"_value": "true",
+					"message": {
+						"i18n": {
+							"_lang": "en",
+							"value": "All form indicators have to be marked as complete before submission."
+						}
+					}
+				}],
+				"actions": [],
+				"task": {
+					"assign": {
+						"profileRole": {
+							"profile": "current",
+							"role": "capturer"
+						},
+						"default": ""
+					},
+					"work": {
+						"action": "editForm"
+					},
+					"transitions": [{
+						"_id": "submitForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Submit"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}
+			}, {
+				"_id": "authoriseForm",
+				"_seq": "3",
+				"_setInstanceStatusTo": "awaitingAuthorisation",
+				"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Review the registration form data."
+					}
+				},
+				"prerequisites": [{
+					"_seq": "1",
+					"_type": "checkRole",
+					"_subject": "profileRole",
+					"_operator": "equalTo",
+					"_value": "authoriser",
+					"message": {
+						"i18n": {
+							"_lang": "en",
+							"value": "You have to be an authoriser on the project to approve the form data that has been captured or refer back for further editing."
+						}
+					}
+				}],
+				"actions": [],
+				"task": {
+					"assign": {
+						"profileRole": {
+							"profile": "current",
+							"role": "authoriser"
+						},
+						"default": ""
+					},
+					"work": {
+						"action": "editForm"
+					},
+					"transitions": [{
+						"_id": "authoriseForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Authorise"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}, {
+						"_id": "revertForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Refer Back"
+							}
+						},
+						"goTo": {
+							"_type": "stepId",
+							"_stepId": "captureForm"
+						},
+						"_stop": false
+					}]
+				}
+			}, {
+				"_id": "closeForm",
+				"_seq": "5",
+				"_setInstanceStatusTo": "Complete",
+				"_setStatusMsgTo": "Form locked",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Close the registration form."
+					}
+				},
+				"actions": [{
+					"_seq": "1",
+					"_type": "internal",
+					"funct": {
+						"module": "form",
+						"method": "authorise"
+					},
+					"transition": [{
+						"_type": "auto",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": ""
+							}
+						},
+						"goTo": {
+							"_type": "",
+							"_stepId": ""
+						},
+						"_stop": true
+					}]
+				}]
+			}]
+		}],
+		"postActions": {}
+	}]
+}
 	return model;
 };
 
@@ -1053,13 +1162,14 @@ module.exports = {
  	mangaungProject: mangaungProject
 
 }
-},{"./utility":4,"q":6}],3:[function(require,module,exports){
+},{"./utility":5,"q":7}],4:[function(require,module,exports){
 'use strict';
 
 var Q = require('q');
 var moment = require('moment');
 
 var util = require('./utility');
+var form = require('./form');
 
 /**
  * Process Module
@@ -1183,7 +1293,7 @@ function preRequisites(prerequisites) {
  * instance data.
  *
  */
-function preRequisite(prerequisite, counter){
+function preRequisite(prerequisite, counter, workflow){
 	var deferred = Q.defer();
 	switch(prerequisite._type) {
 		case 'mock':
@@ -1213,7 +1323,7 @@ function preRequisite(prerequisite, counter){
 	return deferred.promise;
 };
 
-function preActions(preActions){
+function preActions(preActions, workflow){
 	var deferred = Q.defer();
 	var completed = [];
 	var result = {
@@ -1225,9 +1335,8 @@ function preActions(preActions){
 	return deferred.promise;
 };
 
-function subProcess(subProcess, inputData){
+function subProcess(processId, subProcess, inputData, workflow){
 	var deferred = Q.defer();
-	var today = moment().format('YYYY-MM-DD');
 	var completed = [];
 	var result = {
 		complete: false,
@@ -1240,7 +1349,7 @@ function subProcess(subProcess, inputData){
 		"status": "",
 		"message": "",
 		"dates": {
-			"created": today,
+			"created": "",
 			"valid": "",
 			"due": "",
 			"submitted": "",
@@ -1254,29 +1363,34 @@ function subProcess(subProcess, inputData){
 	initiate(subProcess.initiate, inputData).then(function(result){
 		if (result.complete) {
 			subProcessModel.initiated = true;
-			subProcessModel.dates.valid = result.validDate;
-			subProcessModel.dates.valid = result.validDate;
+			subProcessModel.dates.created = result.res.createdDate;
+			subProcessModel.dates.valid = result.res.validDate;
+			subProcessModel.dates.due = result.res.dueDate;
 			// Process the first step and any subsequent 'auto' step
-			steps(subProcess.steps, subProcess.indicators).then(function(result){
+			var formDef = {
+				id: subProcess._id,
+				name: subProcess.name.i18n.value,
+				indicators: subProcess.indicators
+			}
+			step(processId, subProcess._id, subProcessModel, subProcess.steps[0], subProcess.steps[1], formDef, inputData, workflow).then(function(result){
 				if (result.complete) {
-
-					var success = util.success('Sub-Process completed successfully.', subProcessModel);
+					var success = util.success('Sub-Process completed successfully.', result.res);
 					deferred.resolve(success);
 				} else {
-					var error = util.error('WF0011');
+					var error = util.error('WF019');
 					deferred.reject(error);
 				}
 			}).fail(function(err){
-				var error = util.error('WF007', err);
-				deferred.reject(error);
+				deferred.reject(err.stack);
 			}); 
+			// var success = util.success('Sub-Process completed successfully.', subProcessModel);
+			// deferred.resolve(success);
 		} else {
-			var error = util.error('WF0011');
+			var error = util.error('WF011');
 			deferred.reject(error);
 		}
 	}).fail(function(err){
-		var error = util.error('WF007', err);
-		deferred.reject(error);
+		deferred.reject(err.stack);
 	});
 	return deferred.promise;
 };
@@ -1285,25 +1399,25 @@ function initiate(initiate, inputData){
 	var deferred = Q.defer();
 	var completed = [];
 	var result = {
-		complete: false,
-		data: []
+		complete: false
 	};
 	switch(initiate._type) {
 		case 'user':
 			// If the subProcess initiation is user defined then
+			result.createdDate = inputData.createdDate;
 			if (initiate.dates.valid._type === 'userSelected') {
 				if (inputData.validDate !== undefined) {
-					result.data.validDate = inputData.validDate;
+					result.validDate = inputData.validDate;
 				} else {
-					var error = util.error('WF0010');
+					var error = util.error('WF0013');
 					deferred.reject(error);
 				}
 			}
 			if (initiate.dates.due._type === 'userSelected') {
 				if (inputData.dueDate !== undefined) {
-					result.data.dueDate = inputData.dueDate;
+					result.dueDate = inputData.dueDate;
 				} else {
-					var error = util.error('WF0010');
+					var error = util.error('WF0020');
 					deferred.reject(error);
 				}
 			}
@@ -1312,38 +1426,231 @@ function initiate(initiate, inputData){
 			deferred.resolve(success);
 			break;
 		default:
+			var error = util.error('WF016');
+			deferred.reject(error);
+	}
+	return deferred.promise;
+};
+
+function step(processId, subProcessId, subProcessModel, step, nextStep, formDef, inputData, workflow){
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		complete: true,
+		step: {
+			id: '',
+			seq: '',
+			status: '',
+			message: ''
+		},
+		data: {}
+	};
+	console.log(step);
+	// Set the status and status message
+	subProcessModel.status = step._setInstanceStatusTo;
+	subProcessModel.message = step._setStatusMsgTo;
+
+	result.step.id = step._id;
+	result.step.seq = step._seq;
+	// result.step.status = step._setInstanceStatusTo;
+	// result.step.message = step._setStatusMsgTo;
+	
+	if (step.actions[0] !== undefined) {
+		actions(step.actions, formDef, workflow).then(function(data){
+			// Set the processes values for all the indicator sets
+			var processModel = {
+				"configId": workflow.config._id, 
+	            "instanceId": workflow.instance._id,
+	            "processId": processId,
+	            "subProcessId": subProcessId,
+	            "stepId": step._id,
+	            "assignedTo": {
+	                "userId": inputData.userId,
+	                "name": inputData.name
+	            },
+	            "token": "",
+	            "status": step._setInstanceStatusTo,
+	            "statusMsg": step._setStatusMsgTo,
+	            "lastUpdated": inputData.createdDate,
+	            "dueDate": inputData.dueDate
+			};
+			util.syncLoop(data.res.data[0].form.indicators.length, function(loop){
+				var counter = loop.iteration();
+				// Update the processes instance model, inidcators section
+				var indicatorModel = {
+					"id": data.res.data[0].form.indicators[counter].id, 
+					"instances": [
+						{
+							"uuid": data.res.data[0].form.indicators[counter].uuid, 
+							"key": "", 
+							"seq": 1, 
+							"status": "NotStarted", 
+							"lastUpdated": inputData.createdDate,
+							"complete": false                  
+						}
+					]
+				};
+				subProcessModel.indicators.push(indicatorModel);
+				// Update the indicator documents processes section
+				data.res.data[0].form.indicators[counter].processes.push(processModel);
+				loop.next();
+			}, function(){
+				
+				// var success = util.success('Actions completed successfully.', subProcessModel);
+				// deferred.resolve(success);
+				// console.log(step)
+				// Check if it should automatically transition to the next step
+				util.syncLoop(step.actions[0].transitions.length, function(loop){
+					var counter = loop.iteration();
+					// console.log(step._id);
+					transition(processId, subProcessId, step._id, step.actions[0].transitions[counter]._id, subProcessModel, nextStep, workflow).then(function(result){
+						var success = util.success('Actions completed successfully.', subProcessModel);
+						deferred.resolve(success);
+					}).fail(function(err){
+						deferred.reject(err.stack);
+					});	
+					loop.next();
+				});
+			});
+		}).fail(function(err){
+			deferred.reject(err);
+		}); 
+		// var success = util.success('Action completed successfully.', result);
+		// deferred.resolve(success);
+	} else if (step.task !== undefined) {
+		var success = util.success('Actions completed successfully.', subProcessModel);
+		deferred.resolve(success);
+	} else {
+		var error = util.error('WF013');
+		deferred.reject(error);
+	}
+	return deferred.promise;
+};
+
+function actions(actions, formDef, workflow){
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		completed: true,
+		data: []
+	};
+	util.syncLoop(actions.length, function(loop){
+		var counter = loop.iteration();
+		action(actions[counter], counter, formDef, workflow).then(function(data){			
+			// Check if all pre-requisites completed successfully.
+			if (actions.length !== counter) {
+				completed.push(data.complete);
+				result.data.push(data.res);
+				if (completed.every(Boolean)) {
+					result.completed = true;
+					var success = util.success('Action completed successfully.', result);
+					deferred.resolve(success);
+				}
+			} else {
+				completed.push(data.complete);
+				result.data.push(data.res);
+				loop.next();
+			}
+		}).fail(function(err){
+			loop.break();
+			deferred.reject(err);
+		});
+	});
+	return deferred.promise;
+};
+
+function action(action, counter, formDef, workflow){
+	var deferred = Q.defer();
+	switch(action._id) {
+		case 'createForm':
+			form.create(formDef, workflow).then(function(result){	
+				var data = {
+					transitions: [],
+					form: {
+						id: formDef.id,
+						indicators: []
+					}
+				}
+				data.transitions = action.transitions;
+				data.form.indicators = result.res;
+				var success = util.success(result.message, data);
+				deferred.resolve(success);
+			}).fail(function(err){
+				deferred.reject(err);
+			});
+			break;
+		// case 'saveIndicator':
+			
+		// 	break;
+		// case 'submitForm':
+			
+		// 	break;
+		// case 'authoriseForm':
+			
+		// 	break;
+		// case 'closeForm':
+			
+		// 	break;
+		default:
+			var error = util.error('WF020');
+			deferred.reject(error);
+	}
+	return deferred.promise;
+};
+
+function task(task){
+	return 'Implementation pending..';
+};
+
+function transition(processId, subProcessId, stepId, transitionId, subProcessModel, nextStep, workflow){
+	var deferred = Q.defer();
+	var completed = [];
+	var result = {
+		complete: false,
+		data: []
+	};
+	var currentProcess = workflow.config.processes.filter(function(objProcess){
+		if (objProcess._id === processId) {
+			return objProcess;
+		}
+	});
+	var currentSubProcess = currentProcess[0].subProcesses.filter(function(objSubProcess){
+		if (objSubProcess._id === subProcessId) {
+			return objSubProcess;
+		}
+	});
+	var currentStep = currentSubProcess[0].steps.filter(function(objStep){
+		if (objStep._id === stepId) {
+			return objStep;
+		}
+	});
+	var transition = currentStep[0].actions[0].transitions.filter(function(objTransition){
+		if (objTransition._id === transitionId) {
+			return objTransition;
+		}
+	});
+	// console.log(transition)
+	switch(transition[0]._type) {
+		case 'auto':
+			if (transition[0].goTo._type === 'nextStep') {
+				// console.log(transition[0].goTo._type);
+				step(processId, subProcessId, subProcessModel, nextStep, {}, {}, {}, workflow).then(function(result){
+					// console.log(result);
+					var success = util.success('Step transition completed successfully.', result.res);
+					deferred.resolve(success);
+				}).fail(function(err){
+					deferred.reject(err.stack);
+				});
+			}
+			break;
+		default:
 			var error = util.error('WF005');
 			deferred.reject(error);
 	}
 	return deferred.promise;
 };
 
-function steps(steps, indicators){
-	var deferred = Q.defer();
-	var completed = [];
-	var result = {
-		complete: true,
-		data: []
-	};
-	
-	var success = util.success('Steps processed successfully.', result);
-	deferred.resolve(success);
-	return deferred.promise;
-};
-
-function step(step, indicators){
-	return 'Implementation pending..';
-};
-
-function actions(){
-	return 'Implementation pending..';
-};
-
 function postActions(){
-	return 'Implementation pending..';
-};
-
-function action(action, counter){
 	return 'Implementation pending..';
 };
 
@@ -1359,7 +1666,7 @@ module.exports = {
  	subProcess: subProcess
 
 }
-},{"./utility":4,"moment":5,"q":6}],4:[function(require,module,exports){
+},{"./form":2,"./utility":5,"moment":6,"q":7}],5:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1437,6 +1744,30 @@ module.exports = {
 			case 'WF012': 		 
 				data.message = '';
 				return data;
+			case 'WF013': 		 
+				data.message = '';
+				return data;
+			case 'WF014': 		 
+				data.message = '';
+				return data;
+			case 'WF015': 		 
+				data.message = '';
+				return data;
+			case 'WF016': 		 
+				data.message = '';
+				return data;
+			case 'WF017': 		 
+				data.message = '';
+				return data;
+			case 'WF018': 		 
+				data.message = '';
+				return data;
+			case 'WF019': 		 
+				data.message = '';
+				return data;
+			case 'WF020': 		 
+				data.message = '';
+				return data;
 			default: 		 
 				data.code = 'ERR001';
 				data.message = 'Default error message, please add a more specific error code and message. See stacktrace for more information.';
@@ -1495,7 +1826,7 @@ module.exports = {
 	}
 	
  }
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 //! moment.js
 //! version : 2.13.0
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -5536,7 +5867,7 @@ module.exports = {
     return _moment;
 
 }));
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (process){
 // vim:ts=4:sts=4:sw=4:
 /*!
@@ -7588,9 +7919,9 @@ return Q;
 });
 
 }).call(this,require('_process'))
-},{"_process":9}],7:[function(require,module,exports){
+},{"_process":10}],8:[function(require,module,exports){
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -7818,7 +8149,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":9}],9:[function(require,module,exports){
+},{"_process":10}],10:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
