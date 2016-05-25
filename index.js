@@ -33,7 +33,7 @@ var models = require('./lib/models');
  *
  */
 
-function Workflow(profile, config, instance){
+function Workflow(profile, app, config, instance){
 	//
 	var _this = this;
 	// Profile ID validation checks
@@ -43,6 +43,14 @@ function Workflow(profile, config, instance){
     	throw new Error('The profile id must be a javascript string.');
     } else {
     	_this.profile = profile || '';
+    }
+    // App ID validation checks
+	if (app === '' || app === undefined) {
+        throw new Error('A app id is required.');
+    } else if (typeof(app) !== 'string') {
+    	throw new Error('The app id must be a javascript string.');
+    } else {
+    	_this.app = app || '';
     }
     // Workflow configuration validation checks
     if (config === '' || config === undefined) {
@@ -76,7 +84,7 @@ Workflow.prototype.create = function(){
 	} else {
 		// Create the workflow processes instance object
 		var model = models.instance();
-		model._id = _this.profile + ':' + _this.config._id + ':processes';
+		model._id = _this.profile + ':' + _this.app + ':' +_this.config._id + ':processes';
 		model._version = _this.config._version;
 		_this.instance = model;
 		var success = util.success('Workflow processes instance created successfully.', _this.instance);
@@ -137,15 +145,15 @@ Workflow.prototype.initialize = function(processId, inputData){
 	processModel.seq = processSeq;
 	_this.instance.processes.push(processModel);
 	// 2. Complete all the process prerequisites
-	Process.preRequisites(configProcess[0].prerequisites).then(function(result){
+	Process.preRequisites(configProcess[0].prerequisites, _this).then(function(result){
 		// Check if all pre-requisites were met
 		if (result.complete === true) {
 			// 3. Complete all the process pre-actions
-			Process.preActions(configProcess[0].preActions).then(function(result){
+			Process.preActions(configProcess[0].preActions, _this).then(function(result){
 				// Check if all pre-actions were met
 				if (result.complete) {
 					// 4. Initialise the first sub-process
-					Process.subProcess(configProcess[0].subProcesses[0], inputData).then(function(result){
+					Process.subProcess(processId, configProcess[0].subProcesses[0], inputData, _this).then(function(result){
 						// Check if sub-process initialisation was successfull
 						if (result.complete) {
 							// 5. Update the subProcess section details in the processes model
