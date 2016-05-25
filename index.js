@@ -6,6 +6,7 @@ var Q = require('q');
 
 var util = require('./lib/utility');
 var Process = require('./lib/process');
+var models = require('./lib/models');
 
 /*globals */
 
@@ -46,17 +47,13 @@ function Workflow(profile, config, instance){
     // Workflow configuration validation checks
     if (config === '' || config === undefined) {
     	throw new Error('A workflow configuration is required.');
-    } else if (typeof(JSON.parse(config)) !== 'object') {
-        throw new Error('The workflow configuration must be a javascript object');
+    } else if (typeof(config) !== 'object') {
+        _this.config = JSON.parse(config);
     } else {
-    	_this.config = JSON.parse(config) || {};
+    	_this.config = config;
     }
     // Workflow instance validation checks
-    if (instance === '' || instance === undefined) {
-
-    } else {
-    	_this.instance = JSON.parse(instance);
-    };
+    _this.instance = instance;
 }
 
 /** 
@@ -78,8 +75,7 @@ Workflow.prototype.create = function(){
 		deferred.resolve(warn);
 	} else {
 		// Create the workflow processes instance object
-		var file = path.join(__dirname, 'models/processes.json');
-		var model = JSON.parse(fs.readFileSync(file, 'utf8'));
+		var model = models.instance();
 		model._id = _this.profile + ':' + _this.config._id + ':processes';
 		model._version = _this.config._version;
 		_this.instance = model;
@@ -101,64 +97,98 @@ Workflow.prototype.create = function(){
  * @return ''
  *
  */
-Workflow.prototype.process = function(processId, inputData){
+Workflow.prototype.initialize = function(processId, inputData){
 	// Re-assign this 
 	var _this = this;
 	// Create the deffered object
 	var deferred = Q.defer();
-	if (processId !== '' || processId !== undefined) {
+	var configProcess = [];
+	// Check the passed in parameters
+	if (processId !== '' && processId !== undefined) {
 		// Get the current process config
-		var currentProcess = _this.config.processes.filter(function(objProcess){
+		configProcess = _this.config.processes.filter(function(objProcess){
 			if (objProcess._id === processId) {
 				return objProcess;
 			}
 		});
-		// 1. Check the process instance data, if required, update
-		Process.persistState('process', processId, '', '', '', currentProcess, _this.instance, inputData).then(function(result){
-			_this.instance = result.res;
-			// 2. Complete all the process prerequisites
-			Process.preRequisites(currentProcess[0].prerequisites).then(function(result){
-				// Check if all pre-requisites were met
+		if (configProcess[0]._id === undefined) {
+			var error = util.error('WF001', err);
+			deferred.reject(error);
+		}
+	} else {
+		configProcess.push(_this.config.processes[0]);
+		processId = _this.config.processes[0]._id;
+	}
+	// Get the seq and array index for the process and sub-process
+	var state = Process.state(_this, processId);
+	var processIndex = state.processIndex;
+	var processSeq = state.processSeq;
+	var subProcessId = state.subProcessId;
+	var subProcessIndex = state.subProcessIndex;
+	var subProcessSeq = state.subProcessSeq;
+	// Push the process object into the array
+	var processModel = {
+		"id": "", 
+      	"seq": 1, 
+      	"subProcesses": []
+	}
+	// 1. Update the process id and seq
+	processModel.id = processId;
+	processModel.seq = processSeq;
+	_this.instance.processes.push(processModel);
+	// 2. Complete all the process prerequisites
+	Process.preRequisites(configProcess[0].prerequisites).then(function(result){
+		// Check if all pre-requisites were met
+		if (result.complete === true) {
+			// 3. Complete all the process pre-actions
+			Process.preActions(configProcess[0].preActions).then(function(result){
+				// Check if all pre-actions were met
 				if (result.complete) {
-					var success = util.success('Process: ' + processId + ' completed successfully.', _this.instance);
-					deferred.resolve(success);
+					// 4. Initialise the first sub-process
+					Process.subProcess(configProcess[0].subProcesses[0], inputData).then(function(result){
+						// Check if sub-process initialisation was successfull
+						if (result.complete) {
+							// 5. Update the subProcess section details in the processes model
+							var subProcessModel = result.res;
+							_this.instance.processes[processIndex].subProcesses.push(subProcessModel);
+							var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.');
+							deferred.resolve(success);
+						} else {
+							var error = util.error('WF008');
+							deferred.reject(error);
+						}
+					}).fail(function(err){
+						var error = util.error('WF007', err);
+						console.log(err);
+						deferred.reject(error);
+					});
 				} else {
-					var error = util.error('WF004');
+					var error = util.error('WF006');
 					deferred.reject(error);
 				}
 			}).fail(function(err){
-				var error = util.error('WF003', err);
+				var error = util.error('WF005', err);
+				console.log(err);
 				deferred.reject(error);
 			});
-		}).fail(function(err){
-			var error = util.error('WF002', err);
+		} else {
+			var error = util.error('WF004');
 			deferred.reject(error);
-		});
-	} else {
-		var error = util.error('WF001');
+		}
+	}).fail(function(err){
+		var error = util.error('WF003', err);
+		console.log(err);
 		deferred.reject(error);
-	}
+	});
 	// Return the deffered promise object
 	return deferred.promise;
 };
 
-Workflow.prototype.subProcess = function(){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.step = function(){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.assign = function(){
+Workflow.prototype.saveIndicator = function(){
 	return 'Implementation pending..';
 };
 
 Workflow.prototype.transition = function(){
-	return 'Implementation pending..';
-};
-
-Workflow.prototype.close = function(){
 	return 'Implementation pending..';
 };
 
