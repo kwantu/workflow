@@ -197,11 +197,41 @@ Workflow.prototype.saveIndicator = function(){
 	return 'Implementation pending..';
 };
 
-Workflow.prototype.transition = function(){
-	return 'Implementation pending..';
+Workflow.prototype.transition = function(processId, subProcessId, stepId, transitionId, subProcessModel, nextStep, workflow){
+	// Re-assign this 
+	var _this = this;
+	// Create the deffered object
+	var deferred = Q.defer();
+	Process.transition(processId, subProcessId, stepId, transitionId, subProcessModel, nextStep, workflow).then(function(result){
+		var success = util.success('Workflow transitioned to the next step successfully.', subProcessModel);
+		deferred.resolve(success);
+	}).fail(function(err){
+		var error = util.error('WF003', err);
+		console.log(err);
+		deferred.reject(error);
+	});	
+	// Return the deffered promise object
+	return deferred.promise;
 };
 
 module.exports = Workflow;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 },{"./lib/models":3,"./lib/process":4,"./lib/utility":5,"fs":8,"path":9,"q":7}],2:[function(require,module,exports){
 'use strict';
@@ -1445,7 +1475,7 @@ function step(processId, subProcessId, subProcessModel, step, nextStep, formDef,
 		},
 		data: {}
 	};
-	console.log(step);
+	// console.log(step);
 	// Set the status and status message
 	subProcessModel.status = step._setInstanceStatusTo;
 	subProcessModel.message = step._setStatusMsgTo;
@@ -1495,10 +1525,6 @@ function step(processId, subProcessId, subProcessModel, step, nextStep, formDef,
 				data.res.data[0].form.indicators[counter].processes.push(processModel);
 				loop.next();
 			}, function(){
-				
-				// var success = util.success('Actions completed successfully.', subProcessModel);
-				// deferred.resolve(success);
-				// console.log(step)
 				// Check if it should automatically transition to the next step
 				util.syncLoop(step.actions[0].transitions.length, function(loop){
 					var counter = loop.iteration();
