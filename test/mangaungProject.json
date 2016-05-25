@@ -1,5 +1,5 @@
 {
-	"_id": "1234:mangaungProject",
+	"_id": "mangaungProject",
 	"_version": "1.0",
 	"type": "workflowConfig",
 	"title": {
@@ -97,7 +97,6 @@
 					"value": "The project registration form can't be edited once the monthly progress process has been initiated."
 				}
 			}
-			// Not allowed to create another instance if there is one open
 		}],
 		"preActions": [{
 			"_seq": "",
