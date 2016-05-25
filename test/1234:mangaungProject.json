@@ -217,13 +217,9 @@
 					}
 				}],
 				"actions": [{
+					"_id": "createForm",
 					"_seq": "1",
-					"_type": "internal",
-					"funct": {
-						"module": "form",
-						"method": "create",
-						"type": "newSequence" // Create a new instance first time, then increment seq
-					},
+					"_type": "newSequence",
 					"transitions": [{
 						"_type": "auto",
 						"name": {
@@ -393,8 +389,5 @@
 			}]
 		}],
 		"postActions": {}
-	}
-	// Monthly progress should be periodic and similar to process 1
-	// Completion - Close process.
-	]
+	}]
 }
