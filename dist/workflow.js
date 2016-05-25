@@ -88,8 +88,8 @@ Workflow.prototype.create = function(){
 		model._id = _this.profile + ':processes';
 		model.version = _this.config.version;
 		// Update the processes and subProcesses sections with defaults
-		model.processes[0].id = _this.config.processes[0]._id;
-		model.processes[0].seq = 1;
+		// model.processes[0].id = _this.config.processes[0]._id;
+		// model.processes[0].seq = 1;
 		_this.instance = model;
 		var success = util.success('Workflow processes instance created successfully.', _this.instance);
 		deferred.resolve(success);
@@ -264,18 +264,25 @@ function create(formDef, workflow){
 		var indicatorName = formDef.indicators[counter].name.i18n.value;
 		// TODO: Add the call to the gatekeeper method here to create an instance of the
 		// indicator set
-		var uuid = workflow.profile + ':' + workflow.app + ':' + indicatorId + ':0'; // replace this with gatekeeper call and return the uuid
-		var indicator = {
-			id: indicatorId,
-			uuid: uuid,
-			category: {
-				term: indicatorId,
-				label: indicatorName
-			},
-			"processes": []
-		};
-		indicators.push(indicator);
-		loop.next();
+		var indicator = {};
+		library.createIndicatorInstance(indicatorId, workflow.profile).done(function(data){
+			indicator = data;
+			indicators.push(indicator);
+			loop.next();
+		}).fail(function(err){
+			console.log(err);
+		});
+		// var uuid = workflow.profile + ':' + workflow.app + ':' + indicatorId + ':0'; // replace this with gatekeeper call and return the uuid
+		// var indicator = {
+		// 	_id: uuid,
+		// 	category: {
+		// 		_term: indicatorId,
+		// 		label: indicatorName
+		// 	},
+		// 	"processes": []
+		// };
+		// indicators.push(indicator);
+		// loop.next();
 	}, function(){
 	    // console.log('done');
 	});
@@ -364,31 +371,7 @@ function instance(){
 	    "_id": "",
 	    "version": "",
 	    "type": "workflowInstance",
-	    "processes": [
-			{ 
-				"id": "", 
-				"seq": 1, 
-				"subProcesses": [
-					{
-						"id": "", 
-						"seq": 1, 
-						"initiated": false,
-						"status": "",
-						"message": "",
-						"dates": {
-							"created": "",
-							"valid": "",
-							"due": "",
-							"submitted": "",
-							"authorised": "",
-							"closed": ""
-						},
-						"complete": false,
-						"indicators": []
-					}
-				]
-			}
-		]
+	    "processes": []
 	};
 	return model;
 };
@@ -1137,10 +1120,10 @@ function step(processId, subProcessId, subProcessModel, step, nextStep, formDef,
 				var counter = loop.iteration();
 				// Update the processes instance model, inidcators section
 				var indicatorModel = {
-					"id": data.res.data[0].form.indicators[counter].id, 
+					"id": data.res.data[0].form.indicators[counter].category._term, 
 					"instances": [
 						{
-							"uuid": data.res.data[0].form.indicators[counter].uuid, 
+							"uuid": data.res.data[0].form.indicators[counter]._id, 
 							"key": "", 
 							"seq": 1, 
 							"status": "NotStarted", 
