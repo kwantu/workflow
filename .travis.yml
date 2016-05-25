@@ -2,6 +2,14 @@ language: node_js
 node_js:
   - "6"
 before_script:
+  - npm install -g bower
+  - npm install -g web-component-tester
+  - npm install -g browserify
+  - bower install
+  - npm run build-js
+  - 'export DISPLAY=:99.0'
+  - sh -e /etc/init.d/xvfb start
   - sleep 3
 script:
   - npm test
+  - wct test/client/index.test.html

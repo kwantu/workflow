@@ -6,42 +6,37 @@
     { 
       "id": "", 
       "seq": 1, 
-      "date": { 
-        "created": "", 
-        "valid": "",
-        "due": ""
-      },
       "subProcesses": [
         {
           "id": "", 
           "seq": 1, 
+          "initiated": false,
           "status": "",
           "message": "",
           "dates": {
             "created": "",
+            "valid": "",
+            "due": "",
             "submitted": "",
             "authorised": "",
             "closed": ""
           },
           "complete": false,
-          "form": {
-            "id": "",
-            "indicators": [
-              {
-                "id": "", 
-                "instances": [
-                  {
-                    "uuid": "", 
-                    "key": "", 
-                    "seq": 1, 
-                    "status": "", 
-                    "lastUpdated": "",
-                    "complete": false                  
-                  }
-                ]
-              }
-            ]
-          }
+          "indicators": [
+            {
+              "id": "", 
+              "instances": [
+                {
+                  "uuid": "", 
+                  "key": "", 
+                  "seq": 1, 
+                  "status": "NotStarted", 
+                  "lastUpdated": "",
+                  "complete": false                  
+                }
+              ]
+            }
+          ]
         }
       ]
     }

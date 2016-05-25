@@ -1,0 +1,9 @@
+{
+  "verbose": false,
+  "expanded": true,
+  "plugins": {
+    "local": {
+      "browsers": ["firefox"]
+    }
+  }
+}
