@@ -10,6 +10,7 @@
         {
           "id": "", 
           "seq": 1, 
+          "initiated": false,
           "status": "",
           "message": "",
           "dates": {
@@ -21,24 +22,21 @@
             "closed": ""
           },
           "complete": false,
-          "form": {
-            "id": "",
-            "indicators": [
-              {
-                "id": "", 
-                "instances": [
-                  {
-                    "uuid": "", 
-                    "key": "", 
-                    "seq": 1, 
-                    "status": "", 
-                    "lastUpdated": "",
-                    "complete": false                  
-                  }
-                ]
-              }
-            ]
-          }
+          "indicators": [
+            {
+              "id": "", 
+              "instances": [
+                {
+                  "uuid": "", 
+                  "key": "", 
+                  "seq": 1, 
+                  "status": "NotStarted", 
+                  "lastUpdated": "",
+                  "complete": false                  
+                }
+              ]
+            }
+          ]
         }
       ]
     }
