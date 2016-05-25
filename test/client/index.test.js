@@ -399,7 +399,7 @@ var config = {
 };
 
 // Create the workflow constrctor instance
-var workflow = new Workflow('1234', config);
+var workflow = new Workflow('1234', '5678', config);
 
 // Workflow module test
 describe('# Module: Workflow', function(){
