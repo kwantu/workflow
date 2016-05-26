@@ -162,7 +162,12 @@ Workflow.prototype.initialize = function(processId, inputData){
 						if (result.complete) {
 							// 5. Update the subProcess section details in the processes model
 							var subProcessModel = result.res;
-							_this.instance.processes[processIndex].subProcesses.push(subProcessModel);
+							// _this.instance.processes[processIndex].subProcesses.push(subProcessModel);
+							_this.instance.processes.filter(function(objProcess){
+								if (objProcess.id === processId) {
+									objProcess.subProcesses.push(subProcessModel);
+								}
+							});
 							var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.');
 							deferred.resolve(success);
 						} else {
@@ -264,30 +269,30 @@ function create(formDef, workflow){
 		var indicatorName = formDef.indicators[counter].name.i18n.value;
 		// TODO: Add the call to the gatekeeper method here to create an instance of the
 		// indicator set
-		var indicator = {};
-		library.createIndicatorInstance(indicatorId, workflow.profile).done(function(data){
-			indicator = data;
-			indicators.push(indicator);
-			loop.next();
-		}).fail(function(err){
-			console.log(err);
-		});
-		// var uuid = workflow.profile + ':' + workflow.app + ':' + indicatorId + ':0'; // replace this with gatekeeper call and return the uuid
-		// var indicator = {
-		// 	_id: uuid,
-		// 	category: {
-		// 		_term: indicatorId,
-		// 		label: indicatorName
-		// 	},
-		// 	"processes": []
-		// };
-		// indicators.push(indicator);
-		// loop.next();
+		// var indicator = {};
+		// library.createIndicatorInstance(indicatorId, workflow.profile).done(function(data){
+		// 	indicator = data;
+		// 	indicators.push(indicator);
+		// 	loop.next();
+		// }).fail(function(err){
+		// 	console.log(err);
+		// });
+		var uuid = workflow.profile + ':' + workflow.app + ':' + indicatorId + ':0'; // replace this with gatekeeper call and return the uuid
+		var indicator = {
+			_id: uuid,
+			category: {
+				term: indicatorId,
+				label: indicatorName
+			},
+			"processes": []
+		};
+		indicators.push(indicator);
+		loop.next();
 	}, function(){
 	    // console.log('done');
+	    var success = util.success('Form created successfully.', indicators);
+		deferred.resolve(success);
 	});
-	var success = util.success('Form created successfully.', indicators);
-	deferred.resolve(success);
 	return deferred.promise;
 };
 
@@ -1120,7 +1125,7 @@ function step(processId, subProcessId, subProcessModel, step, nextStep, formDef,
 				var counter = loop.iteration();
 				// Update the processes instance model, inidcators section
 				var indicatorModel = {
-					"id": data.res.data[0].form.indicators[counter].category._term, 
+					"id": data.res.data[0].form.indicators[counter].category.term, 
 					"instances": [
 						{
 							"uuid": data.res.data[0].form.indicators[counter]._id, 
@@ -1151,7 +1156,7 @@ function step(processId, subProcessId, subProcessModel, step, nextStep, formDef,
 				});
 			});
 		}).fail(function(err){
-			deferred.reject(err);
+			deferred.reject(err.stack);
 		}); 
 		// var success = util.success('Action completed successfully.', result);
 		// deferred.resolve(success);
@@ -1262,14 +1267,35 @@ function transition(processId, subProcessId, stepId, transitionId, subProcessMod
 			return objStep;
 		}
 	});
-	var transition = currentStep[0].actions[0].transitions.filter(function(objTransition){
-		if (objTransition._id === transitionId) {
-			return objTransition;
-		}
-	});
+	var transition = {};
+	if (currentStep[0].actions[0] !== undefined) {
+		transition = currentStep[0].actions[0].transitions.filter(function(objTransition){
+			if (objTransition._id === transitionId) {
+				return objTransition;
+			}
+		});
+	} else {
+		transition = currentStep[0].task.transitions.filter(function(objTransition){
+			if (objTransition._id === transitionId) {
+				return objTransition;
+			}
+		});
+	}
 	// console.log(transition)
 	switch(transition[0]._type) {
 		case 'auto':
+			if (transition[0].goTo._type === 'nextStep') {
+				// console.log(transition[0].goTo._type);
+				step(processId, subProcessId, subProcessModel, nextStep, {}, {}, {}, workflow).then(function(result){
+					// console.log(result);
+					var success = util.success('Step transition completed successfully.', result.res);
+					deferred.resolve(success);
+				}).fail(function(err){
+					deferred.reject(err.stack);
+				});
+			}
+			break;
+		case 'user':
 			if (transition[0].goTo._type === 'nextStep') {
 				// console.log(transition[0].goTo._type);
 				step(processId, subProcessId, subProcessModel, nextStep, {}, {}, {}, workflow).then(function(result){
@@ -1301,7 +1327,8 @@ module.exports = {
  	state: state,
  	preRequisites: preRequisites,
  	preActions: preActions,
- 	subProcess: subProcess
+ 	subProcess: subProcess,
+ 	transition: transition
 
 }
 },{"./form":2,"./utility":5,"moment":6,"q":7}],5:[function(require,module,exports){
