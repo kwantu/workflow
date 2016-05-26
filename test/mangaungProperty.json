@@ -679,11 +679,11 @@
             "_seq": "1",
             "name": {"i18n": {
                 "_lang": "en",
-                "value": "Register a project"
+                "value": "Site Inspection Lease and Rental"
             }},
             "help": {"i18n": {
                 "_lang": "en",
-                "value": "Register a new project"
+                "value": "Site inspection lease and rental forms"
             }},
             "variables": [{
                 "_id": "",
@@ -726,11 +726,11 @@
                 "_seq": "1",
                 "name": {"i18n": {
                     "_lang": "en",
-                    "value": "Project Registration Form"
+                    "value": "Site Inspection Lease and Rental"
                 }},
                 "help": {"i18n": {
                     "_lang": "en",
-                    "value": "Register a new project"
+                    "value": "Site inspection lease and rental forms"
                 }},
                 "initiate": {
                     "_type": "user",
@@ -1036,11 +1036,11 @@
                 "_seq": "1",
                 "name": {"i18n": {
                     "_lang": "en",
-                    "value": "Project Registration Form"
+                    "value": "Issue a site instruction"
                 }},
                 "help": {"i18n": {
                     "_lang": "en",
-                    "value": "Register a new project"
+                    "value": "Issue a site instruction"
                 }},
                 "initiate": {
                     "_type": "user",
@@ -1846,11 +1846,11 @@
                 "_seq": "1",
                 "name": {"i18n": {
                     "_lang": "en",
-                    "value": "Project Registration Form"
+                    "value": "Property Disposal"
                 }},
                 "help": {"i18n": {
                     "_lang": "en",
-                    "value": "Register a new project"
+                    "value": "Issue a site instruction"
                 }},
                 "initiate": {
                     "_type": "user",
