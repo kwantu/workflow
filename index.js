@@ -161,7 +161,12 @@ Workflow.prototype.initialize = function(processId, inputData){
 						if (result.complete) {
 							// 5. Update the subProcess section details in the processes model
 							var subProcessModel = result.res;
-							_this.instance.processes[processIndex].subProcesses.push(subProcessModel);
+							// _this.instance.processes[processIndex].subProcesses.push(subProcessModel);
+							_this.instance.processes.filter(function(objProcess){
+								if (objProcess.id === processId) {
+									objProcess.subProcesses.push(subProcessModel);
+								}
+							});
 							var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.');
 							deferred.resolve(success);
 						} else {
