@@ -6,7 +6,7 @@
   "scripts": {
     "test": "make test",
     "build-js": "browserify index.js --standalone Workflow > dist/workflow.js -d",
-    "watch-js": "watchify index.js --standalone Workflow -o dist/workflow.js -dv"
+    "build-js-min": "browserify -g uglifyify index.js --standalone Workflow > dist/workflow.min.js -d"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^5.3.0",
-    "mocha": "^2.4.5"
+    "mocha": "^2.4.5",
+    "uglifyify": "^3.0.1"
   },
   "dependencies": {
     "moment": "^2.13.0",
