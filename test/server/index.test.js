@@ -270,6 +270,8 @@ describe('# Test Case (No1): Mangaung project workflow.', function(){
 				// Step updates
 				expect(workflow.instance.processes[0].subProcesses[0].status).to.equal('awaitingAuthorisation');
 				expect(workflow.instance.processes[0].subProcesses[0].message).to.equal('Form data submitted, user assigned and form data under review');
+				// Indicator set object updates - processes section
+				
 			}).should.notify(done);	
 		})
 	});
