@@ -1,0 +1,27 @@
+{
+    "_id": "", 
+    "version": "",
+    "type": "workflowInstanceHistory",
+    "processes": [{ 
+        "id": "", 
+        "seq": 1, 
+        "subProcesses": [{
+            "id": "", 
+            "seq": 1,
+		    "steps": [{ 
+		    	"id": "",
+		        "seq": 1,
+		        "startDate": "",
+		        "status": "",
+		        "message": "",
+		        "assignedTo": {
+		            "userId": "",
+		            "name": ""
+		        },
+		        "comment": "",
+		        "complete": false,
+		        "endDate": ""
+			}]
+		}]
+	}]
+}

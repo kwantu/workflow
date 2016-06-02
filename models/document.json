@@ -146,22 +146,26 @@
             }
         }
     },
-    "processes": [
-        {
-            "configId": "", 
-            "instanceId": "",
-            "processId": "",
+    "workflows": [{
+        "id": "",
+        "instance": "",
+        "processes": [{
+            "id": "",
             "subProcessId": "",
-            "stepId": "",
-            "assignedTo": {
-                "userId": "",
-                "name": ""
-            },
-            "token": "",
-            "status": "",
-            "statusMsg": "",
-            "lastUpdated": "",
-            "dueDate": ""
-        }
-    ]
+            "step": {
+                "id": "",
+                "seq": "",
+                "startDate": "",
+                "status": "",
+                "message": "",
+                "assignedTo": {
+                    "userId": "",
+                    "name": ""
+                },
+                "comment": "",
+                "complete": false,
+                "endDate": ""
+            }
+        }]
+    }]
 }
