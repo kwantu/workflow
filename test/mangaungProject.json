@@ -333,7 +333,7 @@
 						"default": ""
 					},
 					"work": {
-						"action": "editForm"
+						"action": "captureData"
 					},
 					"transitions": [{
 						"_id": "submitForm",
@@ -429,13 +429,23 @@
 					}
 				},
 				"actions": [{
+					"_id": "authoriseForm",
 					"_seq": "1",
 					"_type": "internal",
 					"funct": {
 						"module": "form",
 						"method": "authorise"
 					},
-					"transition": [{
+					"transitions": []
+				},{
+					"_id": "closeForm",
+					"_seq": "2",
+					"_type": "internal",
+					"funct": {
+						"module": "form",
+						"method": "close"
+					},
+					"transitions": [{
 						"_type": "auto",
 						"name": {
 							"i18n": {

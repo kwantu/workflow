@@ -75,27 +75,23 @@ describe('# Module: Workflow', function(){
 				expect(workflow.instance.processes[0].subProcesses[0].dates.due).to.equal(inputData.dueDate);
 				expect(workflow.instance.processes[0].subProcesses[0].complete).to.equal(false);
 				// Step updates
-				expect(workflow.instance.processes[0].subProcesses[0].status).to.equal('InProgress');
-				expect(workflow.instance.processes[0].subProcesses[0].message).to.equal('User assigned and data capture in progress');
-				// Form indicators data checks
+				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('InProgress');
+				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('User assigned and data capture in progress');
+				// Form indicator instance/s data checks
 				for (var i = 0; i < workflow.config.processes[0].subProcesses[0].indicators.length; i++) {
 					var indicator = workflow.config.processes[0].subProcesses[0].indicators[i];
 					var id = indicator._id;
-					expect(workflow.instance.processes[0].subProcesses[0].indicators[i].id).to.equal(id);
-					// Check the instance data
-					var instance = workflow.instance.processes[0].subProcesses[0].indicators[i].instances[0];
-					expect(instance.uuid).to.equal(workflow.profile + ':' + workflow.app + ':' +id + ':0');
-					expect(instance.key).to.equal('');
-					expect(instance.seq).to.equal(1);
-					expect(instance.status).to.equal('NotStarted');
-					expect(instance.lastUpdated).to.equal(inputData.createdDate);
-					expect(instance.complete).to.equal(false);
+					
+					// Check the workflow sub-process indicator instance/s data
+					
+					// Check the indicator instance/s processes data
+
 				}
 			}).should.notify(done);
 		})
 	});
 	// Test the saveIndicator method
-	describe('- Method: saveIndicator()', function(){
+	describe('- Method: task()', function(){
 		it('Should return ')
 
 	});
@@ -107,7 +103,6 @@ describe('# Module: Workflow', function(){
 			var stepId = 'captureForm';
 			var transitionId = 'submitForm';
 			var subProcessModel = workflow.instance.processes[0].subProcesses[0];
-			var nextStep = workflow.config.processes[0].subProcesses[0].steps[2];
 			var inputData = {
 				createdDate: moment().format('YYYY-MM-DD'),
 				validDate: '2016-06-30',
@@ -115,7 +110,7 @@ describe('# Module: Workflow', function(){
 				userId: '9012',
 				name: 'Brent Gordon'
 			}
-			workflow.transition(processId, subProcessId, stepId, transitionId, subProcessModel, nextStep, workflow).then(function(data){
+			workflow.transition(processId, subProcessId, stepId, transitionId, subProcessModel, workflow).then(function(data){
 				expect(data).to.be.an('object');
 				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Workflow transitioned to the next step successfully.');
@@ -134,8 +129,8 @@ describe('# Module: Workflow', function(){
 				expect(workflow.instance.processes[0].subProcesses[0].dates.due).to.equal(inputData.dueDate);
 				expect(workflow.instance.processes[0].subProcesses[0].complete).to.equal(false);
 				// Step updates
-				expect(workflow.instance.processes[0].subProcesses[0].status).to.equal('awaitingAuthorisation');
-				expect(workflow.instance.processes[0].subProcesses[0].message).to.equal('Form data submitted, user assigned and form data under review');
+				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('awaitingAuthorisation');
+				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form data submitted, user assigned and form data under review');
 			}).should.notify(done);	
 		})
 
