@@ -36,6 +36,7 @@
     "uglifyify": "^3.0.1"
   },
   "dependencies": {
+    "es6-promise": "^3.2.1",
     "moment": "^2.13.0",
     "q": "^1.4.1"
   }
