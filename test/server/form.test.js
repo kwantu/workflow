@@ -12,4 +12,4 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 // Require the form module 
-var Workflow = require("../../lib/form.js");
+var form = require("../../lib/form.js");

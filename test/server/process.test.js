@@ -12,4 +12,4 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 // Require the process module 
-var Workflow = require("../../lib/process.js");
+var Process = require("../../lib/process.js");

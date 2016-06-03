@@ -12,4 +12,4 @@ var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 // Require the utility module 
-var Workflow = require("../../lib/utility.js");
+var util = require("../../lib/utility.js");
