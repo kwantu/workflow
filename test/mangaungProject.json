@@ -267,6 +267,12 @@
 						"value": "Create the registration form."
 					}
 				},
+				"help": {
+					"i18n": {
+						"_lang": "en",
+						"value": ""
+					}
+				},
 				"prerequisites": [{
 					"_seq": "",
 					"_type": "",
@@ -354,7 +360,7 @@
 			}, {
 				"_id": "authoriseForm",
 				"_seq": "3",
-				"_setInstanceStatusTo": "awaitingAuthorisation",
+				"_setInstanceStatusTo": "submitted",
 				"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
 				"name": {
 					"i18n": {
