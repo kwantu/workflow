@@ -1,8 +1,5 @@
 'use strict';
 
-var should = chai.should();
-var expect = chai.expect;
-
 // Get the test workflow configuration file
 var config = {
 	"_id": "mangaungProject",
