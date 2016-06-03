@@ -124,7 +124,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				expect(workflow.instance.processes[0].subProcesses[0].dates.due).to.equal(inputData.dueDate);
 				expect(workflow.instance.processes[0].subProcesses[0].complete).to.equal(false);
 				// Step updates
-				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('awaitingAuthorisation');
+				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('submitted');
 				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form data submitted, user assigned and form data under review');
 				// Indicator set object updates - processes section
 
@@ -214,7 +214,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				expect(workflow.instance.processes[0].subProcesses[0].dates.due).to.equal(inputData.dueDate);
 				expect(workflow.instance.processes[0].subProcesses[0].complete).to.equal(false);
 				// Step updates
-				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('awaitingAuthorisation');
+				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('submitted');
 				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form data submitted, user assigned and form data under review');
 				// Indicator set object updates - processes section
 
