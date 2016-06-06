@@ -11,7 +11,7 @@ var expect = chai.expect;
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
-// Require the Workflow class 
+// Require the Workflow constructor / class 
 var Workflow = require("../../index.js");
 
 // Get the test workflow configuration file

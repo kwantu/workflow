@@ -1,9 +1,8 @@
 'use strict';
 
-var Promise = require('es6-promise').Promise;
+var Process = require('./lib/process');
 
 var util = require('./lib/utility');
-var Process = require('./lib/process');
 var models = require('./lib/models');
 
 /*globals */
@@ -177,21 +176,21 @@ Workflow.prototype.initialize = function(processId, inputData){
 								var error = util.error('WF008');
 								reject(error);
 							}
-						}).fail(function(err){
+						}, function(err){
 							reject(err);
 						});
 					} else {
 						var error = util.error('WF006');
 						reject(error);
 					}
-				}).fail(function(err){
+				}, function(err){
 					reject(err);
 				});
 			} else {
 				var error = util.error('WF004');
 				reject(error);
 			}
-		}).fail(function(err){
+		}, function(err){
 			reject(err);
 		});
 	});
@@ -200,7 +199,6 @@ Workflow.prototype.initialize = function(processId, inputData){
 Workflow.prototype.task = function(type, params){
 	// Re-assign this 
 	var _this = this;
-	// Use the native es6 Promise constructor
 	return new Promise(function(resolve, reject) {
 		if (type === 'indicator.markComplete') {
 			resolve('Success');
@@ -218,7 +216,7 @@ Workflow.prototype.transition = function(processId, subProcessId, stepId, transi
 		Process.transition(processId, subProcessId, stepId, transitionId, subProcessModel, workflow).then(function(result){
 			var success = util.success('Workflow transitioned to the next step successfully.', subProcessModel);
 			resolve(success);
-		}).fail(function(err){
+		}, function(err){
 			reject(err);
 		});	
 	});

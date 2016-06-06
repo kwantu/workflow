@@ -8,8 +8,7 @@ node_js:
 before_script:
   - npm install -g bower browserify uglifyify mocha-phantomjs 
   - bower install
-  - npm run build-js
-  - npm run build-js-min
+  - npm run build-js && npm run build-js-min
 script:
   - npm test
   - npm run test-client
