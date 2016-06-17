@@ -22,8 +22,7 @@
     "tests"
   ],
   "dependencies": {
-    "moment": "^2.13.0",
-    "es6-promise": "^3.2.2"
+    "moment": "^2.13.0"
   },
   "devDependencies": {
     "chai-as-promised": "^5.3.0",
