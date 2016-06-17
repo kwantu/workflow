@@ -110,8 +110,7 @@ Workflow.prototype.create = function(){
  * @example 
  * Workflow.initialize('processId', { validDate: 'date' });
  *
- * @return 
- * { complete: true, message: 'Process: 'processId' initialized successfully.', res: undefined }
+ * @return ""
  *
  */
 Workflow.prototype.initialise = function(processId, data){
@@ -190,8 +189,7 @@ Workflow.prototype.initialise = function(processId, data){
  * @example 
  * Workflow.initialize('processId', { validDate: 'date' });
  *
- * @return 
- * { complete: true, message: 'Process: 'processId' initialized successfully.', res: undefined }
+ * @return ""
  *
  */
 Workflow.prototype.task = function(type, params){
@@ -219,8 +217,7 @@ Workflow.prototype.task = function(type, params){
  * @example 
  * Workflow.transition('processId', 'subProcessId', 'stepId', 'transitionId', { key: '', value: '' });
  *
- * @return 
- * { complete: true, message: 'Workflow transitioned to the next step successfully.', res: {} }
+ * @return ""
  *
  */
 Workflow.prototype.transition = function(processId, subProcessId, stepId, transitionId, data){
