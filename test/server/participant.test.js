@@ -22,10 +22,6 @@ var config = fs.readFileSync(filePath, { encoding: 'utf-8' });
 var workflow = new Workflow('1234', '5678', config);
 
 // Workflow: Test case #1
-describe('# Test Case (No3): Mangaung participant workflow.', function(){
-	describe('- Step 1. User ( capturer ) opens the workflow sub process form interface, and registers a new participant.', function(){
-		it('Should return ')
-		// What workflow method should be called??
-		
-	});
+describe('# TEST CASE: PARTICIPANT WORKFLOW', function(){
+	
 })
