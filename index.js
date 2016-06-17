@@ -1,7 +1,6 @@
 'use strict';
 
 var Process = require('./lib/process');
-
 var util = require('./lib/utility');
 
 /*globals */
@@ -11,7 +10,7 @@ var util = require('./lib/utility');
  *
  * @constructor
  * @param {string} profile - Profile UUID
- * @param {string} profile - Application UUID
+ * @param {string} app - Application UUID
  * @param {Object} config - Workflow configuration
  * 	@param {string} config._id 
  *	Workflow configuration / definition ID
