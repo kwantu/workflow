@@ -1105,7 +1105,6 @@ describe('# Module: Workflow', function(){
 		it('Should return a success block with the newly created process instance data.', function(done){
 			workflow.create().then(function(data){
 				expect(data).to.be.an('object');
-				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Workflow processes instance created successfully.');
 				expect(workflow.instance).to.be.an('object');
 				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
@@ -1114,7 +1113,7 @@ describe('# Module: Workflow', function(){
 		})
 	});
 	// Test the initialize method
-	describe('- Method: initialize(): Create the first process instance', function(){
+	describe('- Method: initialise(): Create the first process instance', function(){
 		it('Should return a success block and update the processes instance data.', function(done){
 			var processId = workflow.config.processes[0]._id;
 			var inputData = {
@@ -1124,7 +1123,7 @@ describe('# Module: Workflow', function(){
 				userId: '9012',
 				name: 'Brent Gordon'
 			}
-			workflow.initialize(processId, inputData).then(function(data){
+			workflow.initialise(processId, inputData).then(function(data){
 				expect(data).to.be.an('object');
 				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Process: ' + processId + ' initialized successfully.');
@@ -1170,16 +1169,14 @@ describe('# Module: Workflow', function(){
 			var subProcessId = workflow.config.processes[0].subProcesses[0]._id;
 			var stepId = 'captureForm';
 			var transitionId = 'submitForm';
-			var subProcessModel = workflow.instance.processes[0].subProcesses[0];
 			var inputData = {
 				createdDate: '',
 				endDate: '',
 				userId: '9012',
 				name: 'Brent Gordon'
 			}
-			workflow.transition(processId, subProcessId, stepId, transitionId, subProcessModel, inputData, workflow).then(function(data){
+			workflow.transition(processId, subProcessId, stepId, transitionId, inputData).then(function(data){
 				expect(data).to.be.an('object');
-				expect(data.complete).to.equal(true);
 				expect(data.message).to.equal('Workflow transitioned to the next step successfully.');
 				// Step updates
 				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('submitted');
