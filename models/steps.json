@@ -2,10 +2,10 @@
     "_id": "", 
     "version": "",
     "type": "workflowInstanceHistory",
-    "processes": [{ 
+    "processes": { 
         "id": "", 
         "seq": 1, 
-        "subProcesses": [{
+        "subProcesses": {
             "id": "", 
             "seq": 1,
 		    "steps": [{ 
@@ -22,6 +22,6 @@
 		        "complete": false,
 		        "endDate": ""
 			}]
-		}]
-	}]
+		}
+	}
 }

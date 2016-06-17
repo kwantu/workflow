@@ -19,7 +19,8 @@
             "indicators": [{
                 "id": "", 
                 "instances": [{
-                    "uuid": "", 
+                    "uuid": "",
+                    "title": "", 
                     "key": "", 
                     "seq": 1                
                 }]
@@ -28,7 +29,12 @@
                 "id": "",
                 "seq": "",
                 "status": "",
-                "message": ""
+                "message": "",
+                "assignedTo": {
+                    "userId": "",
+                    "name": ""
+                },
+                "comment": ""
             }
         }]
     }]
