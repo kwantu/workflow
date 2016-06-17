@@ -6,15 +6,15 @@
 **Author:** Brent Gordon  
 
 * [Workflow](#Workflow)
-    * [new Workflow(profile, [config], [instance])](#new_Workflow_new)
-    * [.create()](#Workflow+create) ⇒
-    * [.initialise(processId, data)](#Workflow+initialise) ⇒
+    * [new Workflow(profile, profile, config, [instance])](#new_Workflow_new)
+    * [.create()](#Workflow+create) ⇒ <code>Object</code>
+    * [.initialise(processId, [data])](#Workflow+initialise) ⇒
     * [.task(processId, inputData)](#Workflow+task) ⇒
     * [.transition(processId, subProcessId, stepId, transitionId, data)](#Workflow+transition) ⇒
 
 <a name="new_Workflow_new"></a>
 
-### new Workflow(profile, [config], [instance])
+### new Workflow(profile, profile, config, [instance])
 Kwantu workflow engine
 
 **Returns**: <code>Object</code> - new Workflow object  
@@ -26,7 +26,8 @@ Kwantu workflow engine
 | Param | Type | Description |
 | --- | --- | --- |
 | profile | <code>string</code> | Profile UUID |
-| [config] | <code>Object</code> | Workflow configuration |
+| profile | <code>string</code> | Application UUID |
+| config | <code>Object</code> | Workflow configuration |
 | config._id | <code>string</code> | Workflow configuration / definition ID |
 | [instance] | <code>Object</code> | Workflow instance |
 | instance._id | <code>string</code> | Workflow instance ID |
@@ -37,19 +38,23 @@ new Workflow('1234', {})
 ```
 <a name="Workflow+create"></a>
 
-### workflow.create() ⇒
-Create a new workflow process.
+### workflow.create() ⇒ <code>Object</code>
+This method creates a new workflow process i.e. it creates a processes file with the
+minimum required data.
 
 **Kind**: instance method of <code>[Workflow](#Workflow)</code>  
-**Returns**: Success / error message with the newly created workflow processes
-instance data.  
+**Returns**: <code>Object</code> - new Workflow instance with updated instance data.  
 **Example**  
 ```js
-Workflow.create();
+Workflow.create().then(function(data){ 
+	console.log('Workflow created successfully.'); 
+}, function(err){ 
+	console.log(err); 
+});
 ```
 <a name="Workflow+initialise"></a>
 
-### workflow.initialise(processId, data) ⇒
+### workflow.initialise(processId, [data]) ⇒
 Workflow initialise, this function executes a process within a workflow
 configuration.
 
@@ -59,7 +64,7 @@ configuration.
 | Param | Type | Description |
 | --- | --- | --- |
 | processId | <code>string</code> | the process id to process |
-| data | <code>object</code> | the input data to process |
+| [data] | <code>object</code> | the input data to process |
 
 **Example**  
 ```js

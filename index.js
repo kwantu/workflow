@@ -11,7 +11,8 @@ var util = require('./lib/utility');
  *
  * @constructor
  * @param {string} profile - Profile UUID
- * @param {Object} [config] - Workflow configuration
+ * @param {string} profile - Application UUID
+ * @param {Object} config - Workflow configuration
  * 	@param {string} config._id 
  *	Workflow configuration / definition ID
  * @param {Object} [instance] - Workflow instance
@@ -61,13 +62,17 @@ function Workflow(profile, app, config, instance){
 }
 
 /** 
- * Create a new workflow process.
+ * This method creates a new workflow process i.e. it creates a processes file with the
+ * minimum required data.
  *
  * @example 
- * Workflow.create();
+ * Workflow.create().then(function(data){ 
+ *	console.log('Workflow created successfully.'); 
+ * }, function(err){ 
+ *	console.log(err); 
+ * });
  *
- * @return Success / error message with the newly created workflow processes
- * instance data.
+ * @return {Object} new Workflow instance with updated instance data.
  *
  */
 Workflow.prototype.create = function(){
@@ -105,7 +110,7 @@ Workflow.prototype.create = function(){
  * configuration.
  *
  * @param {string} processId - the process id to process
- * @param {object} data - the input data to process
+ * @param {object} [data] - the input data to process
  *
  * @example 
  * Workflow.initialize('processId', { validDate: 'date' });
