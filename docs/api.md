@@ -6,7 +6,7 @@
 **Author:** Brent Gordon  
 
 * [Workflow](#Workflow)
-    * [new Workflow(profile, profile, config, [instance])](#new_Workflow_new)
+    * [new Workflow(profile, app, config, [instance])](#new_Workflow_new)
     * [.create()](#Workflow+create) ⇒ <code>Object</code>
     * [.initialise(processId, [data])](#Workflow+initialise) ⇒
     * [.task(processId, inputData)](#Workflow+task) ⇒
@@ -14,7 +14,7 @@
 
 <a name="new_Workflow_new"></a>
 
-### new Workflow(profile, profile, config, [instance])
+### new Workflow(profile, app, config, [instance])
 Kwantu workflow engine
 
 **Returns**: <code>Object</code> - new Workflow object  
@@ -26,7 +26,7 @@ Kwantu workflow engine
 | Param | Type | Description |
 | --- | --- | --- |
 | profile | <code>string</code> | Profile UUID |
-| profile | <code>string</code> | Application UUID |
+| app | <code>string</code> | Application UUID |
 | config | <code>Object</code> | Workflow configuration |
 | config._id | <code>string</code> | Workflow configuration / definition ID |
 | [instance] | <code>Object</code> | Workflow instance |
