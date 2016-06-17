@@ -267,6 +267,12 @@
 						"value": "Create the registration form."
 					}
 				},
+				"help": {
+					"i18n": {
+						"_lang": "en",
+						"value": ""
+					}
+				},
 				"prerequisites": [{
 					"_seq": "",
 					"_type": "",
@@ -333,7 +339,7 @@
 						"default": ""
 					},
 					"work": {
-						"action": "editForm"
+						"action": "captureData"
 					},
 					"transitions": [{
 						"_id": "submitForm",
@@ -354,7 +360,7 @@
 			}, {
 				"_id": "authoriseForm",
 				"_seq": "3",
-				"_setInstanceStatusTo": "awaitingAuthorisation",
+				"_setInstanceStatusTo": "submitted",
 				"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
 				"name": {
 					"i18n": {
@@ -429,13 +435,23 @@
 					}
 				},
 				"actions": [{
+					"_id": "authoriseForm",
 					"_seq": "1",
 					"_type": "internal",
 					"funct": {
 						"module": "form",
 						"method": "authorise"
 					},
-					"transition": [{
+					"transitions": []
+				},{
+					"_id": "closeForm",
+					"_seq": "2",
+					"_type": "internal",
+					"funct": {
+						"module": "form",
+						"method": "close"
+					},
+					"transitions": [{
 						"_type": "auto",
 						"name": {
 							"i18n": {

@@ -1,15 +1,12 @@
+os:
+  - linux
 language: node_js
 node_js:
   - "6"
 before_script:
-  - npm install -g bower
-  - npm install -g web-component-tester
-  - npm install -g browserify
+  - npm install -g bower browserify uglifyify mocha-phantomjs 
   - bower install
-  - npm run build-js
-  - 'export DISPLAY=:99.0'
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
+  - npm run build-js && npm run build-js-min
 script:
   - npm test
-  - wct test/client/index.test.html
+  - npm run test-client
