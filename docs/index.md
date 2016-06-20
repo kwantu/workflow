@@ -136,7 +136,8 @@ Workflow.transition('processId', 'subProcessId', 'stepId', 'transitionId', { key
 <dd><p>test description</p>
 </dd>
 <dt><a href="#module_lib/util">lib/util</a></dt>
-<dd><p>test description</p>
+<dd><p>Workflow utility module used to format the return and error objects, and
+contains some other utility functions such as a sync loop and compare.</p>
 </dd>
 </dl>
 
@@ -387,8 +388,26 @@ Process postActions
 <a name="module_lib/util"></a>
 
 ## lib/util
-test description
+Workflow utility module used to format the return and error objects, and
+contains some other utility functions such as a sync loop and compare.
 
-**Version**: 2.0.0  
+**Version**: 0.1.0  
 **Author:** Brent Gordon  
-**Copyright**: Kwantu Ltd RSA 2009-2015.  
+<a name="module_lib/util..success"></a>
+
+### lib/util~success(message, data) ⇒ <code>Object</code>
+Success block return object, contains a message and optional data object.
+
+**Kind**: inner method of <code>[lib/util](#module_lib/util)</code>  
+**Returns**: <code>Object</code> - - with message and data properties  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | the success message |
+| data | <code>string</code> &#124; <code>Object</code> | the success returned data object |
+
+**Example**  
+```js
+// Return success without a data block
+var success = util.success('Success message goes here...');
+```
