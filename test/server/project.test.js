@@ -27,9 +27,9 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 	describe('- STEP 1. User (capturer/authoriser) navigates to the project app dashboard and creates a new profile.', function(){
 		it('Should create a new workflow instance.', function(done){
 			// Call the workflow create method and check the data
-			workflow.create().then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Workflow processes instance created successfully.');
+			workflow.create().then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Workflow processes instance created successfully.');
 				expect(workflow.instance).to.be.an('object');
 				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
 				expect(workflow.instance.version).to.equal(workflow.config.version);
@@ -48,9 +48,9 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				name: 'Brent Gordon'
 			};
 			// Call the workflow initialize method and check the data
-			workflow.initialise(processId, inputData).then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Process: ' + processId + ' initialized successfully.');
+			workflow.initialise(processId, inputData).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Process: ' + processId + ' initialized successfully.');
 				expect(workflow.instance).to.be.an('object');
 				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
 				expect(workflow.instance.version).to.equal(workflow.config.version);
@@ -97,20 +97,20 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 			var subProcessId = workflow.config.processes[0].subProcesses[0]._id;
 			var stepId = 'captureForm';
 			var transitionId = 'submitForm';
-			var inputData = {
+			var data = {
 				startDate: '',
 				endDate: '',
 				userId: '9012',
 				name: 'Brent Gordon'
 			}
-			workflow.transition(processId, subProcessId, stepId, transitionId, inputData).then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Workflow transitioned to the next step successfully.');
+			workflow.transition(processId, subProcessId, stepId, transitionId, data).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Workflow transitioned to the next step successfully.');
 				// Step updates
 				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('submitted');
 				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form data submitted, user assigned and form data under review');
-				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.userId).to.equal(inputData.userId);
-				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(inputData.name);
+				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.userId).to.equal(data.userId);
+				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(data.name);
 				// Indicator set object updates - processes section
 
 			}).should.notify(done);	

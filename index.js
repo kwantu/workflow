@@ -6,13 +6,13 @@ var util = require('./lib/utility');
 /*globals */
 
 /** 
- * @constructor Workflow
- *
- * @description A new Workflow constructor instance contains the reference to the application
+ * A new Workflow constructor instance contains the reference to the application
  * and associated profile which it requires as the first two parameters. It also
  * requires a workflow configuration, as the third parameter, which is used to 
  * descibe the workflow processes. If a workflow instance exists you can pass it
  * in as the fourth parameter which it will then use, else create a new one.
+ *
+ * @constructor
  *
  * @param {string} profile - The current profile id
  * @param {string} app - The associated application id
@@ -40,11 +40,10 @@ var util = require('./lib/utility');
  */
 
 function Workflow(profile, app, config, instance){
-	//
 	var _this = this;
 	// Profile ID validation checks
 	if (profile === '' || profile === undefined) {
-        throw new Error('A profile id is required.');
+        throw util.error('ParamRequired', 'A profile id is required.');
     } else if (typeof(profile) !== 'string') {
     	throw new Error('The profile id must be a javascript string.');
     } else {
@@ -52,7 +51,7 @@ function Workflow(profile, app, config, instance){
     }
     // App ID validation checks
 	if (app === '' || app === undefined) {
-        throw new Error('An app id is required.');
+        throw util.error('ParamRequired', 'An app id is required.');
     } else if (typeof(app) !== 'string') {
     	throw new Error('The app id must be a javascript string.');
     } else {
@@ -60,7 +59,7 @@ function Workflow(profile, app, config, instance){
     }
     // Workflow configuration validation checks
     if (config === '' || config === undefined) {
-    	throw new Error('A workflow configuration is required.');
+    	throw util.error('ParamRequired', 'A workflow configuration is required.');
     } else if (typeof(config) !== 'object') {
         _this.config = JSON.parse(config);
     } else {
