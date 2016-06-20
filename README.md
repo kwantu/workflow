@@ -36,5 +36,5 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 # API Documentation
 
-[View the documentation here ...](https://github.com/kwantu/workflow/blob/develop/docs/API.md)
+[View the documentation here ...](https://github.com/kwantu/workflow/blob/develop/docs/api.md)
 
