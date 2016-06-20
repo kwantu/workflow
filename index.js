@@ -6,26 +6,32 @@ var util = require('./lib/utility');
 /*globals */
 
 /** 
- * Kwantu workflow engine
+ * A new Workflow constructor instance contains the reference to the application
+ * and associated profile which it requires as the first two parameters. It also
+ * requires a workflow configuration, as the third parameter, which is used to 
+ * descibe the workflow processes. If a workflow instance exists you can pass it
+ * in as the fourth parameter which it will then use, else create a new one.
  *
  * @constructor
- * @param {string} profile - Profile UUID
- * @param {string} app - Application UUID
+ *
+ * @param {string} profile - Profile ID
+ * @param {string} app - Application ID
  * @param {Object} config - Workflow configuration
- * 	@param {string} config._id 
- *	Workflow configuration / definition ID
  * @param {Object} [instance] - Workflow instance
- * 	@param {string} instance._id 
- *	Workflow instance ID
+ *
  * @author Brent Gordon
  * @version 0.1.0
  *
- * @example new Workflow('1234', {})
+ * @example 
+ * 	new Workflow('1234', '5678', { '_id': 'abc123' });
+ * 	new Workflow('1234', '5678', { '_id': 'abc123' }, {});
  * 
  *
  * @return {Object} new Workflow object
  *
- * @throws "ERROR: Message"
+ * @throws 
+ *	ERROR: A profile id is required.
+ *	ERROR: An app id is required.
  *
  */
 
@@ -61,7 +67,7 @@ function Workflow(profile, app, config, instance){
 }
 
 /** 
- * This method creates a new workflow process i.e. it creates a processes file with the
+ * This method creates a new workflow process i.e. it creates a processes object with the
  * minimum required data.
  *
  * @example 

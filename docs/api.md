@@ -15,31 +15,35 @@
 <a name="new_Workflow_new"></a>
 
 ### new Workflow(profile, app, config, [instance])
-Kwantu workflow engine
+A new Workflow constructor instance contains the reference to the application
+and associated profile which it requires as the first two parameters. It also
+requires a workflow configuration, as the third parameter, which is used to 
+descibe the workflow processes. If a workflow instance exists you can pass it
+in as the fourth parameter which it will then use, else create a new one.
 
 **Returns**: <code>Object</code> - new Workflow object  
 **Throws**:
 
-- "ERROR: Message"
+- ERROR: A profile id is required.
+	ERROR: An app id is required.
 
 
 | Param | Type | Description |
 | --- | --- | --- |
-| profile | <code>string</code> | Profile UUID |
-| app | <code>string</code> | Application UUID |
+| profile | <code>string</code> | Profile ID |
+| app | <code>string</code> | Application ID |
 | config | <code>Object</code> | Workflow configuration |
-| config._id | <code>string</code> | Workflow configuration / definition ID |
 | [instance] | <code>Object</code> | Workflow instance |
-| instance._id | <code>string</code> | Workflow instance ID |
 
 **Example**  
 ```js
-new Workflow('1234', {})
+new Workflow('1234', '5678', { '_id': 'abc123' });
+	new Workflow('1234', '5678', { '_id': 'abc123' }, {});
 ```
 <a name="Workflow+create"></a>
 
 ### workflow.create() ⇒ <code>Object</code>
-This method creates a new workflow process i.e. it creates a processes file with the
+This method creates a new workflow process i.e. it creates a processes object with the
 minimum required data.
 
 **Kind**: instance method of <code>[Workflow](#Workflow)</code>  
