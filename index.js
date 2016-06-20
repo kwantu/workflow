@@ -24,15 +24,18 @@ var util = require('./lib/utility');
  * @version 0.1.0
  *
  * @example 
- *  new Workflow('1234', '5678', { '_id': 'abc123' });
- *  new Workflow('1234', '5678', { '_id': 'abc123' }, {});
- * 
+ * var config = { '_id': 'abc123' };
+ * var instance = { '_id': 'instance_abc123' };
+ * // If there isn't an existing instance
+ * var workflow = new Workflow('1234', '5678', config);
+ * // If there is an existing instance
+ * var workflow = new Workflow('1234', '5678', config, instance);
  *
  * @return {Object} new Workflow object
  *
- * @throws 
- *	ERROR: A profile id is required.
- *	ERROR: An app id is required.
+ * @throws ERROR: A profile id is required
+ * @throws ERROR: An app id is required
+ * @throws ERROR: A workflow configuration is required
  *
  */
 
@@ -131,7 +134,6 @@ Workflow.prototype.create = function(){
  *
  */
 Workflow.prototype.initialise = function(processId, data){
-	// Re-assign the Workflow constructor instance as _this
 	var _this = this;
 	return new Promise(function(resolve, reject) {
 		try {
