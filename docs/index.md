@@ -398,6 +398,7 @@ contains some other utility functions such as a sync loop and compare.
     * [~success(message, [data])](#module_lib/util..success) ⇒ <code>Object</code>
     * [~warn(message, [data])](#module_lib/util..warn) ⇒ <code>Object</code>
     * [~error(code, message)](#module_lib/util..error) ⇒ <code>Object</code>
+    * [~syncLoop(iterations, process, exit)](#module_lib/util..syncLoop) ⇒ <code>Object</code>
 
 <a name="module_lib/util..success"></a>
 
@@ -451,4 +452,30 @@ Error block JS error object, contains a code and message for the error.
 **Example**  
 ```js
 var success = util.error('Error001','Error message goes here...');
+```
+<a name="module_lib/util..syncLoop"></a>
+
+### lib/util~syncLoop(iterations, process, exit) ⇒ <code>Object</code>
+A loop which can loop X amount of times, which carries out 
+asynchronous code, but waits for that code to complete before looping.
+
+**Kind**: inner method of <code>[lib/util](#module_lib/util)</code>  
+**Returns**: <code>Object</code> - the loop control object.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| iterations | <code>number</code> | the number of iterations to carry out |
+| process | <code>function</code> | the code/function we're running for every  iteration |
+| exit | <code>function</code> | an optional callback to carry out once the loop  has completed |
+
+**Example**  
+```js
+util.syncLoop(actions.length, function(loop){
+	var counter = loop.iteration();
+	// Add async calls here..
+
+}, function(){
+	// On complete perform actions here...
+
+});
 ```
