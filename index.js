@@ -6,13 +6,13 @@ var util = require('./lib/utility');
 /*globals */
 
 /** 
- * A new Workflow constructor instance contains the reference to the application
+ * @constructor Workflow
+ *
+ * @description A new Workflow constructor instance contains the reference to the application
  * and associated profile which it requires as the first two parameters. It also
  * requires a workflow configuration, as the third parameter, which is used to 
  * descibe the workflow processes. If a workflow instance exists you can pass it
  * in as the fourth parameter which it will then use, else create a new one.
- *
- * @constructor
  *
  * @param {string} profile - The current profile id
  * @param {string} app - The associated application id

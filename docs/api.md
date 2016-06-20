@@ -135,7 +135,7 @@ Workflow.transition('processId', 'subProcessId', 'stepId', 'transitionId', { key
 <dt><a href="#module_lib/process">lib/process</a></dt>
 <dd><p>test description</p>
 </dd>
-<dt><a href="#module_modules/util">modules/util</a></dt>
+<dt><a href="#module_lib/util">lib/util</a></dt>
 <dd><p>test description</p>
 </dd>
 </dl>
@@ -155,7 +155,6 @@ test description
 
 **Version**: 0.1.0  
 **Author:** Brent Gordon  
-**Copyright**: Kwantu Ltd RSA 2009-2015.  
 
 * [lib/process](#module_lib/process)
     * [~preRequisites(prerequisites)](#module_lib/process..preRequisites) ⇒
@@ -385,9 +384,9 @@ Process postActions
 ```js
 ''
 ```
-<a name="module_modules/util"></a>
+<a name="module_lib/util"></a>
 
-## modules/util
+## lib/util
 test description
 
 **Version**: 2.0.0  
