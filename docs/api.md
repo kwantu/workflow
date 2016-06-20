@@ -30,30 +30,39 @@ in as the fourth parameter which it will then use, else create a new one.
 
 | Param | Type | Description |
 | --- | --- | --- |
-| profile | <code>string</code> | Profile ID |
-| app | <code>string</code> | Application ID |
-| config | <code>Object</code> | Workflow configuration |
-| [instance] | <code>Object</code> | Workflow instance |
+| profile | <code>string</code> | The current profile id |
+| app | <code>string</code> | The associated application id |
+| config | <code>Object</code> | The application workflow configuration / definition |
+| [instance] | <code>Object</code> | An existing application profile workflow instance based  on the definition |
 
 **Example**  
 ```js
 new Workflow('1234', '5678', { '_id': 'abc123' });
-	new Workflow('1234', '5678', { '_id': 'abc123' }, {});
+ new Workflow('1234', '5678', { '_id': 'abc123' }, {});
 ```
 <a name="Workflow+create"></a>
 
 ### workflow.create() ⇒ <code>Object</code>
-This method creates a new workflow process i.e. it creates a processes object with the
-minimum required data.
+This method creates a new workflow process i.e. it creates a workflow processes instance 
+object with the minimum required data. This instance can be referenced in the following
+way, see example below.
 
 **Kind**: instance method of <code>[Workflow](#Workflow)</code>  
 **Returns**: <code>Object</code> - new Workflow instance with updated instance data.  
 **Example**  
 ```js
-Workflow.create().then(function(data){ 
-	console.log('Workflow created successfully.'); 
-}, function(err){ 
-	console.log(err); 
+var config = { '_id': 'abc123' };
+var workflow = new Workflow('1234', '5678', config);
+workflow.create().then(function(result){ 
+	console.log(result.message); 
+	// The following properties can now be accessed
+	var profile = workflow.profile;
+	var app = workflow.app;
+	var config = workflow.config;
+	// On success you can access the instance the following way
+	var instance = workflow.instance;
+}, function(error){ 
+	console.log(error); 
 });
 ```
 <a name="Workflow+initialise"></a>

@@ -14,17 +14,18 @@ var util = require('./lib/utility');
  *
  * @constructor
  *
- * @param {string} profile - Profile ID
- * @param {string} app - Application ID
- * @param {Object} config - Workflow configuration
- * @param {Object} [instance] - Workflow instance
+ * @param {string} profile - The current profile id
+ * @param {string} app - The associated application id
+ * @param {Object} config - The application workflow configuration / definition 
+ * @param {Object} [instance] - An existing application profile workflow instance based 
+ * on the definition
  *
  * @author Brent Gordon
  * @version 0.1.0
  *
  * @example 
- * 	new Workflow('1234', '5678', { '_id': 'abc123' });
- * 	new Workflow('1234', '5678', { '_id': 'abc123' }, {});
+ *  new Workflow('1234', '5678', { '_id': 'abc123' });
+ *  new Workflow('1234', '5678', { '_id': 'abc123' }, {});
  * 
  *
  * @return {Object} new Workflow object
@@ -67,24 +68,31 @@ function Workflow(profile, app, config, instance){
 }
 
 /** 
- * This method creates a new workflow process i.e. it creates a processes object with the
- * minimum required data.
+ * This method creates a new workflow process i.e. it creates a workflow processes instance 
+ * object with the minimum required data. This instance can be referenced in the following
+ * way, see example below.
  *
  * @example 
- * Workflow.create().then(function(data){ 
- *	console.log('Workflow created successfully.'); 
- * }, function(err){ 
- *	console.log(err); 
+ * var config = { '_id': 'abc123' };
+ * var workflow = new Workflow('1234', '5678', config);
+ * workflow.create().then(function(result){ 
+ *	console.log(result.message); 
+ *	// The following properties can now be accessed
+ * 	var profile = workflow.profile;
+ * 	var app = workflow.app;
+ * 	var config = workflow.config;
+ *	// On success you can access the instance the following way
+ *	var instance = workflow.instance;
+ * }, function(error){ 
+ *	console.log(error); 
  * });
  *
  * @return {Object} new Workflow instance with updated instance data.
  *
  */
 Workflow.prototype.create = function(){
-	// Re-assign the Workflow constructor instance as _this
 	var _this = this;
 	return new Promise(function(resolve, reject) {
-		// Try the block of code
 		try {
 			if (_this.instance !== undefined) {
 				var warn = util.warn('Instance already exists.', _this.instance)
@@ -103,7 +111,6 @@ Workflow.prototype.create = function(){
 				var success = util.success('Workflow processes instance created successfully.', _this.instance);
 				resolve(success);
 			}
-		// Catch any unforseen errors
 		} catch (err) {
 			reject(err);
 		}
