@@ -393,9 +393,15 @@ contains some other utility functions such as a sync loop and compare.
 
 **Version**: 0.1.0  
 **Author:** Brent Gordon  
+
+* [lib/util](#module_lib/util)
+    * [~success(message, [data])](#module_lib/util..success) ⇒ <code>Object</code>
+    * [~warn(message, [data])](#module_lib/util..warn) ⇒ <code>Object</code>
+    * [~error(code, message)](#module_lib/util..error) ⇒ <code>Object</code>
+
 <a name="module_lib/util..success"></a>
 
-### lib/util~success(message, data) ⇒ <code>Object</code>
+### lib/util~success(message, [data]) ⇒ <code>Object</code>
 Success block return object, contains a message and optional data object.
 
 **Kind**: inner method of <code>[lib/util](#module_lib/util)</code>  
@@ -404,10 +410,45 @@ Success block return object, contains a message and optional data object.
 | Param | Type | Description |
 | --- | --- | --- |
 | message | <code>string</code> | the success message |
-| data | <code>string</code> &#124; <code>Object</code> | the success returned data object |
+| [data] | <code>string</code> &#124; <code>Object</code> | the success returned data |
 
 **Example**  
 ```js
 // Return success without a data block
 var success = util.success('Success message goes here...');
+```
+<a name="module_lib/util..warn"></a>
+
+### lib/util~warn(message, [data]) ⇒ <code>Object</code>
+Warning block return object, contains a message and optional data object.
+
+**Kind**: inner method of <code>[lib/util](#module_lib/util)</code>  
+**Returns**: <code>Object</code> - with message and data properties, and logs the warning to the console.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| message | <code>string</code> | the warning message |
+| [data] | <code>string</code> &#124; <code>Object</code> | the returned data |
+
+**Example**  
+```js
+// Return success without a data block
+var success = util.warn('Warning message goes here...');
+```
+<a name="module_lib/util..error"></a>
+
+### lib/util~error(code, message) ⇒ <code>Object</code>
+Error block JS error object, contains a code and message for the error.
+
+**Kind**: inner method of <code>[lib/util](#module_lib/util)</code>  
+**Returns**: <code>Object</code> - with a code and message properties.  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| code | <code>string</code> | the error code |
+| message | <code>string</code> | the error message |
+
+**Example**  
+```js
+var success = util.error('Error001','Error message goes here...');
 ```
