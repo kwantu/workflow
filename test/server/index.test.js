@@ -4,14 +4,14 @@ var path = require("path");
 var fs = require("fs");
 var moment = require("moment");
 
-// Require the test framework modules 
+// Require the test framework modules
 var chai = require("chai");
 var should = chai.should();
 var expect = chai.expect;
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
-// Require the Workflow constructor / class 
+// Require the Workflow constructor / class
 var Workflow = require("../../index.js");
 
 // Get the test workflow configuration file
@@ -80,9 +80,9 @@ describe('# Module: Workflow', function(){
 				for (var i = 0; i < workflow.config.processes[0].subProcesses[0].indicators.length; i++) {
 					var indicator = workflow.config.processes[0].subProcesses[0].indicators[i];
 					var id = indicator._id;
-					
+
 					// Check the workflow sub-process indicator instance/s data
-					
+
 					// Check the indicator instance/s processes data
 
 				}
@@ -113,7 +113,7 @@ describe('# Module: Workflow', function(){
 				// Step updates
 				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('submitted');
 				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form data submitted, user assigned and form data under review');
-			}).should.notify(done);	
+			}).should.notify(done);
 		})
 
 	});

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-js": "browserify index.js --standalone Workflow > dist/workflow.js -d",
-    "build-js-min": "browserify -g uglifyify index.js --standalone Workflow > dist/workflow.min.js -d",
+    "browserify": "browserify -g uglifyify index.js --standalone Workflow > dist/workflow.min.js -d",
     "docs": "jsdoc2md 'index.js' > docs/index.md && jsdoc2md 'lib/**/*.js' >> docs/index.md",
     "test": "make test",
     "test-client": "mocha-phantomjs test/client/runner.html"

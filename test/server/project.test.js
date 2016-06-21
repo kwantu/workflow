@@ -4,14 +4,14 @@ var path = require("path");
 var fs = require("fs");
 var moment = require("moment");
 
-// Require the test framework modules 
+// Require the test framework modules
 var chai = require("chai");
 var should = chai.should();
 var expect = chai.expect;
 var chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
-// Require the Workflow class 
+// Require the Workflow class
 var Workflow = require("../../index.js");
 // Create the workflow constrctor instance
 var profileId = '1234'
@@ -23,7 +23,7 @@ var workflow = new Workflow(profileId, appId, config);
 
 // Workflow: Test case #1
 describe('# TEST CASE: PROJECT WORKFLOW', function(){
-	
+
 	describe('- STEP 1. User (capturer/authoriser) navigates to the project app dashboard and creates a new profile.', function(){
 		it('Should create a new workflow instance.', function(done){
 			// Call the workflow create method and check the data
@@ -74,9 +74,9 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				for (var i = 0; i < workflow.config.processes[0].subProcesses[0].indicators.length; i++) {
 					var indicator = workflow.config.processes[0].subProcesses[0].indicators[i];
 					var id = indicator._id;
-					
+
 					// Check the workflow sub-process indicator instance/s data
-					
+
 					// Check the indicator instance/s processes data
 
 				}
@@ -87,7 +87,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 	describe('- STEP 2. User (capturer) navigates to profile process page, opens the "Register a project" process, captures, saves the indicator set/s data.', function(){
 		it('Should update the associated indicator set instance/s step complete status.')
 		// Onclick of each form indicator tick icon: workflow.task()
-		
+
 	});
 
 	describe('- STEP 3. User (capturer) submits the data for authorisation.', function(){
@@ -113,67 +113,67 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(data.name);
 				// Indicator set object updates - processes section
 
-			}).should.notify(done);	
+			}).should.notify(done);
 		})
 	});
 
-	describe('- STEP 5. User (authoriser) reviews the form indicators data and refers it back with a message.', function(){
+	describe('- STEP 4. User (authoriser) reviews the form indicators data and refers it back with a message.', function(){
 		it('Should transition the workflow back to the data capture step ( captureForm ).', function(done){
 			// Onclick of form 'Refer back' button: workflow.transition('revertForm')
 			var processId = workflow.config.processes[0]._id;
 			var subProcessId = workflow.config.processes[0].subProcesses[0]._id;
 			var stepId = 'authoriseForm';
 			var transitionId = 'revertForm';
-			var inputData = {
+			var data = {
 				startDate: '',
 				endDate: '',
 				userId: '9012',
 				name: 'Brent Gordon'
 			}
-			workflow.transition(processId, subProcessId, stepId, transitionId, inputData).then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Workflow transitioned to the next step successfully.');
+			workflow.transition(processId, subProcessId, stepId, transitionId, data).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Workflow transitioned to the next step successfully.');
 				// Step updates
 				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('InProgress');
 				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('User assigned and data capture in progress');
-				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.userId).to.equal(inputData.userId);
-				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(inputData.name);
+				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.userId).to.equal(data.userId);
+				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(data.name);
 				// Indicator set object updates - processes section
 
-			}).should.notify(done);	
+			}).should.notify(done);
 		});
 	});
 
-	describe('- STEP 6. User (capturer) updates the form indicator data and marks each indicator as complete.', function(){
+	describe('- STEP 5. User (capturer) updates the form indicator data and marks each indicator as complete.', function(){
 		it('Should update the associated indicator set instance/s step complete status.')
 		// Onclick of each form indicator tick icon: workflow.saveIndicator(indicatorId, indicatorSeq, docId)
 
 	});
 
-	describe('- STEP 7. User (capturer) re-submits the data for authorisation.', function(){
+	describe('- STEP 6. User (capturer) re-submits the data for authorisation.', function(){
 		it('Should transition to the next step.', function(done){
 			// Onclick of form 'Submit' button: workflow.transition('submitForm')
 			var processId = workflow.config.processes[0]._id;
 			var subProcessId = workflow.config.processes[0].subProcesses[0]._id;
 			var stepId = 'captureForm';
 			var transitionId = 'submitForm';
-			var inputData = {
+			var data = {
 				startDate: '',
 				endDate: '',
 				userId: '9012',
 				name: 'Brent Gordon'
 			}
-			workflow.transition(processId, subProcessId, stepId, transitionId, inputData).then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Workflow transitioned to the next step successfully.');
+			workflow.transition(processId, subProcessId, stepId, transitionId, data).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Workflow transitioned to the next step successfully.');
 				// Step updates
 				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('submitted');
 				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form data submitted, user assigned and form data under review');
-				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.userId).to.equal(inputData.userId);
-				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(inputData.name);
+				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.userId).to.equal(data.userId);
+				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(data.name);
 				// Indicator set object updates - processes section
 
-			}).should.notify(done);	
+			}).should.notify(done);
 		})
 	});
 
@@ -184,15 +184,15 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 			var subProcessId = workflow.config.processes[0].subProcesses[0]._id;
 			var stepId = 'authoriseForm';
 			var transitionId = 'authoriseForm';
-			var inputData = {
+			var data = {
 				startDate: '',
 				endDate: '',
 				userId: '9012',
 				name: 'Brent Gordon'
 			}
-			workflow.transition(processId, subProcessId, stepId, transitionId, inputData).then(function(data){
+			workflow.transition(processId, subProcessId, stepId, transitionId, data).then(function(data){
 				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Workflow transitioned to the next step successfully.');
+				expect(data.message).to.equal('Workflow transitioned to the next step successfully1.');
 				// Step updates
 				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('Complete');
 				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form locked');
@@ -200,8 +200,8 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				expect(workflow.instance.processes[0].subProcesses[0].step.assignedTo.name).to.equal(inputData.name);
 				// Indicator set object updates - processes section
 
-			}).should.notify(done);	
-		})		
+			}).should.notify(done);
+		})
 	});
 
 	describe('- STEP 9. User (capturer/authoriser) navigates to the existing profile forms tab and creates another version of the registration form / process.', function(){
@@ -243,9 +243,9 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				for (var i = 0; i < workflow.config.processes[1].subProcesses[0].indicators.length; i++) {
 					var indicator = workflow.config.processes[1].subProcesses[0].indicators[i];
 					var id = indicator._id;
-					
+
 					// Check the workflow sub-process indicator instance/s data
-					
+
 					// Check the indicator instance/s processes data
 
 				}
@@ -281,7 +281,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				expect(workflow.instance.processes[1].subProcesses[0].step.assignedTo.name).to.equal(inputData.name);
 				// Indicator set object updates - processes section
 
-			}).should.notify(done);	
+			}).should.notify(done);
 		})
 	});
 
@@ -289,6 +289,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 		it('Should transition the workflow to the next step and close the form.', function(done){
 			// Onclick of form 'Authorise' button: workflow.transition('authoriseForm')
 			var processId = workflow.config.processes[0]._id;
+			console.log(workflow.config.processes[0]._id);
 			var subProcessId = workflow.config.processes[0].subProcesses[0]._id;
 			var stepId = 'authoriseForm';
 			var transitionId = 'authoriseForm';
@@ -308,11 +309,11 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				expect(workflow.instance.processes[1].subProcesses[0].step.assignedTo.name).to.equal(inputData.name);
 				// Indicator set object updates - processes section
 
-			}).should.notify(done);	
+			}).should.notify(done);
 		})
 	});
 
-	describe('- STEP 13. ', function(){
+	describe('- STEP 13. User ', function(){
 		it('Should ')
 
 	});
@@ -343,32 +344,3 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 	});
 
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

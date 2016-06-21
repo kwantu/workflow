@@ -16,7 +16,7 @@
 
 ### How to generate the browser based workflow module with browserify: 
 
-`npm run build-js` or `npm run build-js-min` for the minified version.
+`npm run build-js` or `npm run browserify` for the minified version.
 
 ### How to install the repo for development work:
 
@@ -32,9 +32,9 @@
 
 This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md/jsdoc-to-markdown for more information.
 
-`npm run update-docs`
+`npm run docs`
 
-# API Documentation
+## API Documentation
 
 [View the documentation here ...](https://github.com/kwantu/workflow/blob/develop/docs/index.md)
 

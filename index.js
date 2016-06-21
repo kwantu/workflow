@@ -5,10 +5,10 @@ var util = require('./lib/utility');
 
 /*globals */
 
-/** 
+/**
  * A new Workflow constructor instance contains the reference to the application
  * and associated profile which it requires as the first two parameters. It also
- * requires a workflow configuration, as the third parameter, which is used to 
+ * requires a workflow configuration, as the third parameter, which is used to
  * descibe the workflow processes. If a workflow instance exists you can pass it
  * in as the fourth parameter which it will then use, else create a new one.
  *
@@ -16,14 +16,14 @@ var util = require('./lib/utility');
  *
  * @param {string} profile - The current profile id
  * @param {string} app - The associated application id
- * @param {Object} config - The application workflow configuration / definition 
- * @param {Object} [instance] - An existing application profile workflow instance based 
+ * @param {Object} config - The application workflow configuration / definition
+ * @param {Object} [instance] - An existing application profile workflow instance based
  * on the definition
  *
  * @author Brent Gordon
  * @version 0.1.0
  *
- * @example 
+ * @example
  * var config = { '_id': 'abc123' };
  * var instance = { '_id': 'instance_abc123' };
  * // If there isn't an existing instance
@@ -33,9 +33,9 @@ var util = require('./lib/utility');
  *
  * @return {Object} new Workflow object
  *
- * @throws ERROR: A profile id is required
- * @throws ERROR: An app id is required
- * @throws ERROR: A workflow configuration is required
+ * @throws Error: A profile id is required
+ * @throws Error: An app id is required
+ * @throws Error: A workflow configuration is required
  *
  */
 
@@ -69,24 +69,24 @@ function Workflow(profile, app, config, instance){
     _this.instance = instance;
 }
 
-/** 
- * This method creates a new workflow process i.e. it creates a workflow processes instance 
+/**
+ * This method creates a new workflow process i.e. it creates a workflow processes instance
  * object with the minimum required data. This instance can be referenced in the following
  * way, see example below.
  *
- * @example 
+ * @example
  * var config = { '_id': 'abc123' };
  * var workflow = new Workflow('1234', '5678', config);
- * workflow.create().then(function(result){ 
- *	console.log(result.message); 
+ * workflow.create().then(function(result){
+ *	console.log(result.message);
  *	// The following properties can now be accessed
  * 	var profile = workflow.profile;
  * 	var app = workflow.app;
  * 	var config = workflow.config;
  *	// On success you can access the instance the following way
  *	var instance = workflow.instance;
- * }, function(error){ 
- *	console.log(error); 
+ * }, function(error){
+ *	console.log(error);
  * });
  *
  * @return {Object} new Workflow instance with updated instance data.
@@ -102,10 +102,10 @@ Workflow.prototype.create = function(){
 			} else {
 				// Create the workflow processes instance object
 				var model = {
-				    _id: "",
-				    version: "",
-				    type: "workflowInstance",
-				    processes: []
+				    "_id": "",
+				    "version": "",
+				    "type": "workflowInstance",
+				    "processes": []
 				};
 				model._id = _this.profile + ':processes';
 				model.version = _this.config.version;
@@ -119,14 +119,14 @@ Workflow.prototype.create = function(){
 	});
 };
 
-/** 
+/**
  * Workflow initialise, this function executes a process within a workflow
  * configuration.
  *
  * @param {string} processId - the process id to process
  * @param {object} [data] - the input data to process
  *
- * @example 
+ * @example
  * Workflow.initialize('processId', { validDate: 'date' });
  *
  * @return ""
@@ -165,8 +165,8 @@ Workflow.prototype.initialise = function(processId, data){
 			var nextSeq = currentSeq + 1;
 			// Push the process object into the array
 			var processModel = {
-				"id": "", 
-		      	"seq": "", 
+						id: '',
+		      	seq: '',
 		      	"subProcesses": []
 			}
 			// 1. Update the process id and seq
@@ -198,31 +198,31 @@ Workflow.prototype.initialise = function(processId, data){
 	});
 };
 
-/** 
+/**
  * Workflow task, this method executes a specific task.
  *
  * @param {string} processId - the process id to process
  * @param {object} inputData - the input data to process
  *
- * @example 
+ * @example
  * Workflow.initialize('processId', { validDate: 'date' });
  *
  * @return ""
  *
  */
-Workflow.prototype.task = function(type, params){
+Workflow.prototype.runTask = function(type, params){
 	// Re-assign the Workflow constructor instance as _this
 	var _this = this;
 	return new Promise(function(resolve, reject) {
 		try {
 			resolve('Success');
-		} catch(err) {	
+		} catch(err) {
 			reject(err);
 		}
 	});
 };
 
-/** 
+/**
  * Workflow transition to the next step. This moves the workflow from the current process,
  * sub-process step to the next one as specified.
  *
@@ -232,14 +232,14 @@ Workflow.prototype.task = function(type, params){
  * @param {string} transitionId - the Workflow config / definition transition id
  * @param {object} data - any additional data passed in as key value pairs
  *
- * @example 
+ * @example
  * Workflow.transition('processId', 'subProcessId', 'stepId', 'transitionId', { key: '', value: '' });
  *
  * @return ""
  *
  */
 Workflow.prototype.transition = function(processId, subProcessId, stepId, transitionId, data){
-	// Re-assign this 
+	// Re-assign this
 	var _this = this;
 	return new Promise(function(resolve, reject) {
 		try {
@@ -249,7 +249,7 @@ Workflow.prototype.transition = function(processId, subProcessId, stepId, transi
 			}, function(err){
 				reject(err);
 			});
-		} catch(err) {	
+		} catch(err) {
 			reject(err);
 		}
 	});
