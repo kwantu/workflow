@@ -6,13 +6,30 @@ module.exports = function () {
     ],
 
     tests: [
-      'test/server/**/*.js',
+      'test/server/**/*.test.js',
       'test/**/*.json'
     ],
 
+    workers: {
+      recycle: true
+    },
+
     env: {
-      type: 'node',
-      runner: 'node'
-    }
+      type: 'node'
+    },
+
+    testFramework: 'mocha',
+
+    setup: function (wallaby) {
+      wallaby.testFramework.ui('bdd');
+    },
+
+    workers: {
+      initial: 1,
+      regular: 1
+    },
+
+    debug: true
+
   };
 };

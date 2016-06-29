@@ -67,6 +67,9 @@ function Workflow(profile, app, config, instance){
     }
     // Workflow instance validation checks
     _this.instance = instance;
+		// Workflow indicators place holder
+		_this.indicators = [];
+
 }
 
 /**
@@ -97,20 +100,20 @@ Workflow.prototype.create = function(){
 	return new Promise(function(resolve, reject) {
 		try {
 			if (_this.instance !== undefined) {
-				var warn = util.warn('Instance already exists.', _this.instance)
+				var warn = util.warn('Instance already exists.', _this)
 				resolve(warn);
 			} else {
 				// Create the workflow processes instance object
 				var model = {
-				    "_id": "",
-				    "version": "",
-				    "type": "workflowInstance",
-				    "processes": []
+				    _id: '',
+				    version: '',
+				    type: 'workflowInstance',
+				    processes: []
 				};
 				model._id = _this.profile + ':processes';
 				model.version = _this.config.version;
 				_this.instance = model;
-				var success = util.success('Workflow processes instance created successfully.', _this.instance);
+				var success = util.success('Workflow processes instance created successfully.', _this);
 				resolve(success);
 			}
 		} catch (err) {
@@ -156,9 +159,9 @@ Workflow.prototype.initialise = function(processId, data){
 			// Get the current list of process instances
 			var processSeq = 1;
 			var currentProcess = [];
-			currentProcess = _this.instance.processes.filter(function(objProcess){
+			_this.instance.processes.filter(function(objProcess){
 				if (objProcess.id === processId) {
-					return objProcess;
+					currentProcess = objProcess;
 				}
 			});
 			var currentSeq = currentProcess.length;
@@ -167,31 +170,42 @@ Workflow.prototype.initialise = function(processId, data){
 			var processModel = {
 						id: '',
 		      	seq: '',
-		      	"subProcesses": []
+		      	subProcesses: []
 			}
 			// 1. Update the process id and seq
 			processModel.id = processId;
 			processModel.seq = nextSeq;
 			_this.instance.processes.push(processModel);
-			// 2. Complete all the process prerequisites
-			Process.preRequisites(configProcess[0].prerequisites, _this).then(function(result){
-				// 3. Complete all the process pre-actions
-				Process.preActions(configProcess[0].preActions, _this).then(function(result){
-					// 4. Initialise the first sub-process
-					Process.subProcess(processId, configProcess[0].subProcesses[0], 1, data, _this).then(function(result){
-						// console.log('subProcess completed.');
-						_this.instance = result.res;
-						var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.');
-						resolve(success);
-					}, function(err){
-						reject(err);
-					});
-				}, function(err){
-					reject(err);
-				});
+			// Parameters
+			var subProcessId = configProcess[0].subProcesses[0]._id;
+
+			Process.subProcess(processId, nextSeq, subProcessId, data, _this).then(function(result){
+				processModel.subProcesses.push(result.data);
+				_this.instance.processes.push(processModel);
+				var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
+				resolve(success);
 			}, function(err){
 				reject(err);
 			});
+
+			// 2. Complete all the process prerequisites
+			// Process.preRequisites(configProcess[0].prerequisites, _this).then(function(result){
+			// 	// 3. Complete all the process pre-actions
+			// 	Process.preActions(configProcess[0].preActions, _this).then(function(result){
+			// 		// 4. Initialise the first sub-process
+			// 		Process.subProcess(processId, configProcess[0].subProcesses[0], 1, data, _this).then(function(result){
+			// 			// console.log('subProcess completed.');
+			// 			var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
+			// 			resolve(success);
+			// 		}, function(err){
+			// 			reject(err);
+			// 		});
+			// 	}, function(err){
+			// 		reject(err);
+			// 	});
+			// }, function(err){
+			// 	reject(err);
+			// });
 		} catch(err) {
 			reject(err);
 		}
@@ -243,8 +257,20 @@ Workflow.prototype.transition = function(processId, subProcessId, stepId, transi
 	var _this = this;
 	return new Promise(function(resolve, reject) {
 		try {
+			// Get the current sub-process instance
+			var currentSubProcess = [];			
+			_this.instance.processes.filter(function(objProcess){
+				if (objProcess.id === processId) {
+					objProcess.subProcesses.filter(function(objSubProcess){
+						if (objSubProcess.id === subProcessId) {
+							currentSubProcess = objSubProcess;
+						}
+					})
+				}
+			});
 			Process.transition(processId, subProcessId, stepId, transitionId, data, _this).then(function(result){
-				var success = util.success('Workflow transitioned to the next step successfully.', {});
+				console.log(currentSubProcess);
+				var success = util.success(result.message, result.data);
 				resolve(success);
 			}, function(err){
 				reject(err);

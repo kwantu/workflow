@@ -9,7 +9,7 @@
     * [new Workflow(profile, app, config, [instance])](#new_Workflow_new)
     * [.create()](#Workflow+create) ⇒ <code>Object</code>
     * [.initialise(processId, [data])](#Workflow+initialise) ⇒
-    * [.task(processId, inputData)](#Workflow+task) ⇒
+    * [.runTask(processId, inputData)](#Workflow+runTask) ⇒
     * [.transition(processId, subProcessId, stepId, transitionId, data)](#Workflow+transition) ⇒
 
 <a name="new_Workflow_new"></a>
@@ -17,16 +17,16 @@
 ### new Workflow(profile, app, config, [instance])
 A new Workflow constructor instance contains the reference to the application
 and associated profile which it requires as the first two parameters. It also
-requires a workflow configuration, as the third parameter, which is used to 
+requires a workflow configuration, as the third parameter, which is used to
 descibe the workflow processes. If a workflow instance exists you can pass it
 in as the fourth parameter which it will then use, else create a new one.
 
 **Returns**: <code>Object</code> - new Workflow object  
 **Throws**:
 
-- ERROR: A profile id is required
-- ERROR: An app id is required
-- ERROR: A workflow configuration is required
+- Error: A profile id is required
+- Error: An app id is required
+- Error: A workflow configuration is required
 
 
 | Param | Type | Description |
@@ -34,7 +34,7 @@ in as the fourth parameter which it will then use, else create a new one.
 | profile | <code>string</code> | The current profile id |
 | app | <code>string</code> | The associated application id |
 | config | <code>Object</code> | The application workflow configuration / definition |
-| [instance] | <code>Object</code> | An existing application profile workflow instance based  on the definition |
+| [instance] | <code>Object</code> | An existing application profile workflow instance based on the definition |
 
 **Example**  
 ```js
@@ -48,7 +48,7 @@ var workflow = new Workflow('1234', '5678', config, instance);
 <a name="Workflow+create"></a>
 
 ### workflow.create() ⇒ <code>Object</code>
-This method creates a new workflow process i.e. it creates a workflow processes instance 
+This method creates a new workflow process i.e. it creates a workflow processes instance
 object with the minimum required data. This instance can be referenced in the following
 way, see example below.
 
@@ -58,16 +58,16 @@ way, see example below.
 ```js
 var config = { '_id': 'abc123' };
 var workflow = new Workflow('1234', '5678', config);
-workflow.create().then(function(result){ 
-	console.log(result.message); 
+workflow.create().then(function(result){
+	console.log(result.message);
 	// The following properties can now be accessed
 	var profile = workflow.profile;
 	var app = workflow.app;
 	var config = workflow.config;
 	// On success you can access the instance the following way
 	var instance = workflow.instance;
-}, function(error){ 
-	console.log(error); 
+}, function(error){
+	console.log(error);
 });
 ```
 <a name="Workflow+initialise"></a>
@@ -88,9 +88,9 @@ configuration.
 ```js
 Workflow.initialize('processId', { validDate: 'date' });
 ```
-<a name="Workflow+task"></a>
+<a name="Workflow+runTask"></a>
 
-### workflow.task(processId, inputData) ⇒
+### workflow.runTask(processId, inputData) ⇒
 Workflow task, this method executes a specific task.
 
 **Kind**: instance method of <code>[Workflow](#Workflow)</code>  
@@ -161,8 +161,8 @@ test description
     * [~preRequisites(prerequisites)](#module_lib/process..preRequisites) ⇒
     * [~preRequisite(prerequisite, counter, workflow)](#module_lib/process..preRequisite) ⇒
     * [~preActions(preActions, workflow)](#module_lib/process..preActions) ⇒
-    * [~subProcess(processId, subProcess, seq, inputData, workflow)](#module_lib/process..subProcess) ⇒
-    * [~initiate(initiate, inputData)](#module_lib/process..initiate) ⇒
+    * [~subProcess(processId, subProcess, seq, data, workflow)](#module_lib/process..subProcess) ⇒
+    * [~initiate(initiate, data)](#module_lib/process..initiate) ⇒
     * [~step(processId, subProcessId, stepId, stepSeq, formDef, inputData, workflow)](#module_lib/process..step) ⇒
     * [~actions(actions, formDef, workflow)](#module_lib/process..actions) ⇒
     * [~action(action, formDef, workflow)](#module_lib/process..action) ⇒
@@ -237,7 +237,7 @@ Process pre-actionss
 ```
 <a name="module_lib/process..subProcess"></a>
 
-### lib/process~subProcess(processId, subProcess, seq, inputData, workflow) ⇒
+### lib/process~subProcess(processId, subProcess, seq, data, workflow) ⇒
 Process sub-process
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -248,7 +248,7 @@ Process sub-process
 | processId | <code>string</code> | the current process id |
 | subProcess | <code>object</code> | the sub-process config data |
 | seq | <code>number</code> | the current sub-process instance counter / sequence |
-| inputData | <code>object</code> | the user input data |
+| data | <code>object</code> | the user input data |
 | workflow | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
@@ -257,7 +257,7 @@ Process sub-process
 ```
 <a name="module_lib/process..initiate"></a>
 
-### lib/process~initiate(initiate, inputData) ⇒
+### lib/process~initiate(initiate, data) ⇒
 Process initiate
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -266,7 +266,7 @@ Process initiate
 | Param | Type | Description |
 | --- | --- | --- |
 | initiate | <code>object</code> | the initiate config data |
-| inputData | <code>object</code> | the user input data |
+| data | <code>object</code> | the user input data |
 
 **Example**  
 ```js
@@ -470,7 +470,7 @@ asynchronous code, but waits for that code to complete before looping.
 
 **Example**  
 ```js
-util.syncLoop(actions.length, function(loop){
+util.syncLoop(5, function(loop){
 	var counter = loop.iteration();
 	// Add async calls here..
 

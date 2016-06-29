@@ -1,0 +1,54 @@
+actions(step.actions, formDef, workflow).then(function(data){
+  // The document process.step model
+    var documentStepModel = {
+            id: stepId,
+            seq: stepSeq,
+            startDate: inputData.createdDate,
+            status: step._setInstanceStatusTo,
+            message: step._setStatusMsgTo,
+            assignedTo: {
+                userId: inputData.userId,
+            name: inputData.name
+            },
+            comment: inputData.comment,
+            complete: false,
+            endDate: ''
+      };
+  util.syncLoop(data.res.data[0].form.indicators.length, function(loop){
+    var counter = loop.iteration();
+    // Update the processes instance model, inidcators section
+    var indicatorModel = {
+      id: data.res.data[0].form.indicators[counter].category.term,
+      instances: [
+        {
+          uuid: data.res.data[0].form.indicators[counter]._id,
+          key: '',
+          seq: 1
+        }
+      ]
+    };
+    // Update the indicator set documents workflow.processes.step data
+
+    loop.next();
+  }, function(){
+    // Check if it should automatically transition to the next step
+    if (step.actions[0].transitions.length !== 0) {
+      util.syncLoop(step.actions[0].transitions.length, function(loop){
+        var counter = loop.iteration();
+        transition(processId, subProcessId, stepId, step.actions[0].transitions[counter]._id, inputData, workflow).then(function(result){
+          var success = util.success('Transition step completed successfully.', {});
+          resolve(success);
+        }, function(err){
+          reject(err);
+          loop.break();
+        });
+        loop.next();
+      });
+    } else {
+      var success = util.success('No transitions specified in this step.', {});
+      resolve(success);
+    }
+  });
+}, function(err){
+  reject(err);
+});
