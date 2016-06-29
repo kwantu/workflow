@@ -25,7 +25,7 @@
 
 ### How to run the unit tests ( server / client ):
 
-1. Server side: `npm test`
+`npm test`
 
 ### How to generate the API documentation:
 
