@@ -19,7 +19,7 @@
 	"identification": {
 		"documentation": {
 			"i18n": {
-				"_lang": "",
+				"_lang": "en",
 				"value": ""
 			}
 		},
@@ -30,15 +30,13 @@
 			}
 		}
 	},
-	"variables": {
-		"variable": [{
-			"_id": "",
-			"_dataType": "",
-			"_sessionVar": "",
-			"_default": "",
-			"_value": ""
-		}]
-	},
+	"variables": [{
+		"_id": "",
+		"_dataType": "",
+		"_sessionVar": "",
+		"_default": "",
+		"_value": ""
+	}],
 	"roles": [{
 			"_id": "Guest",
 			"_level": "0",
@@ -185,112 +183,105 @@
 				}
 			}
 		}],
-		"subProcesses": [{
-			"_id": "spRegistration",
-			"_seq": "1",
-			"name": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Project Registration Form"
-				}
-			},
-			"help": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Register a new project"
-				}
-			},
-			"initiate": {
-				"_type": "user",
-				"maxInstances": "-1",
-				"action": {
-					"_type": "button",
-					"label": "Create"
-				},
-				"dates": {
-					"valid": {
-						"_type": "userSelected",
-						"message": {
-							"i18n": {
-								"_lang": "en",
-								"value": "Please select a valid date i.e. the date that the project data captured is valid for."
-							}
-						}
-					},
-					"due": {
-						"_type": "userSelected",
-						"message": {
-							"i18n": {
-								"_lang": "en",
-								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-							}
-						}
-					}
-				}
-			},
-			"indicators": [{
-				"_id": "projectDetail",
-				"maxInstances": "1",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Project Details"
-					}
-				}
-			}, {
-				"_id": "projectLocation",
-				"maxInstances": "-1",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Project Locations"
-					}
-				}
-			}, {
-				"_id": "developerDetail",
-				"maxInstances": "1",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Developer Details"
-					}
-				}
-			}],
-			"steps": [{
-				"_id": "createForm",
+		"subProcesses": [
+			{
+				"_id": "spRegistration",
 				"_seq": "1",
-				"_setInstanceStatusTo": "Created",
-				"_setStatusMsgTo": "Form created",
 				"name": {
 					"i18n": {
 						"_lang": "en",
-						"value": "Create the registration form."
+						"value": "Project Registration Form"
 					}
 				},
 				"help": {
 					"i18n": {
 						"_lang": "en",
-						"value": ""
+						"value": "Register a new project"
 					}
 				},
-				"prerequisites": [{
-					"_seq": "",
-					"_type": "",
-					"_operator": "",
-					"_subject": "",
-					"_value": "",
-					"message": {
+				"initiate": {
+					"_type": "user",
+					"maxInstances": "-1",
+					"parallelInstances": false,
+					"action": {
+						"_type": "button",
+						"label": "Create"
+					},
+					"dates": {
+						"valid": {
+							"_type": "userSelected",
+							"message": {
+								"i18n": {
+									"_lang": "en",
+									"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+								}
+							}
+						},
+						"due": {
+							"_type": "userSelected",
+							"message": {
+								"i18n": {
+									"_lang": "en",
+									"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+								}
+							}
+						}
+					}
+				},
+				"indicators": [{
+					"_id": "projectDetail",
+					"maxInstances": "1",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Project Details"
+						}
+					}
+				}, {
+					"_id": "projectLocation",
+					"maxInstances": "-1",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Project Locations"
+						}
+					}
+				}, {
+					"_id": "developerDetail",
+					"maxInstances": "1",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Developer Details"
+						}
+					}
+				}],
+				"steps": [{
+					"_id": "createForm",
+					"_seq": "1",
+					"_setInstanceStatusTo": "Created",
+					"_setStatusMsgTo": "Form created",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Create the registration form."
+						}
+					},
+					"help": {
 						"i18n": {
 							"_lang": "en",
 							"value": ""
 						}
-					}
-				}],
-				"actions": [{
-					"_id": "createForm",
-					"_seq": "1",
-					"_type": "newSequence",
+					},
+					"actions": [{
+						"_id": "form.create",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "newSequence"
+					}],
+					"task": {},
 					"transitions": [{
+						"_id": "captureForm",
 						"_type": "auto",
 						"name": {
 							"i18n": {
@@ -304,42 +295,29 @@
 						},
 						"_stop": false
 					}]
-				}]
-			}, {
-				"_id": "captureForm",
-				"_seq": "2",
-				"_setInstanceStatusTo": "InProgress",
-				"_setStatusMsgTo": "User assigned and data capture in progress",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Capture"
-					}
-				},
-				"prerequisites": [{
-					"_seq": "1",
-					"_type": "readyToSubmit",
-					"_subject": "indicators.complete",
-					"_operator": "equalTo",
-					"_value": "true",
-					"message": {
+				}, {
+					"_id": "captureForm",
+					"_seq": "2",
+					"_setInstanceStatusTo": "InProgress",
+					"_setStatusMsgTo": "User assigned and data capture in progress",
+					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "All form indicators have to be marked as complete before submission."
+							"value": "Capture"
 						}
-					}
-				}],
-				"actions": [],
-				"task": {
-					"assign": {
-						"profileRole": {
-							"profile": "current",
-							"role": "Capturer"
-						},
-						"default": ""
 					},
-					"work": {
-						"action": "captureData"
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "Capturer"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "captureData"
+						}
 					},
 					"transitions": [{
 						"_id": "submitForm",
@@ -356,42 +334,29 @@
 						},
 						"_stop": false
 					}]
-				}
-			}, {
-				"_id": "authoriseForm",
-				"_seq": "3",
-				"_setInstanceStatusTo": "submitted",
-				"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Review the registration form data."
-					}
-				},
-				"prerequisites": [{
-					"_seq": "1",
-					"_type": "checkRole",
-					"_subject": "profileRole",
-					"_operator": "equalTo",
-					"_value": "authoriser",
-					"message": {
+				}, {
+					"_id": "authoriseForm",
+					"_seq": "3",
+					"_setInstanceStatusTo": "submitted",
+					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "You have to be an authoriser on the project to approve the form data that has been captured or refer back for further editing."
+							"value": "Review the registration form data."
 						}
-					}
-				}],
-				"actions": [],
-				"task": {
-					"assign": {
-						"profileRole": {
-							"profile": "current",
-							"role": "authoriser"
-						},
-						"default": ""
 					},
-					"work": {
-						"action": "editForm"
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "authoriser"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "editForm"
+						}
 					},
 					"transitions": [{
 						"_id": "authoriseForm",
@@ -422,52 +387,33 @@
 						},
 						"_stop": false
 					}]
-				}
-			}, {
-				"_id": "closeForm",
-				"_seq": "5",
-				"_setInstanceStatusTo": "Complete",
-				"_setStatusMsgTo": "Form locked",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Close the registration form."
-					}
-				},
-				"actions": [{
-					"_id": "authoriseForm",
-					"_seq": "1",
-					"_type": "internal",
-					"funct": {
-						"module": "form",
-						"method": "authorise"
-					},
-					"transitions": []
-				},{
+				}, {
 					"_id": "closeForm",
-					"_seq": "2",
-					"_type": "internal",
-					"funct": {
-						"module": "form",
-						"method": "close"
+					"_seq": "4",
+					"_setInstanceStatusTo": "Complete",
+					"_setStatusMsgTo": "Form locked",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Close the registration form."
+						}
 					},
-					"transitions": [{
-						"_type": "auto",
-						"name": {
-							"i18n": {
-								"_lang": "en",
-								"value": ""
-							}
-						},
-						"goTo": {
-							"_type": "",
-							"_stepId": ""
-						},
-						"_stop": true
-					}]
+					"actions": [{
+						"_id": "form.authorise",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					},{
+						"_id": "form.close",
+						"_seq": "2",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					}],
+					"task": {},
+					"transitions": []
 				}]
-			}]
-		}],
+			}
+		],
 		"postActions": {}
 	},{
 		"_id": "monthlyProgress",
@@ -1084,7 +1030,7 @@
 		}],
 		"postActions": {}
 	}
-	
-	
+
+
 	]
 }
