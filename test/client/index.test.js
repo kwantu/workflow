@@ -22,7 +22,7 @@ var config = {
 	"identification": {
 		"documentation": {
 			"i18n": {
-				"_lang": "",
+				"_lang": "en",
 				"value": ""
 			}
 		},
@@ -33,15 +33,13 @@ var config = {
 			}
 		}
 	},
-	"variables": {
-		"variable": [{
-			"_id": "",
-			"_dataType": "",
-			"_sessionVar": "",
-			"_default": "",
-			"_value": ""
-		}]
-	},
+	"variables": [{
+		"_id": "",
+		"_dataType": "",
+		"_sessionVar": "",
+		"_default": "",
+		"_value": ""
+	}],
 	"roles": [{
 			"_id": "Guest",
 			"_level": "0",
@@ -188,106 +186,105 @@ var config = {
 				}
 			}
 		}],
-		"subProcesses": [{
-			"_id": "spRegistration",
-			"_seq": "1",
-			"name": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Project Registration Form"
-				}
-			},
-			"help": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Register a new project"
-				}
-			},
-			"initiate": {
-				"_type": "user",
-				"maxInstances": "-1",
-				"action": {
-					"_type": "button",
-					"label": "Create"
+		"subProcesses": [
+			{
+				"_id": "spRegistration",
+				"_seq": "1",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Project Registration Form"
+					}
 				},
-				"dates": {
-					"valid": {
-						"_type": "userSelected",
-						"message": {
-							"i18n": {
-								"_lang": "en",
-								"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+				"help": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Register a new project"
+					}
+				},
+				"initiate": {
+					"_type": "user",
+					"maxInstances": "-1",
+					"parallelInstances": false,
+					"action": {
+						"_type": "button",
+						"label": "Create"
+					},
+					"dates": {
+						"valid": {
+							"_type": "userSelected",
+							"message": {
+								"i18n": {
+									"_lang": "en",
+									"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+								}
 							}
+						},
+						"due": {
+							"_type": "userSelected",
+							"message": {
+								"i18n": {
+									"_lang": "en",
+									"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+								}
+							}
+						}
+					}
+				},
+				"indicators": [{
+					"_id": "projectDetail",
+					"maxInstances": "1",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Project Details"
+						}
+					}
+				}, {
+					"_id": "projectLocation",
+					"maxInstances": "-1",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Project Locations"
+						}
+					}
+				}, {
+					"_id": "developerDetail",
+					"maxInstances": "1",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Developer Details"
+						}
+					}
+				}],
+				"steps": [{
+					"_id": "createForm",
+					"_seq": "1",
+					"_setInstanceStatusTo": "Created",
+					"_setStatusMsgTo": "Form created",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Create the registration form."
 						}
 					},
-					"due": {
-						"_type": "userSelected",
-						"message": {
-							"i18n": {
-								"_lang": "en",
-								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-							}
-						}
-					}
-				}
-			},
-			"indicators": [{
-				"_id": "projectDetail",
-				"maxInstances": "1",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Project Details"
-					}
-				}
-			}, {
-				"_id": "projectLocation",
-				"maxInstances": "-1",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Project Locations"
-					}
-				}
-			}, {
-				"_id": "developerDetail",
-				"maxInstances": "1",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Developer Details"
-					}
-				}
-			}],
-			"steps": [{
-				"_id": "createForm",
-				"_seq": "1",
-				"_setInstanceStatusTo": "Created",
-				"_setStatusMsgTo": "Form created",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Create the registration form."
-					}
-				},
-				"prerequisites": [{
-					"_seq": "",
-					"_type": "",
-					"_operator": "",
-					"_subject": "",
-					"_value": "",
-					"message": {
+					"help": {
 						"i18n": {
 							"_lang": "en",
 							"value": ""
 						}
-					}
-				}],
-				"actions": [{
-					"_id": "createForm",
-					"_seq": "1",
-					"_type": "newSequence",
+					},
+					"actions": [{
+						"_id": "form.create",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "newSequence"
+					}],
+					"task": {},
 					"transitions": [{
+						"_id": "captureForm",
 						"_type": "auto",
 						"name": {
 							"i18n": {
@@ -301,42 +298,29 @@ var config = {
 						},
 						"_stop": false
 					}]
-				}]
-			}, {
-				"_id": "captureForm",
-				"_seq": "2",
-				"_setInstanceStatusTo": "InProgress",
-				"_setStatusMsgTo": "User assigned and data capture in progress",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Capture"
-					}
-				},
-				"prerequisites": [{
-					"_seq": "1",
-					"_type": "readyToSubmit",
-					"_subject": "indicators.complete",
-					"_operator": "equalTo",
-					"_value": "true",
-					"message": {
+				}, {
+					"_id": "captureForm",
+					"_seq": "2",
+					"_setInstanceStatusTo": "InProgress",
+					"_setStatusMsgTo": "User assigned and data capture in progress",
+					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "All form indicators have to be marked as complete before submission."
+							"value": "Capture"
 						}
-					}
-				}],
-				"actions": [],
-				"task": {
-					"assign": {
-						"profileRole": {
-							"profile": "current",
-							"role": "Capturer"
-						},
-						"default": ""
 					},
-					"work": {
-						"action": "captureData"
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "Capturer"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "captureData"
+						}
 					},
 					"transitions": [{
 						"_id": "submitForm",
@@ -353,42 +337,29 @@ var config = {
 						},
 						"_stop": false
 					}]
-				}
-			}, {
-				"_id": "authoriseForm",
-				"_seq": "3",
-				"_setInstanceStatusTo": "submitted",
-				"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Review the registration form data."
-					}
-				},
-				"prerequisites": [{
-					"_seq": "1",
-					"_type": "checkRole",
-					"_subject": "profileRole",
-					"_operator": "equalTo",
-					"_value": "authoriser",
-					"message": {
+				}, {
+					"_id": "authoriseForm",
+					"_seq": "3",
+					"_setInstanceStatusTo": "submitted",
+					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "You have to be an authoriser on the project to approve the form data that has been captured or refer back for further editing."
+							"value": "Review the registration form data."
 						}
-					}
-				}],
-				"actions": [],
-				"task": {
-					"assign": {
-						"profileRole": {
-							"profile": "current",
-							"role": "authoriser"
-						},
-						"default": ""
 					},
-					"work": {
-						"action": "editForm"
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "authoriser"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "editForm"
+						}
 					},
 					"transitions": [{
 						"_id": "authoriseForm",
@@ -419,52 +390,33 @@ var config = {
 						},
 						"_stop": false
 					}]
-				}
-			}, {
-				"_id": "closeForm",
-				"_seq": "5",
-				"_setInstanceStatusTo": "Complete",
-				"_setStatusMsgTo": "Form locked",
-				"name": {
-					"i18n": {
-						"_lang": "en",
-						"value": "Close the registration form."
-					}
-				},
-				"actions": [{
-					"_id": "authoriseForm",
-					"_seq": "1",
-					"_type": "internal",
-					"funct": {
-						"module": "form",
-						"method": "authorise"
-					},
-					"transitions": []
-				},{
+				}, {
 					"_id": "closeForm",
-					"_seq": "2",
-					"_type": "internal",
-					"funct": {
-						"module": "form",
-						"method": "close"
+					"_seq": "4",
+					"_setInstanceStatusTo": "Complete",
+					"_setStatusMsgTo": "Form locked",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Close the registration form."
+						}
 					},
-					"transitions": [{
-						"_type": "auto",
-						"name": {
-							"i18n": {
-								"_lang": "en",
-								"value": ""
-							}
-						},
-						"goTo": {
-							"_type": "",
-							"_stepId": ""
-						},
-						"_stop": true
-					}]
+					"actions": [{
+						"_id": "form.authorise",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					},{
+						"_id": "form.close",
+						"_seq": "2",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					}],
+					"task": {},
+					"transitions": []
 				}]
-			}]
-		}],
+			}
+		],
 		"postActions": {}
 	},{
 		"_id": "monthlyProgress",
@@ -1081,13 +1033,16 @@ var config = {
 		}],
 		"postActions": {}
 	}
-	
-	
+
+
 	]
 };
 
 // Create the workflow constrctor instance
 var workflow = new Workflow('1234', '5678', config);
+
+var processId = 'registration';
+var subProcessId = 'spRegistration'
 
 // Workflow module test
 describe('# Module: Workflow', function(){
@@ -1103,12 +1058,13 @@ describe('# Module: Workflow', function(){
 	// Test the create method
 	describe('- Method: create(): Create a new workflow instance', function(){
 		it('Should return a success block with the newly created process instance data.', function(done){
-			workflow.create().then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Workflow processes instance created successfully.');
+			workflow.create().then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Workflow processes instance created successfully.');
 				expect(workflow.instance).to.be.an('object');
 				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
 				expect(workflow.instance.version).to.equal(workflow.config.version);
+				expect(workflow.instance.processes.length).to.equal(0);
 			}).should.notify(done);
 		})
 	});
@@ -1116,44 +1072,57 @@ describe('# Module: Workflow', function(){
 	describe('- Method: initialise(): Create the first process instance', function(){
 		it('Should return a success block and update the processes instance data.', function(done){
 			var processId = workflow.config.processes[0]._id;
-			var inputData = {
+			var data = {
 				createdDate: moment().format('YYYY-MM-DD'),
 				validDate: '2016-06-30',
 				dueDate: '2016-07-31',
 				userId: '9012',
-				name: 'Brent Gordon'
+				name: 'Brent Gordon',
+				comment: ''
 			}
-			workflow.initialise(processId, inputData).then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.complete).to.equal(true);
-				expect(data.message).to.equal('Process: ' + processId + ' initialized successfully.');
+			workflow.initialise(processId, data).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Process: ' + processId + ' initialized successfully.');
 				expect(workflow.instance).to.be.an('object');
 				expect(workflow.instance._id).to.equal(workflow.profile + ':processes');
 				expect(workflow.instance.version).to.equal(workflow.config.version);
-				// Process instance data checks
-				expect(workflow.instance.processes[0].id).to.equal(workflow.config.processes[0]._id);
-				expect(workflow.instance.processes[0].seq).to.equal(1);
-				// Sub-process instance data checks
-				expect(workflow.instance.processes[0].subProcesses[0].id).to.equal(workflow.config.processes[0].subProcesses[0]._id);
-				expect(workflow.instance.processes[0].subProcesses[0].seq).to.equal(1);
-				expect(workflow.instance.processes[0].subProcesses[0].initiated).to.equal(true);
-				expect(workflow.instance.processes[0].subProcesses[0].dates.created).to.equal(inputData.createdDate);
-				expect(workflow.instance.processes[0].subProcesses[0].dates.valid).to.equal(inputData.validDate);
-				expect(workflow.instance.processes[0].subProcesses[0].dates.due).to.equal(inputData.dueDate);
-				expect(workflow.instance.processes[0].subProcesses[0].complete).to.equal(false);
-				// Step updates
-				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('InProgress');
-				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('User assigned and data capture in progress');
-				// Form indicator instance/s data checks
-				for (var i = 0; i < workflow.config.processes[0].subProcesses[0].indicators.length; i++) {
-					var indicator = workflow.config.processes[0].subProcesses[0].indicators[i];
-					var id = indicator._id;
-					
-					// Check the workflow sub-process indicator instance/s data
-					
-					// Check the indicator instance/s processes data
-
-				}
+				workflow.instance.processes.filter(function(processItem){
+				if (processItem.id === processId && processItem.seq === 1) {
+						// Workflow process instance data checks
+						expect(processItem.id).to.equal(workflow.config.processes[0]._id);
+						expect(processItem.seq).to.equal(1);
+						processItem.subProcesses.filter(function(subProcessItem){
+							if (subProcessItem.id === subProcessId && subProcessItem.seq === 1) {
+								// Workflow sub-process instance data checks
+								expect(subProcessItem.id).to.equal(workflow.config.processes[0].subProcesses[0]._id);
+								expect(subProcessItem.seq).to.equal(1);
+								expect(subProcessItem.initiated).to.equal(true);
+								expect(subProcessItem.dates.created).to.equal(data.createdDate);
+								expect(subProcessItem.dates.valid).to.equal(data.validDate);
+								expect(subProcessItem.dates.due).to.equal(data.dueDate);
+								expect(subProcessItem.complete).to.equal(false);
+								// Workflow step instance data checks
+								expect(subProcessItem.step.id).to.equal('captureForm');
+								expect(subProcessItem.step.seq).to.equal(2);
+								expect(subProcessItem.step.status).to.equal('InProgress');
+								expect(subProcessItem.step.message).to.equal('User assigned and data capture in progress');
+								expect(subProcessItem.step.assignedTo.userId).to.equal(data.userId);
+								expect(subProcessItem.step.assignedTo.name).to.equal(data.name);
+								expect(subProcessItem.step.comment).to.equal(data.comment);
+								// // Form indicator instance/s data checks
+								// for (var i = 0; i < workflow.config.processes[0].subProcesses[0].indicators.length; i++) {
+								// 	var indicator = workflow.config.processes[0].subProcesses[0].indicators[i];
+								// 	var id = indicator._id;
+								//
+								// 	// Check the workflow sub-process indicator instance/s data
+								//
+								// 	// Check the indicator instance/s processes data
+								//
+								// }
+							}
+						})
+					}
+				})
 			}).should.notify(done);
 		})
 	});
@@ -1165,24 +1134,37 @@ describe('# Module: Workflow', function(){
 	// Test the transition method
 	describe('- Method: transition()', function(){
 		it('Should return a success message and update the processes instance data.', function(done){
-			var processId = workflow.config.processes[0]._id;
-			var subProcessId = workflow.config.processes[0].subProcesses[0]._id;
+			var processSeq = 1;
+			var subProcessSeq = 1;
 			var stepId = 'captureForm';
 			var transitionId = 'submitForm';
-			var inputData = {
+			var data = {
 				createdDate: '',
 				endDate: '',
 				userId: '9012',
-				name: 'Brent Gordon'
+				name: 'Brent Gordon',
+				comment: ''
 			}
-			workflow.transition(processId, subProcessId, stepId, transitionId, inputData).then(function(data){
-				expect(data).to.be.an('object');
-				expect(data.message).to.equal('Workflow transitioned to the next step successfully.');
+			workflow.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('Step transition completed successfully.');
 				// Step updates
-				expect(workflow.instance.processes[0].subProcesses[0].step.status).to.equal('submitted');
-				expect(workflow.instance.processes[0].subProcesses[0].step.message).to.equal('Form data submitted, user assigned and form data under review');
-			}).should.notify(done);	
+				workflow.instance.processes.filter(function(processItem){
+					if (processItem.id === processId && processItem.seq === processSeq) {
+						processItem.subProcesses.filter(function(subProcessItem){
+							if (subProcessItem.id === subProcessId && subProcessItem.seq === subProcessSeq) {
+								expect(subProcessItem.step.id).to.equal('authoriseForm');
+								expect(subProcessItem.step.seq).to.equal(3);
+								expect(subProcessItem.step.status).to.equal('submitted');
+								expect(subProcessItem.step.message).to.equal('Form data submitted, user assigned and form data under review');
+								expect(subProcessItem.step.assignedTo.userId).to.equal(data.userId);
+								expect(subProcessItem.step.assignedTo.name).to.equal(data.name);
+								expect(subProcessItem.step.comment).to.equal(data.comment);
+							}
+						})
+					}
+				})
+			}).should.notify(done);
 		})
-
 	});
 });

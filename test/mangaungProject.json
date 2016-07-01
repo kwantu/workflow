@@ -202,6 +202,7 @@
 				"initiate": {
 					"_type": "user",
 					"maxInstances": "-1",
+					"parallelInstances": false,
 					"action": {
 						"_type": "button",
 						"label": "Create"
@@ -388,7 +389,7 @@
 					}]
 				}, {
 					"_id": "closeForm",
-					"_seq": "5",
+					"_seq": "4",
 					"_setInstanceStatusTo": "Complete",
 					"_setStatusMsgTo": "Form locked",
 					"name": {
@@ -398,42 +399,19 @@
 						}
 					},
 					"actions": [{
-						"_id": "authoriseForm",
+						"_id": "form.authorise",
 						"_seq": "1",
-						"_type": "internal",
-						"funct": {
-							"module": "form",
-							"method": "authorise"
-						}
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
 					},{
-						"_id": "closeForm",
+						"_id": "form.close",
 						"_seq": "2",
-						"_type": "internal",
-						"funct": {
-							"module": "form",
-							"method": "close"
-						}
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
 					}],
 					"task": {},
-					"transitions": [{
-						"_id": "closeForm",
-						"_type": "auto",
-						"name": {
-							"i18n": {
-								"_lang": "en",
-								"value": ""
-							}
-						},
-						"goTo": {
-							"_type": "",
-							"_stepId": ""
-						},
-						"_stop": true
-					}]
+					"transitions": []
 				}]
-			},
-			{
-
 			}
 		],
 		"postActions": {}

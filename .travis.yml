@@ -9,4 +9,3 @@ before_script:
   - npm run build-js && npm run build-js-min
 script:
   - npm test
-  - npm run test-client
