@@ -9,8 +9,8 @@
     * [new Workflow(profile, app, config, [instance])](#new_Workflow_new)
     * [.create()](#Workflow+create) ⇒ <code>Object</code>
     * [.initialise(processId, [data])](#Workflow+initialise) ⇒
+    * [.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data)](#Workflow+transition) ⇒
     * [.runTask(processId, inputData)](#Workflow+runTask) ⇒
-    * [.transition(processId, subProcessId, stepId, transitionId, data)](#Workflow+transition) ⇒
 
 <a name="new_Workflow_new"></a>
 
@@ -88,6 +88,29 @@ configuration.
 ```js
 Workflow.initialize('processId', { validDate: 'date' });
 ```
+<a name="Workflow+transition"></a>
+
+### workflow.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data) ⇒
+Workflow transition to the next step. This moves the workflow from the current process,
+sub-process step to the next one as specified.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| processId | <code>string</code> | the Workflow config / definition process id |
+| processSeq | <code>number</code> | the Workflow instance process seq |
+| subProcessId | <code>string</code> | the Workflow config / definition sub-process id |
+| subProcessSeq | <code>number</code> | the Workflow instance sub-process seq |
+| stepId | <code>string</code> | the Workflow config / definition step id |
+| transitionId | <code>string</code> | the Workflow config / definition transition id |
+| data | <code>object</code> | any additional data passed in as key value pairs |
+
+**Example**  
+```js
+Workflow.transition('processId', 1, 'subProcessId', 1, 'stepId', 'transitionId', { key: '', value: '' });
+```
 <a name="Workflow+runTask"></a>
 
 ### workflow.runTask(processId, inputData) ⇒
@@ -104,27 +127,6 @@ Workflow task, this method executes a specific task.
 **Example**  
 ```js
 Workflow.initialize('processId', { validDate: 'date' });
-```
-<a name="Workflow+transition"></a>
-
-### workflow.transition(processId, subProcessId, stepId, transitionId, data) ⇒
-Workflow transition to the next step. This moves the workflow from the current process,
-sub-process step to the next one as specified.
-
-**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
-**Returns**: ""  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| processId | <code>string</code> | the Workflow config / definition process id |
-| subProcessId | <code>string</code> | the Workflow config / definition sub-process id |
-| stepId | <code>string</code> | the Workflow config / definition step id |
-| transitionId | <code>string</code> | the Workflow config / definition transition id |
-| data | <code>object</code> | any additional data passed in as key value pairs |
-
-**Example**  
-```js
-Workflow.transition('processId', 'subProcessId', 'stepId', 'transitionId', { key: '', value: '' });
 ```
 ## Modules
 
@@ -159,15 +161,15 @@ test description
 
 * [lib/process](#module_lib/process)
     * [~preRequisites(prerequisites)](#module_lib/process..preRequisites) ⇒
-    * [~preRequisite(prerequisite, counter, workflow)](#module_lib/process..preRequisite) ⇒
-    * [~preActions(preActions, workflow)](#module_lib/process..preActions) ⇒
-    * [~subProcess(processId, subProcess, seq, data, workflow)](#module_lib/process..subProcess) ⇒
+    * [~preRequisite(prerequisite, counter, _WFInstance)](#module_lib/process..preRequisite) ⇒
+    * [~preActions(preActions, _WFInstance)](#module_lib/process..preActions) ⇒
+    * [~subProcess(process, subProcess, data, _WFInstance)](#module_lib/process..subProcess) ⇒
     * [~initiate(initiate, data)](#module_lib/process..initiate) ⇒
-    * [~step(processId, subProcessId, stepId, stepSeq, formDef, inputData, workflow)](#module_lib/process..step) ⇒
-    * [~actions(actions, formDef, workflow)](#module_lib/process..actions) ⇒
-    * [~action(action, formDef, workflow)](#module_lib/process..action) ⇒
+    * [~step(processId, subProcessId, stepId, stepSeq, inputData, _WFInstance)](#module_lib/process..step) ⇒
+    * [~actions(actions, subProcess, _WFInstance)](#module_lib/process..actions) ⇒
+    * [~action(action, subProcess, _WFInstance)](#module_lib/process..action) ⇒
     * [~task(task, inputData)](#module_lib/process..task) ⇒
-    * [~transition(processId, subProcessId, stepId, stepId, subProcessModel, data, workflow)](#module_lib/process..transition) ⇒
+    * [~transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _WFInstance)](#module_lib/process..transition) ⇒
     * [~postActions(postActions)](#module_lib/process..postActions) ⇒
 
 <a name="module_lib/process..preRequisites"></a>
@@ -188,7 +190,7 @@ Process pre-requisites
 ```
 <a name="module_lib/process..preRequisite"></a>
 
-### lib/process~preRequisite(prerequisite, counter, workflow) ⇒
+### lib/process~preRequisite(prerequisite, counter, _WFInstance) ⇒
 Process pre-requisite, execute the pre-requisite condition.
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -198,7 +200,7 @@ Process pre-requisite, execute the pre-requisite condition.
 | --- | --- | --- |
 | prerequisite | <code>object</code> | the pre-requisite config data |
 | counter | <code>number</code> | the pre-requisite count / number |
-| workflow | <code>object</code> | the workflow constructor instance |
+| _WFInstance | <code>object</code> | the workflow constructor instance |
 
 **Example**  
 ```js
@@ -220,7 +222,7 @@ Process.preRequisite(config, counter, instance, doc);
 ```
 <a name="module_lib/process..preActions"></a>
 
-### lib/process~preActions(preActions, workflow) ⇒
+### lib/process~preActions(preActions, _WFInstance) ⇒
 Process pre-actionss
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -229,7 +231,7 @@ Process pre-actionss
 | Param | Type | Description |
 | --- | --- | --- |
 | preActions | <code>object</code> | the pre-actions config data |
-| workflow | <code>object</code> | the current workflow constructor instance |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
 ```js
@@ -237,7 +239,7 @@ Process pre-actionss
 ```
 <a name="module_lib/process..subProcess"></a>
 
-### lib/process~subProcess(processId, subProcess, seq, data, workflow) ⇒
+### lib/process~subProcess(process, subProcess, data, _WFInstance) ⇒
 Process sub-process
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -245,11 +247,10 @@ Process sub-process
 
 | Param | Type | Description |
 | --- | --- | --- |
-| processId | <code>string</code> | the current process id |
-| subProcess | <code>object</code> | the sub-process config data |
-| seq | <code>number</code> | the current sub-process instance counter / sequence |
+| process | <code>object</code> | the current process id and seq |
+| subProcess | <code>object</code> | the sub-process id and seq |
 | data | <code>object</code> | the user input data |
-| workflow | <code>object</code> | the current workflow constructor instance |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
 ```js
@@ -274,7 +275,7 @@ Process initiate
 ```
 <a name="module_lib/process..step"></a>
 
-### lib/process~step(processId, subProcessId, stepId, stepSeq, formDef, inputData, workflow) ⇒
+### lib/process~step(processId, subProcessId, stepId, stepSeq, inputData, _WFInstance) ⇒
 Process step
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -286,9 +287,8 @@ Process step
 | subProcessId | <code>string</code> | the current sub-process id |
 | stepId | <code>string</code> | the current sub-process step id |
 | stepSeq | <code>number</code> | the current sub-process step instance counter / sequence |
-| formDef | <code>object</code> | the current sub-process form config data |
 | inputData | <code>object</code> | the user input data |
-| workflow | <code>object</code> | the current workflow constructor instance |
+| _WFInstance | <code>object</code> | the current _WFInstance constructor instance |
 
 **Example**  
 ```js
@@ -296,7 +296,7 @@ Process step
 ```
 <a name="module_lib/process..actions"></a>
 
-### lib/process~actions(actions, formDef, workflow) ⇒
+### lib/process~actions(actions, subProcess, _WFInstance) ⇒
 Process actions
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -305,8 +305,8 @@ Process actions
 | Param | Type | Description |
 | --- | --- | --- |
 | actions | <code>object</code> | the actions config data |
-| formDef | <code>object</code> | the current sub-process form config data |
-| workflow | <code>object</code> | the current workflow constructor instance |
+| subProcess | <code>object</code> | the current sub-process form config data |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
 ```js
@@ -314,7 +314,7 @@ Process actions
 ```
 <a name="module_lib/process..action"></a>
 
-### lib/process~action(action, formDef, workflow) ⇒
+### lib/process~action(action, subProcess, _WFInstance) ⇒
 Process action
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -323,8 +323,8 @@ Process action
 | Param | Type | Description |
 | --- | --- | --- |
 | action | <code>object</code> | the action config data |
-| formDef | <code>object</code> | the current sub-process form config data |
-| workflow | <code>object</code> | the current workflow constructor instance |
+| subProcess | <code>object</code> | the current sub-process form config data |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
 ```js
@@ -349,7 +349,7 @@ Process task
 ```
 <a name="module_lib/process..transition"></a>
 
-### lib/process~transition(processId, subProcessId, stepId, stepId, subProcessModel, data, workflow) ⇒
+### lib/process~transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _WFInstance) ⇒
 Process transition
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -357,13 +357,14 @@ Process transition
 
 | Param | Type | Description |
 | --- | --- | --- |
-| processId | <code>string</code> | the current process id |
-| subProcessId | <code>string</code> | the current sub-process id |
-| stepId | <code>string</code> | the current sub-process step id |
-| stepId | <code>string</code> | the current sub-process step transition id |
-| subProcessModel | <code>object</code> | the current sub-process model instance data |
-| data | <code>object</code> | the user input data |
-| workflow | <code>object</code> | the current workflow constructor instance |
+| processId | <code>string</code> | the Workflow config / definition process id |
+| processSeq | <code>number</code> | the Workflow instance process seq |
+| subProcessId | <code>string</code> | the Workflow config / definition sub-process id |
+| subProcessSeq | <code>number</code> | the Workflow instance sub-process seq |
+| stepId | <code>string</code> | the Workflow config / definition step id |
+| transitionId | <code>string</code> | the Workflow config / definition transition id |
+| data | <code>object</code> | any additional data passed in as key value pairs |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
 ```js
@@ -456,7 +457,7 @@ var success = util.error('Error001','Error message goes here...');
 <a name="module_lib/util..syncLoop"></a>
 
 ### lib/util~syncLoop(iterations, process, exit) ⇒ <code>Object</code>
-A loop which can loop X amount of times, which carries out 
+A loop which can loop X amount of times, which carries out
 asynchronous code, but waits for that code to complete before looping.
 
 **Kind**: inner method of <code>[lib/util](#module_lib/util)</code>  
@@ -465,8 +466,8 @@ asynchronous code, but waits for that code to complete before looping.
 | Param | Type | Description |
 | --- | --- | --- |
 | iterations | <code>number</code> | the number of iterations to carry out |
-| process | <code>function</code> | the code/function we're running for every  iteration |
-| exit | <code>function</code> | an optional callback to carry out once the loop  has completed |
+| process | <code>function</code> | the code/function we're running for every iteration |
+| exit | <code>function</code> | an optional callback to carry out once the loop has completed |
 
 **Example**  
 ```js
