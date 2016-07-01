@@ -8,11 +8,11 @@
 
 ### How to install the npm module:
 
-`npm install git+https://github.com/kwantu/workflow.git#0.1.0`
+`npm install git+https://github.com/kwantu/workflow.git#0.1.1`
 
 ### How to install the bower module:
 
-`bower install https://github.com/kwantu/workflow.git#0.1.0`
+`bower install https://github.com/kwantu/workflow.git#0.1.1`
 
 ### How to generate the browser based workflow module with browserify:
 
@@ -35,4 +35,4 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 ## API Documentation
 
-[View the documentation here ...](https://github.com/kwantu/workflow/blob/develop/docs/index.md)
+[View the documentation here ...](https://github.com/kwantu/workflow/blob/master/docs/index.md)
