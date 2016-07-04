@@ -276,7 +276,7 @@
 					"actions": [{
 						"_id": "form.create",
 						"_seq": "1",
-						"_args": ["subProcess.indicators"],
+						"_args": ["processId","subProcess","step"],
 						"_type": "newSequence"
 					}],
 					"task": {},

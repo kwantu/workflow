@@ -23,7 +23,7 @@
         "setId": ""
     },
     "attachments": [{
-        "id": "", "type": "", "label": "", "href": ""    
+        "id": "", "type": "", "label": "", "href": ""
     }],
     "links": [{
         "id": "", "type": "", "label": "", "href": ""
@@ -31,10 +31,10 @@
     "tags": [{
         "id": "", "type": "", "label": ""
     }],
-    "gps": { 
+    "gps": {
         "type": "Feature",
         "geometry": {
-            "type": "", 
+            "type": "",
             "coordinates": []
         },
         "properties": {
@@ -56,10 +56,9 @@
                 "userId": "",
                 "name": ""
             },
-            "status": "", // Descriptive label of the pending status
-            "data": {} // Component data model goes here
+            "status": "",
+            "data": {}
         },
-        // Authorised
         "approved": [{
             "seq": "",
             "revision": "",

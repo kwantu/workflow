@@ -187,8 +187,15 @@ Workflow.prototype.initialise = function(processId, data){
 			Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, data, _this).then(function(result){
 				processModel.subProcesses.push(result.data);
 				_this.instance.processes.push(processModel);
-				var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
-				resolve(success);
+				// Process the indicator documents workflow processes updates
+				var indicators = result.data.indicators;
+				var step = result.data.step;
+				Process.indicatorDocs(processId, indicators, step, _this).then(function(result){
+					var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
+					resolve(success);
+				}, function(err){
+					reject(err);
+				})
 			}, function(err){
 				reject(err);
 			});
