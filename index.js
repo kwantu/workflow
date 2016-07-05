@@ -2,6 +2,7 @@
 
 var Process = require('./lib/process');
 var util = require('./lib/utility');
+var ui = require('./lib/ui');
 
 /*globals */
 
@@ -276,16 +277,24 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
  * @return ""
  *
  */
-Workflow.prototype.runTask = function(type, params){
+Workflow.prototype.ui = function(type, params){
 	// Re-assign the Workflow constructor instance as _this
 	var _this = this;
-	return new Promise(function(resolve, reject) {
-		try {
-			resolve('Success');
-		} catch(err) {
-			reject(err);
+	return {
+		getSubProcess: function(processId, processSeq, subProcessId, subProcessSeq){
+			return new Promise(function(resolve, reject) {
+				try {
+					ui.getSubProcess(processId, processSeq, subProcessId, subProcessSeq, _this).then(function(model){
+						resolve(model);
+					}, function(err){
+						reject(err);
+					})
+				} catch(err) {
+					reject(err);
+				}
+			})
 		}
-	});
+	}
 };
 
 module.exports = Workflow;

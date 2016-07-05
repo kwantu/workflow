@@ -182,6 +182,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				name: 'Brent Gordon',
 				comment: ''
 			}
+			var currentStep = {};
 			workflow.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data).then(function(result){
 				expect(result).to.be.an('object');
 				expect(result.message).to.equal('Step transition completed successfully.');
@@ -197,12 +198,42 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 								expect(subProcessItem.step.assignedTo.userId).to.equal(data.userId);
 								expect(subProcessItem.step.assignedTo.name).to.equal(data.name);
 								expect(subProcessItem.step.comment).to.equal(data.comment);
+								currentStep = subProcessItem.step;
 							}
 						})
 					}
 				})
 				// Test the updates to the indicator documents workflow processes section
-
+				workflow.config.processes.filter(function(processItem){
+					if (processItem._id === processId) {
+						processItem.subProcesses.filter(function(subProcessItem){
+							if (subProcessItem._id === subProcessId) {
+								var indicators = subProcessItem.indicators;
+								for (var i = 0; i < indicators.length; i++) {
+									var indicatorId = indicators[i]._id;
+									workflow.indicators.filter(function(indicator){
+										if (indicatorId === indicator.category.term) {
+											var workflows = indicator.workflows;
+											workflows.filter(function(wfInstance){
+												if (wfInstance.id === workflow.config._id) {
+													wfInstance.processes.filter(function(processItem){
+														// Check the step data
+														expect(processItem.step.id).to.equal('authoriseForm');
+														expect(processItem.step.seq).to.equal(3);
+														expect(processItem.step.status).to.equal('submitted');
+														expect(processItem.step.message).to.equal('Form data submitted, user assigned and form data under review');
+														expect(processItem.step.assignedTo.userId).to.equal(data.userId);
+														expect(processItem.step.assignedTo.name).to.equal(data.name);
+													})
+												}
+											})
+										}
+									})
+								}
+							}
+						})
+					}
+				})
 			}).should.notify(done);
 		})
 	});
