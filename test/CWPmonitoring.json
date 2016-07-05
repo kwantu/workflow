@@ -39,95 +39,7 @@
 			"_value": ""
 		}]
 	},
-	"roles": [{
-			"_id": "Guest",
-			"_level": "0",
-			"name": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Guest follower of a property."
-				}
-			},
-			"roleMappings": {
-				"roleMapping": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			},
-			"requiredRoles": {
-				"requiredRole": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			}
-		  },
-		   {
-			"_id": "Capturer",
-			"_level": "1",
-			"name": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Capturer"
-				}
-			},
-			"roleMappings": {
-				"roleMapping": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			},
-			"requiredRoles": {
-				"requiredRole": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			}
-		},
-		   {
-			"_id": "Authoriser",
-			"_level": "2",
-			"name": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Authoriser"
-				}
-			},
-			"roleMappings": {
-				"roleMapping": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			},
-			"requiredRoles": {
-				"requiredRole": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			}
-		},
-		   {
-			"_id": "Owner",
-			"_level": "3",
-			"name": {
-				"i18n": {
-					"_lang": "en",
-					"value": "Owner"
-				}
-			},
-			"roleMappings": {
-				"roleMapping": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			},
-			"requiredRoles": {
-				"requiredRole": {
-					"_applicationId": "",
-					"_roleId": ""
-				}
-			}
-		}]
-	,
+	"roles": [],
 	"processes": [{
 		"_id": "Siteinformationprocess",
 		"_seq": "1",
@@ -393,13 +305,8 @@
 					}],
 					"task": {},
 					"transitions": []
-				}]
+				}],
+				"postActions": {}
 			}]
-			}]
-		}],
-		"postActions": {}
-	}
-	
-	
-	]
+	}]
 }
