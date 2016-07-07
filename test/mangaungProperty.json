@@ -101,11 +101,11 @@
             "_seq": "1",
             "name": {"i18n": {
                 "_lang": "en",
-                "value": "Register a property for MMM"
+                "value": "Register a new property"
             }},
             "help": {"i18n": {
                 "_lang": "en",
-                "value": "Edit the property registration details"
+                "value": "Register a new property"
             }},
             "variables": [{
                 "_id": "",
@@ -365,11 +365,11 @@
             "postActions": {}
         },
         {
-            "_id": "siteVisitBuilding",
+            "_id": "BuildingInspectionProcess",
             "_seq": "2",
             "name": {"i18n": {
                 "_lang": "en",
-                "value": "Site Inspection Building"
+                "value": "Building Inspection Process"
             }},
             "help": {"i18n": {
                 "_lang": "en",
@@ -416,7 +416,7 @@
                 "_seq": "1",
                 "name": {"i18n": {
                     "_lang": "en",
-                    "value": "Site Inspection (Building)"
+                    "value": "Building Inspection Process"
                 }},
                 "help": {"i18n": {
                     "_lang": "en",
@@ -676,14 +676,14 @@
         },
         {
             "_id": "siteVisitRental",
-            "_seq": "1",
+            "_seq": "3",
             "name": {"i18n": {
                 "_lang": "en",
-                "value": "Site Inspection Lease and Rental"
+                "value": "Lease and Rental Inspection Process"
             }},
             "help": {"i18n": {
                 "_lang": "en",
-                "value": "Site inspection lease and rental forms"
+                "value": "Lease and Rental Inspection Process"
             }},
             "variables": [{
                 "_id": "",
@@ -700,7 +700,7 @@
                 "_value": "0",
                 "message": {"i18n": {
                     "_lang": "en",
-                    "value": "The project registration form can't be edited once the monthly progress process has been initiated."
+                    "value": "The property inspection form can't be edited once the monthly progress process has been initiated."
                 }}
             }],
             "preActions": [{
@@ -722,19 +722,19 @@
                 }
             }],
             "subProcesses": [{
-                "_id": "spRegistration",
+                "_id": "spRentalInspection",
                 "_seq": "1",
                 "name": {"i18n": {
                     "_lang": "en",
-                    "value": "Site Inspection Lease and Rental"
+                    "value": "Lease and Rental Inspection Process"
                 }},
                 "help": {"i18n": {
                     "_lang": "en",
-                    "value": "Site inspection lease and rental forms"
+                    "value": "Lease and Rental Inspection Process"
                 }},
                 "initiate": {
                     "_type": "user",
-                    "maxInstances": "-1",
+                    "maxInstances": "1",
                     "action": {
                         "_type": "button",
                         "label": "Create"
@@ -986,7 +986,7 @@
         },
         {
             "_id": "siteInstructions",
-            "_seq": "1",
+            "_seq": "4",
             "name": {"i18n": {
                 "_lang": "en",
                 "value": "Issue a site instruction"
@@ -1256,14 +1256,14 @@
         },
         {
             "_id": "commercialLeaseTracking",
-            "_seq": "1",
+            "_seq": "5",
             "name": {"i18n": {
                 "_lang": "en",
-                "value": "Track a commercial lease process"
+                "value": "Commercial Lease Tracking"
             }},
             "help": {"i18n": {
                 "_lang": "en",
-                "value": "Track a commercial lease process"
+                "value": "Commercial Lease Tracking"
             }},
             "variables": [{
                 "_id": "",
@@ -1303,7 +1303,7 @@
             }],
             "subProcesses": [{
                 "_id": "spCommercialLeaseTracking",
-                "_seq": "1",
+                "_seq": "-1",
                 "name": {"i18n": {
                     "_lang": "en",
                     "value": "Commercial Lease Tracking"
@@ -1526,7 +1526,7 @@
         },
         {
             "_id": "propertyAcquisition",
-            "_seq": "1",
+            "_seq": "6",
             "name": {"i18n": {
                 "_lang": "en",
                 "value": "Property Acquisition Process"
@@ -1612,7 +1612,7 @@
                         "maxInstances": "1",
                         "name": {"i18n": {
                             "_lang": "en",
-                            "value": "Unit Acquisition Process"
+                            "value": "Property Acquisition Process"
                         }}
                     }
                 ],
@@ -1796,14 +1796,14 @@
         },
         {
             "_id": "propertyDisposal",
-            "_seq": "1",
+            "_seq": "7",
             "name": {"i18n": {
                 "_lang": "en",
-                "value": "Issue a site instruction"
+                "value": "Process Disposal"
             }},
             "help": {"i18n": {
                 "_lang": "en",
-                "value": "Issue a site instruction"
+                "value": "Property Disposal"
             }},
             "variables": [{
                 "_id": "",
@@ -1820,7 +1820,7 @@
                 "_value": "0",
                 "message": {"i18n": {
                     "_lang": "en",
-                    "value": "The project registration form can't be edited once the monthly progress process has been initiated."
+                    "value": "The property disposal form can't be edited once the monthly progress process has been initiated."
                 }}
             }],
             "preActions": [{
@@ -1850,11 +1850,11 @@
                 }},
                 "help": {"i18n": {
                     "_lang": "en",
-                    "value": "Issue a site instruction"
+                    "value": "Property Disposal"
                 }},
                 "initiate": {
                     "_type": "user",
-                    "maxInstances": "-1",
+                    "maxInstances": "1",
                     "action": {
                         "_type": "button",
                         "label": "Create"
