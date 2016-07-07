@@ -311,7 +311,7 @@
 	},
 {
 		"_id": "Partnerships",
-		"_seq": "1",
+		"_seq": "2",
 		"name": {
 			"i18n": {
 				"_lang": "en",
@@ -580,7 +580,7 @@
 	},
 	{
 		"_id": "Trainingprocess",
-		"_seq": "1",
+		"_seq": "3",
 		"name": {
 			"i18n": {
 				"_lang": "en",
@@ -849,7 +849,7 @@
 	},
 {
 		"_id": "Monthlyreportingprocess",
-		"_seq": "1",
+		"_seq": "4",
 		"name": {
 			"i18n": {
 				"_lang": "en",
@@ -869,6 +869,7 @@
 			"_default": "",
 			"_value": ""
 		}],
+		// Need a prerequ that checks that site registration process has been completed before this can begin
 		"prerequisites": [{
 			"_seq": "1",
 			"_type": "count",
@@ -904,6 +905,7 @@
 				}
 			}
 		}],
+		//Need a way to allow first SP to be user initiated and then following ones monthly, prompting update of new sequence in same IS
 		"subProcesses": [{
 			"_id": "Monthlyreportingsubprocess",
 			"_seq": "1",
