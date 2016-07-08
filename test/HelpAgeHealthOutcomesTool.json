@@ -201,7 +201,7 @@
 				},
 				"initiate": {
 					"_type": "user",
-					"maxInstances": "1",
+					"maxInstances": "-1",
 					"parallelInstances": false,
 					"action": {
 						"_type": "button",
