@@ -1,0 +1,404 @@
+{
+	"_id": "HelpAgeHealthOutcomesTool",
+	"_version": "1.0",
+	"type": "workflowConfig",
+	"title": {
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "HelpAge Health Outcomes Tool Workflow"
+			}
+		},
+		"description": {
+			"i18n": {
+				"_lang": "en",
+				"value": "HelpAge Health Outcomes Tool Workflow."
+			}
+		}
+	},
+	"identification": {
+		"documentation": {
+			"i18n": {
+				"_lang": "en",
+				"value": ""
+			}
+		},
+		"upgradeInformation": {
+			"i18n": {
+				"_lang": "",
+				"value": ""
+			}
+		}
+	},
+	"variables": [{
+		"_id": "",
+		"_dataType": "",
+		"_sessionVar": "",
+		"_default": "",
+		"_value": ""
+	}],
+	"roles": [{
+			"_id": "Guest",
+			"_level": "0",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Guest follower of a participant."
+				}
+			},
+			"roleMappings": {
+				"roleMapping": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			},
+			"requiredRoles": {
+				"requiredRole": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			}
+		  },
+		   {
+			"_id": "Capturer",
+			"_level": "1",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Capturer"
+				}
+			},
+			"roleMappings": {
+				"roleMapping": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			},
+			"requiredRoles": {
+				"requiredRole": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			}
+		},
+		   {
+			"_id": "Authoriser",
+			"_level": "2",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Authoriser"
+				}
+			},
+			"roleMappings": {
+				"roleMapping": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			},
+			"requiredRoles": {
+				"requiredRole": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			}
+		},
+		   {
+			"_id": "Owner",
+			"_level": "3",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Owner"
+				}
+			},
+			"roleMappings": {
+				"roleMapping": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			},
+			"requiredRoles": {
+				"requiredRole": {
+					"_applicationId": "",
+					"_roleId": ""
+				}
+			}
+		}]
+	,
+	"processes": [{
+		"_id": "healthoutcomestool",
+		"_seq": "1",
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a new community in which you will use the Health Outcomes Tool"
+			}
+		},
+		"help": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a new community in which you will use the Health Outcomes Tool"
+			}
+		},
+		"variables": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}],
+		"prerequisites": [{
+			"_seq": "1",
+			"_type": "count",
+			"_subject": "completion.instance",
+			"_operator": "greaterThan",
+			"_value": "0",
+			"message": {
+				"i18n": {
+					"_lang": "en",
+					"value": "The health outcomes tool list form can't be edited once the completion process has been initiated."
+				}
+			}
+		}],
+		"preActions": [{
+			"_seq": "",
+			"_type": "",
+			"funct": {
+				"module": "",
+				"method": "",
+				"params": {
+					"param": []
+				}
+			},
+			"rest": {
+				"hostId": "",
+				"service": "",
+				"APIKey": "",
+				"format": "",
+				"collection": "",
+				"endpoint": "",
+				"params": {
+					"param": []
+				}
+			}
+		}],
+		"subProcesses": [
+			{
+				"_id": "HelpAgeHealthOutcomesTool",
+				"_seq": "1",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Health Outcomes Tool Workflow"
+					}
+				},
+				"help": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Health Outcomes Tool Workflow"
+					}
+				},
+				"initiate": {
+					"_type": "user",
+					"maxInstances": "1",
+					"parallelInstances": false,
+					"action": {
+						"_type": "button",
+						"label": "Create"
+					},
+					"dates": {
+						"valid": {
+							"_type": "userSelected",
+							"message": {
+								"i18n": {
+									"_lang": "en",
+									"value": "Please select the month in which the data was collected."
+								}
+							}
+						},
+						"due": {
+							"_type": "userSelected",
+							"message": {
+								"i18n": {
+									"_lang": "en",
+									"value": "Please select the month in which the data was collected."
+								}
+							}
+						}
+					}
+				},
+				"indicators": [{
+					"_id": "accessToHealthTool",
+					"maxInstances": "1",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Health Outcomes Tool"
+						}
+					}
+				}],
+				"steps": [{
+					"_id": "createForm",
+					"_seq": "1",
+					"_setInstanceStatusTo": "Created",
+					"_setStatusMsgTo": "Form created",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Create the Health Outcomes Tool form."
+						}
+					},
+					"help": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					},
+					"actions": [{
+						"_id": "form.create",
+						"_seq": "1",
+						"_args": ["processId","subProcess","step"],
+						"_type": "newSequence"
+					}],
+					"task": {},
+					"transitions": [{
+						"_id": "captureForm",
+						"_type": "auto",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": ""
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "captureForm",
+					"_seq": "2",
+					"_setInstanceStatusTo": "InProgress",
+					"_setStatusMsgTo": "User assigned and data capture in progress",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Capture"
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "Capturer"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "captureData"
+						}
+					},
+					"transitions": [{
+						"_id": "submitForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Submit"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "authoriseForm",
+					"_seq": "3",
+					"_setInstanceStatusTo": "submitted",
+					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Review the registration form data."
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "authoriser"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "editForm"
+						}
+					},
+					"transitions": [{
+						"_id": "authoriseForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Authorise"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}, {
+						"_id": "revertForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Refer Back"
+							}
+						},
+						"goTo": {
+							"_type": "stepId",
+							"_stepId": "captureForm"
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "closeForm",
+					"_seq": "4",
+					"_setInstanceStatusTo": "Complete",
+					"_setStatusMsgTo": "Form locked",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Close the registration form."
+						}
+					},
+					"actions": [{
+						"_id": "form.authorise",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					},{
+						"_id": "form.close",
+						"_seq": "2",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					}],
+					"task": {},
+					"transitions": []
+				}]
+			}
+		],
+		"postActions": {}
+	}
+
+
+	]
+}
