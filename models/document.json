@@ -42,7 +42,6 @@
         }
     },
     "model": {
-        // Workspace
         "pending": {
             "seq": "",
             "revision": "",
