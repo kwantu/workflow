@@ -187,18 +187,18 @@
 			{
 				"_id": "spRegistration",
 				"_seq": "1",
-				"name": {
+				"name": [{
 					"i18n": {
 						"_lang": "en",
 						"value": "Project Registration Form"
 					}
-				},
-				"help": {
+				}],
+				"help": [{
 					"i18n": {
 						"_lang": "en",
 						"value": "Register a new project"
 					}
-				},
+				}],
 				"initiate": {
 					"_type": "user",
 					"maxInstances": "-1",
@@ -228,51 +228,55 @@
 						}
 					}
 				},
-				"indicators": [{
-					"_id": "projectDetail",
-					"maxInstances": "1",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Project Details"
-						}
+				"indicators": [
+					{
+						"_id": "projectDetail",
+						"maxInstances": "1",
+						"name": [{
+							"i18n": {
+								"_lang": "en",
+								"value": "Project Details"
+							}
+						}]
+					},
+					{
+						"_id": "projectLocation",
+						"maxInstances": "-1",
+						"name": [{
+							"i18n": {
+								"_lang": "en",
+								"value": "Project Locations"
+							}
+						}]
+					},
+					{
+						"_id": "developerDetail",
+						"maxInstances": "1",
+						"name": [{
+							"i18n": {
+								"_lang": "en",
+								"value": "Developer Details"
+							}
+						}]
 					}
-				}, {
-					"_id": "projectLocation",
-					"maxInstances": "-1",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Project Locations"
-						}
-					}
-				}, {
-					"_id": "developerDetail",
-					"maxInstances": "1",
-					"name": {
-						"i18n": {
-							"_lang": "en",
-							"value": "Developer Details"
-						}
-					}
-				}],
+				],
 				"steps": [{
 					"_id": "createForm",
 					"_seq": "1",
 					"_setInstanceStatusTo": "Created",
 					"_setStatusMsgTo": "Form created",
-					"name": {
+					"name": [{
 						"i18n": {
 							"_lang": "en",
 							"value": "Create the registration form."
 						}
-					},
-					"help": {
+					}],
+					"help": [{
 						"i18n": {
 							"_lang": "en",
 							"value": ""
 						}
-					},
+					}],
 					"actions": [{
 						"_id": "form.create",
 						"_seq": "1",
@@ -280,32 +284,41 @@
 						"_type": "newSequence"
 					}],
 					"task": {},
-					"transitions": [{
-						"_id": "captureForm",
-						"_type": "auto",
-						"name": {
-							"i18n": {
-								"_lang": "en",
-								"value": ""
-							}
-						},
-						"goTo": {
-							"_type": "nextStep",
-							"_stepId": ""
-						},
-						"_stop": false
-					}]
-				}, {
+					"transitions": [
+						{
+							"_id": "captureForm",
+							"_type": "auto",
+							"name": {
+								"i18n": {
+									"_lang": "en",
+									"value": ""
+								}
+							},
+							"goTo": {
+								"_type": "nextStep",
+								"_stepId": ""
+							},
+							"_stop": false
+						}
+					]
+				},
+				{
 					"_id": "captureForm",
 					"_seq": "2",
 					"_setInstanceStatusTo": "InProgress",
 					"_setStatusMsgTo": "User assigned and data capture in progress",
-					"name": {
+					"name": [{
 						"i18n": {
 							"_lang": "en",
 							"value": "Capture"
 						}
-					},
+					}],
+					"help": [{
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					}],
 					"actions": [],
 					"task": {
 						"assign": {
@@ -319,32 +332,41 @@
 							"action": "captureData"
 						}
 					},
-					"transitions": [{
-						"_id": "submitForm",
-						"_type": "user",
-						"name": {
-							"i18n": {
-								"_lang": "en",
-								"value": "Submit"
-							}
-						},
-						"goTo": {
-							"_type": "nextStep",
-							"_stepId": ""
-						},
-						"_stop": false
-					}]
-				}, {
+					"transitions": [
+						{
+							"_id": "submitForm",
+							"_type": "user",
+							"name": [{
+								"i18n": {
+									"_lang": "en",
+									"value": "Submit"
+								}
+							}],
+							"goTo": {
+								"_type": "nextStep",
+								"_stepId": ""
+							},
+							"_stop": false
+						}
+					]
+				},
+				{
 					"_id": "authoriseForm",
 					"_seq": "3",
 					"_setInstanceStatusTo": "submitted",
 					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
-					"name": {
+					"name": [{
 						"i18n": {
 							"_lang": "en",
 							"value": "Review the registration form data."
 						}
-					},
+					}],
+					"help": [{
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					}],
 					"actions": [],
 					"task": {
 						"assign": {
@@ -358,57 +380,70 @@
 							"action": "editForm"
 						}
 					},
-					"transitions": [{
-						"_id": "authoriseForm",
-						"_type": "user",
-						"name": {
-							"i18n": {
-								"_lang": "en",
-								"value": "Authorise"
-							}
+					"transitions": [
+						{
+							"_id": "authoriseForm",
+							"_type": "user",
+							"name": [{
+								"i18n": {
+									"_lang": "en",
+									"value": "Authorise"
+								}
+							}],
+							"goTo": {
+								"_type": "nextStep",
+								"_stepId": ""
+							},
+							"_stop": false
 						},
-						"goTo": {
-							"_type": "nextStep",
-							"_stepId": ""
-						},
-						"_stop": false
-					}, {
-						"_id": "revertForm",
-						"_type": "user",
-						"name": {
-							"i18n": {
-								"_lang": "en",
-								"value": "Refer Back"
-							}
-						},
-						"goTo": {
-							"_type": "stepId",
-							"_stepId": "captureForm"
-						},
-						"_stop": false
-					}]
-				}, {
+						{
+							"_id": "revertForm",
+							"_type": "user",
+							"name": [{
+								"i18n": {
+									"_lang": "en",
+									"value": "Refer Back"
+								}
+							}],
+							"goTo": {
+								"_type": "stepId",
+								"_stepId": "captureForm"
+							},
+							"_stop": false
+						}
+					]
+				},
+				{
 					"_id": "closeForm",
 					"_seq": "4",
 					"_setInstanceStatusTo": "Complete",
 					"_setStatusMsgTo": "Form locked",
-					"name": {
+					"name": [{
 						"i18n": {
 							"_lang": "en",
 							"value": "Close the registration form."
 						}
-					},
-					"actions": [{
-						"_id": "form.authorise",
-						"_seq": "1",
-						"_args": ["subProcess.indicators"],
-						"_type": "internal"
-					},{
-						"_id": "form.close",
-						"_seq": "2",
-						"_args": ["subProcess.indicators"],
-						"_type": "internal"
 					}],
+					"help": [{
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					}],
+					"actions": [
+						{
+							"_id": "form.authorise",
+							"_seq": "1",
+							"_args": ["subProcess"],
+							"_type": "internal"
+						},
+						{
+							"_id": "form.close",
+							"_seq": "2",
+							"_args": ["subProcess"],
+							"_type": "internal"
+						}
+					],
 					"task": {},
 					"transitions": []
 				}]
