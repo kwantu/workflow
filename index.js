@@ -1,7 +1,7 @@
 'use strict';
 
 var Process = require('./lib/process');
-var util = require('./lib/utility');
+var util = require('utility');
 var userInterface = require('./lib/interface');
 
 /*globals */
@@ -404,6 +404,33 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 			reject(err);
 		}
 	});
+};
+
+/**
+ * Workflow assign user.
+ *
+ * @param {string} processId - the Workflow config / definition process id
+ * @param {number} processSeq - the Workflow instance process seq
+ * @param {string} subProcessId - the Workflow config / definition sub-process id
+ * @param {number} subProcessSeq - the Workflow instance sub-process seq
+ * @param {string} stepId - the Workflow config / definition step id
+ * @param {object} user - the user id and username data
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, subProcessSeq, user){
+	// Re-assign the Workflow constructor instance as _this
+	var _this = this;
+	return new Promise(function(resolve, reject) {
+		try {
+			resolve(user)
+		} catch(err) {
+			reject(err);
+		}
+	})
 };
 
 /**
