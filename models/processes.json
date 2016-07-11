@@ -1,41 +1,12 @@
 {
-    "_id": "", 
+    "_id": "",
     "version": "",
     "type": "workflowInstance",
-    "processes": [{ 
-        "id": "", 
-        "seq": 1, 
-        "subProcesses": [{
-            "id": "", 
-            "seq": 1, 
-            "initiated": false,
-            "dates": {
-                "created": "",
-                "valid": "",
-                "due": "",
-                "closed": ""
-            },
-            "complete": false,
-            "indicators": [{
-                "id": "", 
-                "instances": [{
-                    "uuid": "",
-                    "title": "", 
-                    "key": "", 
-                    "seq": 1                
-                }]
-            }],
-            "step": {
-                "id": "",
-                "seq": "",
-                "status": "",
-                "message": "",
-                "assignedTo": {
-                    "userId": "",
-                    "name": ""
-                },
-                "comment": ""
-            }
-        }]
+    "processes": [{
+        "id": "",
+        "seq": 1,
+        "subProcesses": [
+          { "id": "", "seq": 1, "ref": "" }
+        ]
     }]
 }

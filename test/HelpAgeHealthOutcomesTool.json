@@ -1,18 +1,18 @@
 {
-	"_id": "Mangaungparticipant",
+	"_id": "HelpAgeHealthOutcomesTool",
 	"_version": "1.0",
 	"type": "workflowConfig",
 	"title": {
 		"name": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Mangaing participant workflow"
+				"value": "HelpAge Health Outcomes Tool Workflow"
 			}
 		},
 		"description": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Workflow to manage addition of new beneficiaries."
+				"value": "HelpAge Health Outcomes Tool Workflow."
 			}
 		}
 	},
@@ -127,18 +127,18 @@
 		}]
 	,
 	"processes": [{
-		"_id": "beneficiarieregistration",
+		"_id": "healthoutcomestool",
 		"_seq": "1",
 		"name": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Register a new beneficiary"
+				"value": "Register a new community in which you will use the Health Outcomes Tool"
 			}
 		},
 		"help": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Register a new beneficiary"
+				"value": "Register a new community in which you will use the Health Outcomes Tool"
 			}
 		},
 		"variables": [{
@@ -157,7 +157,7 @@
 			"message": {
 				"i18n": {
 					"_lang": "en",
-					"value": "The beneficiary registration form can't be edited once the completion process has been initiated."
+					"value": "The health outcomes tool list form can't be edited once the completion process has been initiated."
 				}
 			}
 		}],
@@ -185,18 +185,18 @@
 		}],
 		"subProcesses": [
 			{
-				"_id": "spBeneficiaryRegistration",
-				"_seq": "-1",
+				"_id": "HelpAgeHealthOutcomesTool",
+				"_seq": "1",
 				"name": {
 					"i18n": {
 						"_lang": "en",
-						"value": "Beneficiary Registration Form"
+						"value": "Health Outcomes Tool Workflow"
 					}
 				},
 				"help": {
 					"i18n": {
 						"_lang": "en",
-						"value": "Register a new beneficiary"
+						"value": "Health Outcomes Tool Workflow"
 					}
 				},
 				"initiate": {
@@ -213,7 +213,7 @@
 							"message": {
 								"i18n": {
 									"_lang": "en",
-									"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+									"value": "Please select the month in which the data was collected."
 								}
 							}
 						},
@@ -222,19 +222,19 @@
 							"message": {
 								"i18n": {
 									"_lang": "en",
-									"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+									"value": "Please select the month in which the data was collected."
 								}
 							}
 						}
 					}
 				},
 				"indicators": [{
-					"_id": "captureBeneficiaries",
+					"_id": "accessToHealthTool",
 					"maxInstances": "1",
 					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "Site Personnel"
+							"value": "Health Outcomes Tool"
 						}
 					}
 				}],
@@ -246,7 +246,7 @@
 					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "Create the beneficiary registration form."
+							"value": "Create the Health Outcomes Tool form."
 						}
 					},
 					"help": {

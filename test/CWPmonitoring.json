@@ -1,0 +1,1121 @@
+{
+	"_id": "CWPmonitoring",
+	"_version": "1.0",
+	"type": "workflowConfig",
+	"title": {
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "CWP monitoring app workflow"
+			}
+		},
+		"description": {
+			"i18n": {
+				"_lang": "en",
+				"value": "CWP monitoring app workflow."
+			}
+		}
+	},
+	"identification": {
+		"documentation": {
+			"i18n": {
+				"_lang": "en",
+				"value": ""
+			}
+		},
+		"upgradeInformation": {
+			"i18n": {
+				"_lang": "",
+				"value": ""
+			}
+		}
+	},
+	"variables": {
+		"variable": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}]
+	},
+	"roles": [],
+	"processes": [{
+		"_id": "Siteinformation",
+		"_seq": "1",
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a site"
+			}
+		},
+		"help": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a new site"
+			}
+		},
+		"variables": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}],
+		"prerequisites": [{
+			"_seq": "1",
+			"_type": "count",
+			"_subject": "completion.instance",
+			"_operator": "greaterThan",
+			"_value": "0",
+			"message": {
+				"i18n": {
+					"_lang": "en",
+					"value": "The project registration form can't be edited once the completion process has been initiated."
+				}
+			}
+		}],
+		"preActions": [{
+			"_seq": "",
+			"_type": "",
+			"funct": {
+				"module": "",
+				"method": "",
+				"params": {
+					"param": []
+				}
+			},
+			"rest": {
+				"hostId": "",
+				"service": "",
+				"APIKey": "",
+				"format": "",
+				"collection": "",
+				"endpoint": "",
+				"params": {
+					"param": []
+				}
+			}
+		}],
+		"subProcesses": [{
+			"_id": "Siteinformationsubprocess",
+			"_seq": "1",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Site information Form"
+				}
+			},
+			"help": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Capture the site information form"
+				}
+			},
+			"initiate": {
+				"_type": "user",
+				"maxInstances": "1",
+				"action": {
+					"_type": "button",
+					"label": "Add site information"
+				},
+				"dates": {
+					"valid": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+							}
+						}
+					},
+					"due": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}
+						}
+					}
+				}
+			},
+			"indicators": [{
+				"_id": "MESiteInformation",
+				"maxInstances": "1",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Site information"
+					}
+				}
+			}],
+			"steps": [{
+					"_id": "createForm",
+					"_seq": "1",
+					"_setInstanceStatusTo": "Created",
+					"_setStatusMsgTo": "Form created",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Create the site information form."
+						}
+					},
+					"help": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					},
+					"actions": [{
+						"_id": "form.create",
+						"_seq": "1",
+						"_args": ["processId","subProcess","step"],
+						"_type": "newSequence"
+					}],
+					"task": {},
+					"transitions": [{
+						"_id": "captureForm",
+						"_type": "auto",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": ""
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "captureForm",
+					"_seq": "2",
+					"_setInstanceStatusTo": "InProgress",
+					"_setStatusMsgTo": "User assigned and data capture in progress",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Capture"
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "Capturer"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "captureData"
+						}
+					},
+					"transitions": [{
+						"_id": "submitForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Submit"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "authoriseForm",
+					"_seq": "3",
+					"_setInstanceStatusTo": "submitted",
+					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Review the registration form data."
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "authoriser"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "editForm"
+						}
+					},
+					"transitions": [{
+						"_id": "authoriseForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Authorise"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}, {
+						"_id": "revertForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Refer Back"
+							}
+						},
+						"goTo": {
+							"_type": "stepId",
+							"_stepId": "captureForm"
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "closeForm",
+					"_seq": "4",
+					"_setInstanceStatusTo": "Complete",
+					"_setStatusMsgTo": "Form locked",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Close the registration form."
+						}
+					},
+					"actions": [{
+						"_id": "form.authorise",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					},{
+						"_id": "form.close",
+						"_seq": "2",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					}],
+					"task": {},
+					"transitions": []
+				}],
+				"postActions": {}
+			}]
+	},
+{
+		"_id": "Partnerships",
+		"_seq": "2",
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a partnership"
+			}
+		},
+		"help": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a new partnership"
+			}
+		},
+		"variables": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}],
+		"prerequisites": [{
+			"_seq": "1",
+			"_type": "count",
+			"_subject": "completion.instance",
+			"_operator": "greaterThan",
+			"_value": "0",
+			"message": {
+				"i18n": {
+					"_lang": "en",
+					"value": "The partnership registration form can't be edited once the completion process has been initiated."
+				}
+			}
+		}],
+		"preActions": [{
+			"_seq": "",
+			"_type": "",
+			"funct": {
+				"module": "",
+				"method": "",
+				"params": {
+					"param": []
+				}
+			},
+			"rest": {
+				"hostId": "",
+				"service": "",
+				"APIKey": "",
+				"format": "",
+				"collection": "",
+				"endpoint": "",
+				"params": {
+					"param": []
+				}
+			}
+		}],
+		"subProcesses": [{
+			"_id": "Partnershipsubprocess",
+			"_seq": "1",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Register Partnership Form"
+				}
+			},
+			"help": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Capture the register partnership form"
+				}
+			},
+			"initiate": {
+				"_type": "user",
+				"maxInstances": "1",
+				"action": {
+					"_type": "button",
+					"label": "Add partnership information"
+				},
+				"dates": {
+					"valid": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+							}
+						}
+					},
+					"due": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}
+						}
+					}
+				}
+			},
+			"indicators": [{
+				"_id": "MEPartnership",
+				"maxInstances": "-1",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Partnership"
+					}
+				}
+			}],
+			"steps": [{
+					"_id": "createForm",
+					"_seq": "1",
+					"_setInstanceStatusTo": "Created",
+					"_setStatusMsgTo": "Form created",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Create the register partnership form."
+						}
+					},
+					"help": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					},
+					"actions": [{
+						"_id": "form.create",
+						"_seq": "1",
+						"_args": ["processId","subProcess","step"],
+						"_type": "newSequence"
+					}],
+					"task": {},
+					"transitions": [{
+						"_id": "captureForm",
+						"_type": "auto",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": ""
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "captureForm",
+					"_seq": "2",
+					"_setInstanceStatusTo": "InProgress",
+					"_setStatusMsgTo": "User assigned and data capture in progress",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Capture"
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "Capturer"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "captureData"
+						}
+					},
+					"transitions": [{
+						"_id": "submitForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Submit"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "authoriseForm",
+					"_seq": "3",
+					"_setInstanceStatusTo": "submitted",
+					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Review the partnership form data."
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "authoriser"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "editForm"
+						}
+					},
+					"transitions": [{
+						"_id": "authoriseForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Authorise"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}, {
+						"_id": "revertForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Refer Back"
+							}
+						},
+						"goTo": {
+							"_type": "stepId",
+							"_stepId": "captureForm"
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "closeForm",
+					"_seq": "4",
+					"_setInstanceStatusTo": "Complete",
+					"_setStatusMsgTo": "Form locked",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Close the partnership form."
+						}
+					},
+					"actions": [{
+						"_id": "form.authorise",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					},{
+						"_id": "form.close",
+						"_seq": "2",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					}],
+					"task": {},
+					"transitions": []
+				}],
+				"postActions": {}
+			}]
+	},
+	{
+		"_id": "Trainingprocess",
+		"_seq": "3",
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a new training"
+			}
+		},
+		"help": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Register a new training"
+			}
+		},
+		"variables": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}],
+		"prerequisites": [{
+			"_seq": "1",
+			"_type": "count",
+			"_subject": "completion.instance",
+			"_operator": "greaterThan",
+			"_value": "0",
+			"message": {
+				"i18n": {
+					"_lang": "en",
+					"value": "The training form can't be edited once the completion process has been initiated."
+				}
+			}
+		}],
+		"preActions": [{
+			"_seq": "",
+			"_type": "",
+			"funct": {
+				"module": "",
+				"method": "",
+				"params": {
+					"param": []
+				}
+			},
+			"rest": {
+				"hostId": "",
+				"service": "",
+				"APIKey": "",
+				"format": "",
+				"collection": "",
+				"endpoint": "",
+				"params": {
+					"param": []
+				}
+			}
+		}],
+		"subProcesses": [{
+			"_id": "Trainingsubprocess",
+			"_seq": "1",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Registr Training Form"
+				}
+			},
+			"help": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Capture the register training form"
+				}
+			},
+			"initiate": {
+				"_type": "user",
+				"maxInstances": "1",
+				"action": {
+					"_type": "button",
+					"label": "Add site information"
+				},
+				"dates": {
+					"valid": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+							}
+						}
+					},
+					"due": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}
+						}
+					}
+				}
+			},
+			"indicators": [{
+				"_id": "METraining",
+				"maxInstances": "-1",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Training"
+					}
+				}
+			}],
+			"steps": [{
+					"_id": "createForm",
+					"_seq": "1",
+					"_setInstanceStatusTo": "Created",
+					"_setStatusMsgTo": "Form created",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Create the register training form."
+						}
+					},
+					"help": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					},
+					"actions": [{
+						"_id": "form.create",
+						"_seq": "1",
+						"_args": ["processId","subProcess","step"],
+						"_type": "newSequence"
+					}],
+					"task": {},
+					"transitions": [{
+						"_id": "captureForm",
+						"_type": "auto",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": ""
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "captureForm",
+					"_seq": "2",
+					"_setInstanceStatusTo": "InProgress",
+					"_setStatusMsgTo": "User assigned and data capture in progress",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Capture"
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "Capturer"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "captureData"
+						}
+					},
+					"transitions": [{
+						"_id": "submitForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Submit"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "authoriseForm",
+					"_seq": "3",
+					"_setInstanceStatusTo": "submitted",
+					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Review the training form data."
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "authoriser"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "editForm"
+						}
+					},
+					"transitions": [{
+						"_id": "authoriseForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Authorise"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}, {
+						"_id": "revertForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Refer Back"
+							}
+						},
+						"goTo": {
+							"_type": "stepId",
+							"_stepId": "captureForm"
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "closeForm",
+					"_seq": "4",
+					"_setInstanceStatusTo": "Complete",
+					"_setStatusMsgTo": "Form locked",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Close the training form."
+						}
+					},
+					"actions": [{
+						"_id": "form.authorise",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					},{
+						"_id": "form.close",
+						"_seq": "2",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					}],
+					"task": {},
+					"transitions": []
+				}],
+				"postActions": {}
+			}]
+	},
+{
+		"_id": "Monthlyreportingprocess",
+		"_seq": "4",
+		"name": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Capture the monthly report"
+			}
+		},
+		"help": {
+			"i18n": {
+				"_lang": "en",
+				"value": "Capture the monthly report"
+			}
+		},
+		"variables": [{
+			"_id": "",
+			"_dataType": "",
+			"_sessionVar": "",
+			"_default": "",
+			"_value": ""
+		}],
+		// Need a prerequ that checks that site registration process has been completed before this can begin
+		"prerequisites": [{
+			"_seq": "1",
+			"_type": "count",
+			"_subject": "completion.instance",
+			"_operator": "greaterThan",
+			"_value": "0",
+			"message": {
+				"i18n": {
+					"_lang": "en",
+					"value": "The monthly reporting form can't be edited once the completion process has been initiated."
+				}
+			}
+		}],
+		"preActions": [{
+			"_seq": "",
+			"_type": "",
+			"funct": {
+				"module": "",
+				"method": "",
+				"params": {
+					"param": []
+				}
+			},
+			"rest": {
+				"hostId": "",
+				"service": "",
+				"APIKey": "",
+				"format": "",
+				"collection": "",
+				"endpoint": "",
+				"params": {
+					"param": []
+				}
+			}
+		}],
+		//Need a way to allow first SP to be user initiated and then following ones monthly, prompting update of new sequence in same IS
+		"subProcesses": [{
+			"_id": "Monthlyreportingsubprocess",
+			"_seq": "1",
+			"name": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Monthly Reporting Form"
+				}
+			},
+			"help": {
+				"i18n": {
+					"_lang": "en",
+					"value": "Capture the monthly reporting form"
+				}
+			},
+			"initiate": {
+				"_type": "user",
+				"maxInstances": "1",
+				"action": {
+					"_type": "button",
+					"label": "Add site information"
+				},
+				"dates": {
+					"valid": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+							}
+						}
+					},
+					"due": {
+						"_type": "userSelected",
+						"message": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}
+						}
+					}
+				}
+			},
+			"indicators": [{
+				"_id": "MEMonthlyProgress",
+				"maxInstances": "1",
+				"name": {
+					"i18n": {
+						"_lang": "en",
+						"value": "Monthly reporting"
+					}
+				}
+			}],
+			"steps": [{
+					"_id": "createForm",
+					"_seq": "1",
+					"_setInstanceStatusTo": "Created",
+					"_setStatusMsgTo": "Form created",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Create the monthly reporting form."
+						}
+					},
+					"help": {
+						"i18n": {
+							"_lang": "en",
+							"value": ""
+						}
+					},
+					"actions": [{
+						"_id": "form.create",
+						"_seq": "1",
+						"_args": ["processId","subProcess","step"],
+						"_type": "newSequence"
+					}],
+					"task": {},
+					"transitions": [{
+						"_id": "captureForm",
+						"_type": "auto",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": ""
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "captureForm",
+					"_seq": "2",
+					"_setInstanceStatusTo": "InProgress",
+					"_setStatusMsgTo": "User assigned and data capture in progress",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Capture"
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "Capturer"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "captureData"
+						}
+					},
+					"transitions": [{
+						"_id": "submitForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Submit"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "authoriseForm",
+					"_seq": "3",
+					"_setInstanceStatusTo": "submitted",
+					"_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Review the registration form data."
+						}
+					},
+					"actions": [],
+					"task": {
+						"assign": {
+							"profileRole": {
+								"profile": "current",
+								"role": "authoriser"
+							},
+							"default": ""
+						},
+						"work": {
+							"action": "editForm"
+						}
+					},
+					"transitions": [{
+						"_id": "authoriseForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Authorise"
+							}
+						},
+						"goTo": {
+							"_type": "nextStep",
+							"_stepId": ""
+						},
+						"_stop": false
+					}, {
+						"_id": "revertForm",
+						"_type": "user",
+						"name": {
+							"i18n": {
+								"_lang": "en",
+								"value": "Refer Back"
+							}
+						},
+						"goTo": {
+							"_type": "stepId",
+							"_stepId": "captureForm"
+						},
+						"_stop": false
+					}]
+				}, {
+					"_id": "closeForm",
+					"_seq": "4",
+					"_setInstanceStatusTo": "Complete",
+					"_setStatusMsgTo": "Form locked",
+					"name": {
+						"i18n": {
+							"_lang": "en",
+							"value": "Close the registration form."
+						}
+					},
+					"actions": [{
+						"_id": "form.authorise",
+						"_seq": "1",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					},{
+						"_id": "form.close",
+						"_seq": "2",
+						"_args": ["subProcess.indicators"],
+						"_type": "internal"
+					}],
+					"task": {},
+					"transitions": []
+				}],
+				"postActions": {}
+			}]
+	}]
+}

@@ -1,14 +1,15 @@
 {
-    "_id": "", 
+    "_id": "",
     "version": "",
-    "type": "workflowInstanceHistory",
-    "processes": { 
-        "id": "", 
-        "seq": 1, 
+    "type": "workflowInstanceStepHistory",
+    "processes": {
+        "id": "",
+        "seq": 1,
         "subProcesses": {
-            "id": "", 
-            "seq": 1,
-		    "steps": [{ 
+          "id": "",
+          "seq": 1
+        },
+		    "steps": [{
 		    	"id": "",
 		        "seq": 1,
 		        "startDate": "",

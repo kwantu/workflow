@@ -7,10 +7,20 @@
 
 * [Workflow](#Workflow)
     * [new Workflow(profile, app, config, [instance])](#new_Workflow_new)
+    * [.getProfile()](#Workflow+getProfile) ⇒
+    * [.getApp()](#Workflow+getApp) ⇒
+    * [.getConfig()](#Workflow+getConfig) ⇒
+    * [.getInstance()](#Workflow+getInstance) ⇒
+    * [.setInstance(data)](#Workflow+setInstance) ⇒
+    * [.getSubProcesses()](#Workflow+getSubProcesses) ⇒
+    * [.setSubProcesses(data)](#Workflow+setSubProcesses) ⇒
+    * [.getIndicators()](#Workflow+getIndicators) ⇒
+    * [.setIndicators(data)](#Workflow+setIndicators) ⇒
     * [.create()](#Workflow+create) ⇒ <code>Object</code>
     * [.initialise(processId, [data])](#Workflow+initialise) ⇒
     * [.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data)](#Workflow+transition) ⇒
-    * [.runTask(processId, inputData)](#Workflow+runTask) ⇒
+    * [.assignUser(processId, processSeq, subProcessId, subProcessSeq, stepId, user)](#Workflow+assignUser) ⇒
+    * [.ui(processId, inputData)](#Workflow+ui) ⇒
 
 <a name="new_Workflow_new"></a>
 
@@ -44,6 +54,120 @@ var instance = { '_id': 'instance_abc123' };
 var workflow = new Workflow('1234', '5678', config);
 // If there is an existing instance
 var workflow = new Workflow('1234', '5678', config, instance);
+```
+<a name="Workflow+getProfile"></a>
+
+### workflow.getProfile() ⇒
+Workflow get profile id.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+**Example**  
+```js
+""
+```
+<a name="Workflow+getApp"></a>
+
+### workflow.getApp() ⇒
+Workflow get app id.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+**Example**  
+```js
+""
+```
+<a name="Workflow+getConfig"></a>
+
+### workflow.getConfig() ⇒
+Workflow get config.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+**Example**  
+```js
+""
+```
+<a name="Workflow+getInstance"></a>
+
+### workflow.getInstance() ⇒
+Workflow get instance.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+**Example**  
+```js
+""
+```
+<a name="Workflow+setInstance"></a>
+
+### workflow.setInstance(data) ⇒
+Workflow set the instance data.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | the workflow process instance data |
+
+**Example**  
+```js
+""
+```
+<a name="Workflow+getSubProcesses"></a>
+
+### workflow.getSubProcesses() ⇒
+Workflow get sub-processes data.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+**Example**  
+```js
+""
+```
+<a name="Workflow+setSubProcesses"></a>
+
+### workflow.setSubProcesses(data) ⇒
+Workflow set the sub-processes data.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | the workflow process instance data |
+
+**Example**  
+```js
+""
+```
+<a name="Workflow+getIndicators"></a>
+
+### workflow.getIndicators() ⇒
+Workflow get indicator set data.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+**Example**  
+```js
+""
+```
+<a name="Workflow+setIndicators"></a>
+
+### workflow.setIndicators(data) ⇒
+Workflow set the indicator set data.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Object</code> | the workflow process instance data |
+
+**Example**  
+```js
+""
 ```
 <a name="Workflow+create"></a>
 
@@ -111,9 +235,30 @@ sub-process step to the next one as specified.
 ```js
 Workflow.transition('processId', 1, 'subProcessId', 1, 'stepId', 'transitionId', { key: '', value: '' });
 ```
-<a name="Workflow+runTask"></a>
+<a name="Workflow+assignUser"></a>
 
-### workflow.runTask(processId, inputData) ⇒
+### workflow.assignUser(processId, processSeq, subProcessId, subProcessSeq, stepId, user) ⇒
+Workflow assign user.
+
+**Kind**: instance method of <code>[Workflow](#Workflow)</code>  
+**Returns**: ""  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| processId | <code>string</code> | the Workflow config / definition process id |
+| processSeq | <code>number</code> | the Workflow instance process seq |
+| subProcessId | <code>string</code> | the Workflow config / definition sub-process id |
+| subProcessSeq | <code>number</code> | the Workflow instance sub-process seq |
+| stepId | <code>string</code> | the Workflow config / definition step id |
+| user | <code>object</code> | the user id and username data |
+
+**Example**  
+```js
+""
+```
+<a name="Workflow+ui"></a>
+
+### workflow.ui(processId, inputData) ⇒
 Workflow task, this method executes a specific task.
 
 **Kind**: instance method of <code>[Workflow](#Workflow)</code>  
@@ -134,6 +279,9 @@ Workflow.initialize('processId', { validDate: 'date' });
 <dt><a href="#module_lib/form">lib/form</a></dt>
 <dd><p>test description</p>
 </dd>
+<dt><a href="#module_lib/ui">lib/ui</a></dt>
+<dd><p>test description</p>
+</dd>
 <dt><a href="#module_lib/process">lib/process</a></dt>
 <dd><p>test description</p>
 </dd>
@@ -151,6 +299,56 @@ test description
 **Version**: 2.0.0  
 **Author:** Brent Gordon  
 **Copyright**: Kwantu Ltd RSA 2009-2015.  
+<a name="module_lib/ui"></a>
+
+## lib/ui
+test description
+
+**Version**: 0.1.0  
+**Author:** Brent Gordon  
+
+* [lib/ui](#module_lib/ui)
+    * [~getProcess(processId, lang, _WFInstance)](#module_lib/ui..getProcess) ⇒
+    * [~getSubProcess(processId, processSeq, subProcessId, subProcessSeq, _WFInstance)](#module_lib/ui..getSubProcess) ⇒
+
+<a name="module_lib/ui..getProcess"></a>
+
+### lib/ui~getProcess(processId, lang, _WFInstance) ⇒
+Get all process sub-processes user interface data
+
+**Kind**: inner method of <code>[lib/ui](#module_lib/ui)</code>  
+**Returns**: ''  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| processId | <code>string</code> | the Workflow config / definition process id |
+| lang | <code>string</code> | the user preffered langauge |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
+
+**Example**  
+```js
+''
+```
+<a name="module_lib/ui..getSubProcess"></a>
+
+### lib/ui~getSubProcess(processId, processSeq, subProcessId, subProcessSeq, _WFInstance) ⇒
+Get SubProcess user interface data
+
+**Kind**: inner method of <code>[lib/ui](#module_lib/ui)</code>  
+**Returns**: ''  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| processId | <code>string</code> | the Workflow config / definition process id |
+| processSeq | <code>number</code> | the Workflow instance process seq |
+| subProcessId | <code>string</code> | the Workflow config / definition sub-process id |
+| subProcessSeq | <code>number</code> | the Workflow instance sub-process seq |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
+
+**Example**  
+```js
+''
+```
 <a name="module_lib/process"></a>
 
 ## lib/process
@@ -166,6 +364,8 @@ test description
     * [~subProcess(process, subProcess, data, _WFInstance)](#module_lib/process..subProcess) ⇒
     * [~initiate(initiate, data)](#module_lib/process..initiate) ⇒
     * [~step(processId, subProcessId, stepId, stepSeq, inputData, _WFInstance)](#module_lib/process..step) ⇒
+    * [~indicators(actions, subProcess, _WFInstance)](#module_lib/process..indicators) ⇒
+    * [~indicatorDocs(actions, subProcess, _WFInstance)](#module_lib/process..indicatorDocs) ⇒
     * [~actions(actions, subProcess, _WFInstance)](#module_lib/process..actions) ⇒
     * [~action(action, subProcess, _WFInstance)](#module_lib/process..action) ⇒
     * [~task(task, inputData)](#module_lib/process..task) ⇒
@@ -289,6 +489,42 @@ Process step
 | stepSeq | <code>number</code> | the current sub-process step instance counter / sequence |
 | inputData | <code>object</code> | the user input data |
 | _WFInstance | <code>object</code> | the current _WFInstance constructor instance |
+
+**Example**  
+```js
+''
+```
+<a name="module_lib/process..indicators"></a>
+
+### lib/process~indicators(actions, subProcess, _WFInstance) ⇒
+Process indicator updates
+
+**Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
+**Returns**: ''  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| actions | <code>object</code> | the actions config data |
+| subProcess | <code>object</code> | the current sub-process form config data |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
+
+**Example**  
+```js
+''
+```
+<a name="module_lib/process..indicatorDocs"></a>
+
+### lib/process~indicatorDocs(actions, subProcess, _WFInstance) ⇒
+Process indicator document updates
+
+**Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
+**Returns**: ''  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| actions | <code>object</code> | the actions config data |
+| subProcess | <code>object</code> | the current sub-process form config data |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
 ```js

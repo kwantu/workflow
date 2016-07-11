@@ -1,7 +1,8 @@
 'use strict';
 
 var Process = require('./lib/process');
-var util = require('./lib/utility');
+var util = require('utility');
+var userInterface = require('./lib/interface');
 
 /*globals */
 
@@ -39,7 +40,7 @@ var util = require('./lib/utility');
  *
  */
 
-function Workflow(profile, app, config, instance){
+function Workflow(profile, app, config){
 	var _this = this;
 	// Profile ID validation checks
 	if (profile === '' || profile === undefined) {
@@ -66,11 +67,129 @@ function Workflow(profile, app, config, instance){
     	_this.config = config;
     }
     // Workflow instance validation checks
-    _this.instance = instance;
+    _this.instance;
+		// Workflow sub-processes validation checks
+		_this.subprocesses = [];
 		// Workflow indicators place holder
 		_this.indicators = [];
+		// Workflow sub-process step history place holder
+		_this.history = [];
 
 }
+
+/**
+ * Workflow get profile id.
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.getProfile = function(){
+	return this.profile;
+};
+
+/**
+ * Workflow get app id.
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.getApp = function(){
+	return this.app;
+};
+
+/**
+ * Workflow get config.
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.getConfig = function(){
+	return this.config;
+};
+
+/**
+ * Workflow get instance.
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.getInstance = function(){
+	return this.instance;
+};
+
+/**
+ * Workflow set the instance data.
+ *
+ * @param {Object} data - the workflow process instance data
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.setInstance = function(data){
+	this.instance = data;
+};
+
+/**
+ * Workflow get sub-processes data.
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.getSubProcesses = function(){
+	return this.subprocesses;
+};
+
+/**
+ * Workflow set the sub-processes data.
+ *
+ * @param {Object} data - the workflow process instance data
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.setSubProcesses = function(data){
+	this.subprocesses = data;
+};
+
+/**
+ * Workflow get indicator set data.
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.getIndicators = function(){
+	return this.indicators;
+};
+
+/**
+ * Workflow set the indicator set data.
+ *
+ * @param {Object} data - the workflow process instance data
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.setIndicators = function(data){
+	this.indicators = data;
+};
 
 /**
  * This method creates a new workflow process i.e. it creates a workflow processes instance
@@ -164,7 +283,7 @@ Workflow.prototype.initialise = function(processId, data){
 					currentProcess.push(processItem);
 				}
 			});
-			var processSeq = currentProcess.length === 0 ? 1 : currentProcess.length;
+			var processSeq = currentProcess.length + 1;
 			// var nextSeq = processSeq + 1;
 			// Push the process object into the array
 			var processModel = {
@@ -180,15 +299,41 @@ Workflow.prototype.initialise = function(processId, data){
 			var subProcessId = configProcess[0].subProcesses[0]._id;
 			var subProcessSeq = 1;
 			_this.instance.processes.filter(function(processItem){
-				if (processItem.id === processId && processItem.seq === processSeq) (
+				if (processItem.id === processId && processItem.seq === processSeq) {
 					subProcessSeq = processItem.subProcesses.length + 1
-				)
+				}
 			})
-			Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, data, _this).then(function(result){
-				processModel.subProcesses.push(result.data);
-				_this.instance.processes.push(processModel);
-				var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
-				resolve(success);
+			// Call the subprocess method
+			Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, data, _this).then(function(subProcess){
+				// Generate the uuid
+				var uuid = _this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
+				// Build the sub-process reference object
+				var subProcessRef = {
+					id: subProcessId,
+					seq: subProcessSeq,
+					uuid: uuid
+				}
+				// Add the reference to the process model
+				processModel.subProcesses.push(subProcessRef);
+				// Add the subProcess model to the subprocesses array
+				_this.subprocesses.push(subProcess.data);
+				// _this.instance.processes.push(processModel);
+				for (var index = 0; index < _this.instance.processes.length; index++){
+					var processItem = _this.instance.processes[index];
+					if (processItem.id === processId && processItem.seq === processSeq) {
+						// Remove the current process from the array and add the updated processModel
+						_this.instance.processes.splice(index, 1, processModel)
+					}
+				}
+				// Process the indicator documents workflow processes updates
+				var indicators = subProcess.data.indicators;
+				var step = subProcess.data.step;
+				Process.indicatorDocs(processId, indicators, step, _this).then(function(result){
+					var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
+					resolve(success);
+				}, function(err){
+					reject(err);
+				})
 			}, function(err){
 				reject(err);
 			});
@@ -228,16 +373,20 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 						if (processItem.id === processId && processItem.seq === processSeq) {
 							processItem.subProcesses.filter(function(subProcessItem){
 								if (subProcessItem.id === subProcessId && subProcessItem.seq === subProcessSeq) {
-									if (type === 'step') {
-										subProcessItem.step = result.data;
-										var success = util.success(result.message, subProcessItem);
-										resolve(success);
-									} else if (type === 'stepComplete') {
-										subProcessItem.step = result.data.step;
-										subProcessItem.complete = true
-										var success = util.success(result.message, subProcessItem);
-										resolve(success);
-									}
+									_this.subprocesses.filter(function(subProcessObj){
+										if (subProcessObj._id === subProcessItem.uuid) {
+											if (type === 'step') {
+												subProcessObj.step = result.data;
+												var success = util.success(result.message, subProcessObj);
+												resolve(success);
+											} else if (type === 'stepComplete') {
+												subProcessObj.step = result.data.step;
+												subProcessObj.complete = true
+												var success = util.success(result.message, subProcessObj);
+												resolve(success);
+											}
+										}
+									})
 								}
 							})
 						}
@@ -258,6 +407,33 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 };
 
 /**
+ * Workflow assign user.
+ *
+ * @param {string} processId - the Workflow config / definition process id
+ * @param {number} processSeq - the Workflow instance process seq
+ * @param {string} subProcessId - the Workflow config / definition sub-process id
+ * @param {number} subProcessSeq - the Workflow instance sub-process seq
+ * @param {string} stepId - the Workflow config / definition step id
+ * @param {object} user - the user id and username data
+ *
+ * @example ""
+ *
+ * @return ""
+ *
+ */
+Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, subProcessSeq, user){
+	// Re-assign the Workflow constructor instance as _this
+	var _this = this;
+	return new Promise(function(resolve, reject) {
+		try {
+			resolve(user)
+		} catch(err) {
+			reject(err);
+		}
+	})
+};
+
+/**
  * Workflow task, this method executes a specific task.
  *
  * @param {string} processId - the process id to process
@@ -269,16 +445,24 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
  * @return ""
  *
  */
-Workflow.prototype.runTask = function(type, params){
+Workflow.prototype.ui = function(){
 	// Re-assign the Workflow constructor instance as _this
 	var _this = this;
-	return new Promise(function(resolve, reject) {
-		try {
-			resolve('Success');
-		} catch(err) {
-			reject(err);
+	return {
+		getProcess: function(processId, lang){
+			return new Promise(function(resolve, reject) {
+				try {
+					userInterface.getProcess(processId, lang, _this).then(function(model){
+						resolve(model);
+					}, function(err){
+						reject(err);
+					})
+				} catch(err) {
+					reject(err);
+				}
+			})
 		}
-	});
+	}
 };
 
 module.exports = Workflow;

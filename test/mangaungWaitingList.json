@@ -1,18 +1,18 @@
 {
-	"_id": "Mangaungparticipant",
+	"_id": "Mangaungbeneficiarywaitinglist",
 	"_version": "1.0",
 	"type": "workflowConfig",
 	"title": {
 		"name": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Mangaing participant workflow"
+				"value": "Mangaing beneficiary waiting list workflow"
 			}
 		},
 		"description": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Workflow to manage addition of new beneficiaries."
+				"value": "Workflow to manage addition of new beneficiaries to the waiting list."
 			}
 		}
 	},
@@ -127,18 +127,18 @@
 		}]
 	,
 	"processes": [{
-		"_id": "beneficiarieregistration",
+		"_id": "beneficiarywaitinglistregistration",
 		"_seq": "1",
 		"name": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Register a new beneficiary"
+				"value": "Register a new beneficiary on the waiting list"
 			}
 		},
 		"help": {
 			"i18n": {
 				"_lang": "en",
-				"value": "Register a new beneficiary"
+				"value": "Register a new beneficiary on the waiting list"
 			}
 		},
 		"variables": [{
@@ -157,7 +157,7 @@
 			"message": {
 				"i18n": {
 					"_lang": "en",
-					"value": "The beneficiary registration form can't be edited once the completion process has been initiated."
+					"value": "The beneficiary registration waiting list form can't be edited once the completion process has been initiated."
 				}
 			}
 		}],
@@ -185,23 +185,23 @@
 		}],
 		"subProcesses": [
 			{
-				"_id": "spBeneficiaryRegistration",
-				"_seq": "-1",
+				"_id": "spBeneficiaryWaitingListRegistration",
+				"_seq": "1",
 				"name": {
 					"i18n": {
 						"_lang": "en",
-						"value": "Beneficiary Registration Form"
+						"value": "Beneficiary Registration Waiting List Registration Form"
 					}
 				},
 				"help": {
 					"i18n": {
 						"_lang": "en",
-						"value": "Register a new beneficiary"
+						"value": "Register a new beneficiary on the waiting list"
 					}
 				},
 				"initiate": {
 					"_type": "user",
-					"maxInstances": "-1",
+					"maxInstances": "1",
 					"parallelInstances": false,
 					"action": {
 						"_type": "button",
@@ -229,12 +229,12 @@
 					}
 				},
 				"indicators": [{
-					"_id": "captureBeneficiaries",
+					"_id": "BeneficiaryWaitingList",
 					"maxInstances": "1",
 					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "Site Personnel"
+							"value": "Beneficiary Waiting List"
 						}
 					}
 				}],
@@ -246,7 +246,7 @@
 					"name": {
 						"i18n": {
 							"_lang": "en",
-							"value": "Create the beneficiary registration form."
+							"value": "Create the beneficiary waiting list registration form."
 						}
 					},
 					"help": {
