@@ -37,7 +37,8 @@
 		"_default": "",
 		"_value": ""
 	}],
-	"roles": [{
+	"roles": [
+		{
 			"_id": "Guest",
 			"_level": "0",
 			"name": {
@@ -124,8 +125,8 @@
 					"_roleId": ""
 				}
 			}
-		}]
-	,
+		}
+	],
 	"processes": [{
 		"_id": "registration",
 		"_seq": "1",
@@ -230,21 +231,23 @@
 				},
 				"indicators": [{
 					"_id": "projectDetail",
+					"_type": "newSequence",
 					"maxInstances": "1",
 					"name": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": "Project Details"
-						}
+						}]
 					}
 				}, {
 					"_id": "BudgetInformation",
+					"_type": "newSequence",
 					"maxInstances": "1",
 					"name": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": "Budget information"
-						}
+						}]
 					}
 				}],
 				"steps": [{
@@ -253,16 +256,16 @@
 					"_setInstanceStatusTo": "Created",
 					"_setStatusMsgTo": "Form created",
 					"name": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": "Create the registration form."
-						}
+						}]
 					},
 					"help": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": ""
-						}
+						}]
 					},
 					"actions": [{
 						"_id": "form.create",

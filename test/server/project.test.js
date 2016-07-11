@@ -61,8 +61,9 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 				// saveFile(workflow.profile + ':processes', workflow.instance);
 			}).should.notify(done);
 		});
-var currentStep = {};
+
 		it('Should initialise the first process, sub-process, step and associated indicator set documents.', function(done){
+			var currentStep = {};
 			workflow.initialise(processId, data).then(function(result){
 				expect(result).to.be.an('object');
 				expect(result.message).to.equal('Process: ' + processId + ' initialized successfully.');
@@ -497,7 +498,6 @@ var currentStep = {};
 				expect(workflow.instance.version).to.equal(workflow.config.version);
 				// Save file for testing
 				// saveFile(workflow.profile + ':processes', workflow.instance);
-				console.log(workflow.instance.processes);
 				workflow.instance.processes.filter(function(processItem){
 					if (processItem.id === processId && processItem.seq === 2) {
 						// Workflow process instance data checks
@@ -543,7 +543,6 @@ var currentStep = {};
 										})
 										// Workflow step instance data checks
 										currentStep = subProcessObj.step
-										console.log(currentStep);
 										expect(currentStep.id).to.equal('captureForm');
 										expect(currentStep.seq).to.equal(2);
 										expect(currentStep.status).to.equal('InProgress');
