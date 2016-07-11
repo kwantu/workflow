@@ -37,21 +37,8 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 [View the documentation here ...](https://github.com/kwantu/workflow/blob/master/docs/index.md)
 
-## Usage in the browser
+## Module usage
 
-Required dependancies / polyfills.
+### Browser ( client )
 
-`<script src="../../bower_components/moment/min/moment.min.js"></script>`
-`<script src="../../bower_components/es6-promise/es6-promise.min.js"></script>`
-
-Include the workflow js file
-
-`<script src="workflow.js"></script>`
-
-Use it in the following manner hereafter
-
-`var profileId = '1234';`
-`var appId = '5678';`
-`var configData = {}; // Get the config file from the database here.`
-
-`var workflow = new Workflow(profileId, appId, configData);`
+### Node ( server )
