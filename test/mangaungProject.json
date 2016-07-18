@@ -151,15 +151,15 @@
 		}],
 		"prerequisites": [{
 			"_seq": "1",
-			"_type": "count",
-			"_subject": "completion.instance",
-			"_operator": "greaterThan",
+			"_type": "processInstances",
+			"_operator": "equalTo",
+			"_parameter": "completion",
 			"_value": "0",
 			"message": {
-				"i18n": {
+				"i18n": [{
 					"_lang": "en",
 					"value": "The project registration form can't be edited once the completion process has been initiated."
-				}
+				}]
 			}
 		}],
 		"preActions": [{
@@ -1598,8 +1598,5 @@
 			}]
 		}],
 		"postActions": {}
-	}
-
-
-	]
+	}]
 }

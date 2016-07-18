@@ -414,7 +414,7 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
  * @param {string} subProcessId - the Workflow config / definition sub-process id
  * @param {number} subProcessSeq - the Workflow instance sub-process seq
  * @param {string} stepId - the Workflow config / definition step id
- * @param {object} user - the user id and username data
+ * @param {object} user - the user id and name data
  *
  * @example ""
  *
