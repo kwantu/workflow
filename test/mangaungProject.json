@@ -162,28 +162,7 @@
 				}]
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spRegistration",
@@ -408,7 +387,7 @@
 				}]
 			}
 		],
-		"postActions": {}
+		"postActions": []
 	},
 	{
 		"_id": "developerregistration",
@@ -445,28 +424,7 @@
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spDeveloperRegistration",
@@ -717,28 +675,7 @@
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spprojectlocation",
@@ -983,7 +920,7 @@
 				}]
 			}
 		],
-		"postActions": {}
+		"postActions": []
 	},{
 		"_id": "monthlyProgress",
 		"_seq": "3",
@@ -1019,28 +956,7 @@
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [{
 			"_id": "spMonthlyProgress",
 			"_seq": "1",
@@ -1290,7 +1206,7 @@
 				}]
 			}]
 		}],
-		"postActions": {}
+		"postActions": []
 	},{
 		"_id": "completion",
 		"_seq": "4",
@@ -1326,28 +1242,7 @@
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [{
 			"_id": "spCompletion",
 			"_seq": "1",
@@ -1597,6 +1492,6 @@
 				}]
 			}]
 		}],
-		"postActions": {}
+		"postActions": []
 	}]
 }
