@@ -40,7 +40,8 @@ var config = {
 		"_default": "",
 		"_value": ""
 	}],
-	"roles": [{
+	"roles": [
+		{
 			"_id": "Guest",
 			"_level": "0",
 			"name": {
@@ -127,8 +128,8 @@ var config = {
 					"_roleId": ""
 				}
 			}
-		}]
-	,
+		}
+	],
 	"processes": [{
 		"_id": "registration",
 		"_seq": "1",
@@ -153,39 +154,18 @@ var config = {
 		}],
 		"prerequisites": [{
 			"_seq": "1",
-			"_type": "count",
-			"_subject": "completion.instance",
-			"_operator": "greaterThan",
+			"_type": "processInstances",
+			"_operator": "equalTo",
+			"_parameter": "completion",
 			"_value": "0",
 			"message": {
-				"i18n": {
+				"i18n": [{
 					"_lang": "en",
 					"value": "The project registration form can't be edited once the completion process has been initiated."
-				}
+				}]
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spRegistration",
@@ -233,21 +213,23 @@ var config = {
 				},
 				"indicators": [{
 					"_id": "projectDetail",
+					"_type": "newSequence",
 					"maxInstances": "1",
 					"name": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": "Project Details"
-						}
+						}]
 					}
 				}, {
 					"_id": "BudgetInformation",
+					"_type": "newSequence",
 					"maxInstances": "1",
 					"name": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": "Budget information"
-						}
+						}]
 					}
 				}],
 				"steps": [{
@@ -256,16 +238,16 @@ var config = {
 					"_setInstanceStatusTo": "Created",
 					"_setStatusMsgTo": "Form created",
 					"name": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": "Create the registration form."
-						}
+						}]
 					},
 					"help": {
-						"i18n": {
+						"i18n": [{
 							"_lang": "en",
 							"value": ""
-						}
+						}]
 					},
 					"actions": [{
 						"_id": "form.create",
@@ -408,7 +390,7 @@ var config = {
 				}]
 			}
 		],
-		"postActions": {}
+		"postActions": []
 	},
 	{
 		"_id": "developerregistration",
@@ -445,28 +427,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spDeveloperRegistration",
@@ -680,7 +641,7 @@ var config = {
 				}]
 			}
 		],
-		"postActions": {}
+		"postActions": []
 	},
 	{
 		"_id": "location",
@@ -717,28 +678,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spprojectlocation",
@@ -983,7 +923,7 @@ var config = {
 				}]
 			}
 		],
-		"postActions": {}
+		"postActions": []
 	},{
 		"_id": "monthlyProgress",
 		"_seq": "3",
@@ -1019,28 +959,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [{
 			"_id": "spMonthlyProgress",
 			"_seq": "1",
@@ -1290,7 +1209,7 @@ var config = {
 				}]
 			}]
 		}],
-		"postActions": {}
+		"postActions": []
 	},{
 		"_id": "completion",
 		"_seq": "4",
@@ -1326,28 +1245,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [{
 			"_id": "spCompletion",
 			"_seq": "1",
@@ -1597,12 +1495,9 @@ var config = {
 				}]
 			}]
 		}],
-		"postActions": {}
-	}
-
-
-	]
-};
+		"postActions": []
+	}]
+}
 
 // Create the workflow constrctor instance
 var workflow = new Workflow('1234', '5678', config);
@@ -1753,10 +1648,61 @@ describe('# Module: Workflow', function(){
 			}).should.notify(done);
 		})
 	});
-	// Test the saveIndicator method
-	describe('- Method: assignUser()', function(){
-		it('Should return ')
-
+	// Test the assignUser method
+	describe('- Method: assignUser(): Assign a user to a particular sub-process step.', function(){
+		it('Should return a success message and the valid user id and name in the current step.', function(done){
+			var processSeq = 1;
+			var subProcessSeq = 1;
+			var user = {
+				id: '5678',
+				name: 'Satinder Sighn'
+			}
+			workflow.assignUser(processId, processSeq, subProcessId, subProcessSeq, user).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('User assigned successfully. UserId: "' + user.id + '", Name: "' + user.name + '"');
+				workflow.instance.processes.filter(function(processItem){
+					if (processItem.id === processId && processItem.seq === processSeq) {
+						processItem.subProcesses.filter(function(subProcessItem){
+							if (subProcessItem.id === subProcessId && subProcessItem.seq === subProcessSeq) {
+								workflow.subprocesses.filter(function(subProcessObj){
+									if (subProcessObj._id === subProcessItem.uuid) {
+										expect(subProcessObj.step.assignedTo.userId).to.equal(user.id);
+										expect(subProcessObj.step.assignedTo.name).to.equal(user.name);
+									}
+								})
+							}
+						})
+					}
+				})
+				// Test the updates to the indicator documents workflow processes section
+				workflow.config.processes.filter(function(processItem){
+					if (processItem._id === processId) {
+						processItem.subProcesses.filter(function(subProcessItem){
+							if (subProcessItem._id === subProcessId) {
+								var indicators = subProcessItem.indicators;
+								for (var i = 0; i < indicators.length; i++) {
+									var indicatorId = indicators[i]._id;
+									workflow.indicators.filter(function(indicator){
+										if (indicatorId === indicator.category.term) {
+											var workflows = indicator.workflows;
+											workflows.filter(function(wfInstance){
+												if (wfInstance.id === workflow.config._id) {
+													wfInstance.processes.filter(function(processItem){
+														// Check the step data
+														expect(processItem.step.assignedTo.userId).to.equal(user.id);
+														expect(processItem.step.assignedTo.name).to.equal(user.name);
+													})
+												}
+											})
+										}
+									})
+								}
+							}
+						})
+					}
+				})
+			}).should.notify(done);
+		})
 	});
 	// Test the transition method
 	describe('- Method: transition()', function(){

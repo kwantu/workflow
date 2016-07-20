@@ -192,6 +192,66 @@ Workflow.prototype.setIndicators = function(data){
 };
 
 /**
+ * Set the variable value.
+ *
+ * @param {string} processId - the Workflow config / definition process id
+ * @param {number} processSeq - the Workflow instance process seq
+ * @param {string} subProcessId - the Workflow config / definition sub-process id
+ * @param {number} subProcessSeq - the Workflow instance sub-process seq
+ * @param {string} stepId - the Workflow config / definition step id
+ * @param {Object} variable - the Workflow variable object
+ *
+ * @example ''
+ *
+ * @return ''
+ *
+ */
+// Workflow.prototype.setVariable = function(processId, processSeq, subProcessId, subProcessSeq, stepId, variable){
+// 	var _this = this;
+// 	return new Promise(function(resolve, reject) {
+// 		try {
+// 			Process.getVariable(processId, processSeq, subProcessId, subProcessSeq, stepId, variable).then(funcion(result){
+// 				resolve(result.data);
+// 			}, function(err){
+// 				reject(err);
+// 			})
+// 		} catch (err) {
+// 			reject(err);
+// 		}
+// 	});
+// };
+
+/**
+ * Get the variable value.
+ *
+ * @param {string} processId - the Workflow config / definition process id
+ * @param {number} processSeq - the Workflow instance process seq
+ * @param {string} subProcessId - the Workflow config / definition sub-process id
+ * @param {number} subProcessSeq - the Workflow instance sub-process seq
+ * @param {string} stepId - the Workflow config / definition step id
+ * @param {string} key - the Workflow variable id
+ *
+ * @example ''
+ *
+ * @return ''
+ *
+ */
+// Workflow.prototype.getVariable = function(processId, processSeq, subProcessId, subProcessSeq, stepId, key){
+// 	var _this = this;
+// 	return new Promise(function(resolve, reject) {
+// 		try {
+// 			Process.setVariable(processId, processSeq, subProcessId, subProcessSeq, stepId, key).then(funcion(result){
+// 				resolve(result.data);
+// 			}, function(err){
+// 				reject(err);
+// 			})
+// 		} catch (err) {
+// 			reject(err);
+// 		}
+// 	});
+// };
+
+/**
  * This method creates a new workflow process i.e. it creates a workflow processes instance
  * object with the minimum required data. This instance can be referenced in the following
  * way, see example below.
@@ -414,7 +474,7 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
  * @param {string} subProcessId - the Workflow config / definition sub-process id
  * @param {number} subProcessSeq - the Workflow instance sub-process seq
  * @param {string} stepId - the Workflow config / definition step id
- * @param {object} user - the user id and username data
+ * @param {object} user - the user id and name data
  *
  * @example ""
  *
@@ -426,7 +486,11 @@ Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, su
 	var _this = this;
 	return new Promise(function(resolve, reject) {
 		try {
-			resolve(user)
+			Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, _this).then(function(result){
+				resolve(result);
+			}, function(err){
+				reject(err);
+			})
 		} catch(err) {
 			reject(err);
 		}
