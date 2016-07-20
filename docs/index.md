@@ -250,7 +250,7 @@ Workflow assign user.
 | subProcessId | <code>string</code> | the Workflow config / definition sub-process id |
 | subProcessSeq | <code>number</code> | the Workflow instance sub-process seq |
 | stepId | <code>string</code> | the Workflow config / definition step id |
-| user | <code>object</code> | the user id and username data |
+| user | <code>object</code> | the user id and name data |
 
 **Example**  
 ```js
@@ -276,6 +276,9 @@ Workflow.initialize('processId', { validDate: 'date' });
 ## Modules
 
 <dl>
+<dt><a href="#module_lib/action">lib/action</a></dt>
+<dd><p>test description</p>
+</dd>
 <dt><a href="#module_lib/form">lib/form</a></dt>
 <dd><p>test description</p>
 </dd>
@@ -287,6 +290,14 @@ Workflow.initialize('processId', { validDate: 'date' });
 </dd>
 </dl>
 
+<a name="module_lib/action"></a>
+
+## lib/action
+test description
+
+**Version**: 2.0.0  
+**Author:** Brent Gordon  
+**Copyright**: Kwantu Ltd RSA 2009-2015.  
 <a name="module_lib/form"></a>
 
 ## lib/form
@@ -354,13 +365,16 @@ test description
 **Author:** Brent Gordon  
 
 * [lib/process](#module_lib/process)
+    * [~count(arr)](#module_lib/process..count) ⇒
     * [~preRequisites(prerequisites)](#module_lib/process..preRequisites) ⇒
-    * [~preRequisite(prerequisite, counter, _WFInstance)](#module_lib/process..preRequisite) ⇒
+    * [~preRequisite(prerequisite, _WFInstance)](#module_lib/process..preRequisite) ⇒
     * [~preActions(preActions, _WFInstance)](#module_lib/process..preActions) ⇒
+    * [~getSubProcess(id, _WFInstance)](#module_lib/process..getSubProcess) ⇒
     * [~subProcess(process, subProcess, data, _WFInstance)](#module_lib/process..subProcess) ⇒
     * [~initiate(initiate, data)](#module_lib/process..initiate) ⇒
-    * [~step(processId, subProcessId, stepId, stepSeq, inputData, _WFInstance)](#module_lib/process..step) ⇒
+    * [~step(processId, subProcessId, stepId, stepSeq, data, _WFInstance)](#module_lib/process..step) ⇒
     * [~indicators(actions, subProcess, _WFInstance)](#module_lib/process..indicators) ⇒
+    * [~assignUser(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, user, _WFInstance)](#module_lib/process..assignUser) ⇒
     * [~indicatorDocs(actions, subProcess, _WFInstance)](#module_lib/process..indicatorDocs) ⇒
     * [~actions(actions, subProcess, _WFInstance)](#module_lib/process..actions) ⇒
     * [~action(action, subProcess, _WFInstance)](#module_lib/process..action) ⇒
@@ -368,6 +382,22 @@ test description
     * [~transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _WFInstance)](#module_lib/process..transition) ⇒
     * [~postActions(postActions)](#module_lib/process..postActions) ⇒
 
+<a name="module_lib/process..count"></a>
+
+### lib/process~count(arr) ⇒
+Count an array of items
+
+**Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
+**Returns**: ''  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| arr | <code>Array</code> | the array data |
+
+**Example**  
+```js
+''
+```
 <a name="module_lib/process..preRequisites"></a>
 
 ### lib/process~preRequisites(prerequisites) ⇒
@@ -386,7 +416,7 @@ Process pre-requisites
 ```
 <a name="module_lib/process..preRequisite"></a>
 
-### lib/process~preRequisite(prerequisite, counter, _WFInstance) ⇒
+### lib/process~preRequisite(prerequisite, _WFInstance) ⇒
 Process pre-requisite, execute the pre-requisite condition.
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -395,25 +425,10 @@ Process pre-requisite, execute the pre-requisite condition.
 | Param | Type | Description |
 | --- | --- | --- |
 | prerequisite | <code>object</code> | the pre-requisite config data |
-| counter | <code>number</code> | the pre-requisite count / number |
 | _WFInstance | <code>object</code> | the workflow constructor instance |
 
 **Example**  
 ```js
-var config = {
-	    "_seq": "",
-	    "_type": "",
-		"_subject": "",
-	    "_operator": "",
-	    "_value": "",
-	    "_reference": "",
-	    "message": {
-	    	"i18n": {
-	    		"_lang": "en",
-	    		"value": ""
-	    	}
-	    }
-	};
 Process.preRequisite(config, counter, instance, doc);
 ```
 <a name="module_lib/process..preActions"></a>
@@ -432,6 +447,23 @@ Process pre-actionss
 **Example**  
 ```js
 ''
+```
+<a name="module_lib/process..getSubProcess"></a>
+
+### lib/process~getSubProcess(id, _WFInstance) ⇒
+Workflow get sub-process data.
+
+**Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
+**Returns**: ""  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | the subProcess config id |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
+
+**Example**  
+```js
+""
 ```
 <a name="module_lib/process..subProcess"></a>
 
@@ -471,7 +503,7 @@ Process initiate
 ```
 <a name="module_lib/process..step"></a>
 
-### lib/process~step(processId, subProcessId, stepId, stepSeq, inputData, _WFInstance) ⇒
+### lib/process~step(processId, subProcessId, stepId, stepSeq, data, _WFInstance) ⇒
 Process step
 
 **Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
@@ -483,7 +515,7 @@ Process step
 | subProcessId | <code>string</code> | the current sub-process id |
 | stepId | <code>string</code> | the current sub-process step id |
 | stepSeq | <code>number</code> | the current sub-process step instance counter / sequence |
-| inputData | <code>object</code> | the user input data |
+| data | <code>object</code> | the user input data |
 | _WFInstance | <code>object</code> | the current _WFInstance constructor instance |
 
 **Example**  
@@ -502,6 +534,29 @@ Process indicator updates
 | --- | --- | --- |
 | actions | <code>object</code> | the actions config data |
 | subProcess | <code>object</code> | the current sub-process form config data |
+| _WFInstance | <code>object</code> | the current workflow constructor instance |
+
+**Example**  
+```js
+''
+```
+<a name="module_lib/process..assignUser"></a>
+
+### lib/process~assignUser(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, user, _WFInstance) ⇒
+Process assign user
+
+**Kind**: inner method of <code>[lib/process](#module_lib/process)</code>  
+**Returns**: ''  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| processId | <code>string</code> | the Workflow config / definition process id |
+| processSeq | <code>number</code> | the Workflow instance process seq |
+| subProcessId | <code>string</code> | the Workflow config / definition sub-process id |
+| subProcessSeq | <code>number</code> | the Workflow instance sub-process seq |
+| stepId | <code>string</code> | the Workflow config / definition step id |
+| transitionId | <code>string</code> | the Workflow config / definition transition id |
+| user | <code>object</code> | the user to assign to |
 | _WFInstance | <code>object</code> | the current workflow constructor instance |
 
 **Example**  
