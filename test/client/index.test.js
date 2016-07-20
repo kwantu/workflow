@@ -165,28 +165,7 @@ var config = {
 				}]
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spRegistration",
@@ -411,7 +390,7 @@ var config = {
 				}]
 			}
 		],
-		"postActions": {}
+		"postActions": []
 	},
 	{
 		"_id": "developerregistration",
@@ -448,28 +427,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spDeveloperRegistration",
@@ -720,28 +678,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [
 			{
 				"_id": "spprojectlocation",
@@ -986,7 +923,7 @@ var config = {
 				}]
 			}
 		],
-		"postActions": {}
+		"postActions": []
 	},{
 		"_id": "monthlyProgress",
 		"_seq": "3",
@@ -1022,28 +959,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [{
 			"_id": "spMonthlyProgress",
 			"_seq": "1",
@@ -1293,7 +1209,7 @@ var config = {
 				}]
 			}]
 		}],
-		"postActions": {}
+		"postActions": []
 	},{
 		"_id": "completion",
 		"_seq": "4",
@@ -1329,28 +1245,7 @@ var config = {
 				}
 			}
 		}],
-		"preActions": [{
-			"_seq": "",
-			"_type": "",
-			"funct": {
-				"module": "",
-				"method": "",
-				"params": {
-					"param": []
-				}
-			},
-			"rest": {
-				"hostId": "",
-				"service": "",
-				"APIKey": "",
-				"format": "",
-				"collection": "",
-				"endpoint": "",
-				"params": {
-					"param": []
-				}
-			}
-		}],
+		"preActions": [],
 		"subProcesses": [{
 			"_id": "spCompletion",
 			"_seq": "1",
@@ -1600,9 +1495,9 @@ var config = {
 				}]
 			}]
 		}],
-		"postActions": {}
+		"postActions": []
 	}]
-};
+}
 
 // Create the workflow constrctor instance
 var workflow = new Workflow('1234', '5678', config);
