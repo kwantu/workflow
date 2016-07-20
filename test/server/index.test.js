@@ -168,9 +168,60 @@ describe('# Module: Workflow', function(){
 		})
 	});
 	// Test the saveIndicator method
-	describe('- Method: assignUser()', function(){
-		it('Should return ')
-
+	describe('- Method: assignUser(): Assign a user to a particular sub-process step.', function(){
+		it('Should return a success message and the valid user id and name in the current step.', function(done){
+			var processSeq = 1;
+			var subProcessSeq = 1;
+			var user = {
+				id: '5678',
+				name: 'Satinder Sighn'
+			}
+			workflow.assignUser(processId, processSeq, subProcessId, subProcessSeq, user).then(function(result){
+				expect(result).to.be.an('object');
+				expect(result.message).to.equal('User assigned successfully. UserId: "' + user.id + '", Name: "' + user.name + '"');
+				workflow.instance.processes.filter(function(processItem){
+					if (processItem.id === processId && processItem.seq === processSeq) {
+						processItem.subProcesses.filter(function(subProcessItem){
+							if (subProcessItem.id === subProcessId && subProcessItem.seq === subProcessSeq) {
+								workflow.subprocesses.filter(function(subProcessObj){
+									if (subProcessObj._id === subProcessItem.uuid) {
+										expect(subProcessObj.step.assignedTo.userId).to.equal(user.id);
+										expect(subProcessObj.step.assignedTo.name).to.equal(user.name);
+									}
+								})
+							}
+						})
+					}
+				})
+				// Test the updates to the indicator documents workflow processes section
+				workflow.config.processes.filter(function(processItem){
+					if (processItem._id === processId) {
+						processItem.subProcesses.filter(function(subProcessItem){
+							if (subProcessItem._id === subProcessId) {
+								var indicators = subProcessItem.indicators;
+								for (var i = 0; i < indicators.length; i++) {
+									var indicatorId = indicators[i]._id;
+									workflow.indicators.filter(function(indicator){
+										if (indicatorId === indicator.category.term) {
+											var workflows = indicator.workflows;
+											workflows.filter(function(wfInstance){
+												if (wfInstance.id === workflow.config._id) {
+													wfInstance.processes.filter(function(processItem){
+														// Check the step data
+														expect(processItem.step.assignedTo.userId).to.equal(user.id);
+														expect(processItem.step.assignedTo.name).to.equal(user.name);
+													})
+												}
+											})
+										}
+									})
+								}
+							}
+						})
+					}
+				})
+			}).should.notify(done);
+		})
 	});
 	// Test the transition method
 	describe('- Method: transition()', function(){
