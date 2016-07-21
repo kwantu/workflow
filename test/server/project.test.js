@@ -95,6 +95,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 												confProcessItem.subProcesses.filter(function(confSubProcessItem){
 													if (confSubProcessItem._id === subProcessId) {
 														var indicators = confSubProcessItem.indicators;
+														expect(subProcessObj.indicators.length).to.equal(confSubProcessItem.indicators.length);
 														for (var i = 0; i < indicators.length; i++) {
 															var indicatorId = indicators[i]._id;
 															for (var j = 0; j < subProcessObj.indicators.length; j++) {
@@ -483,7 +484,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 			// Get the input data from the form
 			var data = {
 				createdDate: moment().format('YYYY-MM-DD'),
-				validDate: '2016-06-30',
+				validDate: '',
 				dueDate: '2016-07-31',
 				userId: '9012',
 				name: 'Brent Gordon',
@@ -521,6 +522,7 @@ describe('# TEST CASE: PROJECT WORKFLOW', function(){
 												confProcessItem.subProcesses.filter(function(confSubProcessItem){
 													if (confSubProcessItem._id === subProcessId) {
 														var indicators = confSubProcessItem.indicators;
+														expect(subProcessObj.indicators.length).to.equal(confSubProcessItem.indicators.length);
 														for (var i = 0; i < indicators.length; i++) {
 															var indicatorId = indicators[i]._id;
 															for (var j = 0; j < subProcessObj.indicators.length; j++) {
