@@ -39,6 +39,26 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 ## Module usage
 
-### Browser ( client )
+#### 1. Require the Workflow and DAO modules
 
-### Node ( server )
+> Server side ( Node JS )
+
+`var Workflow = require('./workflow');`  
+`var DAO = require('./dao');`
+
+> Client side ( All modern browsers )
+
+`<script src="../bower_components/workflow/dist/workflow.js"></script>`  
+`<script src="../bower_components/database/dist/database.js"></script>`
+
+#### 2. Get all the required parameters
+
+`var profile = '1234';`  
+`var app = '5678';`  
+> This should point to the application workflow config / definition file:  
+`var config = {};`
+
+#### 3. Instantiate the Workflow and DAO constructors
+
+`var db = new DAO('pouchdb', 'http://kwantu10.kwantu.net:8091');`
+`var workflow = new Workflow(profile, app, config);`
