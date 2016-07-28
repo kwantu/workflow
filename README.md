@@ -43,22 +43,30 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 > Server side ( Node JS )
 
-`var Workflow = require('./workflow');`  
-`var Database = require('./database');`
+```javascript
+var Workflow = require('./workflow');
+var Database = require('./database');
+```
 
 > Client side ( All modern browsers )
 
-`<script src="../bower_components/workflow/dist/workflow.js"></script>`  
-`<script src="../bower_components/database/dist/database.js"></script>`
+```html
+<script src="../bower_components/workflow/dist/workflow.js"></script>
+<script src="../bower_components/database/dist/database.js"></script>
+```
 
 #### 2. Get all the required parameters
 
-`var profile = '1234';`  
-`var app = '5678';`  
+```javascript
+var profile = '1234';
+var app = '5678';
+```
 
 > This should point to the application workflow config / definition file:
 
-`var config = {};`
+```javascript
+var config = {};
+```
 
 #### 3. Instantiate the Workflow and DAO constructors
 
@@ -66,6 +74,8 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 `var workflow = new Workflow(profile, app, config);`
 
 #### 4. Define these two functions in a global script / module
+
+> initData(type, workflow) - On workflow UI load, initialize the data. Param type allowed values --> 'instance' / 'subprocesses' / 'indicators'
 
 ```javascript
 function initData(type, workflow){  
@@ -120,6 +130,68 @@ function initData(type, workflow){
 		return indicators;
 	} else {
 		console.error('Init Data type: ' + type + ' not defined.')
+	}
+}
+```
+
+> persistData(type, workflow) - Locally declared functions to persist the data. Param type allowed values --> 'instance' / 'subprocesses' / 'indicators'
+
+```javascript
+function persistData(type, workflow){
+	if (type === 'instance') {
+		// Save the workflow instance file
+		db.save(workflow.instance).then(function(data){
+			console.log('Instance file saved successfully.');
+			// Update the instance variable
+			var id = data.id;
+			db.get(id).then(function(doc){
+				return doc;
+			}, function(err){
+				console.error(err);
+			})
+		}, function(err){
+			console.error(err);
+		})
+	} else if (type === 'subprocesses') {
+		// Save the workflow sub-process instances
+		var subprocesses = [];
+		for (var i = 0; i < workflow.subprocesses.length; i++) {
+			var doc = workflow.subprocesses[i];
+			db.save(doc).then(function(data){
+				console.log('Subprocess instance file saved successfully.');
+				// Update the subprocesses array variable
+				var id = data.id;
+				db.get(id).then(function(doc){
+					subprocesses.push(doc);
+				}, function(err){
+					console.error(err);
+				})
+			}, function(err){
+				console.error(err);
+			})
+		}
+		return subprocesses;
+	} else if (type === 'indicators') {
+		// Save the workflow sub-process indicator set document instances
+		var indicators = [];
+		for (var i = 0; i < workflow.indicators.length; i++) {
+			var doc = workflow.indicators[i];
+			db.save(doc).then(function(data){
+				console.log('Subprocess indicator set instance file saved successfully.');
+				// Update the indicators array variable
+				var id = data.id;
+				db.get(id).then(function(doc){
+					indicators.push(doc);
+				}, function(err){
+					console.error(err);
+				})
+			}, function(err){
+				console.error(err);
+			})
+		}
+		return indicators;
+	} else {
+		console.error('Persist Data type: ' + type + ' not defined.')
 	}
 }
 ```
