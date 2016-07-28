@@ -302,4 +302,23 @@ workflow.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, 
 })
 ```
 
-#### 8. Called when a user is re-assigned
+#### 8. Re-assign a user to a sub-process step
+
+> Get the user data from the workflow UI
+
+```javascript
+var user = { 'id': '5678', 'name': 'Satinder Sighn' };
+```
+
+> Assign the user to a workflow sub-process step
+
+```javascript
+workflow.assignUser(processId, processSeq, subProcessId, subProcessSeq, user).then(function(data){
+	// On success, persist all the data and update the Workflow constructor properties
+	workflow.setInstance(persistData('instance', workflow));
+	workflow.setSubProcesses(persistData('subprocesses', workflow));
+	workflow.setIndicators(persistData('indicators', workflow));
+}, function(err){
+	console.error(err);
+})
+```
