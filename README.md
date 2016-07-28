@@ -67,7 +67,8 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 #### 4. Define these two functions in a global script / module
 
-`function initData(type, workflow){  
+```javascript
+function initData(type, workflow){  
 	if (type === 'instance') {  
 		// Get the workflow instance file  
 		var id = workflow.profile + ':processes';
@@ -120,4 +121,5 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 	} else {
 		console.error('Init Data type: ' + type + ' not defined.')
 	}
-}`
+}
+```
