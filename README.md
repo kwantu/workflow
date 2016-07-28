@@ -236,7 +236,37 @@ if (workflow.instance === undefined) {
 	})
 }
 ```
-#### 6. On transition of the workflow
+
+#### 6. Initialize another sub-process instance i.e. on edit
+
+> Get the required parameters, at this point it will probably come from the workflow UI
+
+```javascript
+var processId = 'registration';
+var data = {
+	createdDate: '',
+	validDate: '',
+	dueDate: '',
+	userId: '1024',
+	name: 'Brent Gordon',
+	comment: ''
+};
+```
+
+> Call the initialise method only
+
+```javascript
+workflow.initialise(processId, data).then(function(data){
+  // On success, persist all the data and update the Workflow constructor properties
+  workflow.setInstance(persistData('instance', workflow));
+  workflow.setSubProcesses(persistData('subprocesses', workflow));
+  workflow.setIndicators(persistData('indicators', workflow));
+}, function(err){
+  console.error(err);
+})
+```
+
+#### 7. On transition of the workflow
 
 This function needs to be called with all required parameters when a workflow transitions from one sub-process step to another
 
@@ -272,4 +302,4 @@ workflow.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, 
 })
 ```
 
-#### 7. Called when a user is re-assigned
+#### 8. Called when a user is re-assigned
