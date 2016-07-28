@@ -70,8 +70,10 @@ var config = {};
 
 #### 3. Instantiate the Workflow and DAO constructors
 
-`var db = new Database('pouchdb', 'http://kwantu10.kwantu.net:8091');`  
-`var workflow = new Workflow(profile, app, config);`
+```javascript
+var db = new Database('pouchdb', 'http://kwantu10.kwantu.net:8091');
+var workflow = new Workflow(profile, app, config);
+```
 
 #### 4. Define these two functions in a global script / module
 
@@ -195,3 +197,79 @@ function persistData(type, workflow){
 	}
 }
 ```
+
+#### 5. On load of the workflow UI
+
+> On load of UI, initialize the workflow constructor with the existing data from the database
+
+```javascript
+workflow.setInstance(initData('instance', workflow));
+workflow.setSubProcesses(initData('subprocesses', workflow));
+workflow.setIndicators(initData('indicators', workflow));
+```
+
+> Create a new workflow process instance if one doesn't exist already
+
+```javascript
+var processId = config.processes[0]._id;
+var data = {
+	createdDate: '',
+	validDate: '',
+	dueDate: '',
+	userId: '',
+	name: '',
+	comment: ''
+};
+if (workflow.instance === undefined) {
+	workflow.create().then(function(data){
+		// Initialise the first process
+		workflow.initialise(processId, data).then(function(data){
+			// On success, persist all the data and update the Workflow constructor properties
+			workflow.setInstance(persistData('instance', workflow));
+			workflow.setSubProcesses(persistData('subprocesses', workflow));
+			workflow.setIndicators(persistData('indicators', workflow));
+		}, function(err){
+			console.error(err);
+		})
+	}, function(err){
+		console.error(err);
+	})
+}
+```
+#### 6. On transition of the workflow
+
+This function needs to be called with all required parameters when a workflow transitions from one sub-process step to another
+
+> Get the required variables, this should come from the workflow UI
+
+```javascript
+var processSeq = 1;
+var subProcessId = 'spRegistration';
+var subProcessSeq = 1;
+var stepId = 'captureForm';
+var transitionId = 'submitForm';
+
+var data = {
+	createdDate: '',
+	validDate: '',
+	dueDate: '',
+	userId: '',
+	name: '',
+	comment: ''
+};
+```
+
+> Transition the workflow to the next step
+
+```javascript
+workflow.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data).then(function(data){
+	// On success, persist all the data and update the Workflow constructor properties
+	workflow.setInstance(persistData('instance', workflow));
+	workflow.setSubProcesses(persistData('subprocesses', workflow));
+	workflow.setIndicators(persistData('indicators', workflow));
+}, function(err){
+	console.error(err);
+})
+```
+
+#### 7. Called when a user is re-assigned
