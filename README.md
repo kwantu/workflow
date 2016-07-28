@@ -211,7 +211,8 @@ workflow.setIndicators(initData('indicators', workflow));
 > Create a new workflow process instance if one doesn't exist already
 
 ```javascript
-var processId = config.processes[0]._id;
+var processId = 'registration';
+
 var data = {
 	createdDate: '',
 	validDate: '',
@@ -243,6 +244,7 @@ if (workflow.instance === undefined) {
 
 ```javascript
 var processId = 'registration';
+
 var data = {
 	createdDate: '',
 	validDate: '',
@@ -273,6 +275,7 @@ This function needs to be called with all required parameters when a workflow tr
 > Get the required variables, this should come from the workflow UI
 
 ```javascript
+var processId = 'registration';
 var processSeq = 1;
 var subProcessId = 'spRegistration';
 var subProcessSeq = 1;
@@ -304,9 +307,14 @@ workflow.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, 
 
 #### 8. Re-assign a user to a sub-process step
 
-> Get the user data from the workflow UI
+> Get the required paramters and user data from the workflow UI
 
 ```javascript
+var processId = 'registration';
+var processSeq = 1;
+var subProcessId = 'spRegistration';
+var subProcessSeq = 1;
+
 var user = { 'id': '5678', 'name': 'Satinder Sighn' };
 ```
 
@@ -322,3 +330,15 @@ workflow.assignUser(processId, processSeq, subProcessId, subProcessSeq, user).th
 	console.error(err);
 })
 ```
+
+#### 9. Implemented server and client side tests
+
+View these tests to see in more detail how the workflow methods are used and the expected data that flows in and out.
+
+> Server side
+
+https://github.com/kwantu/workflow/blob/develop/test/server/project.test.js
+
+> Client side
+
+https://github.com/kwantu/workflow/blob/develop/test/client/index.test.js
