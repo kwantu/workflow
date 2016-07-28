@@ -39,12 +39,12 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 ## Module usage
 
-#### 1. Require the Workflow and DAO modules
+#### 1. Require the Workflow and Database modules
 
 > Server side ( Node JS )
 
 `var Workflow = require('./workflow');`  
-`var DAO = require('./dao');`
+`var Database = require('./database');`
 
 > Client side ( All modern browsers )
 
@@ -55,10 +55,69 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 `var profile = '1234';`  
 `var app = '5678';`  
-> This should point to the application workflow config / definition file:  
+
+> This should point to the application workflow config / definition file:
+
 `var config = {};`
 
 #### 3. Instantiate the Workflow and DAO constructors
 
-`var db = new DAO('pouchdb', 'http://kwantu10.kwantu.net:8091');`
+`var db = new Database('pouchdb', 'http://kwantu10.kwantu.net:8091');`  
 `var workflow = new Workflow(profile, app, config);`
+
+#### 4. Define these two functions in a global script / module
+
+`function initData(type, workflow){
+	if (type === 'instance') {
+		// Get the workflow instance file
+		var id = workflow.profile + ':processes';
+		db.get(id).then(function(data){
+			return doc;
+		}, function(err){
+			console.error(err);
+		})
+	} else if (type === 'subprocesses') {
+		// Get the workflow sub-process instances
+		var subprocesses = [];
+		for (var i = 0; i < workflow.instance.processes.length; i++) {
+			var subProcessesArray = workflow.instance.processes[i].subProcesses;
+			for (var j = 0; j < subProcessesArray.length; j++) {
+				var id = subProcessesArray[j].ref;
+				db.get(id).then(function(doc){
+					subprocesses.push(doc);
+				}, function(err){
+					console.error(err);
+				})
+			}
+		}
+		return subprocesses;
+	} else if (type === 'indicators') {
+		// Save the workflow sub-process indicator set document instances
+		var indicators = [];
+		for (var i = 0; i < workflow.instance.processes.length; i++) {
+			var subProcessesArray = workflow.instance.processes[i].subProcesses;
+			for (var j = 0; j < subProcessesArray.length; j++) {
+				var id = subProcessesArray[j].ref;				
+				for (var k = 0; k < workflow.subprocesses.length; k++) {
+					if (workflow.subprocesses[k]._id === id) {
+						var indicatorArray = workflow.subprocesses[k].indicators;
+						for (var l = 0; l < indicatorArray.length; l++) {
+							var instanceArray = indicatorArray[l].instances;
+							for (var m = 0; m < instanceArray.length; m++) {
+								var id = instanceArray[m].uuid;
+								db.get(id).then(function(doc){
+									indicators.push(doc);
+								}, function(err){
+									console.error(err);
+								})
+							}							
+						}
+					}
+				}
+			}
+		}
+		return indicators;
+	} else {
+		console.error('Init Data type: ' + type + ' not defined.')
+	}
+}`
