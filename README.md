@@ -67,9 +67,9 @@ This is based on the 'jsdoc-to-markdown' module. See https://github.com/jsdoc2md
 
 #### 4. Define these two functions in a global script / module
 
-`function initData(type, workflow){
-	if (type === 'instance') {
-		// Get the workflow instance file
+`function initData(type, workflow){  
+	if (type === 'instance') {  
+		// Get the workflow instance file  
 		var id = workflow.profile + ':processes';
 		db.get(id).then(function(data){
 			return doc;
