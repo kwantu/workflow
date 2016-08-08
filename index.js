@@ -289,7 +289,10 @@ Workflow.prototype.create = function(){
 				    type: 'workflowInstance',
 				    processes: [],
 				    channels:[
-				    	"community_"+app.SCOPE.communityId , "profile_"+ app.SCOPE.profileId
+				    	"community_"+app.SCOPE.communityId ,
+				    	"profile_"+ app.SCOPE.profileId ,
+				    	"application_"+app.SCOPE.applicationId,
+				    	"community_"+app.SCOPE.communityId+"_application_"+app.SCOPE.applicationId
 				    ]
 				};
 				model._id = _this.profile + ':processes';
@@ -297,6 +300,7 @@ Workflow.prototype.create = function(){
 				_this.instance = model;
 				var success = util.success('Workflow processes instance created successfully.', _this);
 				resolve(success);
+
 			}
 		} catch (err) {
 			reject(err);
