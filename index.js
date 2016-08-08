@@ -43,7 +43,7 @@ var userInterface = require('./lib/interface');
 function Workflow(profile, app, config){
 	var _this = this;
 	// Profile ID validation checks
-	if (profile === '' || profile === undefined) {
+	if (profile == '' || profile == undefined) {
         throw util.error('ParamRequired', 'A profile id is required.');
     } else if (typeof(profile) !== 'string') {
     	throw new Error('The profile id must be a javascript string.');
@@ -51,7 +51,7 @@ function Workflow(profile, app, config){
     	_this.profile = profile || '';
     }
     // App ID validation checks
-	if (app === '' || app === undefined) {
+	if (app == '' || app == undefined) {
         throw util.error('ParamRequired', 'An app id is required.');
     } else if (typeof(app) !== 'string') {
     	throw new Error('The app id must be a javascript string.');
@@ -59,15 +59,15 @@ function Workflow(profile, app, config){
     	_this.app = app || '';
     }
     // Workflow configuration validation checks
-    if (config === '' || config === undefined) {
+    if (config == '' || config == undefined) {
     	throw util.error('ParamRequired', 'A workflow configuration is required.');
     } else if (typeof(config) !== 'object') {
         _this.config = JSON.parse(config);
     } else {
     	_this.config = config;
     }
-    // Workflow instance validation checks
-    _this.instance;
+	    // Workflow instance validation checks
+	    _this.instance;
 		// Workflow sub-processes validation checks
 		_this.subprocesses = [];
 		// Workflow indicators place holder
@@ -287,7 +287,10 @@ Workflow.prototype.create = function(){
 				    _id: '',
 				    version: '',
 				    type: 'workflowInstance',
-				    processes: []
+				    processes: [],
+				    channels:[
+				    	"community_"+app.SCOPE.communityId , "profile_"+ app.SCOPE.profileId
+				    ]
 				};
 				model._id = _this.profile + ':processes';
 				model.version = _this.config.version;
@@ -323,11 +326,11 @@ Workflow.prototype.initialise = function(processId, data){
 			if (processId !== '' && processId !== undefined) {
 				// Get the current process config
 				configProcess = _this.config.processes.filter(function(objProcess){
-					if (objProcess._id === processId) {
+					if (objProcess._id == processId) {
 						return objProcess;
 					}
 				});
-				if (configProcess[0]._id === undefined) {
+				if (configProcess[0]._id == undefined) {
 					var error = util.error('WFConfigError', 'No valid process definition found with process id: ' + processId);
 					reject(error);
 				}
@@ -339,7 +342,7 @@ Workflow.prototype.initialise = function(processId, data){
 			// var processSeq = 1;
 			var currentProcess = [];
 			_this.instance.processes.filter(function(processItem){
-				if (processItem.id === processId) {
+				if (processItem.id == processId) {
 					currentProcess.push(processItem);
 				}
 			});
@@ -349,7 +352,7 @@ Workflow.prototype.initialise = function(processId, data){
 			var processModel = {
 				id: '',
 				seq: '',
-				subProcesses: []
+				subProcesses: [],
 			}
 			// 1. Update the process id and seq
 			processModel.id = processId;
@@ -359,32 +362,39 @@ Workflow.prototype.initialise = function(processId, data){
 			var subProcessId = configProcess[0].subProcesses[0]._id;
 			var subProcessSeq = 1;
 			_this.instance.processes.filter(function(processItem){
-				if (processItem.id === processId && processItem.seq === processSeq) {
+				if (processItem.id == processId && processItem.seq == processSeq) {
 					subProcessSeq = processItem.subProcesses.length + 1
 				}
 			})
 			// Call the subprocess method
+			
+			
+
 			Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, data, _this).then(function(subProcess){
 				// Generate the uuid
+				
+
 				var uuid = _this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
+				var label = data.label;
 				// Build the sub-process reference object
 				var subProcessRef = {
 					id: subProcessId,
 					seq: subProcessSeq,
-					uuid: uuid
+					uuid: uuid,
+					label:label
 				}
 				// Add the reference to the process model
 				processModel.subProcesses.push(subProcessRef);
 				// Add the subProcess model to the subprocesses array
-				_this.subprocesses.push(subProcess.data);
+				//_this.subprocesses.push(subProcess.data);
 				// _this.instance.processes.push(processModel);
 				for (var index = 0; index < _this.instance.processes.length; index++){
 					var processItem = _this.instance.processes[index];
-					if (processItem.id === processId && processItem.seq === processSeq) {
+					if (processItem.id == processId && processItem.seq == processSeq) {
 						// Remove the current process from the array and add the updated processModel
 						_this.instance.processes.splice(index, 1, processModel)
 					}
-				}
+				}	
 				// Process the indicator documents workflow processes updates
 				var indicators = subProcess.data.indicators;
 				var step = subProcess.data.step;
@@ -394,7 +404,16 @@ Workflow.prototype.initialise = function(processId, data){
 				}, function(err){
 					reject(err);
 				})
+
+
+				
+
+
+
+
 			}, function(err){
+			
+				console.log(err);
 				reject(err);
 			});
 		} catch(err) {
@@ -427,22 +446,33 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 	return new Promise(function(resolve, reject) {
 		try {
 			Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this).then(function(result){
+
+				
 				// Update the current sub-process step data
 				var update = function(type){
 					_this.instance.processes.filter(function(processItem){
-						if (processItem.id === processId && processItem.seq === processSeq) {
+						if (processItem.id == processId && processItem.seq == processSeq) {
+
+							
 							processItem.subProcesses.filter(function(subProcessItem){
-								if (subProcessItem.id === subProcessId && subProcessItem.seq === subProcessSeq) {
+								if (subProcessItem.id == subProcessId && subProcessItem.seq == subProcessSeq) {
+									
+
 									_this.subprocesses.filter(function(subProcessObj){
-										if (subProcessObj._id === subProcessItem.uuid) {
-											if (type === 'step') {
+										if (subProcessObj._id == subProcessItem.uuid) {
+											
+											if (type == 'step') {
+
 												subProcessObj.step = result.data;
 												var success = util.success(result.message, subProcessObj);
+												
+
 												resolve(success);
-											} else if (type === 'stepComplete') {
+											} else if (type == 'stepComplete') {
 												subProcessObj.step = result.data.step;
 												subProcessObj.complete = true
 												var success = util.success(result.message, subProcessObj);
+												
 												resolve(success);
 											}
 										}
@@ -453,14 +483,18 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 					})
 				}
 				if (result.data.subProcessComplete) {
+					
 					update('stepComplete');
 				} else {
+					
 					update('step');
 				}
 			}, function(err){
+				
 				reject(err);
 			});
 		} catch(err) {
+			
 			reject(err);
 		}
 	});
