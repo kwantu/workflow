@@ -316,7 +316,7 @@ Workflow.prototype.create = function(){
  * @param {object} [data] - the input data to process
  *
  * @example
- * Workflow.initialize('processId', { validDate: 'date' });
+ * Workflow.initialise('processId', { validDate: 'date' });
  *
  * @return ""
  *
