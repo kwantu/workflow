@@ -385,7 +385,8 @@ Workflow.prototype.initialise = function(processId, data){
 					id: subProcessId,
 					seq: subProcessSeq,
 					uuid: uuid,
-					label:label
+					label:label,
+					active:true
 				}
 				// Add the reference to the process model
 				processModel.subProcesses.push(subProcessRef);
