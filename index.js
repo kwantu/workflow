@@ -417,7 +417,9 @@ Workflow.prototype.initialise = function(processId, data){
 
 
 			}, function(err){
-			
+				_this.instance.processes = _this.instance.processes.filter(function( obj ) {
+					return !(obj.id == processId && obj.seq == processSeq);
+				});
 				console.log(err);
 				reject(err);
 			});
