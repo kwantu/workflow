@@ -570,21 +570,7 @@ Workflow.prototype.ui = function(){
 	}
 };
 
-Workflow.prototype.takeAssignment = function(spUUID){
-	// Re-assign the Workflow constructor instance as _this
-		var _this = this;
-		// Assign the current user to the profile workflow process spUUID ->step->assignedTo-> userId and name
-		var assignee = JSON.xpath("/subprocesses[_id eq '"+ spUUID +"']/step/assignedTo",app.SCOPE.workflow,{})[0];
-		assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username+"";
-		assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId+"";
 
-		persistData('subprocesses', app.SCOPE.workflow).then(function(data){
-			app.SCOPE.workflow.setInstance(data);
-		 	console.log('Assignemnt done.');
-		}, function(err){
-		 	console.log('Assignemnt failed.');
-		});
-};
 
 
 module.exports = Workflow;
