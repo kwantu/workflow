@@ -381,12 +381,15 @@ Workflow.prototype.initialise = function(processId, data){
 				var uuid = _this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
 				var label = data.label;
 				// Build the sub-process reference object
+
+				//TODO: Change required to move isActive to subProcess file.Remove from here
+
+
 				var subProcessRef = {
 					id: subProcessId,
 					seq: subProcessSeq,
 					uuid: uuid,
-					label:label,
-					active:true
+					label:label
 				}
 				// Add the reference to the process model
 				processModel.subProcesses.push(subProcessRef);
