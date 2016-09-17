@@ -1,0 +1,1059 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"id": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/",
+	"title": "Workflow Definition Object to define a full application workflow",
+	"description": "This is the basic structure of the workflow definition",
+	"copyright":"All rights belong to Kwantu Information Technology",
+	"type": "object",
+	"properties": {
+		"_id": {
+			"title": "Process Definition Identifier",
+			"description": "Should be in the format <appid>:processDefinition",
+			"type": "string"
+		},
+		"_rev": {
+			"title": "Process Definition Identifier",
+			"description": "Couchbase revision ID. Do not touch this",
+			"type": "string"
+		},
+		"title": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"type": "object",
+					"properties": {
+						"i18n": {
+							"$ref": "#/definitions/i18n"
+						}
+					},
+					"required": [
+						"i18n"
+					]
+				},
+				"name": {
+					"type": "object",
+					"properties": {
+						"i18n": {
+							"$ref": "#/definitions/i18n"
+						}
+					},
+					"required": [
+						"i18n"
+					]
+				}
+			},
+			"required": [
+				"description",
+				"name"
+			],
+			"additionalProperties": false
+		},
+		"identification": {
+			"description": "This is the overall object to identify the overall workflow",
+			"type": "object",
+			"properties": {
+				"documentation": {
+					"$ref": "#/definitions/documentation"
+				},
+				"upgradeInformation": {
+					"$ref": "#/definitions/documentation"
+				}
+			},
+			"required": [
+				"documentation",
+				"upgradeInformation"
+			],
+			"additionalProperties": false
+		},
+		"type": {
+			"type": "string",
+			"enum": [
+				"workflowConfig"
+			]
+		},
+		"version": {
+			"type": "string"
+		},
+		"variables": {
+			"$ref": "#/definitions/variables"
+		},
+		"channels": {
+			"description": "Array of replication channels defined in this workflow. Ie. Who should get it.",
+			"type": "array",
+			"items": {
+				"type": "string"
+			}
+		},
+		"processes": {
+			"title": "Processes that forms the workflow definition",
+			"description": "This tag holds a description of all the processes",
+			"type": "array",
+			"items": {
+				"title": "Array of process definitions",
+				"description": "Each object describes a process",
+				"type": "object",
+				"properties": {
+					"_id": {
+						"title": "Unique identifier",
+						"description": "Unique identifier of the process",
+						"type": "string"
+					},
+					"_seq": {
+						"$ref": "#/definitions/_seq"
+					},
+					"help": {
+						"$ref": "#/definitions/help"
+					},
+					"name": {
+						"title": "Name of the process to be displayed",
+						"description": "Display name of the process",
+						"type": "object",
+						"properties": {
+							"i18n": {
+								"$ref": "#/definitions/i18n"
+							}
+						},
+						"required": [
+							"i18n"
+						]
+					},
+					"preActions": {
+						"title": "Pre-actions that need to be executed before instantiating a process",
+						"description": "Pre-actions that need to be executed before instantiating a process",
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/actions"
+						}
+					},
+					"prerequisites": {
+						"title": "Pre-requisites to sub-process instantiation",
+						"description": "This area provides for all the pre-requisites that may be specified to determine if a process may be instantiated. If any of the prerequisites tested in the correct order fails, then the processing stops at that point and the error message from the failed object is returned as the failed error message",
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"_id": {
+									"type": "string",
+									"description": "Unique id with which to refer to this precondition to use for language resource array"
+								},
+								"_seq": {
+									"$ref": "#/definitions/_seq"
+								},
+								"message": {
+									"$ref": "#/definitions/documentation"
+								},
+								"check": {
+									"type": "object",
+									"oneOf": [
+										{
+											"numberProcessInstances": {
+												"type": "object",
+												"description": "Checks if the number of subProcessInstances for a given process has the number of instances as specified by the operator and value. The type specifies if the instance instantiation or completion is regarded",
+												"properties": {
+													"processId": {
+														"type": "string"
+													},
+													"subProcessId": {
+														"type": "string"
+													},
+													"operator": {
+                            "type": "string",
+                            "enum": ["greaterThan","equalto"]
+													},
+													"value": {
+														"type": "number"
+													},
+													"type": {
+														"type": "string",
+														"enum": [
+															"instantiate",
+															"complete",
+															"active"
+														]
+													}
+												},
+												"required": [
+													"operator",
+													"processId",
+													"value",
+													"type",
+													"subProcessId"
+												],
+												"additionalProperties": false
+											}
+										}
+									]
+								}
+							},
+							"required": [
+								"_id",
+								"_seq",
+								"check",
+								"message"
+							],
+							"additionalProperties": false
+						}
+					},
+					"postActions": {
+						"title": "Process Post Actions",
+						"description": "Actions to be executed as soon as the all the subprocesses have completed",
+						"type": "array",
+						"items": {
+							"$ref": "#/definitions/actions"
+						}
+					},
+					"subProcesses": {
+						"title": "Details of one or more sub-processes",
+						"description": "Details of one or more sub-processes",
+						"type": "array",
+						"minItems": 1,
+						"items": {
+							"type": "object",
+							"properties": {
+								"_id": {
+									"type": "string"
+								},
+								"_seq": {
+									"$ref": "#/definitions/_seq"
+								},
+								"help": {
+									"$ref": "#/definitions/help"
+								},
+								"indicators": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string"
+											},
+											"maxInstances": {
+												"type": "integer"
+											},
+											"name": {
+												"type": "object",
+												"properties": {
+													"i18n": {
+														"$ref": "#/definitions/i18n"
+													}
+												},
+												"required": [
+													"i18n"
+												]
+											}
+										},
+										"required": [
+											"_id",
+											"maxInstances",
+											"name"
+										]
+									}
+								},
+								"initiate": {
+									"type": "object",
+									"properties": {
+										"_type": {
+											"type": "string"
+										},
+										"action": {
+											"type": "object",
+											"properties": {
+												"_type": {
+													"type": "string"
+												},
+												"label": {
+													"type": "string"
+												}
+											},
+											"required": [
+												"_type",
+												"label"
+											]
+										},
+										"dates": {
+											"type": "object",
+											"properties": {
+												"due": {
+													"type": "object",
+													"properties": {
+														"_type": {
+															"type": "string"
+														},
+														"message": {
+															"$ref": "#/definitions/documentation"
+														}
+													},
+													"required": [
+														"_type",
+														"message"
+													]
+												},
+												"valid": {
+													"type": "object",
+													"properties": {
+														"_type": {
+															"type": "string"
+														},
+														"message": {
+															"$ref": "#/definitions/documentation"
+														}
+													},
+													"required": [
+														"_type",
+														"message"
+													]
+												}
+											},
+											"required": [
+												"due",
+												"valid"
+											]
+										},
+										"maxInstances": {
+											"type": "integer"
+										}
+									},
+									"required": [
+										"_type",
+										"action",
+										"dates",
+										"maxInstances"
+									]
+								},
+								"name": {
+									"type": "object",
+									"properties": {
+										"i18n": {
+											"$ref": "#/definitions/i18n"
+										}
+									},
+									"required": [
+										"i18n"
+									]
+								},
+								"steps": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"_id": {
+												"type": "string"
+											},
+											"_seq": {
+												"$ref": "#/definitions/_seq"
+											},
+											"_setInstanceStatusTo": {
+												"type": "string"
+											},
+											"_setStatusMsgTo": {
+												"type": "string"
+											},
+											"actions": {
+												"type": "array",
+												"items": {
+													"type": "object",
+													"properties": {
+														"_seq": {
+															"$ref": "#/definitions/_seq"
+														},
+														"_type": {
+															"type": "string"
+														},
+														"funct": {
+															"type": "object",
+															"properties": {
+																"method": {
+																	"type": "string"
+																},
+																"module": {
+																	"type": "string"
+																}
+															},
+															"required": [
+																"method",
+																"module"
+															]
+														},
+														"transition": {
+															"type": "array",
+															"items": {
+																"type": "object",
+																"properties": {
+																	"_stop": {
+																		"type": "boolean"
+																	},
+																	"_type": {
+																		"type": "string"
+																	},
+																	"goTo": {
+																		"type": "object",
+																		"properties": {
+																			"_stepId": {
+																				"type": "string"
+																			},
+																			"_type": {
+																				"type": "string"
+																			}
+																		},
+																		"required": [
+																			"_stepId",
+																			"_type"
+																		]
+																	},
+																	"name": {
+																		"type": "object",
+																		"properties": {
+																			"i18n": {
+																				"$ref": "#/definitions/i18n"
+																			}
+																		},
+																		"required": [
+																			"i18n"
+																		]
+																	}
+																},
+																"required": [
+																	"_stop",
+																	"_type",
+																	"goTo",
+																	"name"
+																]
+															}
+														}
+													},
+													"required": [
+														"_seq",
+														"_type",
+														"funct",
+														"transition"
+													]
+												}
+											},
+											"name": {
+												"type": "object",
+												"properties": {
+													"i18n": {
+														"$ref": "#/definitions/i18n"
+													}
+												},
+												"required": [
+													"i18n"
+												]
+											}
+										},
+										"required": [
+											"_id",
+											"_seq",
+											"_setInstanceStatusTo",
+											"_setStatusMsgTo",
+											"actions",
+											"name"
+										]
+									}
+								}
+							},
+							"required": [
+								"_id",
+								"_seq",
+								"help",
+								"indicators",
+								"initiate",
+								"name",
+								"steps"
+							]
+						}
+					},
+					"variables": {
+						"$ref": "#/definitions/variables"
+					}
+				},
+				"required": [
+					"_id",
+					"_seq",
+					"help",
+					"name",
+					"subProcesses"
+				],
+				"additionalProperties": false
+			}
+		},
+		"roles": {
+			"$ref": "#/definitions/roles"
+		}
+	},
+	"required": [
+		"_id",
+		"_rev",
+		"title",
+		"identification",
+		"type",
+		"version",
+		"channels",
+		"processes",
+		"roles"
+	],
+	"additionalProperties": false,
+	"definitions": {
+		"_seq": {
+			"title": "Unique sequence of the processs",
+			"description": "Unique sequence of the process",
+			"type": "integer"
+		},
+		"name": {
+			"type": "object",
+			"properties": {
+				"i18n": {
+					"$ref": "#/definitions/i18n"
+				}
+			},
+			"required": [
+				"i18n"
+			]
+		},
+		"help": {
+			"title": "Help text for the process",
+			"description": "Help text to display to users related to the process as a whole",
+			"type": "object",
+			"properties": {
+				"i18n": {
+					"$ref": "#/definitions/i18n"
+				}
+			},
+			"required": [
+				"i18n"
+			]
+		},
+		"description": {
+			"type": "object",
+			"properties": {
+				"i18n": {
+					"$ref": "#/definitions/i18n"
+				}
+			},
+			"required": [
+				"i18n"
+			]
+		},
+		"i18n": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"_lang": {
+						"type": "string"
+					},
+					"value": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"_lang",
+					"value"
+				]
+			}
+		},
+		"actions": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"title": "Unique identifier of the specific action",
+						"description": "Unique identifier of the specific action",
+						"type": "string"
+					},
+					"_seq": {
+						"type": "number"
+					},
+					"description": {
+						"$ref": "#/definitions/description"
+					},
+					"function": {
+						"type": "object",
+						"additionalProperties": false,
+						"oneOf": [
+							{
+								"form": {
+									"type": "object",
+									"oneOf": [
+										{
+											"create": {
+												"type": "string",
+												"enum": [
+													"fromDefinition",
+													"fromSomeOther..."
+												]
+											}
+										},
+										{
+											"instantiate": {
+												"type": "string",
+												"enum": [
+													"fromDefinition",
+													"fromSomeOther..."
+												]
+											}
+										}
+									]
+								},
+								"indicator": {
+									"type": "object",
+									"oneOf": [
+										{
+											"create": {
+												"type": "string",
+												"enum": [
+													"fromDefinition",
+													"fromSomeOther..."
+												]
+											}
+										},
+										{
+											"instantiate": {
+												"type": "string",
+												"enum": [
+													"fromDefinition",
+													"fromSomeOther..."
+												]
+											}
+										},
+										{
+											"setValue": {
+												"$ref": "setValue"
+											}
+										}
+									]
+								},
+								"profile": {
+									"type": "object",
+									"oneOf": [
+										{
+											"setVariable": {
+												"$ref": "setVariable"
+											}
+										},
+										{
+											"setValue": {
+												"$ref": "setValue"
+											}
+										},
+										{
+											"create": {
+												"type": "object",
+												"properties": {
+													"communityId": {
+														"type": "string"
+													},
+													"applicationId": {
+														"type": "string"
+													},
+													"name": {
+														"$ref": "#description/getNodeValue"
+													},
+													"reference": {
+														"$ref": "#description/getNodeValue"
+													},
+													"description": {
+														"$ref": "#description/getNodeValue"
+													}
+												}
+											}
+										}
+									]
+								},
+								"subProcessInstance": {
+									"type": "object",
+									"oneOf": [
+										{
+											"instantiate": {
+												"type": "string"
+											}
+										},
+										{
+											"authorise": {
+												"type": "string"
+											}
+										},
+										{
+											"close": {
+												"type": "string"
+											}
+										},
+										{
+											"setVariable": {
+												"$ref": "#/definitions/setVariable"
+											}
+										}
+									]
+								},
+								"step": {
+									"type": "object",
+									"oneOf": [
+										{
+											"setVariable": {
+												"$ref": "#/definitions/setVariable"
+											}
+										}
+									]
+								}
+							}
+						]
+					}
+				},
+				"required": [
+					"_id",
+					"_seq",
+					"description",
+					"function"
+				],
+				"additionalProperties": false
+			}
+		},
+		"dataType": {
+			"type": "object",
+			"properties": {
+				"dataType": {
+					"type": "string",
+					"enum": [
+						"string",
+						"number",
+						"date",
+						"dateTime",
+						"integer",
+						"decimal"
+					]
+				},
+				"dataFormat": {
+						"type": "string",
+						"description": "Here we need to specify some string formatting set of functions to use that will fit easily with Javascript"
+					
+				}
+			},
+			"required": ["dataType"],
+			"additionalProperties": false
+		},
+		"getNodeValue": {
+			"type": "object",
+			"oneOf": [
+				{
+					"value": {
+						"type": "object",
+						"properties": {
+							"datatype": {
+								"$ref": "#/definitions/dataType"
+							},
+							"data": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				{
+					"indicator": {
+						"type": "object",
+						"properties": {
+							"indicatorSetId": {
+								"type": "string"
+							},
+							"xpath": {
+								"type": "string",
+								"description": "optional definition of an xpath statement that is generated and used"
+							},
+							"elementId": {
+								"type": "string",
+								"description": "elementId that is used as the reference to build up the xpath statement"
+							},
+							"status": {
+								"type": "string",
+								"description": "Defines which version should be read. History will require an additional value to determine the sequence or date",
+								"enum": [
+									"pending",
+									"authorised",
+									"history"
+								]
+							}
+						},
+						"required": [
+							"indicatorSetId",
+							"elementId",
+							"status"
+						]
+					}
+				},
+				{
+					"system": {
+						"type": "object",
+						"description": "Read the value from some system value",
+						"oneOf": [
+							{
+								"profileId": {
+									"type": "string",
+									"description": "value of the current profileId"
+								}
+							},
+							{
+								"applicationId": {
+									"type": "string",
+									"description": "value of the current applicaiton ID"
+								}
+							},
+							{
+								"processId": {
+									"type": "string",
+									"description": "value of the current applicaiton ID"
+								}
+							},
+							{
+								"subProcessId": {
+									"type": "string",
+									"description": "value of the current applicaiton ID"
+								}
+							}
+						]
+					}
+				},
+				{
+					"variable": {
+						"type": "object",
+						"description": "Read the value from some variable",
+						"oneOf": [
+							{
+								"profile": {
+									"type": "string",
+									"description": "value of the variable specified in the current profileId"
+								}
+							},
+							{
+								"subProcessInstance": {
+									"type": "string",
+									"description": "value of the variable subProcessInstance variable current subprocessInstance"
+								}
+							},
+							{
+								"step": {
+									"type": "string",
+									"description": "value of the variable in the current step"
+								}
+							},
+							{
+								"subProcessId": {
+									"type": "string",
+									"description": "value of the current applicaiton ID"
+								}
+							}
+						]
+					}
+				}
+			]
+		},
+		"setVariable": {
+			"type": "object",
+			"properties": {
+				"scope": {
+					"type": "string",
+					"description": "Which variable will be updated",
+					"enum": [
+						"profile",
+						"subProcessInstance",
+						"step"
+					]
+				},
+				"name": {
+					"type": "string",
+					"description": "Name of the variable that will be updated"
+				},
+				"data": {
+					"$ref": "#/definitions/getNodeValue"
+				}
+			}
+		},
+		"setValue": {
+			"type": "string",
+			"description": "Still need to extend this"
+		},
+		"transition": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"_stop": {
+						"type": "boolean"
+					},
+					"_type": {
+						"type": "string"
+					},
+					"goTo": {
+						"type": "object",
+						"properties": {
+							"_stepId": {
+								"type": "string"
+							},
+							"_type": {
+								"type": "string"
+							}
+						},
+						"required": [
+							"_stepId",
+							"_type"
+						]
+					},
+					"name": {
+						"type": "object",
+						"properties": {
+							"i18n": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"_lang": {
+											"type": "string"
+										},
+										"value": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"_lang",
+										"value"
+									]
+								}
+							}
+						},
+						"required": [
+							"i18n"
+						]
+					}
+				},
+				"required": [
+					"_stop",
+					"_type",
+					"goTo",
+					"name"
+				]
+			}
+		},
+		"documentation": {
+			"type": "object",
+			"properties": {
+				"i18n": {
+					"$ref": "#/definitions/i18n"
+				}
+			},
+			"required": [
+				"i18n"
+			]
+		},
+		"variables": {
+			"description": "Variables that may be set at the process level",
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"dataType": {
+						"type": "string"
+					},
+					"default": {
+						"type": "string"
+					},
+					"sessionVar": {
+						"type": "string"
+					},
+					"value": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"dataType",
+					"default",
+					"value"
+				],
+				"additionalProperties": false
+			}
+		},
+		"roles": {
+			"title": "Application role definitions",
+			"description": "Role definitions for this application",
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"_level": {
+						"type": "string"
+					},
+					"name": {
+						"type": "object",
+						"properties": {
+							"i18n": {
+								"$ref": "#/definitions/i18n"
+							}
+						},
+						"required": [
+							"i18n"
+						]
+					},
+					"requiredRoles": {
+						"type": "object",
+						"properties": {
+							"requiredRole": {
+								"type": "object",
+								"properties": {
+									"_applicationId": {
+										"type": "string"
+									},
+									"_roleId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"_applicationId",
+									"_roleId"
+								]
+							}
+						},
+						"required": [
+							"requiredRole"
+						]
+					},
+					"roleMappings": {
+						"type": "object",
+						"properties": {
+							"roleMapping": {
+								"type": "object",
+								"properties": {
+									"_applicationId": {
+										"type": "string"
+									},
+									"_roleId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"_applicationId",
+									"_roleId"
+								]
+							}
+						},
+						"required": [
+							"roleMapping"
+						]
+					}
+				},
+				"required": [
+					"_id",
+					"_level",
+					"name",
+					"requiredRoles",
+					"roleMappings"
+				],
+				"additionalProperties": false
+			}
+		}
+	}
+}
