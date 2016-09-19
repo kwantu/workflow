@@ -1,1 +1,2105 @@
-{"_id":"1008:processDefinition","_rev":"70-9fd051e3ba48c4f06fafbe7c54a40ad9","channels":["kwantu","community_24000"],"identification":{"documentation":{"i18n":[{"_lang":"en","value":""}]},"upgradeInformation":{"i18n":[{"_lang":"","value":""}]}},"processes":[{"_id":"SiteInformation","_seq":1,"help":{"i18n":[{"_lang":"en","value":"Please click the 'Add site information' button to enter the site information."}]},"name":{"i18n":[{"_lang":"en","value":"Site information"}]},"postActions":[],"preActions":[],"prerequisites":[{"_operator":"equalTo","_parameter":"completion","_seq":1,"_type":"processInstances","_value":0,"message":{"i18n":[{"_lang":"en","value":"The project registration form can't be edited once the completion process has been initiated."}]}}],"subProcesses":[{"_id":"spSiteinformation","_seq":1,"help":{"i18n":[{"_lang":"en","value":"Please enter the site information data"}]},"indicators":[{"_id":"MESiteInformation","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Site Information"}]}}],"initiate":{"_type":"user","action":{"_type":"button","label":"Add site information"},"dates":{"due":{"_label":"Due date","_show":false,"_type":"autoSelected","default":{"_type":"calculated","calculated":{"operator":"add","source":"valid","value":10},"value":""},"message":{"i18n":[{"_lang":"en","value":"Please select a due date i.e. the actual date that the data needs to be captured and authorised by."}]}},"valid":{"_label":"Valid date","_show":true,"_type":"autoSelected","default":{"_type":"today","value":""},"message":{"i18n":[{"_lang":"en","value":"Please select the date on which you collected this data."}]},"vaidation":{"isFuture":false}}},"editLabel":{"i18n":[{"_lang":"en","value":"Edit"}]},"instanceTitle":{"_label":"Title","_show":true,"message":{"i18n":[{"_lang":"en","value":"Please enter the name for the site."}]}},"isEditable":true,"maxInstances":1,"parallelInstances":false},"name":{"i18n":[{"_lang":"en","value":"Site Information Process"}]},"steps":[{"_id":"createForm","_seq":1,"_setInstanceStatusTo":"Created","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[{"_args":["processId","subProcess","step","action","processSeq","subProcessSeq"],"_doInitialiseData":true,"_id":"form.create","_initialiseFrom":"fromDefinition","_seq":1}],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Create the site information form."}]},"task":"","transitions":[{"_id":"captureForm","_stop":false,"_type":"auto","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":""}]}}]},{"_id":"captureForm","_seq":2,"_setInstanceStatusTo":"InProgress","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Capture site information form"}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Capturer"}},"work":{"action":"captureData"}},"transitions":[{"_id":"submitForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Submit"}]}}]},{"_id":"authoriseForm","_seq":3,"_setInstanceStatusTo":"Submitted","_setStatusMsgTo":"Waiting for user to review and authorise data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please review the data captured and either refer back or authorise it"}]},"name":{"i18n":[{"_lang":"en","value":"Review the site information form data."}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Authoriser"}},"work":{"action":"editForm"}},"transitions":[{"_id":"authoriseForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Authorise"}]}},{"_id":"revertForm","_stop":false,"_type":"user","goTo":{"_stepId":"captureForm","_type":"stepId"},"name":{"i18n":[{"_lang":"en","value":"Refer Back"}]}}]},{"_id":"closeForm","_seq":4,"_setInstanceStatusTo":"Complete","_setStatusMsgTo":"Data capture complete and form locked","actions":[{"_args":["processId","subProcess","processSeq","subProcessSeq"],"_id":"form.authorise","_seq":1,"_type":"internal"},{"_args":["subProcess.indicators"],"_id":"form.close","_seq":2,"_type":"internal"}],"help":{"i18n":[{"_lang":"en","value":"Data captured and authorised"}]},"name":{"i18n":[{"_lang":"en","value":"Site information data captured and authorised"}]},"task":"","transitions":[]}]}],"variables":[{"_dataType":"","_default":"","_id":"","_sessionVar":"","_value":""}]},{"_id":"PersonnelContracts","_seq":2,"help":{"i18n":[{"_lang":"en","value":"Please click the 'Add contracts' button to enter site personnel contracts."}]},"name":{"i18n":[{"_lang":"en","value":"Contracts for site personnel"}]},"postActions":[],"preActions":[],"prerequisites":[{"_operator":"equalTo","_parameter":"completion","_seq":1,"_type":"processInstances","_value":0,"message":{"i18n":[{"_lang":"en","value":"The project registration form can't be edited once the completion process has been initiated."}]}}],"subProcesses":[{"_id":"spsitepersonnel","_seq":1,"help":{"i18n":[{"_lang":"en","value":"Please enter the contract information for the site personnel"}]},"indicators":[{"_id":"MEContract","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Site personnel contracts"}]}}],"initiate":{"_type":"user","action":{"_type":"button","label":"Add contracts"},"dates":{"due":{"_label":"Due date","_show":false,"_type":"autoSelected","default":{"_type":"calculated","calculated":{"operator":"add","source":"valid","value":10},"value":""},"message":{"i18n":[{"_lang":"en","value":"Please select a due date i.e. the actual date that the data needs to be captured and authorised by."}]}},"valid":{"_label":"Valid date","_show":true,"_type":"autoSelected","default":{"_type":"today","value":""},"message":{"i18n":[{"_lang":"en","value":"Please select the date on which you collected data on site personnel contracts"}]},"vaidation":{"isFuture":false}}},"editLabel":{"i18n":[{"_lang":"en","value":"Edit"}]},"instanceTitle":{"_label":"Title","_show":true,"message":{"i18n":[{"_lang":"en","value":"Please enter the name 'Personnel contracts'"}]}},"isEditable":true,"maxInstances":1,"parallelInstances":false},"name":{"i18n":[{"_lang":"en","value":"Site personnel contracts"}]},"steps":[{"_id":"createForm","_seq":1,"_setInstanceStatusTo":"Created","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[{"_args":["processId","subProcess","step","action","processSeq","subProcessSeq"],"_doInitialiseData":true,"_id":"form.create","_initialiseFrom":"fromDefinition","_seq":1}],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Create the site personnel contracts form."}]},"task":"","transitions":[{"_id":"captureForm","_stop":false,"_type":"auto","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":""}]}}]},{"_id":"captureForm","_seq":2,"_setInstanceStatusTo":"InProgress","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Capture site personnel contract data."}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Capturer"}},"work":{"action":"captureData"}},"transitions":[{"_id":"submitForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Submit"}]}}]},{"_id":"authoriseForm","_seq":3,"_setInstanceStatusTo":"Submitted","_setStatusMsgTo":"Waiting for user to review and authorise data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please review the data captured and either refer back or authorise it"}]},"name":{"i18n":[{"_lang":"en","value":"Review the site personnel contract form data."}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Authoriser"}},"work":{"action":"editForm"}},"transitions":[{"_id":"authoriseForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Authorise"}]}},{"_id":"revertForm","_stop":false,"_type":"user","goTo":{"_stepId":"captureForm","_type":"stepId"},"name":{"i18n":[{"_lang":"en","value":"Refer Back"}]}}]},{"_id":"closeForm","_seq":4,"_setInstanceStatusTo":"Complete","_setStatusMsgTo":"Data capture complete and form locked","actions":[{"_args":["processId","subProcess","processSeq","subProcessSeq"],"_id":"form.authorise","_seq":1,"_type":"internal"},{"_args":["subProcess.indicators"],"_id":"form.close","_seq":2,"_type":"internal"}],"help":{"i18n":[{"_lang":"en","value":"Data captured and authorised"}]},"name":{"i18n":[{"_lang":"en","value":"Site personnel contract data captured and authorised"}]},"task":"","transitions":[]}]}],"variables":[{"_dataType":"","_default":"","_id":"","_sessionVar":"","_value":""}]},{"_id":"SiteTraining","_seq":3,"help":{"i18n":[{"_lang":"en","value":"Please click 'Add training' to add a new training."}]},"name":{"i18n":[{"_lang":"en","value":"Training"}]},"postActions":[],"preActions":[],"prerequisites":[{"_operator":"equalTo","_parameter":"completion","_seq":1,"_type":"processInstances","_value":0,"message":{"i18n":[{"_lang":"en","value":"The project registration form can't be edited once the completion process has been initiated."}]}}],"subProcesses":[{"_id":"spSitetraining","_seq":1,"help":{"i18n":[{"_lang":"en","value":"Register training that took place this month"}]},"indicators":[{"_id":"METraining","_type":"newInstance","maxInstances":-1,"name":{"i18n":[{"_lang":"en","value":"Training"}]}}],"initiate":{"_type":"user","action":{"_type":"button","label":"Add training"},"dates":{"due":{"_label":"Due date","_show":false,"_type":"autoSelected","default":{"_type":"calculated","calculated":{"operator":"add","source":"valid","value":10},"value":""},"message":{"i18n":[{"_lang":"en","value":"Please select a due date i.e. the actual date that the data needs to be captured and authorised by."}]}},"valid":{"_label":"Valid date","_show":true,"_type":"autoSelected","default":{"_type":"today","value":""},"message":{"i18n":[{"_lang":"en","value":"Please select the date on which the training took place."}]},"vaidation":{"isFuture":false}}},"editLabel":{"i18n":[{"_lang":"en","value":"Edit"}]},"instanceTitle":{"_label":"Title","_show":true,"message":{"i18n":[{"_lang":"en","value":"Please enter the name of the training"}]}},"isEditable":true,"maxInstances":-1,"parallelInstances":true},"name":{"i18n":[{"_lang":"en","value":"Site training"}]},"steps":[{"_id":"createForm","_seq":1,"_setInstanceStatusTo":"Created","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[{"_args":["processId","subProcess","step","action","processSeq","subProcessSeq"],"_doInitialiseData":true,"_id":"form.create","_initialiseFrom":"fromDefinition","_seq":1}],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Create the training form."}]},"task":"","transitions":[{"_id":"captureForm","_stop":false,"_type":"auto","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":""}]}}]},{"_id":"captureForm","_seq":2,"_setInstanceStatusTo":"InProgress","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Capture the training form"}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Capturer"}},"work":{"action":"captureData"}},"transitions":[{"_id":"submitForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Submit"}]}}]},{"_id":"authoriseForm","_seq":3,"_setInstanceStatusTo":"Submitted","_setStatusMsgTo":"Waiting for user to review and authorise data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please review the data captured and either refer back or authorise it"}]},"name":{"i18n":[{"_lang":"en","value":"Review the training form data and approve or refer back"}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Authoriser"}},"work":{"action":"editForm"}},"transitions":[{"_id":"authoriseForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Authorise"}]}},{"_id":"revertForm","_stop":false,"_type":"user","goTo":{"_stepId":"captureForm","_type":"stepId"},"name":{"i18n":[{"_lang":"en","value":"Refer Back"}]}}]},{"_id":"closeForm","_seq":4,"_setInstanceStatusTo":"Complete","_setStatusMsgTo":"Data capture complete and form locked","actions":[{"_args":["processId","subProcess","processSeq","subProcessSeq"],"_id":"form.authorise","_seq":1,"_type":"internal"},{"_args":["subProcess.indicators"],"_id":"form.close","_seq":2,"_type":"internal"}],"help":{"i18n":[{"_lang":"en","value":"Data captured and authorised"}]},"name":{"i18n":[{"_lang":"en","value":"Training data authorised and locked"}]},"task":"","transitions":[]}]}],"variables":[{"_dataType":"","_default":"","_id":"","_sessionVar":"","_value":""}]},{"_id":"Partnerships","_seq":4,"help":{"i18n":[{"_lang":"en","value":"Please click 'Add partnership' to add a new partnership"}]},"name":{"i18n":[{"_lang":"en","value":"Partnerships"}]},"postActions":[],"preActions":[],"prerequisites":[{"_operator":"equalTo","_parameter":"completion","_seq":1,"_type":"processInstances","_value":0,"message":{"i18n":[{"_lang":"en","value":"The project registration form can't be edited once the completion process has been initiated."}]}}],"subProcesses":[{"_id":"spPartnerships","_seq":1,"help":{"i18n":[{"_lang":"en","value":"Capture data on new partnerships"}]},"indicators":[{"_id":"MEPartnership","_type":"newInstance","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Capture data on new partnerships"}]}}],"initiate":{"_type":"user","action":{"_type":"button","label":"Add partnership"},"dates":{"due":{"_label":"Due date","_show":false,"_type":"autoSelected","default":{"_type":"calculated","calculated":{"operator":"add","source":"valid","value":10},"value":""},"message":{"i18n":[{"_lang":"en","value":"Please select a due date i.e. the actual date that the data needs to be captured and authorised by."}]}},"valid":{"_label":"Valid date","_show":true,"_type":"autoSelected","default":{"_type":"today","value":""},"message":{"i18n":[{"_lang":"en","value":"Please select a valid date i.e. the date that the project data captured is valid for."}]},"vaidation":{"isFuture":false}}},"editLabel":{"i18n":[{"_lang":"en","value":"Edit"}]},"instanceTitle":{"_label":"Title","_show":true,"message":{"i18n":[{"_lang":"en","value":"Please enter instance title."}]}},"isEditable":true,"maxInstances":-1,"parallelInstances":true},"name":{"i18n":[{"_lang":"en","value":"Partnerships"}]},"steps":[{"_id":"createForm","_seq":1,"_setInstanceStatusTo":"Created","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[{"_args":["processId","subProcess","step","action","processSeq","subProcessSeq"],"_doInitialiseData":true,"_id":"form.create","_initialiseFrom":"fromDefinition","_seq":1}],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Create the partnerships form."}]},"task":"","transitions":[{"_id":"captureForm","_stop":false,"_type":"auto","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":""}]}}]},{"_id":"captureForm","_seq":2,"_setInstanceStatusTo":"InProgress","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Capture the partnerships form"}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Capturer"}},"work":{"action":"captureData"}},"transitions":[{"_id":"submitForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Submit"}]}}]},{"_id":"authoriseForm","_seq":3,"_setInstanceStatusTo":"awaitingAuthorisation","_setStatusMsgTo":"Waiting for user to review and authorise data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please review the data captured and either refer back or authorise it"}]},"name":{"i18n":[{"_lang":"en","value":"Authorise the partnerships form."}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Authoriser"}},"work":{"action":"editForm"}},"transitions":[{"_id":"authoriseForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Authorise"}]}},{"_id":"revertForm","_stop":false,"_type":"user","goTo":{"_stepId":"captureForm","_type":"stepId"},"name":{"i18n":[{"_lang":"en","value":"Refer Back"}]}}]},{"_id":"closeForm","_seq":4,"_setInstanceStatusTo":"Complete","_setStatusMsgTo":"Data capture complete and form locked","actions":[{"_args":["processId","subProcess","processSeq","subProcessSeq"],"_id":"form.authorise","_seq":1,"_type":"internal"},{"_args":["subProcess.indicators"],"_id":"form.close","_seq":2,"_type":"internal"}],"help":{"i18n":[{"_lang":"en","value":"Data capture complete and form locked"}]},"name":{"i18n":[{"_lang":"en","value":"Partnership form authorised and locked"}]},"task":"","transitions":[]}]}],"variables":[{"_dataType":"","_default":"","_id":"","_sessionVar":"","_value":""}]},{"_id":"MonthlyProgress","_seq":5,"help":{"i18n":[{"_lang":"en","value":"Please click 'Start monthly reporting' to begin the monthly reporting process."}]},"name":{"i18n":[{"_lang":"en","value":"Monthly progress reporting"}]},"postActions":[],"preActions":[],"prerequisites":[{"_filter":{"_element":"complete","_operator":"equalTo","_value":true},"_operator":"greaterThan","_parameter":"spSiteinformation","_seq":1,"_type":"processInstances","_value":0,"message":{"i18n":[{"_lang":"en","value":"Cannot start until one process on site information is complete"}]}},{"_filter":{"_element":"complete","_operator":"equalTo","_value":true},"_operator":"greaterThan","_parameter":"spsitepersonnel","_seq":1,"_type":"processInstances","_value":0,"message":{"i18n":[{"_lang":"en","value":"Cannot start until one process on site personnel is complete."}]}}],"subProcesses":[{"_id":"spMonthlyprogress","_seq":1,"help":{"i18n":[{"_lang":"en","value":"Capture the monthly progress"}]},"indicators":[{"_id":"MEMonthlyProgressLRC","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Local Reference Committee"}]}},{"_id":"MEMonthlyProgressMW","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Meetings and Workshops"}]}},{"_id":"MEMonthlyProgressP","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Partnerships"}]}},{"_id":"MEMonthlyProgressMV","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Monitoring Visits"}]}},{"_id":"MEMonthlyProgressSBGDACS","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Support by Government Departments and Civil Society"}]}},{"_id":"MEMonthlyProgressT","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Training"}]}},{"_id":"MEMonthlyProgressSitePersonal","_type":"newSequence","maxInstances":1,"name":{"i18n":[{"_lang":"en","value":"Site Personnel"}]}}],"initiate":{"_type":"user","action":{"_type":"button","label":"Start monthly reporting"},"dates":{"due":{"_label":"Due date","_show":false,"_type":"autoSelected","default":{"_type":"calculated","calculated":{"operator":"add","source":"valid","value":10},"value":""},"message":{"i18n":[{"_lang":"en","value":"Please select a due date i.e. the actual date that the data needs to be captured and authorised by."}]}},"valid":{"_label":"Valid date","_show":true,"_type":"autoSelected","default":{"_type":"today","value":""},"message":{"i18n":[{"_lang":"en","value":"Please select the date on which you will begin reporting monthly progress for this site."}]},"vaidation":{"isFuture":false}}},"editLabel":{"i18n":[{"_lang":"en","value":"Edit"}]},"instanceTitle":{"_label":"Title","_show":true,"message":{"i18n":[{"_lang":"en","value":"Please enter instance title."}]}},"isEditable":false,"maxInstances":1,"parallelInstances":false},"name":{"i18n":[{"_lang":"en","value":"Monthly progress"}]},"steps":[{"_id":"createForm","_seq":1,"_setInstanceStatusTo":"Created","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[{"_args":["processId","subProcess","step","action","processSeq","subProcessSeq"],"_doInitialiseData":true,"_id":"form.create","_initialiseFrom":"fromDefinition","_seq":1}],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Create the monthly progress information forms."}]},"task":"","transitions":[{"_id":"captureForm","_stop":false,"_type":"auto","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":""}]}}]},{"_id":"captureForm","_seq":2,"_setInstanceStatusTo":"InProgress","_setStatusMsgTo":"Waiting for user to capture and submit data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please open the form and capture data"}]},"name":{"i18n":[{"_lang":"en","value":"Capture the monthly progress information forms"}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Capturer"}},"work":{"action":"captureData"}},"transitions":[{"_id":"submitForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Submit"}]}}]},{"_id":"authoriseForm","_seq":3,"_setInstanceStatusTo":"awaitingAuthorisation","_setStatusMsgTo":"Waiting for user to review and authorise data","actions":[],"help":{"i18n":[{"_lang":"en","value":"Please review the data captured and either refer back or authorise it"}]},"name":{"i18n":[{"_lang":"en","value":"Review the monthly progress information forms"}]},"task":{"assign":{"assignment":{"accept":{"label":{"i18n":[{"_lang":"en","value":"Accept"}]},"show":true},"message":{"i18n":[{"_lang":"en","value":"This workflow sub process is ready for acceptance."}]},"reject":{"label":{"i18n":[{"_lang":"en","value":"Reject"}]},"show":true}},"default":{"userId":"30","userName":"CWP"},"profileRole":{"profile":"current","role":"Authoriser"}},"work":{"action":"editForm"}},"transitions":[{"_id":"authoriseForm","_stop":false,"_type":"user","goTo":{"_stepId":"","_type":"nextStep"},"name":{"i18n":[{"_lang":"en","value":"Authorise"}]}},{"_id":"revertForm","_stop":false,"_type":"user","goTo":{"_stepId":"captureForm","_type":"stepId"},"name":{"i18n":[{"_lang":"en","value":"Refer Back"}]}}]},{"_id":"closeForm","_seq":4,"_setInstanceStatusTo":"Complete","_setStatusMsgTo":"Data capture complete and form locked","actions":[{"_args":["processId","subProcess","processSeq","subProcessSeq"],"_id":"form.authorise","_seq":1,"_type":"internal"},{"_args":["subProcess.indicators"],"_id":"form.close","_seq":2,"_type":"internal"}],"help":{"i18n":[{"_lang":"en","value":"Data capture complete and form locked"}]},"name":{"i18n":[{"_lang":"en","value":"Monthly progress information forms authorised and locked"}]},"task":"","transitions":[]}]}],"variables":[{"_dataType":"","_default":"","_id":"","_sessionVar":"","_value":""}]}],"roles":[{"_id":"Guest","_level":0,"name":{"i18n":[{"_lang":"en","value":"Guest follower of a property."}]},"requiredRoles":{"requiredRole":{"_applicationId":"","_roleId":""}},"roleMappings":{"roleMapping":{"_applicationId":"","_roleId":""}}},{"_id":"Capturer","_level":1,"name":{"i18n":[{"_lang":"en","value":"Capturer"}]},"requiredRoles":{"requiredRole":{"_applicationId":"","_roleId":""}},"roleMappings":{"roleMapping":{"_applicationId":"","_roleId":""}}},{"_id":"Authoriser","_level":2,"name":{"i18n":[{"_lang":"en","value":"Authoriser"}]},"requiredRoles":{"requiredRole":{"_applicationId":"","_roleId":""}},"roleMappings":{"roleMapping":{"_applicationId":"","_roleId":""}}},{"_id":"Owner","_level":3,"name":{"i18n":[{"_lang":"en","value":"Owner"}]},"requiredRoles":{"requiredRole":{"_applicationId":"","_roleId":""}},"roleMappings":{"roleMapping":{"_applicationId":"","_roleId":""}}}],"title":{"description":{"i18n":[{"_lang":"en","value":"CWP project workflow"}]},"name":{"i18n":[{"_lang":"en","value":"CWP project workflow"}]}},"type":"workflowConfig","variables":[{"_dataType":"","_default":"","_id":"","_sessionVar":"","_value":""}],"version":1}
+{
+	"_id": "1008:processDefinition",
+	"_rev": "70-9fd051e3ba48c4f06fafbe7c54a40ad9",
+	"channels": ["kwantu",
+	"community_24000"],
+	"identification": {
+		"documentation": {
+			"i18n": [{
+				"_lang": "en",
+				"value": ""
+			}]
+		},
+		"upgradeInformation": {
+			"i18n": [{
+				"_lang": "",
+				"value": ""
+			}]
+		}
+	},
+	"processes": [{
+		"_id": "SiteInformation",
+		"_seq": 1,
+		"help": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Please click the 'Add site information' button to enter the site information."
+			}]
+		},
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Site information"
+			}]
+		},
+		"postActions": [],
+		"preActions": [],
+		"prerequisites": [{
+			"_operator": "equalTo",
+			"_parameter": "completion",
+			"_seq": 1,
+			"_type": "processInstances",
+			"_value": 0,
+			"message": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "The project registration form can't be edited once the completion process has been initiated."
+				}]
+			}
+		}],
+		"subProcesses": [{
+			"_id": "spSiteinformation",
+			"_seq": 1,
+			"help": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Please enter the site information data"
+				}]
+			},
+			"indicators": [{
+				"_id": "MESiteInformation",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Site Information"
+					}]
+				}
+			}],
+			"initiate": {
+				"_type": "user",
+				"action": {
+					"_type": "button",
+					"label": "Add site information"
+				},
+				"dates": {
+					"due": {
+						"_label": "Due date",
+						"_show": false,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "calculated",
+							"calculated": {
+								"operator": "add",
+								"source": "valid",
+								"value": 10
+							},
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}]
+						}
+					},
+					"valid": {
+						"_label": "Valid date",
+						"_show": true,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "today",
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select the date on which you collected this data."
+							}]
+						},
+						"vaidation": {
+							"isFuture": false
+						}
+					}
+				},
+				"editLabel": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Edit"
+					}]
+				},
+				"instanceTitle": {
+					"_label": "Title",
+					"_show": true,
+					"message": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Please enter the name for the site."
+						}]
+					}
+				},
+				"isEditable": true,
+				"maxInstances": 1,
+				"parallelInstances": false
+			},
+			"name": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Site Information Process"
+				}]
+			},
+			"steps": [{
+				"_id": "createForm",
+				"_seq": 1,
+				"_setInstanceStatusTo": "Created",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"step",
+					"action",
+					"processSeq",
+					"subProcessSeq"],
+					"_doInitialiseData": true,
+					"_id": "form.create",
+					"_initialiseFrom": "fromDefinition",
+					"_seq": 1
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Create the site information form."
+					}]
+				},
+				"task": "",
+				"transitions": [{
+					"_id": "captureForm",
+					"_stop": false,
+					"_type": "auto",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": ""
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "captureForm",
+				"_seq": 2,
+				"_setInstanceStatusTo": "InProgress",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Capture site information form"
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Capturer"
+						}
+					},
+					"work": {
+						"action": "captureData"
+					}
+				},
+				"transitions": [{
+					"_id": "submitForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Submit"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "authoriseForm",
+				"_seq": 3,
+				"_setInstanceStatusTo": "Submitted",
+				"_setStatusMsgTo": "Waiting for user to review and authorise data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please review the data captured and either refer back or authorise it"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Review the site information form data."
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Authoriser"
+						}
+					},
+					"work": {
+						"action": "editForm"
+					}
+				},
+				"transitions": [{
+					"_id": "authoriseForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Authorise"
+						}]
+					}
+				},
+				{
+					"_id": "revertForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "captureForm",
+						"_type": "stepId"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Refer Back"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "closeForm",
+				"_seq": 4,
+				"_setInstanceStatusTo": "Complete",
+				"_setStatusMsgTo": "Data capture complete and form locked",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"processSeq",
+					"subProcessSeq"],
+					"_id": "form.authorise",
+					"_seq": 1,
+					"_type": "internal"
+				},
+				{
+					"_args": ["subProcess.indicators"],
+					"_id": "form.close",
+					"_seq": 2,
+					"_type": "internal"
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Data captured and authorised"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Site information data captured and authorised"
+					}]
+				},
+				"task": "",
+				"transitions": []
+			}]
+		}],
+		"variables": [{
+			"_dataType": "",
+			"_default": "",
+			"_id": "",
+			"_sessionVar": "",
+			"_value": ""
+		}]
+	},
+	{
+		"_id": "PersonnelContracts",
+		"_seq": 2,
+		"help": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Please click the 'Add contracts' button to enter site personnel contracts."
+			}]
+		},
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Contracts for site personnel"
+			}]
+		},
+		"postActions": [],
+		"preActions": [],
+		"prerequisites": [{
+			"_operator": "equalTo",
+			"_parameter": "completion",
+			"_seq": 1,
+			"_type": "processInstances",
+			"_value": 0,
+			"message": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "The project registration form can't be edited once the completion process has been initiated."
+				}]
+			}
+		}],
+		"subProcesses": [{
+			"_id": "spsitepersonnel",
+			"_seq": 1,
+			"help": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Please enter the contract information for the site personnel"
+				}]
+			},
+			"indicators": [{
+				"_id": "MEContract",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Site personnel contracts"
+					}]
+				}
+			}],
+			"initiate": {
+				"_type": "user",
+				"action": {
+					"_type": "button",
+					"label": "Add contracts"
+				},
+				"dates": {
+					"due": {
+						"_label": "Due date",
+						"_show": false,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "calculated",
+							"calculated": {
+								"operator": "add",
+								"source": "valid",
+								"value": 10
+							},
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}]
+						}
+					},
+					"valid": {
+						"_label": "Valid date",
+						"_show": true,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "today",
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select the date on which you collected data on site personnel contracts"
+							}]
+						},
+						"vaidation": {
+							"isFuture": false
+						}
+					}
+				},
+				"editLabel": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Edit"
+					}]
+				},
+				"instanceTitle": {
+					"_label": "Title",
+					"_show": true,
+					"message": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Please enter the name 'Personnel contracts'"
+						}]
+					}
+				},
+				"isEditable": true,
+				"maxInstances": 1,
+				"parallelInstances": false
+			},
+			"name": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Site personnel contracts"
+				}]
+			},
+			"steps": [{
+				"_id": "createForm",
+				"_seq": 1,
+				"_setInstanceStatusTo": "Created",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"step",
+					"action",
+					"processSeq",
+					"subProcessSeq"],
+					"_doInitialiseData": true,
+					"_id": "form.create",
+					"_initialiseFrom": "fromDefinition",
+					"_seq": 1
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Create the site personnel contracts form."
+					}]
+				},
+				"task": "",
+				"transitions": [{
+					"_id": "captureForm",
+					"_stop": false,
+					"_type": "auto",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": ""
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "captureForm",
+				"_seq": 2,
+				"_setInstanceStatusTo": "InProgress",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Capture site personnel contract data."
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Capturer"
+						}
+					},
+					"work": {
+						"action": "captureData"
+					}
+				},
+				"transitions": [{
+					"_id": "submitForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Submit"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "authoriseForm",
+				"_seq": 3,
+				"_setInstanceStatusTo": "Submitted",
+				"_setStatusMsgTo": "Waiting for user to review and authorise data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please review the data captured and either refer back or authorise it"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Review the site personnel contract form data."
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Authoriser"
+						}
+					},
+					"work": {
+						"action": "editForm"
+					}
+				},
+				"transitions": [{
+					"_id": "authoriseForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Authorise"
+						}]
+					}
+				},
+				{
+					"_id": "revertForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "captureForm",
+						"_type": "stepId"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Refer Back"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "closeForm",
+				"_seq": 4,
+				"_setInstanceStatusTo": "Complete",
+				"_setStatusMsgTo": "Data capture complete and form locked",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"processSeq",
+					"subProcessSeq"],
+					"_id": "form.authorise",
+					"_seq": 1,
+					"_type": "internal"
+				},
+				{
+					"_args": ["subProcess.indicators"],
+					"_id": "form.close",
+					"_seq": 2,
+					"_type": "internal"
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Data captured and authorised"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Site personnel contract data captured and authorised"
+					}]
+				},
+				"task": "",
+				"transitions": []
+			}]
+		}],
+		"variables": [{
+			"_dataType": "",
+			"_default": "",
+			"_id": "",
+			"_sessionVar": "",
+			"_value": ""
+		}]
+	},
+	{
+		"_id": "SiteTraining",
+		"_seq": 3,
+		"help": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Please click 'Add training' to add a new training."
+			}]
+		},
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Training"
+			}]
+		},
+		"postActions": [],
+		"preActions": [],
+		"prerequisites": [{
+			"_operator": "equalTo",
+			"_parameter": "completion",
+			"_seq": 1,
+			"_type": "processInstances",
+			"_value": 0,
+			"message": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "The project registration form can't be edited once the completion process has been initiated."
+				}]
+			}
+		}],
+		"subProcesses": [{
+			"_id": "spSitetraining",
+			"_seq": 1,
+			"help": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Register training that took place this month"
+				}]
+			},
+			"indicators": [{
+				"_id": "METraining",
+				"_type": "newInstance",
+				"maxInstances": -1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Training"
+					}]
+				}
+			}],
+			"initiate": {
+				"_type": "user",
+				"action": {
+					"_type": "button",
+					"label": "Add training"
+				},
+				"dates": {
+					"due": {
+						"_label": "Due date",
+						"_show": false,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "calculated",
+							"calculated": {
+								"operator": "add",
+								"source": "valid",
+								"value": 10
+							},
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}]
+						}
+					},
+					"valid": {
+						"_label": "Valid date",
+						"_show": true,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "today",
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select the date on which the training took place."
+							}]
+						},
+						"vaidation": {
+							"isFuture": false
+						}
+					}
+				},
+				"editLabel": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Edit"
+					}]
+				},
+				"instanceTitle": {
+					"_label": "Title",
+					"_show": true,
+					"message": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Please enter the name of the training"
+						}]
+					}
+				},
+				"isEditable": true,
+				"maxInstances": -1,
+				"parallelInstances": true
+			},
+			"name": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Site training"
+				}]
+			},
+			"steps": [{
+				"_id": "createForm",
+				"_seq": 1,
+				"_setInstanceStatusTo": "Created",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"step",
+					"action",
+					"processSeq",
+					"subProcessSeq"],
+					"_doInitialiseData": true,
+					"_id": "form.create",
+					"_initialiseFrom": "fromDefinition",
+					"_seq": 1
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Create the training form."
+					}]
+				},
+				"task": "",
+				"transitions": [{
+					"_id": "captureForm",
+					"_stop": false,
+					"_type": "auto",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": ""
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "captureForm",
+				"_seq": 2,
+				"_setInstanceStatusTo": "InProgress",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Capture the training form"
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Capturer"
+						}
+					},
+					"work": {
+						"action": "captureData"
+					}
+				},
+				"transitions": [{
+					"_id": "submitForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Submit"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "authoriseForm",
+				"_seq": 3,
+				"_setInstanceStatusTo": "Submitted",
+				"_setStatusMsgTo": "Waiting for user to review and authorise data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please review the data captured and either refer back or authorise it"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Review the training form data and approve or refer back"
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Authoriser"
+						}
+					},
+					"work": {
+						"action": "editForm"
+					}
+				},
+				"transitions": [{
+					"_id": "authoriseForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Authorise"
+						}]
+					}
+				},
+				{
+					"_id": "revertForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "captureForm",
+						"_type": "stepId"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Refer Back"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "closeForm",
+				"_seq": 4,
+				"_setInstanceStatusTo": "Complete",
+				"_setStatusMsgTo": "Data capture complete and form locked",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"processSeq",
+					"subProcessSeq"],
+					"_id": "form.authorise",
+					"_seq": 1,
+					"_type": "internal"
+				},
+				{
+					"_args": ["subProcess.indicators"],
+					"_id": "form.close",
+					"_seq": 2,
+					"_type": "internal"
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Data captured and authorised"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Training data authorised and locked"
+					}]
+				},
+				"task": "",
+				"transitions": []
+			}]
+		}],
+		"variables": [{
+			"_dataType": "",
+			"_default": "",
+			"_id": "",
+			"_sessionVar": "",
+			"_value": ""
+		}]
+	},
+	{
+		"_id": "Partnerships",
+		"_seq": 4,
+		"help": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Please click 'Add partnership' to add a new partnership"
+			}]
+		},
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Partnerships"
+			}]
+		},
+		"postActions": [],
+		"preActions": [],
+		"prerequisites": [{
+			"_operator": "equalTo",
+			"_parameter": "completion",
+			"_seq": 1,
+			"_type": "processInstances",
+			"_value": 0,
+			"message": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "The project registration form can't be edited once the completion process has been initiated."
+				}]
+			}
+		}],
+		"subProcesses": [{
+			"_id": "spPartnerships",
+			"_seq": 1,
+			"help": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Capture data on new partnerships"
+				}]
+			},
+			"indicators": [{
+				"_id": "MEPartnership",
+				"_type": "newInstance",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Capture data on new partnerships"
+					}]
+				}
+			}],
+			"initiate": {
+				"_type": "user",
+				"action": {
+					"_type": "button",
+					"label": "Add partnership"
+				},
+				"dates": {
+					"due": {
+						"_label": "Due date",
+						"_show": false,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "calculated",
+							"calculated": {
+								"operator": "add",
+								"source": "valid",
+								"value": 10
+							},
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}]
+						}
+					},
+					"valid": {
+						"_label": "Valid date",
+						"_show": true,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "today",
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select a valid date i.e. the date that the project data captured is valid for."
+							}]
+						},
+						"vaidation": {
+							"isFuture": false
+						}
+					}
+				},
+				"editLabel": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Edit"
+					}]
+				},
+				"instanceTitle": {
+					"_label": "Title",
+					"_show": true,
+					"message": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Please enter instance title."
+						}]
+					}
+				},
+				"isEditable": true,
+				"maxInstances": -1,
+				"parallelInstances": true
+			},
+			"name": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Partnerships"
+				}]
+			},
+			"steps": [{
+				"_id": "createForm",
+				"_seq": 1,
+				"_setInstanceStatusTo": "Created",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"step",
+					"action",
+					"processSeq",
+					"subProcessSeq"],
+					"_doInitialiseData": true,
+					"_id": "form.create",
+					"_initialiseFrom": "fromDefinition",
+					"_seq": 1
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Create the partnerships form."
+					}]
+				},
+				"task": "",
+				"transitions": [{
+					"_id": "captureForm",
+					"_stop": false,
+					"_type": "auto",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": ""
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "captureForm",
+				"_seq": 2,
+				"_setInstanceStatusTo": "InProgress",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Capture the partnerships form"
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Capturer"
+						}
+					},
+					"work": {
+						"action": "captureData"
+					}
+				},
+				"transitions": [{
+					"_id": "submitForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Submit"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "authoriseForm",
+				"_seq": 3,
+				"_setInstanceStatusTo": "awaitingAuthorisation",
+				"_setStatusMsgTo": "Waiting for user to review and authorise data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please review the data captured and either refer back or authorise it"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Authorise the partnerships form."
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Authoriser"
+						}
+					},
+					"work": {
+						"action": "editForm"
+					}
+				},
+				"transitions": [{
+					"_id": "authoriseForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Authorise"
+						}]
+					}
+				},
+				{
+					"_id": "revertForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "captureForm",
+						"_type": "stepId"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Refer Back"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "closeForm",
+				"_seq": 4,
+				"_setInstanceStatusTo": "Complete",
+				"_setStatusMsgTo": "Data capture complete and form locked",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"processSeq",
+					"subProcessSeq"],
+					"_id": "form.authorise",
+					"_seq": 1,
+					"_type": "internal"
+				},
+				{
+					"_args": ["subProcess.indicators"],
+					"_id": "form.close",
+					"_seq": 2,
+					"_type": "internal"
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Data capture complete and form locked"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Partnership form authorised and locked"
+					}]
+				},
+				"task": "",
+				"transitions": []
+			}]
+		}],
+		"variables": [{
+			"_dataType": "",
+			"_default": "",
+			"_id": "",
+			"_sessionVar": "",
+			"_value": ""
+		}]
+	},
+	{
+		"_id": "MonthlyProgress",
+		"_seq": 5,
+		"help": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Please click 'Start monthly reporting' to begin the monthly reporting process."
+			}]
+		},
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Monthly progress reporting"
+			}]
+		},
+		"postActions": [],
+		"preActions": [],
+		"prerequisites": [{
+			"_filter": {
+				"_element": "complete",
+				"_operator": "equalTo",
+				"_value": true
+			},
+			"_operator": "greaterThan",
+			"_parameter": "spSiteinformation",
+			"_seq": 1,
+			"_type": "processInstances",
+			"_value": 0,
+			"message": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Cannot start until one process on site information is complete"
+				}]
+			}
+		},
+		{
+			"_filter": {
+				"_element": "complete",
+				"_operator": "equalTo",
+				"_value": true
+			},
+			"_operator": "greaterThan",
+			"_parameter": "spsitepersonnel",
+			"_seq": 1,
+			"_type": "processInstances",
+			"_value": 0,
+			"message": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Cannot start until one process on site personnel is complete."
+				}]
+			}
+		}],
+		"subProcesses": [{
+			"_id": "spMonthlyprogress",
+			"_seq": 1,
+			"help": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Capture the monthly progress"
+				}]
+			},
+			"indicators": [{
+				"_id": "MEMonthlyProgressLRC",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Local Reference Committee"
+					}]
+				}
+			},
+			{
+				"_id": "MEMonthlyProgressMW",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Meetings and Workshops"
+					}]
+				}
+			},
+			{
+				"_id": "MEMonthlyProgressP",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Partnerships"
+					}]
+				}
+			},
+			{
+				"_id": "MEMonthlyProgressMV",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Monitoring Visits"
+					}]
+				}
+			},
+			{
+				"_id": "MEMonthlyProgressSBGDACS",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Support by Government Departments and Civil Society"
+					}]
+				}
+			},
+			{
+				"_id": "MEMonthlyProgressT",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Training"
+					}]
+				}
+			},
+			{
+				"_id": "MEMonthlyProgressSitePersonal",
+				"_type": "newSequence",
+				"maxInstances": 1,
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Site Personnel"
+					}]
+				}
+			}],
+			"initiate": {
+				"_type": "user",
+				"action": {
+					"_type": "button",
+					"label": "Start monthly reporting"
+				},
+				"dates": {
+					"due": {
+						"_label": "Due date",
+						"_show": false,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "calculated",
+							"calculated": {
+								"operator": "add",
+								"source": "valid",
+								"value": 10
+							},
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+							}]
+						}
+					},
+					"valid": {
+						"_label": "Valid date",
+						"_show": true,
+						"_type": "autoSelected",
+						"default": {
+							"_type": "today",
+							"value": ""
+						},
+						"message": {
+							"i18n": [{
+								"_lang": "en",
+								"value": "Please select the date on which you will begin reporting monthly progress for this site."
+							}]
+						},
+						"vaidation": {
+							"isFuture": false
+						}
+					}
+				},
+				"editLabel": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Edit"
+					}]
+				},
+				"instanceTitle": {
+					"_label": "Title",
+					"_show": true,
+					"message": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Please enter instance title."
+						}]
+					}
+				},
+				"isEditable": false,
+				"maxInstances": 1,
+				"parallelInstances": false
+			},
+			"name": {
+				"i18n": [{
+					"_lang": "en",
+					"value": "Monthly progress"
+				}]
+			},
+			"steps": [{
+				"_id": "createForm",
+				"_seq": 1,
+				"_setInstanceStatusTo": "Created",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"step",
+					"action",
+					"processSeq",
+					"subProcessSeq"],
+					"_doInitialiseData": true,
+					"_id": "form.create",
+					"_initialiseFrom": "fromDefinition",
+					"_seq": 1
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Create the monthly progress information forms."
+					}]
+				},
+				"task": "",
+				"transitions": [{
+					"_id": "captureForm",
+					"_stop": false,
+					"_type": "auto",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": ""
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "captureForm",
+				"_seq": 2,
+				"_setInstanceStatusTo": "InProgress",
+				"_setStatusMsgTo": "Waiting for user to capture and submit data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please open the form and capture data"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Capture the monthly progress information forms"
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Capturer"
+						}
+					},
+					"work": {
+						"action": "captureData"
+					}
+				},
+				"transitions": [{
+					"_id": "submitForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Submit"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "authoriseForm",
+				"_seq": 3,
+				"_setInstanceStatusTo": "awaitingAuthorisation",
+				"_setStatusMsgTo": "Waiting for user to review and authorise data",
+				"actions": [],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Please review the data captured and either refer back or authorise it"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Review the monthly progress information forms"
+					}]
+				},
+				"task": {
+					"assign": {
+						"assignment": {
+							"accept": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Accept"
+									}]
+								},
+								"show": true
+							},
+							"message": {
+								"i18n": [{
+									"_lang": "en",
+									"value": "This workflow sub process is ready for acceptance."
+								}]
+							},
+							"reject": {
+								"label": {
+									"i18n": [{
+										"_lang": "en",
+										"value": "Reject"
+									}]
+								},
+								"show": true
+							}
+						},
+						"default": {
+							"userId": "30",
+							"userName": "CWP"
+						},
+						"profileRole": {
+							"profile": "current",
+							"role": "Authoriser"
+						}
+					},
+					"work": {
+						"action": "editForm"
+					}
+				},
+				"transitions": [{
+					"_id": "authoriseForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "",
+						"_type": "nextStep"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Authorise"
+						}]
+					}
+				},
+				{
+					"_id": "revertForm",
+					"_stop": false,
+					"_type": "user",
+					"goTo": {
+						"_stepId": "captureForm",
+						"_type": "stepId"
+					},
+					"name": {
+						"i18n": [{
+							"_lang": "en",
+							"value": "Refer Back"
+						}]
+					}
+				}]
+			},
+			{
+				"_id": "closeForm",
+				"_seq": 4,
+				"_setInstanceStatusTo": "Complete",
+				"_setStatusMsgTo": "Data capture complete and form locked",
+				"actions": [{
+					"_args": ["processId",
+					"subProcess",
+					"processSeq",
+					"subProcessSeq"],
+					"_id": "form.authorise",
+					"_seq": 1,
+					"_type": "internal"
+				},
+				{
+					"_args": ["subProcess.indicators"],
+					"_id": "form.close",
+					"_seq": 2,
+					"_type": "internal"
+				}],
+				"help": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Data capture complete and form locked"
+					}]
+				},
+				"name": {
+					"i18n": [{
+						"_lang": "en",
+						"value": "Monthly progress information forms authorised and locked"
+					}]
+				},
+				"task": "",
+				"transitions": []
+			}]
+		}],
+		"variables": [{
+			"_dataType": "",
+			"_default": "",
+			"_id": "",
+			"_sessionVar": "",
+			"_value": ""
+		}]
+	}],
+	"roles": [{
+		"_id": "Guest",
+		"_level": 0,
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Guest follower of a property."
+			}]
+		},
+		"requiredRoles": {
+			"requiredRole": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		},
+		"roleMappings": {
+			"roleMapping": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		}
+	},
+	{
+		"_id": "Capturer",
+		"_level": 1,
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Capturer"
+			}]
+		},
+		"requiredRoles": {
+			"requiredRole": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		},
+		"roleMappings": {
+			"roleMapping": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		}
+	},
+	{
+		"_id": "Authoriser",
+		"_level": 2,
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Authoriser"
+			}]
+		},
+		"requiredRoles": {
+			"requiredRole": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		},
+		"roleMappings": {
+			"roleMapping": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		}
+	},
+	{
+		"_id": "Owner",
+		"_level": 3,
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "Owner"
+			}]
+		},
+		"requiredRoles": {
+			"requiredRole": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		},
+		"roleMappings": {
+			"roleMapping": {
+				"_applicationId": "",
+				"_roleId": ""
+			}
+		}
+	}],
+	"title": {
+		"description": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "CWP project workflow"
+			}]
+		},
+		"name": {
+			"i18n": [{
+				"_lang": "en",
+				"value": "CWP project workflow"
+			}]
+		}
+	},
+	"type": "workflowConfig",
+	"variables": [{
+		"_dataType": "",
+		"_default": "",
+		"_id": "",
+		"_sessionVar": "",
+		"_value": ""
+	}],
+	"version": 1
+}
