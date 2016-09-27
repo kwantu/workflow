@@ -40,8 +40,18 @@ var userInterface = require('./lib/interface');
  *
  */
 
-function Workflow(profile, app, config){
+function Workflow(profile, communityId, app, config){
 	var _this = this;
+	
+	// Community ID validation checks
+	if (communityId == '' || communityId == undefined) {
+        throw util.error('ParamRequired', 'A community id is required.');
+    } else if (typeof(communityId) !== 'string') {
+    	throw new Error('The community id must be a javascript string.');
+    } else {
+    	_this.communityId = communityId || '';
+    }
+
 	// Profile ID validation checks
 	if (profile == '' || profile == undefined) {
         throw util.error('ParamRequired', 'A profile id is required.');
