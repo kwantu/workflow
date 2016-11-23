@@ -2,7 +2,7 @@
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Workflow Definition Object to define a full application workflow",
     "description": "This is the basic structure of the workflow definition",
-    "version": "Hasan 1.0",
+    "version": "Hasan 1.1",
     "type": "object",
     "properties": {
         "$schema": {
