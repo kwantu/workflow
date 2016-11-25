@@ -143,57 +143,55 @@
                                 },
                                 "check": {
                                     "type": "object",
-                                    "anyOf": [
-                                        {
-                                            "numberProcessInstances": {
-                                                "type": "object",
-                                                "description": "Checks if the number of subProcessInstances for a given process has the number of instances as specified by the operator and value. The type specifies if the instance instantiation or completion is regarded",
-                                                "properties": {
-                                                    "processId": {
-                                                        "type": "string"
-                                                    },
-                                                    "subProcessId": {
-                                                        "type": "string"
-                                                    },
-                                                    "operator": {
-                                                        "$ref": "#/definitions/operator"
-                                                    },
-                                                    "count": {
-                                                        "type": "number"
-                                                    },
-                                                    "type": {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "instantiated",
-                                                            "completed",
-                                                            "active"
-                                                        ]
-                                                    }
+                                    "anyOf": [{
+                                        "numberProcessInstances": {
+                                            "type": "object",
+                                            "description": "Checks if the number of subProcessInstances for a given process has the number of instances as specified by the operator and value. The type specifies if the instance instantiation or completion is regarded",
+                                            "properties": {
+                                                "processId": {
+                                                    "type": "string"
                                                 },
-                                                "required": [
-                                                    "processId",
-                                                    "subProcessId",
-                                                    "operator",
-                                                    "count",
-                                                    "type"
-                                                ],
-                                                "additionalProperties": false
+                                                "subProcessId": {
+                                                    "type": "string"
+                                                },
+                                                "operator": {
+                                                    "$ref": "#/definitions/operator"
+                                                },
+                                                "count": {
+                                                    "type": "number"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "instantiated",
+                                                        "completed",
+                                                        "active"
+                                                    ]
+                                                }
                                             },
-                                            "variableConfirm": {
-                                                "type": "object",
-                                                "description": "Checks if the number of SOmething",
-                                                "properties": {
-                                                    "test": {
-                                                        "type": "string"
-                                                    }
-                                                },
-                                                "required": [
-                                                    "test"
-                                                ],
-                                                "additionalProperties": false
-                                            }
+                                            "required": [
+                                                "processId",
+                                                "subProcessId",
+                                                "operator",
+                                                "count",
+                                                "type"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        "variableConfirm": {
+                                            "type": "object",
+                                            "description": "Checks if the number of SOmething",
+                                            "properties": {
+                                                "test": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "test"
+                                            ],
+                                            "additionalProperties": false
                                         }
-                                    ]
+                                    }]
                                 }
                             },
                             "required": [
@@ -228,8 +226,7 @@
                                 },
                                 "instanceLabel": {
                                     "type": "object",
-                                    "anyOf": [
-                                        {
+                                    "anyOf": [{
                                             "calculated": {
                                                 "type": "object",
                                                 "properties": {
@@ -354,99 +351,96 @@
                                                 ]
                                             },
                                             "preloadData": {
-                                                "anyOf": [
-                                                    {
-                                                        "rest": {
-                                                            "hostId": {
-                                                                "type": "string"
-                                                            },
-                                                            "uri": {
-                                                                "type": "string"
-                                                            },
-                                                            "parameters": {
-                                                                "type": "array",
-                                                                "items": {
-                                                                    "_seq": {
-                                                                        "$ref": "#/definitions/_seq"
-                                                                    },
-                                                                    "anyOf": {
-                                                                        "systemValue": {
-                                                                            "type": {
-                                                                                "addmorehere": "xxxxx"
-                                                                            }
-                                                                        },
-                                                                        "getNodeValue": {
-                                                                            "$ref": "#/definitions/getNodeValue"
-                                                                        }
-                                                                    }
-                                                                }
-                                                            },
-                                                            "assign": {
-                                                                "type": "object",
-                                                                "properties": {
-                                                                    "source": {
-                                                                        "type": "string"
-                                                                    },
-                                                                    "target": {
-                                                                        "type": "string"
-                                                                    }
-                                                                }
-                                                            }
+                                                "anyOf": [{
+                                                    "rest": {
+                                                        "hostId": {
+                                                            "type": "string"
                                                         },
-                                                        "getNodeValue": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "source": {
-                                                                    "$ref": "#/definitions/getNodeValue"
+                                                        "uri": {
+                                                            "type": "string"
+                                                        },
+                                                        "parameters": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "_seq": {
+                                                                    "$ref": "#/definitions/_seq"
                                                                 },
-                                                                "target": {
-                                                                    "type": "string"
+                                                                "anyOf": {
+                                                                    "systemValue": {
+                                                                        "type": {
+                                                                            "addmorehere": "xxxxx"
+                                                                        }
+                                                                    },
+                                                                    "getNodeValue": {
+                                                                        "$ref": "#/definitions/getNodeValue"
+                                                                    }
                                                                 }
                                                             }
                                                         },
-                                                        "context": {
+                                                        "assign": {
                                                             "type": "object",
                                                             "properties": {
                                                                 "source": {
-                                                                    "type": "object",
-                                                                    "oneOf": [
-                                                                        {
-                                                                            "currentDate": {
-                                                                                "type": "date"
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "currentTime": {
-                                                                                "type": "date"
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "currentGPS": {
-                                                                                "type": "string"
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "currentUser": {
-                                                                                "type": "string"
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "currentInstance": {
-                                                                                "type": "string",
-                                                                                "enum": [
-                                                                                    "instanceLabel"
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
+                                                                    "type": "string"
                                                                 },
                                                                 "target": {
                                                                     "type": "string"
                                                                 }
                                                             }
                                                         }
+                                                    },
+                                                    "getNodeValue": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "source": {
+                                                                "$ref": "#/definitions/getNodeValue"
+                                                            },
+                                                            "target": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "context": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "source": {
+                                                                "type": "object",
+                                                                "oneOf": [{
+                                                                        "currentDate": {
+                                                                            "type": "date"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "currentTime": {
+                                                                            "type": "date"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "currentGPS": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "currentUser": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "currentInstance": {
+                                                                            "type": "string",
+                                                                            "enum": [
+                                                                                "instanceLabel"
+                                                                            ]
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            },
+                                                            "target": {
+                                                                "type": "string"
+                                                            }
+                                                        }
                                                     }
-                                                ]
+                                                }]
                                             }
                                         },
                                         "required": [
@@ -457,8 +451,7 @@
                                 },
                                 "initiate": {
                                     "type": "object",
-                                    "anyOf": [
-                                        {
+                                    "anyOf": [{
                                             "user": {
                                                 "type": "object",
                                                 "properties": {
@@ -586,8 +579,7 @@
                                             },
                                             "function": {
                                                 "type": "object",
-                                                "oneOf": [
-                                                    {
+                                                "oneOf": [{
                                                         "type": "object",
                                                         "properties": {
                                                             "actions": {
@@ -781,100 +773,95 @@
                 },
                 "assign": {
                     "type": "object",
-                    "oneOf": [
-                        {
-                            "user": {
-                                "type": "object",
-                                "properties": {
-                                    "$ref": "#/definitions/userSelector"
-                                }
-                            },
-                            "role": {
-                                "type": "object",
-                                "description": "Select the role, and find the scope of the role in the roles definition. If community, then read the sommunity network object",
-                                "properties": {
-                                    "roleId": {
-                                        "type": "string"
-                                    }
-                                }
-                            },
-                            "profile": {
-                                "type": "object",
-                                "description": "Select the profile role, and find the scope of the role in the roles definition. If community, then read the sommunity network object",
-                                "properties": {
-                                    "userSelector": {
-                                        "$ref": "#/definitions/userSelector"
-                                    },
-                                    "profileSelector": {
-                                        "$ref": "#/definitions/profileSelector"
-                                    }
-                                }
-                            },
-                            "swimlane": {
-                                "type": "object",
-                                "properties": {
-                                    "stepId": {
-                                        "type": "string"
-                                    },
-                                    "sequence": {
-                                        "type": "string",
-                                        "enum": [
-                                            "first",
-                                            "last"
-                                        ]
-                                    }
-                                }
-                            },
-                            "variable": {
-                                "$ref": "#/definitions/getNodeValue"
+                    "oneOf": [{
+                        "user": {
+                            "type": "object",
+                            "properties": {
+                                "$ref": "#/definitions/userSelector"
                             }
+                        },
+                        "role": {
+                            "type": "object",
+                            "description": "Select the role, and find the scope of the role in the roles definition. If community, then read the sommunity network object",
+                            "properties": {
+                                "roleId": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "profile": {
+                            "type": "object",
+                            "description": "Select the profile role, and find the scope of the role in the roles definition. If community, then read the sommunity network object",
+                            "properties": {
+                                "userSelector": {
+                                    "$ref": "#/definitions/userSelector"
+                                },
+                                "profileSelector": {
+                                    "$ref": "#/definitions/profileSelector"
+                                }
+                            }
+                        },
+                        "swimlane": {
+                            "type": "object",
+                            "properties": {
+                                "stepId": {
+                                    "type": "string"
+                                },
+                                "sequence": {
+                                    "type": "string",
+                                    "enum": [
+                                        "first",
+                                        "last"
+                                    ]
+                                }
+                            }
+                        },
+                        "variable": {
+                            "$ref": "#/definitions/getNodeValue"
                         }
-                    ]
+                    }]
                 },
                 "preActions": {
                     "$ref": "#/definitions/actions"
                 },
                 "work": {
                     "type": "object",
-                    "oneOf": [
-                        {
-                            "capture": {
-                                "type": "object",
-                                "description": "Present a list of indicators with edit / view view buttons",
-                                "anyOf": [
-                                    {
-                                        "form": {
-                                            "type": "string",
-                                            "enum": [
-                                                "default",
-                                                "someOtherViewOftheWork"
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "indicators": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "indicatorId": {
-                                                        "type": "string"
-                                                    },
-                                                    "viewId": {
-                                                        "type": "string",
-                                                        "default": "default"
-                                                    }
+                    "oneOf": [{
+                        "capture": {
+                            "type": "object",
+                            "description": "Present a list of indicators with edit / view view buttons",
+                            "anyOf": [{
+                                    "form": {
+                                        "type": "string",
+                                        "enum": [
+                                            "default",
+                                            "someOtherViewOftheWork"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "indicators": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "indicatorId": {
+                                                    "type": "string"
+                                                },
+                                                "viewId": {
+                                                    "type": "string",
+                                                    "default": "default"
                                                 }
                                             }
                                         }
                                     }
-                                ]
-                            },
-                            "userInput": {
-                                "type": "string"
-                            }
+                                }
+                            ]
+                        },
+                        "userInput": {
+                            "type": "string"
                         }
-                    ]
+                    }]
                 },
                 "postActions": {
                     "$ref": "#/definitions/actions"
@@ -899,12 +886,10 @@
                     },
                     "method": {
                         "type": "object",
-                        "anyOf": [
-                            {
+                        "anyOf": [{
                                 "form": {
                                     "type": "object",
-                                    "anyOf": [
-                                        {
+                                    "anyOf": [{
                                             "create": {
                                                 "type": "string",
                                                 "enum": [
@@ -928,8 +913,7 @@
                             {
                                 "indicator": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
+                                    "oneOf": [{
                                             "create": {
                                                 "type": "string",
                                                 "enum": [
@@ -958,8 +942,7 @@
                             {
                                 "profile": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
+                                    "oneOf": [{
                                             "setVariable": {
                                                 "$ref": "#/definitions/setVariable"
                                             }
@@ -1007,8 +990,7 @@
                             {
                                 "subProcessInstance": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
+                                    "oneOf": [{
                                             "instantiate": {
                                                 "type": "string"
                                             }
@@ -1044,39 +1026,35 @@
                             {
                                 "step": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "setVariable": {
-                                                "$ref": "#/definitions/setVariable"
-                                            }
+                                    "oneOf": [{
+                                        "setVariable": {
+                                            "$ref": "#/definitions/setVariable"
                                         }
-                                    ]
+                                    }]
                                 }
                             },
                             {
                                 "community": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "setVariable": {
-                                                "$ref": "#/definitions/setVariable"
-                                            }
-                                        },
-                                        {
+                                    "oneOf": [{
                                             "createCommunity": {
-                                                // Create worker
-                                                "newCommunityId": {
-                                                    "$ref": "#/definitions/systemVariables"
-                                                },
-                                                "communityIndicatorUUID": {
-                                                    "$ref": "#/definitions/systemVariables"
-                                                },
-                                                "creatorUserId": {
-                                                    "$ref": "#/definitions/systemVariables"
-                                                },
-                                                "ownerUserId": {
-                                                    "$ref": "#/definitions/systemVariables"
+                                                "type": "object",
+                                                "description": "Action that is when community configurations needs to be created at server side",
+                                                "properties": {
+                                                    "newCommunityId": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    },
+                                                    "communityIndicatorUUID": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    },
+                                                    "creatorUserId": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    },
+                                                    "ownerUserId": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    }
                                                 }
+
                                             }
                                         },
                                         {
@@ -1092,87 +1070,108 @@
                                                     }
                                                 }
                                             }
+                                        },
+                                        {
+                                            "releaseAdoptedApplication": {
+                                                "type": "object",
+                                                "description": "Action that is called when an adopted application needs to be released",
+                                                "properties": {
+                                                    "communityId": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    },
+                                                    "releaseAdoptedApplicationIndicator": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    }
+                                                }
+                                            }
                                         }
                                     ]
                                 }
                             },
                             {
-                                "applicationDefinition": {
+                                "application": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "setVariable": {
-                                                "$ref": "#/definitions/setVariable"
-                                            }
-                                        },
-                                        {
+                                    "oneOf": [{
                                             "createAppDefinition": {
-                                                // Create worker
-                                                "newApplicationId": {
-                                                    "$ref": "#/definitions/systemVariables",
-                                                    "description": "The UUID of the profile that will become the application defintion profile"
-                                                },
-                                                "applicationIndicatorUUID": {
-                                                    "$ref": "#/definitions/systemVariables"
-                                                },
-                                                "creatorUserId": {
-                                                    "$ref": "#/definitions/systemVariables"
-                                                },
-                                                "ownerUserId": {
-                                                    "$ref": "#/definitions/systemVariables"
+                                                "type": "object",
+                                                "description": "Action that is called while creating application configurations",
+                                                "properties": {
+                                                    "newApplicationId": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The UUID of the profile that will become the application defintion profile"
+                                                    },
+                                                    "applicationIndicatorUUID": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    },
+                                                    "creatorUserId": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    },
+                                                    "ownerUserId": {
+                                                        "$ref": "#/definitions/systemVariables"
+                                                    }
                                                 }
+
                                             }
                                         },
                                         {
                                             "buildApplication": {
-                                                // Create worker
-                                                "applicationId": {
-                                                    "$ref": "#/definitions/systemVariables",
-                                                    "description": "The UUID of the application profile"
-                                                },
-                                                "applicationIndicatorUUID": {
-                                                    "$ref": "#/definitions/systemVariables",
-                                                    "description": "The UUID of the application definition indicator set for the current application"
-                                                },
-                                                "rolesIndicatorUUID": {
-                                                    "$ref": "#/definitions/systemVariables",
-                                                    "description": "The UUID of the application roles definition indicator set for the current application"
-                                                },
-                                                "buildIndicatorUUID": {
-                                                    "$ref": "#/definitions/systemVariables",
-                                                    "description": "The UUID of the application build indicator set for the current application"
-                                                },
-                                                "buildUserId": {
-                                                    "$ref": "#/definitions/systemVariables",
-                                                    "description": "The userId that is building the application"
+                                                "type": "object",
+                                                "description": "Action is called for building applications",
+                                                "properties": {
+                                                    "applicationId": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The UUID of the application profile"
+                                                    },
+                                                    "applicationIndicatorUUID": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The UUID of the application definition indicator set for the current application"
+                                                    },
+                                                    "rolesIndicatorUUID": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The UUID of the application roles definition indicator set for the current application"
+                                                    },
+                                                    "buildIndicatorUUID": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The UUID of the application build indicator set for the current application"
+                                                    },
+                                                    "buildUserId": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The userId that is building the application"
+                                                    }
                                                 }
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "applicationAdoption": {
-                                    "type": "object",
-                                    "oneOf": [
-                                        {
-                                            "setVariable": {
-                                                "$ref": "#/definitions/setVariable"
+
                                             }
                                         },
                                         {
-                                            "createAppAdoptionProfile": {
-                                                "specify": "here"
+                                            "applicationAdoption": {
+                                                "type": "object",
+                                                "description": "Action is called for adopting applications in communities",
+                                                "properties": {
+                                                    "applicationId": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The UUID of the application profile"
+                                                    },
+                                                    "adoptionIndicatorUUID": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The UUID of the adoption indicator set"
+                                                    },
+                                                    "adoptionUserId": {
+                                                        "$ref": "#/definitions/systemVariables",
+                                                        "description": "The userId that is adopting the application"
+                                                    }
+                                                }
+
                                             }
                                         }
                                     ]
                                 }
+
                             },
+
                             {
                                 "user": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
+                                    "oneOf": [{
                                             "setVariable": {
                                                 "$ref": "#/definitions/setVariable"
                                             }
@@ -1188,8 +1187,7 @@
                             {
                                 "sdo": {
                                     "type": "object",
-                                    "oneOf": [
-                                        {
+                                    "oneOf": [{
                                             "buildToTest": {
                                                 "description": "This reads the SDO settings from the pending and publish to the test bucket",
                                                 "properies": {
@@ -1252,12 +1250,10 @@
         },
         "systemVariables": {
             "type": "object",
-            "anyOf": [
-                {
+            "anyOf": [{
                     "currentScope": {
                         "type": "object",
-                        "anyof": [
-                            {
+                        "anyof": [{
                                 "communityId": {
                                     "type": "string"
                                 }
@@ -1311,8 +1307,7 @@
         },
         "getNodeValue": {
             "type": "object",
-            "oneOf": [
-                {
+            "oneOf": [{
                     "value": {
                         "type": "object",
                         "properties": {
@@ -1374,8 +1369,7 @@
                     "system": {
                         "type": "object",
                         "description": "Read the value from some system value",
-                        "oneOf": [
-                            {
+                        "oneOf": [{
                                 "profileId": {
                                     "type": "string",
                                     "description": "value of the current profileId"
@@ -1400,8 +1394,7 @@
                     "variable": {
                         "type": "object",
                         "description": "Read the value from some variable",
-                        "oneOf": [
-                            {
+                        "oneOf": [{
                                 "profile": {
                                     "type": "string",
                                     "description": "value of the variable specified in the current profileId"
@@ -1459,8 +1452,7 @@
             "type": "array",
             "items": {
                 "type": "object",
-                "oneOf": [
-                    {
+                "oneOf": [{
                         "stop": {
                             "type": "object",
                             "properties": {
@@ -1632,8 +1624,7 @@
         "instanceStatus": {
             "type": "object",
             "description": "These are system used values, and need to be translated into different languages",
-            "anyOf": [
-                {
+            "anyOf": [{
                     "NotStarted": {
                         "$ref": "#/definitions/statusLabel"
                     }
@@ -1694,8 +1685,7 @@
             },
             "dateSelector": {
                 "type": "object",
-                "oneOf": [
-                    {
+                "oneOf": [{
                         "user": {
                             "type": "object",
                             "properties": {
@@ -1733,8 +1723,7 @@
             "dateCalculator": {
                 "type": "object",
                 "description": "This defines a calculated date. It uses some constant or current selection of a date and allows for an offset, back (-) or forward (+) to be added to that specificaiton",
-                "oneOf": [
-                    {
+                "oneOf": [{
                         "constant": {
                             "type": "date"
                         }
@@ -1772,8 +1761,7 @@
             },
             "userSelector": {
                 "type": "object",
-                "oneOf": [
-                    {
+                "oneOf": [{
                         "userId": {
                             "type": "string"
                         }
@@ -1802,8 +1790,7 @@
             },
             "profileSelector": {
                 "type": "object",
-                "oneOf": [
-                    {
+                "oneOf": [{
                         "variable": {
                             "$ref": "#/definitions/variables"
                         }
