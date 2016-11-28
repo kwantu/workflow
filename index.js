@@ -40,8 +40,18 @@ var userInterface = require('./lib/interface');
  *
  */
 
-function Workflow(profile, app, config){
+function Workflow(profile, communityId, app, config){
 	var _this = this;
+	
+	// Community ID validation checks
+	if (communityId == '' || communityId == undefined) {
+        throw util.error('ParamRequired', 'A community id is required.');
+    } else if (typeof(communityId) !== 'string') {
+    	throw new Error('The community id must be a javascript string.');
+    } else {
+    	_this.communityId = communityId || '';
+    }
+
 	// Profile ID validation checks
 	if (profile == '' || profile == undefined) {
         throw util.error('ParamRequired', 'A profile id is required.');
@@ -381,12 +391,15 @@ Workflow.prototype.initialise = function(processId, data){
 				var uuid = _this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
 				var label = data.label;
 				// Build the sub-process reference object
+
+				//TODO: Change required to move isActive to subProcess file.Remove from here
+
+
 				var subProcessRef = {
 					id: subProcessId,
 					seq: subProcessSeq,
 					uuid: uuid,
-					label:label,
-					active:true
+					label:label
 				}
 				// Add the reference to the process model
 				processModel.subProcesses.push(subProcessRef);
@@ -569,5 +582,8 @@ Workflow.prototype.ui = function(){
 		}
 	}
 };
+
+
+
 
 module.exports = Workflow;
