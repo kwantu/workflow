@@ -163,9 +163,8 @@
                                                 "type": {
                                                     "type": "string",
                                                     "enum": [
-                                                        "instantiated",
-                                                        "completed",
-                                                        "active"
+                                                        "Completed",
+                                                        "InProgress"
                                                     ]
                                                 }
                                             },
@@ -786,6 +785,13 @@
                             "properties": {
                                 "roleId": {
                                     "type": "string"
+                                },
+                                "profile": {
+                                    "type": "string",
+                                    "enum": [
+                                        "community",
+                                        "current"
+                                    ]
                                 }
                             }
                         },

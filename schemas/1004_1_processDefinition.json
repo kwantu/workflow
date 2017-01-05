@@ -1,8 +1,9 @@
 {
     "$schema": "./workFlowDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "3-962c9f3ecd0e929c8609dea64d24ea8a",
-    "channels": ["kwantu",
+    "_rev": "10-3a91ec70f1b9f63f6ffa9bf56f4ac129",
+    "channels": [
+        "kwantu",
         "community_24000"
     ],
     "identification": {
@@ -46,7 +47,7 @@
                     "operator": "equalTo",
                     "processId": "profileRegistration",
                     "subProcessId": "spProfileRegistration",
-                    "type": "completed"
+                    "type": "Completed"
                 }
             },
             "message": {
@@ -66,7 +67,7 @@
                 }
             },
             "indicators": [{
-                "_id": "MESiteInformation",
+                "_id": "appProfile",
                 "initiateData": "history",
                 "name": {
                     "i18n": {
@@ -162,9 +163,7 @@
                 }
             },
             "instanceType": {
-                "newSequence": {
-
-                }
+                "newSequence": {}
             },
             "name": {
                 "i18n": {
@@ -227,7 +226,7 @@
                         },
                         "transitionAction": {
                             "goToStep": {
-                                "default": "",
+                                "default": "1",
                                 "type": ""
                             }
                         }
@@ -249,7 +248,8 @@
                                     "userId": ""
                                 },
                                 "role": {
-                                    "roleId": ""
+                                    "roleId": "CommunityCapturer",
+                                    "profile": "community"
                                 }
                             },
                             "help": {
@@ -258,36 +258,12 @@
                                     "en": ""
                                 }
                             },
-                            "postActions": [{
-                                "_id": "",
-                                "_seq": 0,
-                                "description": {
-                                    "i18n": {
-                                        "_id": "uuid",
-                                        "en": ""
-                                    }
-                                },
-                                "method": {
-                                    "form": {
-                                        "create": "fromDefinition"
-                                    }
-                                }
-                            }],
-                            "preActions": [{
-                                "_id": "",
-                                "_seq": 0,
-                                "description": {
-                                    "i18n": {
-                                        "_id": "uuid",
-                                        "en": ""
-                                    }
-                                },
-                                "method": {
-                                    "form": {
-                                        "create": "fromDefinition"
-                                    }
-                                }
-                            }],
+                            "postActions": [
+
+                            ],
+                            "preActions": [
+
+                            ],
                             "work": {
                                 "capture": {
                                     "form": "default"
@@ -306,12 +282,10 @@
                         "en": "Create the site information form."
                     },
                     "setInstanceStatusTo": {
-                        "statusType": {
-                            "InProgress": {
-                                "label": {
-                                    "_id": "",
-                                    "en": ""
-                                }
+                        "InProgress": {
+                            "label": {
+                                "_id": "",
+                                "en": ""
                             }
                         }
                     },
@@ -322,8 +296,79 @@
                             "en": ""
                         },
                         "transitionAction": {
-                            "goToStep": {
-                                "default": "",
+                            "goToStepId": {
+                                "stepId": "aa",
+                                "type": ""
+                            }
+                        }
+                    }]
+                },
+                {
+                    "_id": "aa",
+                    "_seq": 3,
+                    "description": {
+                        "i18n": [{
+                            "_lang": "en",
+                            "value": "Create the site information form."
+                        }]
+                    },
+                    "function": {
+                        "task": {
+                            "assign": {
+                                "default": {
+                                    "userId": ""
+                                },
+                                "role": {
+                                    "roleId": "CommunityCapturer",
+                                    "profile": "community"
+                                }
+                            },
+                            "help": {
+                                "i18n": {
+                                    "_id": "uuid",
+                                    "en": ""
+                                }
+                            },
+                            "postActions": [
+
+                            ],
+                            "preActions": [
+
+                            ],
+                            "work": {
+                                "capture": {
+                                    "form": "default"
+                                }
+                            }
+                        }
+                    },
+                    "help": {
+                        "i18n": [{
+                            "_lang": "en",
+                            "value": "Please open the form and capture data"
+                        }]
+                    },
+                    "name": {
+                        "_id": "uuid",
+                        "en": "Create the site information form."
+                    },
+                    "setInstanceStatusTo": {
+                        "InProgress": {
+                            "label": {
+                                "_id": "",
+                                "en": ""
+                            }
+                        }
+                    },
+                    "transition": [{
+                        "_id": "captureForm",
+                        "name": {
+                            "_id": "",
+                            "en": ""
+                        },
+                        "transitionAction": {
+                            "goToStepId": {
+                                "stepId": "createForm",
                                 "type": ""
                             }
                         }

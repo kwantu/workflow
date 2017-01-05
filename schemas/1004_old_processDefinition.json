@@ -1,0 +1,3494 @@
+{
+    "_id": "1004:processDefinition",
+    "_rev": "142-e0cc6a2ea31586ef419f326b7627cadf",
+    "channels": ["kwantu",
+        "community_25000"
+    ],
+    "identification": {
+        "documentation": {
+            "i18n": [{
+                    "_lang": "en",
+                    "value": "Mangaung project workflow"
+                },
+                {
+                    "_lang": "pt",
+                    "value": "Mangaung project workflow"
+                }
+            ]
+        },
+        "upgradeInformation": {
+            "i18n": [{
+                    "_lang": "en",
+                    "value": "Mangaung project workflow"
+                },
+                {
+                    "_lang": "pt",
+                    "value": "Mangaung project workflow"
+                }
+            ]
+        }
+    },
+    "processes": [{
+            "_id": "profileRegistration",
+            "_seq": 1,
+            "help": {
+                "i18n": [{
+                    "_lang": "en",
+                    "value": "Register a new profile"
+                }]
+            },
+            "name": {
+                "i18n": [{
+                    "_lang": "en",
+                    "value": "Register a new profile"
+                }]
+            },
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [],
+            "subProcesses": [{
+                "_id": "spProfileRegistration",
+                "_seq": "1",
+                "help": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Register a new profile"
+                    }]
+                },
+                "indicators": [{
+                    "_id": "appProfile",
+                    "_type": "newInstance",
+                    "maxInstances": 1,
+                    "name": {
+                        "i18n": [{
+                            "_lang": "en",
+                            "value": "Project profile"
+                        }]
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Create"
+                    },
+                    "dates": {
+                        "due": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "userSelected",
+                            "default": {
+                                "_type": "today",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": "10"
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                }]
+                            }
+                        },
+                        "valid": {
+                            "_label": "Valid date",
+                            "_show": false,
+                            "_type": "userSelected",
+                            "default": {
+                                "_type": "today",
+                                "calculated": {
+                                    "operator": "",
+                                    "source": "",
+                                    "value": ""
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please select a valid date i.e. the date that the project data captured is valid for."
+                                }]
+                            },
+                            "vaidation": {
+                                "isFuture": "false"
+                            }
+                        }
+                    },
+                    "editLabel": {
+                        "i18n": [{
+                            "_lang": "en",
+                            "value": "Edit"
+                        }]
+                    },
+                    "instanceTitle": {
+                        "_label": "Title",
+                        "_show": "true",
+                        "message": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Please enter instance title."
+                            }]
+                        }
+                    },
+                    "isEditable": false,
+                    "maxInstances": 1,
+                    "parallelInstances": true
+                },
+                "isProfile": true,
+                "name": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Project Profile Process"
+                    }]
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": "1",
+                        "_setInstanceStatusTo": "Created",
+                        "_setStatusMsgTo": "Form created",
+                        "actions": [{
+                            "_args": ["processId",
+                                "subProcess",
+                                "step",
+                                "action",
+                                "processSeq",
+                                "subProcessSeq"
+                            ],
+                            "_doInitialiseData": true,
+                            "_id": "form.create",
+                            "_initialiseFrom": "fromDefinition",
+                            "_seq": "1",
+                            "setDraft": true,
+                            "setWorkflowLabelInField": "appProfile.Name",
+                            "setWorkflowLabelInTitle": true
+                        }],
+                        "help": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Regarding createForm"
+                            }]
+                        },
+                        "name": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Create the registration form."
+                            }]
+                        },
+                        "task": "",
+                        "transitions": [{
+                            "_id": "captureForm",
+                            "_stop": false,
+                            "_type": "auto",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                    "_lang": "en",
+                                    "value": ""
+                                }]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": "2",
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "User assigned and data capture in progress",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Regarding captureForm"
+                            }]
+                        },
+                        "name": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Capture"
+                            }]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "community",
+                                    "role": "CommunityCapturer"
+                                }
+                            },
+                            "work": {
+                                "action": "captureData"
+                            }
+                        },
+                        "transitions": [{
+                            "_id": "submitForm",
+                            "_stop": false,
+                            "_type": "user",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Submit"
+                                }]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": "3",
+                        "_setInstanceStatusTo": "Submitted",
+                        "_setStatusMsgTo": "Form data submitted, user assigned and form data under review",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Regarding authoriseForm"
+                            }]
+                        },
+                        "name": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Review the registration form data."
+                            }]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "community",
+                                    "role": "CommunityAuthoriser"
+                                }
+                            },
+                            "work": {
+                                "action": "editForm"
+                            }
+                        },
+                        "transitions": [{
+                                "_id": "authoriseForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "",
+                                    "_type": "nextStep"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Authorise"
+                                    }]
+                                }
+                            },
+                            {
+                                "_id": "revertForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "captureForm",
+                                    "_type": "stepId"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Refer Back"
+                                    }]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "closeForm",
+                        "_seq": "4",
+                        "_setInstanceStatusTo": "Complete",
+                        "_setStatusMsgTo": "Form locked",
+                        "actions": [{
+                                "_args": ["processId",
+                                    "subProcess",
+                                    "processSeq",
+                                    "subProcessSeq"
+                                ],
+                                "_id": "form.authorise",
+                                "_seq": "1",
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["processId"],
+                                "_id": "form.createProfile",
+                                "_seq": "2",
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": [],
+                                "_id": "form.setUnDraft",
+                                "_seq": "3",
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["subProcess.indicators"],
+                                "_id": "form.close",
+                                "_seq": "4",
+                                "_type": "internal"
+                            }
+                        ],
+                        "help": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Regarding close form"
+                            }]
+                        },
+                        "name": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Close the registration form."
+                            }]
+                        },
+                        "task": "",
+                        "transitions": []
+                    }
+                ]
+            }],
+            "variables": [{
+                "_dataType": "",
+                "_default": "",
+                "_id": "",
+                "_sessionVar": "",
+                "_value": ""
+            }]
+        },
+        {
+            "_id": "ProjectRegistration",
+            "_seq": 2,
+            "help": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Please click 'Register project' to start the project registration process"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Please click 'Register project' to start the project registration process"
+                    }
+                ]
+            },
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Project Registration"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Project Registration"
+                    }
+                ]
+            },
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_filter": {
+                    "_element": "complete",
+                    "_operator": "equalTo",
+                    "_value": true
+                },
+                "_operator": "greaterThan",
+                "_parameter": "spProfileRegistration",
+                "_seq": 1,
+                "_type": "processInstances",
+                "_value": 0,
+                "message": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Cannot start until profile is created"
+                    }]
+                }
+            }],
+            "subProcesses": [{
+                "_id": "SPProjectRegistration",
+                "_seq": 1,
+                "help": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Please complete the project registration form"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Please complete the project registration form"
+                        }
+                    ]
+                },
+                "indicators": [{
+                    "_id": "ProjectDetail",
+                    "_type": "newSequence",
+                    "maxInstances": 1,
+                    "name": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Project Registration"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Project Registration"
+                            }
+                        ]
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Start a new project"
+                    },
+                    "dates": {
+                        "due": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                ]
+                            }
+                        },
+                        "valid": {
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please enter the date on which the project started"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please enter the date on which the project started"
+                                    }
+                                ]
+                            },
+                            "vaidation": {
+                                "isFuture": false
+                            }
+                        }
+                    },
+                    "editLabel": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Edit"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Edit"
+                            }
+                        ]
+                    },
+                    "instanceTitle": {
+                        "_label": "Title",
+                        "_show": true,
+                        "message": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please enter the project name"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please enter the project name"
+                                }
+                            ]
+                        }
+                    },
+                    "isEditable": true,
+                    "maxInstances": 1,
+                    "parallelInstances": false
+                },
+                "name": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Project Registration"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Project Registration"
+                        }
+                    ]
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [{
+                            "_args": ["processId",
+                                "subProcess",
+                                "step",
+                                "action",
+                                "processSeq",
+                                "subProcessSeq"
+                            ],
+                            "_doInitialiseData": true,
+                            "_id": "form.create",
+                            "_initialiseFrom": "fromDefinition",
+                            "_seq": 1
+                        }],
+                        "help": {
+                            "i18n": [{
+                                "_lang": "en",
+                                "value": "Please capture the data"
+                            }]
+                        },
+                        "name": {
+                            "i18n": [{
+                                "_lang": "pt",
+                                "value": "Create the form"
+                            }]
+                        },
+                        "postActions": [],
+                        "task": "",
+                        "transitions": [{
+                            "_id": "captureForm",
+                            "_stop": false,
+                            "_type": "auto",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": ""
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Capture the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Capturer"
+                                }
+                            },
+                            "work": {
+                                "action": "captureData"
+                            }
+                        },
+                        "transitions": [{
+                            "_id": "submitForm",
+                            "_stop": false,
+                            "_type": "user",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Submit"
+                                }]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "_setInstanceStatusTo": "Submitted",
+                        "_setStatusMsgTo": "Waiting for approval",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please review and authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please review and authorise the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Authorise the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Authoriser"
+                                }
+                            },
+                            "work": {
+                                "action": "editForm"
+                            }
+                        },
+                        "transitions": [{
+                                "_id": "authoriseForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "",
+                                    "_type": "nextStep"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Authorise"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Authorise"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "_id": "revertForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "captureForm",
+                                    "_type": "stepId"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Refer Back"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Refer Back"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "closeForm",
+                        "_seq": 4,
+                        "_setInstanceStatusTo": "Complete",
+                        "_setStatusMsgTo": "Data captured and approved",
+                        "actions": [{
+                                "_args": ["processId",
+                                    "subProcess",
+                                    "processSeq",
+                                    "subProcessSeq"
+                                ],
+                                "_id": "form.authorise",
+                                "_seq": 1,
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["subProcess.indicators"],
+                                "_id": "form.close",
+                                "_seq": 2,
+                                "_type": "internal"
+                            }
+                        ],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "The data have been captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "The data have been captured and authorised"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Data captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Data captured and authorised"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": []
+                    }
+                ]
+            }],
+            "variables": [{
+                "_dataType": "",
+                "_default": "",
+                "_id": "",
+                "_sessionVar": "",
+                "_value": ""
+            }]
+        },
+        {
+            "_id": "DeveloperDetails",
+            "_seq": 3,
+            "help": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Please click 'Add developer' to add developer details"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Please click 'Add developer' to add developer details"
+                    }
+                ]
+            },
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Developer details"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Developer details"
+                    }
+                ]
+            },
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_filter": {
+                    "_element": "complete",
+                    "_operator": "equalTo",
+                    "_value": true
+                },
+                "_operator": "greaterThan",
+                "_parameter": "spProfileRegistration",
+                "_seq": 1,
+                "_type": "processInstances",
+                "_value": 0,
+                "message": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Cannot start until profile is created"
+                    }]
+                }
+            }],
+            "subProcesses": [{
+                "_id": "SPDeveloperDetails",
+                "_seq": 1,
+                "help": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Please complete the developer details form."
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Please complete the developer details form."
+                        }
+                    ]
+                },
+                "indicators": [{
+                    "_id": "developerDetail",
+                    "_type": "newSequence",
+                    "maxInstances": 1,
+                    "name": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Developer details"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Developer details"
+                            }
+                        ]
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Add developer details"
+                    },
+                    "dates": {
+                        "due": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                ]
+                            }
+                        },
+                        "valid": {
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select the date on which you collected the data"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select the date on which you collected the data"
+                                    }
+                                ]
+                            },
+                            "vaidation": {
+                                "isFuture": false
+                            }
+                        }
+                    },
+                    "editLabel": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Edit"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Edit"
+                            }
+                        ]
+                    },
+                    "instanceTitle": {
+                        "_label": "Title",
+                        "_show": true,
+                        "message": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please enter the name for the site inspection"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please enter the name for the site inspection"
+                                }
+                            ]
+                        }
+                    },
+                    "isEditable": true,
+                    "maxInstances": -1,
+                    "parallelInstances": true
+                },
+                "name": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Developer details"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Developer details"
+                        }
+                    ]
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [{
+                            "_args": ["processId",
+                                "subProcess",
+                                "step",
+                                "action",
+                                "processSeq",
+                                "subProcessSeq"
+                            ],
+                            "_doInitialiseData": true,
+                            "_id": "form.create",
+                            "_initialiseFrom": "fromDefinition",
+                            "_seq": 1
+                        }],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Create the form"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Create the form"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": [{
+                            "_id": "captureForm",
+                            "_stop": false,
+                            "_type": "auto",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": ""
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Capture the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Capturer"
+                                }
+                            },
+                            "work": {
+                                "action": "captureData"
+                            }
+                        },
+                        "transitions": [{
+                            "_id": "submitForm",
+                            "_stop": false,
+                            "_type": "user",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Submit"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Submit"
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "_setInstanceStatusTo": "Submitted",
+                        "_setStatusMsgTo": "Waiting for approval",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please review and authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please review and authorise the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Authorise the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Authoriser"
+                                }
+                            },
+                            "work": {
+                                "action": "editForm"
+                            }
+                        },
+                        "transitions": [{
+                                "_id": "authoriseForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "",
+                                    "_type": "nextStep"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Authorise"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Authorise"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "_id": "revertForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "captureForm",
+                                    "_type": "stepId"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Refer Back"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Refer Back"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "closeForm",
+                        "_seq": 4,
+                        "_setInstanceStatusTo": "Complete",
+                        "_setStatusMsgTo": "Data captured and approved",
+                        "actions": [{
+                                "_args": ["processId",
+                                    "subProcess",
+                                    "processSeq",
+                                    "subProcessSeq"
+                                ],
+                                "_id": "form.authorise",
+                                "_seq": 1,
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["subProcess.indicators"],
+                                "_id": "form.close",
+                                "_seq": 2,
+                                "_type": "internal"
+                            }
+                        ],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "The data have been captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "The data have been captured and authorised"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Data captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Data captured and authorised"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": []
+                    }
+                ]
+            }],
+            "variables": [{
+                "_dataType": "",
+                "_default": "",
+                "_id": "",
+                "_sessionVar": "",
+                "_value": ""
+            }]
+        },
+        {
+            "_id": "BudgetInformation",
+            "_seq": 4,
+            "help": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Please click 'Add budget information' to start the budget information process"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Please click 'Add budget information' to start the budget information process"
+                    }
+                ]
+            },
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Budget Information"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Budget Information"
+                    }
+                ]
+            },
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_filter": {
+                    "_element": "complete",
+                    "_operator": "equalTo",
+                    "_value": true
+                },
+                "_operator": "greaterThan",
+                "_parameter": "spProfileRegistration",
+                "_seq": 1,
+                "_type": "processInstances",
+                "_value": 0,
+                "message": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Cannot start until profile is created"
+                    }]
+                }
+            }],
+            "subProcesses": [{
+                "_id": "SPBudgetInformation",
+                "_seq": 1,
+                "help": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Please complete the budget information form"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Please complete the budget information form"
+                        }
+                    ]
+                },
+                "indicators": [{
+                    "_id": "BudgetInformation",
+                    "_type": "newSequence",
+                    "maxInstances": 1,
+                    "name": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Budget Information"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Budget Information"
+                            }
+                        ]
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Add budget information"
+                    },
+                    "dates": {
+                        "due": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                ]
+                            }
+                        },
+                        "valid": {
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select the date on which you collected data on site personnel contracts"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select the date on which you collected data on site personnel contracts"
+                                    }
+                                ]
+                            },
+                            "vaidation": {
+                                "isFuture": false
+                            }
+                        }
+                    },
+                    "editLabel": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Edit"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Edit"
+                            }
+                        ]
+                    },
+                    "instanceTitle": {
+                        "_label": "Title",
+                        "_show": true,
+                        "message": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please enter the name 'Personnel contracts'"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please enter the name 'Personnel contracts'"
+                                }
+                            ]
+                        }
+                    },
+                    "isEditable": true,
+                    "maxInstances": 1,
+                    "parallelInstances": true
+                },
+                "name": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Budget Information"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Budget Information"
+                        }
+                    ]
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [{
+                            "_args": ["processId",
+                                "subProcess",
+                                "step",
+                                "action",
+                                "processSeq",
+                                "subProcessSeq"
+                            ],
+                            "_doInitialiseData": true,
+                            "_id": "form.create",
+                            "_initialiseFrom": "fromDefinition",
+                            "_seq": 1
+                        }],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Create the form"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Create the form"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": [{
+                            "_id": "captureForm",
+                            "_stop": false,
+                            "_type": "auto",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": ""
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Capture the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Capturer"
+                                }
+                            },
+                            "work": {
+                                "action": "captureData"
+                            }
+                        },
+                        "transitions": [{
+                            "_id": "submitForm",
+                            "_stop": false,
+                            "_type": "user",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Submit"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Submit"
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "_setInstanceStatusTo": "Submitted",
+                        "_setStatusMsgTo": "Waiting for approval",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please review and authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please review and authorise the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Authorise the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Authoriser"
+                                }
+                            },
+                            "work": {
+                                "action": "editForm"
+                            }
+                        },
+                        "transitions": [{
+                                "_id": "authoriseForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "",
+                                    "_type": "nextStep"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Authorise"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Authorise"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "_id": "revertForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "captureForm",
+                                    "_type": "stepId"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Refer Back"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Refer Back"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "closeForm",
+                        "_seq": 4,
+                        "_setInstanceStatusTo": "Complete",
+                        "_setStatusMsgTo": "Data captured and approved",
+                        "actions": [{
+                                "_args": ["processId",
+                                    "subProcess",
+                                    "processSeq",
+                                    "subProcessSeq"
+                                ],
+                                "_id": "form.authorise",
+                                "_seq": 1,
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["subProcess.indicators"],
+                                "_id": "form.close",
+                                "_seq": 2,
+                                "_type": "internal"
+                            }
+                        ],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "The data have been captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "The data have been captured and authorised"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Data captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Data captured and authorised"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": []
+                    }
+                ]
+            }],
+            "variables": [{
+                "_dataType": "",
+                "_default": "",
+                "_id": "",
+                "_sessionVar": "",
+                "_value": ""
+            }]
+        },
+        {
+            "_id": "ProjectLocation",
+            "_seq": 5,
+            "help": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Please click 'Add project location' to add a new project location"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Please click 'Add project location' to add a new project location"
+                    }
+                ]
+            },
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Project Location"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Project Location"
+                    }
+                ]
+            },
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_filter": {
+                    "_element": "complete",
+                    "_operator": "equalTo",
+                    "_value": true
+                },
+                "_operator": "greaterThan",
+                "_parameter": "spProfileRegistration",
+                "_seq": 1,
+                "_type": "processInstances",
+                "_value": 0,
+                "message": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Cannot start until profile is created"
+                    }]
+                }
+            }],
+            "subProcesses": [{
+                "_id": "SPProjectLocation",
+                "_seq": 1,
+                "help": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Please complete the project location form"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Please complete the project location form"
+                        }
+                    ]
+                },
+                "indicators": [{
+                    "_id": "ProjectLocation",
+                    "_type": "newInstance",
+                    "maxInstances": 1,
+                    "name": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Project Location"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Project Location"
+                            }
+                        ]
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Add project location"
+                    },
+                    "dates": {
+                        "due": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                ]
+                            }
+                        },
+                        "valid": {
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select the date on which the training took place."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select the date on which the training took place."
+                                    }
+                                ]
+                            },
+                            "vaidation": {
+                                "isFuture": false
+                            }
+                        }
+                    },
+                    "editLabel": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Edit"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Edit"
+                            }
+                        ]
+                    },
+                    "instanceTitle": {
+                        "_label": "Title",
+                        "_show": true,
+                        "message": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please enter the name of the site inspection"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please enter the name of the site inspection"
+                                }
+                            ]
+                        }
+                    },
+                    "isEditable": true,
+                    "maxInstances": -1,
+                    "parallelInstances": true
+                },
+                "name": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Project Location"
+                    }]
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [{
+                            "_args": ["processId",
+                                "subProcess",
+                                "step",
+                                "action",
+                                "processSeq",
+                                "subProcessSeq"
+                            ],
+                            "_doInitialiseData": true,
+                            "_id": "form.create",
+                            "_initialiseFrom": "fromDefinition",
+                            "_seq": 1
+                        }],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Create the form"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Create the form"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": [{
+                            "_id": "captureForm",
+                            "_stop": false,
+                            "_type": "auto",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": ""
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Capture the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Capturer"
+                                }
+                            },
+                            "work": {
+                                "action": "captureData"
+                            }
+                        },
+                        "transitions": [{
+                            "_id": "submitForm",
+                            "_stop": false,
+                            "_type": "user",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Submit"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Submit"
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "_setInstanceStatusTo": "Submitted",
+                        "_setStatusMsgTo": "Waiting for approval",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please review and authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please review and authorise the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Authorise the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Authoriser"
+                                }
+                            },
+                            "work": {
+                                "action": "editForm"
+                            }
+                        },
+                        "transitions": [{
+                                "_id": "authoriseForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "",
+                                    "_type": "nextStep"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Authorise"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Authorise"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "_id": "revertForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "captureForm",
+                                    "_type": "stepId"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Refer Back"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Refer Back"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "closeForm",
+                        "_seq": 4,
+                        "_setInstanceStatusTo": "Complete",
+                        "_setStatusMsgTo": "Data captured and approved",
+                        "actions": [{
+                                "_args": ["processId",
+                                    "subProcess",
+                                    "processSeq",
+                                    "subProcessSeq"
+                                ],
+                                "_id": "form.authorise",
+                                "_seq": 1,
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["subProcess.indicators"],
+                                "_id": "form.close",
+                                "_seq": 2,
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": [],
+                                "_id": "profile.delete",
+                                "_seq": 3,
+                                "_type": "internal"
+                            }
+                        ],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "The data have been captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "The data have been captured and authorised"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Data captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Data captured and authorised"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": []
+                    }
+                ]
+            }],
+            "variables": [{
+                "_dataType": "",
+                "_default": "",
+                "_id": "",
+                "_sessionVar": "",
+                "_value": ""
+            }]
+        },
+        {
+            "_id": "MonthlyProgress",
+            "_seq": 6,
+            "help": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Please click on 'Start monthly progress' to start the monthly progress process"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Please click on 'Start monthly progress' to start the monthly progress process"
+                    }
+                ]
+            },
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Monthly Progress"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Monthly Progress"
+                    }
+                ]
+            },
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_filter": {
+                    "_element": "complete",
+                    "_operator": "equalTo",
+                    "_value": true
+                },
+                "_operator": "greaterThan",
+                "_parameter": "spProfileRegistration",
+                "_seq": 1,
+                "_type": "processInstances",
+                "_value": 0,
+                "message": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Cannot start until profile is created"
+                    }]
+                }
+            }],
+            "subProcesses": [{
+                "_id": "SPMonthlyProgress",
+                "_seq": 1,
+                "help": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Please complete the monthly progress forms"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Please complete the monthly progress forms"
+                        }
+                    ]
+                },
+                "indicators": [{
+                    "_id": "projectLevelMonthlyprogressReport",
+                    "_type": "newSequence",
+                    "maxInstances": 1,
+                    "name": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Monthly Progress"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Monthly Progress"
+                            }
+                        ]
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Start monthly progress"
+                    },
+                    "dates": {
+                        "due": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                ]
+                            }
+                        },
+                        "valid": {
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select a valid date i.e. the date that the project data captured is valid for."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select a valid date i.e. the date that the project data captured is valid for."
+                                    }
+                                ]
+                            },
+                            "vaidation": {
+                                "isFuture": false
+                            }
+                        }
+                    },
+                    "editLabel": {
+                        "i18n": [{
+                            "_lang": "en",
+                            "value": "Edit"
+                        }]
+                    },
+                    "instanceTitle": {
+                        "_label": "Title",
+                        "_show": true,
+                        "message": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please enter instance title."
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please enter instance title."
+                                }
+                            ]
+                        }
+                    },
+                    "isEditable": true,
+                    "maxInstances": 1,
+                    "parallelInstances": false
+                },
+                "name": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Monthly Progress"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Monthly Progress"
+                        }
+                    ]
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [{
+                            "_args": ["processId",
+                                "subProcess",
+                                "step",
+                                "action",
+                                "processSeq",
+                                "subProcessSeq"
+                            ],
+                            "_doInitialiseData": true,
+                            "_id": "form.create",
+                            "_initialiseFrom": "fromDefinition",
+                            "_seq": 1
+                        }],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Create the form"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Create the form"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": [{
+                            "_id": "captureForm",
+                            "_stop": false,
+                            "_type": "auto",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": ""
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Capture the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Capturer"
+                                }
+                            },
+                            "work": {
+                                "action": "captureData"
+                            }
+                        },
+                        "transitions": [{
+                            "_id": "submitForm",
+                            "_stop": false,
+                            "_type": "user",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Submit"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Submit"
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "_setInstanceStatusTo": "Submitted",
+                        "_setStatusMsgTo": "Waiting for approval",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please review and authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please review and authorise the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Authorise the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Authoriser"
+                                }
+                            },
+                            "work": {
+                                "action": "editForm"
+                            }
+                        },
+                        "transitions": [{
+                                "_id": "authoriseForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "",
+                                    "_type": "nextStep"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Authorise"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Authorise"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "_id": "revertForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "captureForm",
+                                    "_type": "stepId"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Refer Back"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Refer Back"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "closeForm",
+                        "_seq": 4,
+                        "_setInstanceStatusTo": "Complete",
+                        "_setStatusMsgTo": "Data captured and approved",
+                        "actions": [{
+                                "_args": ["processId",
+                                    "subProcess",
+                                    "processSeq",
+                                    "subProcessSeq"
+                                ],
+                                "_id": "form.authorise",
+                                "_seq": 1,
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["subProcess.indicators"],
+                                "_id": "form.close",
+                                "_seq": 2,
+                                "_type": "internal"
+                            }
+                        ],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "The data have been captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "The data have been captured and authorised"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Data captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Data captured and authorised"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": []
+                    }
+                ]
+            }],
+            "variables": [{
+                "_dataType": "",
+                "_default": "",
+                "_id": "",
+                "_sessionVar": "",
+                "_value": ""
+            }]
+        },
+        {
+            "_id": "ProjectCompletion",
+            "_seq": 7,
+            "help": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Please click 'Start project completion' to start the project completion process"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Please click 'Start project completion' to start the project completion process"
+                    }
+                ]
+            },
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Project Completion"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Project Completion"
+                    }
+                ]
+            },
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_filter": {
+                    "_element": "complete",
+                    "_operator": "equalTo",
+                    "_value": true
+                },
+                "_operator": "greaterThan",
+                "_parameter": "spProfileRegistration",
+                "_seq": 1,
+                "_type": "processInstances",
+                "_value": 0,
+                "message": {
+                    "i18n": [{
+                        "_lang": "en",
+                        "value": "Cannot start until profile is created"
+                    }]
+                }
+            }],
+            "subProcesses": [{
+                "_id": "SPProjectCompletion",
+                "_seq": 1,
+                "help": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Please complete the project completion form"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Please complete the project completion form"
+                        }
+                    ]
+                },
+                "indicators": [{
+                    "_id": "Completion",
+                    "_type": "newInstance",
+                    "maxInstances": 1,
+                    "name": {
+                        "i18n": [{
+                                "_lang": "en",
+                                "value": "Project Completion"
+                            },
+                            {
+                                "_lang": "pt",
+                                "value": "Project Completion"
+                            }
+                        ]
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Start project completion"
+                    },
+                    "dates": {
+                        "due": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                ]
+                            }
+                        },
+                        "valid": {
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Please select the date on which you will begin reporting monthly progress for this site."
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Please select the date on which you will begin reporting monthly progress for this site."
+                                    }
+                                ]
+                            },
+                            "vaidation": {
+                                "isFuture": false
+                            }
+                        }
+                    },
+                    "editLabel": {
+                        "i18n": [{
+                            "_lang": "en",
+                            "value": "Edit"
+                        }]
+                    },
+                    "instanceTitle": {
+                        "_label": "Title",
+                        "_show": true,
+                        "message": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please enter instance title."
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please enter instance title."
+                                }
+                            ]
+                        }
+                    },
+                    "isEditable": true,
+                    "maxInstances": 1,
+                    "parallelInstances": true
+                },
+                "name": {
+                    "i18n": [{
+                            "_lang": "en",
+                            "value": "Project Completion"
+                        },
+                        {
+                            "_lang": "pt",
+                            "value": "Project Completion"
+                        }
+                    ]
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [{
+                            "_args": ["processId",
+                                "subProcess",
+                                "step",
+                                "action",
+                                "processSeq",
+                                "subProcessSeq"
+                            ],
+                            "_doInitialiseData": true,
+                            "_id": "form.create",
+                            "_initialiseFrom": "fromDefinition",
+                            "_seq": 1
+                        }],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Create the form"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Create the form"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": [{
+                            "_id": "captureForm",
+                            "_stop": false,
+                            "_type": "auto",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": ""
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": ""
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "_setInstanceStatusTo": "InProgress",
+                        "_setStatusMsgTo": "Waiting for data to be captured and submitted",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please capture the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Capture the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Capture the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Capturer"
+                                }
+                            },
+                            "work": {
+                                "action": "captureData"
+                            }
+                        },
+                        "transitions": [{
+                            "_id": "submitForm",
+                            "_stop": false,
+                            "_type": "user",
+                            "goTo": {
+                                "_stepId": "",
+                                "_type": "nextStep"
+                            },
+                            "name": {
+                                "i18n": [{
+                                        "_lang": "en",
+                                        "value": "Submit"
+                                    },
+                                    {
+                                        "_lang": "pt",
+                                        "value": "Submit"
+                                    }
+                                ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "_setInstanceStatusTo": "Submitted",
+                        "_setStatusMsgTo": "Waiting for approval",
+                        "actions": [],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Please review and authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Please review and authorise the data"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Authorise the data"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Authorise the data"
+                                }
+                            ]
+                        },
+                        "task": {
+                            "assign": {
+                                "assignment": {
+                                    "accept": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Accept"
+                                            }]
+                                        },
+                                        "show": true
+                                    },
+                                    "message": {
+                                        "i18n": [{
+                                            "_lang": "en",
+                                            "value": "This workflow sub process is ready for acceptance."
+                                        }]
+                                    },
+                                    "reject": {
+                                        "label": {
+                                            "i18n": [{
+                                                "_lang": "en",
+                                                "value": "Reject"
+                                            }]
+                                        },
+                                        "show": true
+                                    }
+                                },
+                                "default": {
+                                    "userId": "3",
+                                    "userName": "Manguang Member"
+                                },
+                                "profileRole": {
+                                    "profile": "current",
+                                    "role": "Authoriser"
+                                }
+                            },
+                            "work": {
+                                "action": "editForm"
+                            }
+                        },
+                        "transitions": [{
+                                "_id": "authoriseForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "",
+                                    "_type": "nextStep"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Authorise"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Authorise"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "_id": "revertForm",
+                                "_stop": false,
+                                "_type": "user",
+                                "goTo": {
+                                    "_stepId": "captureForm",
+                                    "_type": "stepId"
+                                },
+                                "name": {
+                                    "i18n": [{
+                                            "_lang": "en",
+                                            "value": "Refer Back"
+                                        },
+                                        {
+                                            "_lang": "pt",
+                                            "value": "Refer Back"
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "closeForm",
+                        "_seq": 4,
+                        "_setInstanceStatusTo": "Complete",
+                        "_setStatusMsgTo": "Data captured and approved",
+                        "actions": [{
+                                "_args": ["processId",
+                                    "subProcess",
+                                    "processSeq",
+                                    "subProcessSeq"
+                                ],
+                                "_id": "form.authorise",
+                                "_seq": 1,
+                                "_type": "internal"
+                            },
+                            {
+                                "_args": ["subProcess.indicators"],
+                                "_id": "form.close",
+                                "_seq": 2,
+                                "_type": "internal"
+                            }
+                        ],
+                        "help": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "The data have been captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "The data have been captured and authorised"
+                                }
+                            ]
+                        },
+                        "name": {
+                            "i18n": [{
+                                    "_lang": "en",
+                                    "value": "Data captured and authorised"
+                                },
+                                {
+                                    "_lang": "pt",
+                                    "value": "Data captured and authorised"
+                                }
+                            ]
+                        },
+                        "task": "",
+                        "transitions": []
+                    }
+                ]
+            }],
+            "variables": [{
+                "_dataType": "",
+                "_default": "",
+                "_id": "",
+                "_sessionVar": "",
+                "_value": ""
+            }]
+        }
+    ],
+    "roles": [{
+            "_id": "Guest",
+            "_level": 0,
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Guest follower of a property."
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Guest follower of a property."
+                    }
+                ]
+            },
+            "requiredRoles": {
+                "requiredRole": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            },
+            "roleMappings": {
+                "roleMapping": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            }
+        },
+        {
+            "_id": "Capturer",
+            "_level": 1,
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Capturer"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Capturer"
+                    }
+                ]
+            },
+            "requiredRoles": {
+                "requiredRole": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            },
+            "roleMappings": {
+                "roleMapping": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            }
+        },
+        {
+            "_id": "Authoriser",
+            "_level": 2,
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Authoriser"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Authoriser"
+                    }
+                ]
+            },
+            "requiredRoles": {
+                "requiredRole": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            },
+            "roleMappings": {
+                "roleMapping": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            }
+        },
+        {
+            "_id": "Owner",
+            "_level": 3,
+            "name": {
+                "i18n": [{
+                        "_lang": "en",
+                        "value": "Owner"
+                    },
+                    {
+                        "_lang": "pt",
+                        "value": "Owner"
+                    }
+                ]
+            },
+            "requiredRoles": {
+                "requiredRole": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            },
+            "roleMappings": {
+                "roleMapping": {
+                    "_applicationId": "",
+                    "_roleId": ""
+                }
+            }
+        }
+    ],
+    "title": {
+        "description": {
+            "i18n": [{
+                    "_lang": "en",
+                    "value": "Mangaung Projects workflow"
+                },
+                {
+                    "_lang": "pt",
+                    "value": "Mangaung Projects workflow"
+                }
+            ]
+        },
+        "name": {
+            "i18n": [{
+                    "_lang": "en",
+                    "value": "Mangaung Projects workflow"
+                },
+                {
+                    "_lang": "pt",
+                    "value": "Mangaung Projects workflow"
+                }
+            ]
+        }
+    },
+    "type": "workflowConfig",
+    "variables": [{
+        "_dataType": "",
+        "_default": "",
+        "_id": "",
+        "_sessionVar": "",
+        "_value": ""
+    }],
+    "version": 1
+}

@@ -131,6 +131,8 @@ Workflow.prototype.getConfig = function() {
  * @return ""
  *
  */
+
+
 Workflow.prototype.getInstance = function() {
     return this.instance;
 };
@@ -284,6 +286,9 @@ Workflow.prototype.setIndicators = function(data) {
  * @return {Object} new Workflow instance with updated instance data.
  *
  */
+
+
+
 Workflow.prototype.create = function() {
     var _this = this;
     return new Promise(function(resolve, reject) {
