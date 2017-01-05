@@ -905,6 +905,21 @@
                                             }
                                         },
                                         {
+                                            "authorise": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        {
+                                            "undraft": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        {
+                                            "draft": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        {
                                             "instantiate": {
                                                 "type": "string",
                                                 "enum": [
