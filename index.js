@@ -393,7 +393,7 @@ Workflow.prototype.initialise = function(processId, data) {
                 // Generate the uuid
 
 
-                var uuid = _this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
+                var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
                 var label = data.label;
                 // Build the sub-process reference object
 

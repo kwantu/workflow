@@ -1,7 +1,7 @@
 {
     "$schema": "./workFlowDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "36-05aafdd00a507d4c88b5b9da7b23cf22",
+    "_rev": "38-6b941a6b59698d37ee33a3b36a103051",
     "channels": [
         "kwantu",
         "community_24000"
@@ -9,13 +9,13 @@
     "identification": {
         "documentation": {
             "i18n": {
-                "_id": "uuid",
-                "en": "This is the work flow definition file for the CWP application"
+                "_id": "",
+                "en": "This is the work flow definition file for the Project application"
             }
         },
         "upgradeInformation": {
             "i18n": {
-                "_id": "uuid",
+                "_id": "",
                 "en": "Nothing to say here"
             }
         }
@@ -26,15 +26,15 @@
             "_seq": 1,
             "help": {
                 "i18n": {
-                    "_id": "uuid",
+                    "_id": "",
                     "en": "Please click the 'Add site information' button to enter the site information.",
                     "hi": "Please click the 'Add site information' button to enter the site information."
                 }
             },
             "name": {
                 "i18n": {
-                    "_id": "uuid",
-                    "en": "Site information"
+                    "_id": "",
+                    "en": "Project profile registration"
                 }
             },
             "postActions": [
@@ -56,8 +56,8 @@
                     },
                     "message": {
                         "i18n": {
-                            "_id": "uuid",
-                            "en": "The project registration form can't be edited once the completion process has been initiated."
+                            "_id": "",
+                            "en": "Only one instance of project registration can be created."
                         }
                     }
                 }
@@ -68,7 +68,7 @@
                     "_seq": 1,
                     "help": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": "Please enter the site information data"
                         }
                     },
@@ -78,8 +78,8 @@
                             "initiateData": "history",
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
-                                    "en": "Site Information"
+                                    "_id": "",
+                                    "en": "Application Profile"
                                 }
                             }
                         }
@@ -99,19 +99,19 @@
                         "user": {
                             "create": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Add site information"
                                 }
                             },
                             "edit": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Edit site information"
                                 }
                             },
                             "editLabel": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Edit"
                                 }
                             },
@@ -120,7 +120,7 @@
                                 "_show": true,
                                 "message": {
                                     "i18n": {
-                                        "_id": "uuid",
+                                        "_id": "",
                                         "en": "Please enter the name for the site."
                                     }
                                 }
@@ -144,7 +144,7 @@
                                     },
                                     "message": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
                                         }
                                     }
@@ -159,7 +159,7 @@
                                     },
                                     "message": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": "Please select the date on which you collected this data."
                                         }
                                     },
@@ -182,7 +182,7 @@
                     "isProfile": true,
                     "name": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": ""
                         }
                     },
@@ -206,7 +206,7 @@
                                         "_seq": 1,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -223,13 +223,13 @@
                             },
                             "help": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Please open the form and capture data"
                                 }
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -246,7 +246,7 @@
                                     "_id": "captureForm",
                                     "name": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -307,7 +307,7 @@
                                     },
                                     "help": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -330,7 +330,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -408,7 +408,7 @@
                                     },
                                     "help": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -431,7 +431,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -492,7 +492,7 @@
                                         "_seq": 1,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -507,7 +507,7 @@
                                         "_seq": 2,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -522,7 +522,7 @@
                                         "_seq": 3,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -537,7 +537,7 @@
                                         "_seq": 4,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -557,7 +557,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -574,7 +574,7 @@
                                     "_id": "authoriseFormTransition",
                                     "name": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -603,14 +603,14 @@
             "_seq": 2,
             "help": {
                 "i18n": {
-                    "_id": "uuid",
+                    "_id": "",
                     "en": "Please click the 'Add site information' button to enter the site information.",
                     "hi": "Please click the 'Add site information' button to enter the site information."
                 }
             },
             "name": {
                 "i18n": {
-                    "_id": "uuid",
+                    "_id": "",
                     "en": "Location"
                 }
             },
@@ -633,7 +633,7 @@
                     },
                     "message": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": "The project registration form can't be edited once the completion process has been initiated."
                         }
                     }
@@ -645,7 +645,7 @@
                     "_seq": 1,
                     "help": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": "Please enter the site information data"
                         }
                     },
@@ -655,7 +655,7 @@
                             "initiateData": "history",
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Site Information"
                                 }
                             }
@@ -676,19 +676,19 @@
                         "user": {
                             "create": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Add site information"
                                 }
                             },
                             "edit": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Edit site information"
                                 }
                             },
                             "editLabel": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Edit"
                                 }
                             },
@@ -697,7 +697,7 @@
                                 "_show": true,
                                 "message": {
                                     "i18n": {
-                                        "_id": "uuid",
+                                        "_id": "",
                                         "en": "Please enter the name for the site."
                                     }
                                 }
@@ -721,7 +721,7 @@
                                     },
                                     "message": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
                                         }
                                     }
@@ -736,7 +736,7 @@
                                     },
                                     "message": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": "Please select the date on which you collected this data."
                                         }
                                     },
@@ -758,7 +758,7 @@
                     },
                     "name": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": ""
                         }
                     },
@@ -782,7 +782,7 @@
                                         "_seq": 1,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -796,13 +796,13 @@
                             },
                             "help": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Please open the form and capture data"
                                 }
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -819,7 +819,7 @@
                                     "_id": "captureForm",
                                     "name": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -880,7 +880,7 @@
                                     },
                                     "help": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -903,7 +903,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -981,7 +981,7 @@
                                     },
                                     "help": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -1004,7 +1004,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -1065,7 +1065,7 @@
                                         "_seq": 1,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -1080,7 +1080,7 @@
                                         "_seq": 2,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -1095,7 +1095,7 @@
                                         "_seq": 3,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -1115,7 +1115,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -1132,7 +1132,7 @@
                                     "_id": "authoriseFormTransition",
                                     "name": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -1161,14 +1161,14 @@
             "_seq": 3,
             "help": {
                 "i18n": {
-                    "_id": "uuid",
+                    "_id": "",
                     "en": "Please click the 'Add site information' button to enter the site information.",
                     "hi": "Please click the 'Add site information' button to enter the site information."
                 }
             },
             "name": {
                 "i18n": {
-                    "_id": "uuid",
+                    "_id": "",
                     "en": "Project Detail"
                 }
             },
@@ -1191,7 +1191,7 @@
                     },
                     "message": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": "The project registration form can't be edited once the completion process has been initiated."
                         }
                     }
@@ -1210,7 +1210,7 @@
                     },
                     "message": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": "The project registration form can't be edited once the completion process has been initiated."
                         }
                     }
@@ -1222,7 +1222,7 @@
                     "_seq": 1,
                     "help": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": "Please enter the site information data"
                         }
                     },
@@ -1232,7 +1232,7 @@
                             "initiateData": "history",
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Site Information"
                                 }
                             }
@@ -1253,19 +1253,19 @@
                         "user": {
                             "create": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Add site information"
                                 }
                             },
                             "edit": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Edit site information"
                                 }
                             },
                             "editLabel": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Edit"
                                 }
                             },
@@ -1274,7 +1274,7 @@
                                 "_show": true,
                                 "message": {
                                     "i18n": {
-                                        "_id": "uuid",
+                                        "_id": "",
                                         "en": "Please enter the name for the site."
                                     }
                                 }
@@ -1298,7 +1298,7 @@
                                     },
                                     "message": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
                                         }
                                     }
@@ -1313,7 +1313,7 @@
                                     },
                                     "message": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": "Please select the date on which you collected this data."
                                         }
                                     },
@@ -1335,7 +1335,7 @@
                     },
                     "name": {
                         "i18n": {
-                            "_id": "uuid",
+                            "_id": "",
                             "en": ""
                         }
                     },
@@ -1359,7 +1359,7 @@
                                         "_seq": 1,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -1373,13 +1373,13 @@
                             },
                             "help": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Please open the form and capture data"
                                 }
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -1396,7 +1396,7 @@
                                     "_id": "captureForm",
                                     "name": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -1457,7 +1457,7 @@
                                     },
                                     "help": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -1480,7 +1480,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -1558,7 +1558,7 @@
                                     },
                                     "help": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -1581,7 +1581,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -1642,7 +1642,7 @@
                                         "_seq": 1,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -1657,7 +1657,7 @@
                                         "_seq": 2,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -1672,7 +1672,7 @@
                                         "_seq": 3,
                                         "description": {
                                             "i18n": {
-                                                "_id": "uuid",
+                                                "_id": "",
                                                 "en": "test"
                                             }
                                         },
@@ -1692,7 +1692,7 @@
                             },
                             "name": {
                                 "i18n": {
-                                    "_id": "uuid",
+                                    "_id": "",
                                     "en": "Create the site information form."
                                 }
                             },
@@ -1709,7 +1709,7 @@
                                     "_id": "authoriseFormTransition",
                                     "name": {
                                         "i18n": {
-                                            "_id": "uuid",
+                                            "_id": "",
                                             "en": ""
                                         }
                                     },
@@ -1742,7 +1742,7 @@
                 "level": 0,
                 "name": {
                     "i18n": {
-                        "_id": "uuid",
+                        "_id": "",
                         "en": "Guest follower of a property."
                     }
                 },
@@ -1830,13 +1830,13 @@
     "title": {
         "description": {
             "i18n": {
-                "_id": "uuid",
+                "_id": "",
                 "en": "CWP project workflow"
             }
         },
         "name": {
             "i18n": {
-                "_id": "uuid",
+                "_id": "",
                 "en": "CWP projek proses beheer"
             }
         }
