@@ -467,6 +467,16 @@
                                                     "edit": {
                                                         "$ref": "#/definitions/i18n"
                                                     },
+                                                    "isEditable": {
+                                                        "type": "boolean"
+                                                    },
+                                                    "maxInstances": {
+                                                        "type": "integer",
+                                                        "description": "Refers to maximum instances allowed. -1 is unlimited"
+                                                    },
+                                                    "parallelInstances": {
+                                                        "type": "boolean"
+                                                    },
                                                     "validDate": {
                                                         "$ref": "#/definitions/dateSelector"
                                                     },
