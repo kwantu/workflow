@@ -305,6 +305,10 @@
                                         }
                                     }
                                 },
+                                "isProfile": {
+                                    "type": "boolean",
+                                    "description": "Refers that this process creates a profile at some stage hence indicator id is same as profile id of current context."
+                                },
                                 "periodType": {
                                     "type": "object",
                                     "description": "The periodType defines the rules for defining the sequences and valid dates for new sub-processes.",
@@ -1236,6 +1240,18 @@
                                 }
                             }
                         ]
+                    },
+                    "setDraft": {
+                        "type": "boolean",
+                        "description": "Added to actions where profile are getting created like form create for appProfile indicator. Once these indicators are created they are added to draft state so that they are displayed in pending state"
+                    },
+                    "setWorkflowLabelInField": {
+                        "type": "string",
+                        "description": "Refers to indicator+field where workflow label is assigned. Like for appProfile indicator 'appProfile.Name' as Name is field where workflow label is assigned to"
+                    },
+                    "setWorkflowLabelInTitle": {
+                        "type": "boolean",
+                        "description": "Sets workflow label in json document title. Like workfloe label is added to appProfile document title so that in forms view a title is displayed in fornt of View and Edit buttons"
                     }
                 },
                 "required": [
