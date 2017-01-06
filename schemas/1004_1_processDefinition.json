@@ -3,8 +3,7 @@
     "_id": "1004:1:processDefinition",
     "_rev": "38-6b941a6b59698d37ee33a3b36a103051",
     "channels": [
-        "kwantu",
-        "community_24000"
+        "config_a_1004"
     ],
     "identification": {
         "documentation": {
@@ -20,8 +19,7 @@
             }
         }
     },
-    "processes": [
-        {
+    "processes": [{
             "_id": "profileRegistration",
             "_seq": 1,
             "help": {
@@ -37,566 +35,539 @@
                     "en": "Project profile registration"
                 }
             },
-            "postActions": [
-            ],
-            "preActions": [
-            ],
-            "prerequisites": [
-                {
-                    "_id": "regLockedIfComplete",
-                    "_seq": 1,
-                    "check": {
-                        "numberProcessInstances": {
-                            "count": 0,
-                            "operator": "equalTo",
-                            "processId": "profileRegistration",
-                            "subProcessId": "spProfileRegistration",
-                            "type": "Completed"
-                        }
-                    },
-                    "message": {
-                        "i18n": {
-                            "_id": "",
-                            "en": "Only one instance of project registration can be created."
-                        }
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_id": "regLockedIfComplete",
+                "_seq": 1,
+                "check": {
+                    "numberProcessInstances": {
+                        "count": 0,
+                        "operator": "equalTo",
+                        "processId": "profileRegistration",
+                        "subProcessId": "spProfileRegistration",
+                        "type": "Completed"
+                    }
+                },
+                "message": {
+                    "i18n": {
+                        "_id": "",
+                        "en": "Only one instance of project registration can be created."
                     }
                 }
-            ],
-            "subProcesses": [
-                {
-                    "_id": "spProfileRegistration",
-                    "_seq": 1,
-                    "help": {
-                        "i18n": {
-                            "_id": "",
-                            "en": "Please enter the site information data"
-                        }
-                    },
-                    "indicators": [
-                        {
-                            "_id": "appProfile",
-                            "initiateData": "history",
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Application Profile"
-                                }
-                            }
-                        }
-                    ],
-                    "initiate": {
-                        "_type": "user",
-                        "action": {
-                            "_type": "button",
-                            "label": "Add new"
-                        },
-                        "name": {
-                            "i18n": {
-                                "_id": "en",
-                                "en": "Site Information Process"
-                            }
-                        },
-                        "user": {
-                            "create": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Add site information"
-                                }
-                            },
-                            "edit": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Edit site information"
-                                }
-                            },
-                            "editLabel": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Edit"
-                                }
-                            },
-                            "instanceTitle": {
-                                "_label": "Title",
-                                "_show": true,
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please enter the name for the site."
-                                    }
-                                }
-                            },
-                            "isEditable": false,
-                            "maxInstances": 1,
-                            "parallelInstances": false,
-                            "validDate": {
-                                "due": {
-                                    "_label": "Due date",
-                                    "_show": false,
-                                    "_type": "autoSelected",
-                                    "default": {
-                                        "_type": "calculated",
-                                        "calculated": {
-                                            "operator": "add",
-                                            "source": "valid",
-                                            "value": 10
-                                        },
-                                        "value": ""
-                                    },
-                                    "message": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-                                        }
-                                    }
-                                },
-                                "valid": {
-                                    "_label": "Valid date",
-                                    "_show": true,
-                                    "_type": "autoSelected",
-                                    "default": {
-                                        "_type": "today",
-                                        "value": ""
-                                    },
-                                    "message": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Please select the date on which you collected this data."
-                                        }
-                                    },
-                                    "vaidation": {
-                                        "isFuture": false
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "instanceLabel": {
-                        "calculated": {
-                            "subprocess": "SubprocessName"
-                        }
-                    },
-                    "instanceType": {
-                        "newSequence": {
-                        }
-                    },
-                    "isProfile": true,
+            }],
+            "subProcesses": [{
+                "_id": "spProfileRegistration",
+                "_seq": 1,
+                "help": {
+                    "i18n": {
+                        "_id": "",
+                        "en": "Please enter the site information data"
+                    }
+                },
+                "indicators": [{
+                    "_id": "appProfile",
+                    "initiateData": "history",
                     "name": {
                         "i18n": {
                             "_id": "",
-                            "en": ""
+                            "en": "Application Profile"
+                        }
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Add new"
+                    },
+                    "name": {
+                        "i18n": {
+                            "_id": "en",
+                            "en": "Site Information Process"
                         }
                     },
-                    "periodType": {
-                        "adhoc": ""
-                    },
-                    "steps": [
-                        {
-                            "_id": "createForm",
-                            "_seq": 1,
-                            "description": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "function": {
-                                "actions": [
-                                    {
-                                        "_id": "form.create",
-                                        "_seq": 1,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "create": "fromDefinition"
-                                            }
-                                        },
-                                        "setDraft": true,
-                                        "setWorkflowLabelInField": "appProfile.Name",
-                                        "setWorkflowLabelInTitle": true
-                                    }
-                                ]
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "setInstanceStatusTo": {
-                                "NotStarted": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": ""
-                                    }
-                                }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "captureForm",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "goToStep": {
-                                            "default": "1",
-                                            "type": ""
-                                        }
-                                    }
-                                }
-                            ]
+                    "user": {
+                        "create": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Add site information"
+                            }
                         },
-                        {
+                        "edit": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Edit site information"
+                            }
+                        },
+                        "editLabel": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Edit"
+                            }
+                        },
+                        "instanceTitle": {
+                            "_label": "Title",
+                            "_show": true,
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please enter the name for the site."
+                                }
+                            }
+                        },
+                        "isEditable": false,
+                        "maxInstances": 1,
+                        "parallelInstances": false,
+                        "validDate": {
+                            "due": {
+                                "_label": "Due date",
+                                "_show": false,
+                                "_type": "autoSelected",
+                                "default": {
+                                    "_type": "calculated",
+                                    "calculated": {
+                                        "operator": "add",
+                                        "source": "valid",
+                                        "value": 10
+                                    },
+                                    "value": ""
+                                },
+                                "message": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                }
+                            },
+                            "valid": {
+                                "_label": "Valid date",
+                                "_show": true,
+                                "_type": "autoSelected",
+                                "default": {
+                                    "_type": "today",
+                                    "value": ""
+                                },
+                                "message": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Please select the date on which you collected this data."
+                                    }
+                                },
+                                "vaidation": {
+                                    "isFuture": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "instanceLabel": {
+                    "calculated": {
+                        "subprocess": "SubprocessName"
+                    }
+                },
+                "instanceType": {
+                    "newSequence": {}
+                },
+                "isProfile": true,
+                "name": {
+                    "i18n": {
+                        "_id": "",
+                        "en": ""
+                    }
+                },
+                "periodType": {
+                    "adhoc": ""
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "description": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "function": {
+                            "actions": [{
+                                "_id": "form.create",
+                                "_seq": 1,
+                                "description": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "test"
+                                    }
+                                },
+                                "method": {
+                                    "form": {
+                                        "create": "fromDefinition"
+                                    }
+                                },
+                                "setDraft": true,
+                                "setWorkflowLabelInField": "appProfile.Name",
+                                "setWorkflowLabelInTitle": true
+                            }]
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "NotStarted": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
                             "_id": "captureForm",
-                            "_seq": 2,
-                            "description": {
-                                "i18n": {
-                                    "_lang": "en",
-                                    "value": "Capture form details"
-                                }
-                            },
-                            "function": {
-                                "task": {
-                                    "assign": {
-                                        "assignment": {
-                                            "accept": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Accept"
-                                                    }
-                                                },
-                                                "show": true
-                                            },
-                                            "message": {
-                                                "i18n": {
-                                                    "_id": "en",
-                                                    "en": "This workflow sub process is ready for acceptance."
-                                                }
-                                            },
-                                            "reject": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Reject"
-                                                    }
-                                                },
-                                                "show": true
-                                            }
-                                        },
-                                        "default": {
-                                            "userId": ""
-                                        },
-                                        "role": {
-                                            "profile": "community",
-                                            "roleId": "CommunityCapturer"
-                                        }
-                                    },
-                                    "help": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "postActions": [
-                                    ],
-                                    "preActions": [
-                                    ],
-                                    "work": {
-                                        "capture": {
-                                            "form": "default"
-                                        }
-                                    }
-                                }
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
                             "name": {
                                 "i18n": {
                                     "_id": "",
-                                    "en": "Create the site information form."
+                                    "en": ""
                                 }
                             },
-                            "setInstanceStatusTo": {
-                                "InProgress": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": ""
-                                    }
+                            "transitionAction": {
+                                "goToStep": {
+                                    "default": "1",
+                                    "type": ""
                                 }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "captureFormSubmit",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Submit"
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "authoriseForm",
-                                            "type": ""
-                                        }
-                                    }
-                                }
-                            ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "description": {
+                            "i18n": {
+                                "_lang": "en",
+                                "value": "Capture form details"
+                            }
                         },
-                        {
-                            "_id": "authoriseForm",
-                            "_seq": 3,
-                            "description": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "function": {
-                                "task": {
-                                    "assign": {
-                                        "assignment": {
-                                            "accept": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Accept"
-                                                    }
-                                                },
-                                                "show": true
-                                            },
-                                            "message": {
+                        "function": {
+                            "task": {
+                                "assign": {
+                                    "assignment": {
+                                        "accept": {
+                                            "label": {
                                                 "i18n": {
                                                     "_id": "en",
-                                                    "en": "This workflow sub process is ready for acceptance."
+                                                    "en": "Accept"
                                                 }
                                             },
-                                            "reject": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Reject"
-                                                    }
-                                                },
-                                                "show": true
+                                            "show": true
+                                        },
+                                        "message": {
+                                            "i18n": {
+                                                "_id": "en",
+                                                "en": "This workflow sub process is ready for acceptance."
                                             }
                                         },
-                                        "default": {
-                                            "userId": ""
-                                        },
-                                        "role": {
-                                            "profile": "community",
-                                            "roleId": "CommunityAuthoriser"
+                                        "reject": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Reject"
+                                                }
+                                            },
+                                            "show": true
                                         }
                                     },
-                                    "help": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
+                                    "default": {
+                                        "userId": ""
                                     },
-                                    "postActions": [
-                                    ],
-                                    "preActions": [
-                                    ],
-                                    "work": {
-                                        "capture": {
-                                            "form": "default"
-                                        }
+                                    "role": {
+                                        "profile": "community",
+                                        "roleId": "CommunityCapturer"
                                     }
-                                }
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "setInstanceStatusTo": {
-                                "InProgress": {
-                                    "label": {
+                                },
+                                "help": {
+                                    "i18n": {
                                         "_id": "",
                                         "en": ""
                                     }
+                                },
+                                "postActions": [],
+                                "preActions": [],
+                                "work": {
+                                    "capture": {
+                                        "form": "default"
+                                    }
+                                }
+                            }
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "InProgress": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
+                            "_id": "captureFormSubmit",
+                            "name": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Submit"
                                 }
                             },
-                            "transition": [
-                                {
-                                    "_id": "approve",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Approve"
+                            "transitionAction": {
+                                "goToStepId": {
+                                    "stepId": "authoriseForm",
+                                    "type": ""
+                                }
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "description": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "function": {
+                            "task": {
+                                "assign": {
+                                    "assignment": {
+                                        "accept": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Accept"
+                                                }
+                                            },
+                                            "show": true
+                                        },
+                                        "message": {
+                                            "i18n": {
+                                                "_id": "en",
+                                                "en": "This workflow sub process is ready for acceptance."
+                                            }
+                                        },
+                                        "reject": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Reject"
+                                                }
+                                            },
+                                            "show": true
                                         }
                                     },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "completion",
-                                            "type": ""
+                                    "default": {
+                                        "userId": ""
+                                    },
+                                    "role": {
+                                        "profile": "community",
+                                        "roleId": "CommunityAuthoriser"
+                                    }
+                                },
+                                "help": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": ""
+                                    }
+                                },
+                                "postActions": [],
+                                "preActions": [],
+                                "work": {
+                                    "capture": {
+                                        "form": "default"
+                                    }
+                                }
+                            }
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "InProgress": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
+                                "_id": "approve",
+                                "name": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Approve"
+                                    }
+                                },
+                                "transitionAction": {
+                                    "goToStepId": {
+                                        "stepId": "completion",
+                                        "type": ""
+                                    }
+                                }
+                            },
+                            {
+                                "_id": "referback",
+                                "name": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Refer back"
+                                    }
+                                },
+                                "transitionAction": {
+                                    "goToStepId": {
+                                        "stepId": "captureForm",
+                                        "type": ""
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "completion",
+                        "_seq": 4,
+                        "description": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Completion"
+                            }
+                        },
+                        "function": {
+                            "actions": [{
+                                    "_id": "formAuthoriseAction",
+                                    "_seq": 1,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "test"
+                                        }
+                                    },
+                                    "method": {
+                                        "form": {
+                                            "authorise": ""
                                         }
                                     }
                                 },
                                 {
-                                    "_id": "referback",
-                                    "name": {
+                                    "_id": "profileCreateAction",
+                                    "_seq": 2,
+                                    "description": {
                                         "i18n": {
                                             "_id": "",
-                                            "en": "Refer back"
+                                            "en": "test"
                                         }
                                     },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "captureForm",
-                                            "type": ""
+                                    "method": {
+                                        "profile": {
+                                            "create": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "_id": "formUnDraftAction",
+                                    "_seq": 3,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "test"
+                                        }
+                                    },
+                                    "method": {
+                                        "form": {
+                                            "undraft": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "_id": "formCloseAction",
+                                    "_seq": 4,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "test"
+                                        }
+                                    },
+                                    "method": {
+                                        "form": {
+                                            "close": ""
                                         }
                                     }
                                 }
                             ]
                         },
-                        {
-                            "_id": "completion",
-                            "_seq": 4,
-                            "description": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Completion"
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "Complete": {
+                                "label": {
+                                    "_id": "",
+                                    "en": "Workflow Complete"
                                 }
-                            },
-                            "function": {
-                                "actions": [
-                                    {
-                                        "_id": "formAuthoriseAction",
-                                        "_seq": 1,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "authorise": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "_id": "profileCreateAction",
-                                        "_seq": 2,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "profile": {
-                                                "create": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "_id": "formUnDraftAction",
-                                        "_seq": 3,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "undraft": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "_id": "formCloseAction",
-                                        "_seq": 4,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "close": ""
-                                            }
-                                        }
-                                    }
-                                ]
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
+                            }
+                        },
+                        "transition": [{
+                            "_id": "authoriseFormTransition",
                             "name": {
                                 "i18n": {
                                     "_id": "",
-                                    "en": "Create the site information form."
+                                    "en": ""
                                 }
                             },
-                            "setInstanceStatusTo": {
-                                "Complete": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": "Workflow Complete"
-                                    }
-                                }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "authoriseFormTransition",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "stop": {
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    "variables": [
-                        {
-                            "dataType": "",
-                            "default": "",
-                            "id": "",
-                            "sessionVar": "",
-                            "value": ""
-                        }
-                    ]
-                }
-            ]
+                            "transitionAction": {
+                                "stop": {}
+                            }
+                        }]
+                    }
+                ],
+                "variables": [{
+                    "dataType": "",
+                    "default": "",
+                    "id": "",
+                    "sessionVar": "",
+                    "value": ""
+                }]
+            }]
         },
         {
             "_id": "location",
@@ -614,547 +585,520 @@
                     "en": "Location"
                 }
             },
-            "postActions": [
-            ],
-            "preActions": [
-            ],
-            "prerequisites": [
-                {
-                    "_id": "regLockedIfComplete",
-                    "_seq": 1,
-                    "check": {
-                        "numberProcessInstances": {
-                            "count": 0,
-                            "operator": "greaterThan",
-                            "processId": "profileRegistration",
-                            "subProcessId": "spProfileRegistration",
-                            "type": "Complete"
-                        }
-                    },
-                    "message": {
-                        "i18n": {
-                            "_id": "",
-                            "en": "The project registration form can't be edited once the completion process has been initiated."
-                        }
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
+                "_id": "regLockedIfComplete",
+                "_seq": 1,
+                "check": {
+                    "numberProcessInstances": {
+                        "count": 0,
+                        "operator": "greaterThan",
+                        "processId": "profileRegistration",
+                        "subProcessId": "spProfileRegistration",
+                        "type": "Complete"
+                    }
+                },
+                "message": {
+                    "i18n": {
+                        "_id": "",
+                        "en": "The project registration form can't be edited once the completion process has been initiated."
                     }
                 }
-            ],
-            "subProcesses": [
-                {
-                    "_id": "splocation",
-                    "_seq": 1,
-                    "help": {
-                        "i18n": {
-                            "_id": "",
-                            "en": "Please enter the site information data"
-                        }
-                    },
-                    "indicators": [
-                        {
-                            "_id": "ProjectLocation",
-                            "initiateData": "history",
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Site Information"
-                                }
-                            }
-                        }
-                    ],
-                    "initiate": {
-                        "_type": "user",
-                        "action": {
-                            "_type": "button",
-                            "label": "Add new"
-                        },
-                        "name": {
-                            "i18n": {
-                                "_id": "en",
-                                "en": "Site Information Process"
-                            }
-                        },
-                        "user": {
-                            "create": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Add site information"
-                                }
-                            },
-                            "edit": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Edit site information"
-                                }
-                            },
-                            "editLabel": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Edit"
-                                }
-                            },
-                            "instanceTitle": {
-                                "_label": "Title",
-                                "_show": true,
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please enter the name for the site."
-                                    }
-                                }
-                            },
-                            "isEditable": false,
-                            "maxInstances": -1,
-                            "parallelInstances": false,
-                            "validDate": {
-                                "due": {
-                                    "_label": "Due date",
-                                    "_show": false,
-                                    "_type": "autoSelected",
-                                    "default": {
-                                        "_type": "calculated",
-                                        "calculated": {
-                                            "operator": "add",
-                                            "source": "valid",
-                                            "value": 10
-                                        },
-                                        "value": ""
-                                    },
-                                    "message": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-                                        }
-                                    }
-                                },
-                                "valid": {
-                                    "_label": "Valid date",
-                                    "_show": true,
-                                    "_type": "autoSelected",
-                                    "default": {
-                                        "_type": "today",
-                                        "value": ""
-                                    },
-                                    "message": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Please select the date on which you collected this data."
-                                        }
-                                    },
-                                    "vaidation": {
-                                        "isFuture": false
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "instanceLabel": {
-                        "calculated": {
-                            "subprocess": "SubprocessName"
-                        }
-                    },
-                    "instanceType": {
-                        "newInstance": {
-                        }
-                    },
+            }],
+            "subProcesses": [{
+                "_id": "splocation",
+                "_seq": 1,
+                "help": {
+                    "i18n": {
+                        "_id": "",
+                        "en": "Please enter the site information data"
+                    }
+                },
+                "indicators": [{
+                    "_id": "ProjectLocation",
+                    "initiateData": "history",
                     "name": {
                         "i18n": {
                             "_id": "",
-                            "en": ""
+                            "en": "Site Information"
+                        }
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Add new"
+                    },
+                    "name": {
+                        "i18n": {
+                            "_id": "en",
+                            "en": "Site Information Process"
                         }
                     },
-                    "periodType": {
-                        "adhoc": ""
-                    },
-                    "steps": [
-                        {
-                            "_id": "createForm",
-                            "_seq": 1,
-                            "description": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "function": {
-                                "actions": [
-                                    {
-                                        "_id": "form.create",
-                                        "_seq": 1,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "create": "fromDefinition"
-                                            }
-                                        }
-                                    }
-                                ]
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "setInstanceStatusTo": {
-                                "NotStarted": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": ""
-                                    }
-                                }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "captureForm",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "goToStep": {
-                                            "default": "1",
-                                            "type": ""
-                                        }
-                                    }
-                                }
-                            ]
+                    "user": {
+                        "create": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Add site information"
+                            }
                         },
-                        {
+                        "edit": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Edit site information"
+                            }
+                        },
+                        "editLabel": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Edit"
+                            }
+                        },
+                        "instanceTitle": {
+                            "_label": "Title",
+                            "_show": true,
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please enter the name for the site."
+                                }
+                            }
+                        },
+                        "isEditable": false,
+                        "maxInstances": -1,
+                        "parallelInstances": false,
+                        "validDate": {
+                            "due": {
+                                "_label": "Due date",
+                                "_show": false,
+                                "_type": "autoSelected",
+                                "default": {
+                                    "_type": "calculated",
+                                    "calculated": {
+                                        "operator": "add",
+                                        "source": "valid",
+                                        "value": 10
+                                    },
+                                    "value": ""
+                                },
+                                "message": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                }
+                            },
+                            "valid": {
+                                "_label": "Valid date",
+                                "_show": true,
+                                "_type": "autoSelected",
+                                "default": {
+                                    "_type": "today",
+                                    "value": ""
+                                },
+                                "message": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Please select the date on which you collected this data."
+                                    }
+                                },
+                                "vaidation": {
+                                    "isFuture": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "instanceLabel": {
+                    "calculated": {
+                        "subprocess": "SubprocessName"
+                    }
+                },
+                "instanceType": {
+                    "newInstance": {}
+                },
+                "name": {
+                    "i18n": {
+                        "_id": "",
+                        "en": ""
+                    }
+                },
+                "periodType": {
+                    "adhoc": ""
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "description": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "function": {
+                            "actions": [{
+                                "_id": "form.create",
+                                "_seq": 1,
+                                "description": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "test"
+                                    }
+                                },
+                                "method": {
+                                    "form": {
+                                        "create": "fromDefinition"
+                                    }
+                                }
+                            }]
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "NotStarted": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
                             "_id": "captureForm",
-                            "_seq": 2,
-                            "description": {
-                                "i18n": {
-                                    "_lang": "en",
-                                    "value": "Capture form details"
-                                }
-                            },
-                            "function": {
-                                "task": {
-                                    "assign": {
-                                        "assignment": {
-                                            "accept": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Accept"
-                                                    }
-                                                },
-                                                "show": true
-                                            },
-                                            "message": {
-                                                "i18n": {
-                                                    "_id": "en",
-                                                    "en": "This workflow sub process is ready for acceptance."
-                                                }
-                                            },
-                                            "reject": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Reject"
-                                                    }
-                                                },
-                                                "show": true
-                                            }
-                                        },
-                                        "default": {
-                                            "userId": ""
-                                        },
-                                        "role": {
-                                            "profile": "community",
-                                            "roleId": "CommunityCapturer"
-                                        }
-                                    },
-                                    "help": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "postActions": [
-                                    ],
-                                    "preActions": [
-                                    ],
-                                    "work": {
-                                        "capture": {
-                                            "form": "default"
-                                        }
-                                    }
-                                }
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
                             "name": {
                                 "i18n": {
                                     "_id": "",
-                                    "en": "Create the site information form."
+                                    "en": ""
                                 }
                             },
-                            "setInstanceStatusTo": {
-                                "InProgress": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": ""
-                                    }
+                            "transitionAction": {
+                                "goToStep": {
+                                    "default": "1",
+                                    "type": ""
                                 }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "captureFormSubmit",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Submit"
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "authoriseForm",
-                                            "type": ""
-                                        }
-                                    }
-                                }
-                            ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "description": {
+                            "i18n": {
+                                "_lang": "en",
+                                "value": "Capture form details"
+                            }
                         },
-                        {
-                            "_id": "authoriseForm",
-                            "_seq": 3,
-                            "description": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "function": {
-                                "task": {
-                                    "assign": {
-                                        "assignment": {
-                                            "accept": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Accept"
-                                                    }
-                                                },
-                                                "show": true
-                                            },
-                                            "message": {
+                        "function": {
+                            "task": {
+                                "assign": {
+                                    "assignment": {
+                                        "accept": {
+                                            "label": {
                                                 "i18n": {
                                                     "_id": "en",
-                                                    "en": "This workflow sub process is ready for acceptance."
+                                                    "en": "Accept"
                                                 }
                                             },
-                                            "reject": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Reject"
-                                                    }
-                                                },
-                                                "show": true
+                                            "show": true
+                                        },
+                                        "message": {
+                                            "i18n": {
+                                                "_id": "en",
+                                                "en": "This workflow sub process is ready for acceptance."
                                             }
                                         },
-                                        "default": {
-                                            "userId": ""
-                                        },
-                                        "role": {
-                                            "profile": "community",
-                                            "roleId": "CommunityAuthoriser"
+                                        "reject": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Reject"
+                                                }
+                                            },
+                                            "show": true
                                         }
                                     },
-                                    "help": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
+                                    "default": {
+                                        "userId": ""
                                     },
-                                    "postActions": [
-                                    ],
-                                    "preActions": [
-                                    ],
-                                    "work": {
-                                        "capture": {
-                                            "form": "default"
-                                        }
+                                    "role": {
+                                        "profile": "community",
+                                        "roleId": "CommunityCapturer"
                                     }
-                                }
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "setInstanceStatusTo": {
-                                "InProgress": {
-                                    "label": {
+                                },
+                                "help": {
+                                    "i18n": {
                                         "_id": "",
                                         "en": ""
                                     }
+                                },
+                                "postActions": [],
+                                "preActions": [],
+                                "work": {
+                                    "capture": {
+                                        "form": "default"
+                                    }
+                                }
+                            }
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "InProgress": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
+                            "_id": "captureFormSubmit",
+                            "name": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Submit"
                                 }
                             },
-                            "transition": [
-                                {
-                                    "_id": "approve",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Approve"
+                            "transitionAction": {
+                                "goToStepId": {
+                                    "stepId": "authoriseForm",
+                                    "type": ""
+                                }
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "description": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "function": {
+                            "task": {
+                                "assign": {
+                                    "assignment": {
+                                        "accept": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Accept"
+                                                }
+                                            },
+                                            "show": true
+                                        },
+                                        "message": {
+                                            "i18n": {
+                                                "_id": "en",
+                                                "en": "This workflow sub process is ready for acceptance."
+                                            }
+                                        },
+                                        "reject": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Reject"
+                                                }
+                                            },
+                                            "show": true
                                         }
                                     },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "completion",
-                                            "type": ""
+                                    "default": {
+                                        "userId": ""
+                                    },
+                                    "role": {
+                                        "profile": "community",
+                                        "roleId": "CommunityAuthoriser"
+                                    }
+                                },
+                                "help": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": ""
+                                    }
+                                },
+                                "postActions": [],
+                                "preActions": [],
+                                "work": {
+                                    "capture": {
+                                        "form": "default"
+                                    }
+                                }
+                            }
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "InProgress": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
+                                "_id": "approve",
+                                "name": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Approve"
+                                    }
+                                },
+                                "transitionAction": {
+                                    "goToStepId": {
+                                        "stepId": "completion",
+                                        "type": ""
+                                    }
+                                }
+                            },
+                            {
+                                "_id": "referback",
+                                "name": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Refer back"
+                                    }
+                                },
+                                "transitionAction": {
+                                    "goToStepId": {
+                                        "stepId": "captureForm",
+                                        "type": ""
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "completion",
+                        "_seq": 4,
+                        "description": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Completion"
+                            }
+                        },
+                        "function": {
+                            "actions": [{
+                                    "_id": "formAuthoriseAction",
+                                    "_seq": 1,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "test"
+                                        }
+                                    },
+                                    "method": {
+                                        "form": {
+                                            "authorise": ""
                                         }
                                     }
                                 },
                                 {
-                                    "_id": "referback",
-                                    "name": {
+                                    "_id": "formUnDraftAction",
+                                    "_seq": 2,
+                                    "description": {
                                         "i18n": {
                                             "_id": "",
-                                            "en": "Refer back"
+                                            "en": "test"
                                         }
                                     },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "captureForm",
-                                            "type": ""
+                                    "method": {
+                                        "form": {
+                                            "undraft": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "_id": "formCloseAction",
+                                    "_seq": 3,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "test"
+                                        }
+                                    },
+                                    "method": {
+                                        "form": {
+                                            "close": ""
                                         }
                                     }
                                 }
                             ]
                         },
-                        {
-                            "_id": "completion",
-                            "_seq": 4,
-                            "description": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Completion"
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "Complete": {
+                                "label": {
+                                    "_id": "",
+                                    "en": "Workflow Complete"
                                 }
-                            },
-                            "function": {
-                                "actions": [
-                                    {
-                                        "_id": "formAuthoriseAction",
-                                        "_seq": 1,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "authorise": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "_id": "formUnDraftAction",
-                                        "_seq": 2,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "undraft": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "_id": "formCloseAction",
-                                        "_seq": 3,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "close": ""
-                                            }
-                                        }
-                                    }
-                                ]
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
+                            }
+                        },
+                        "transition": [{
+                            "_id": "authoriseFormTransition",
                             "name": {
                                 "i18n": {
                                     "_id": "",
-                                    "en": "Create the site information form."
+                                    "en": ""
                                 }
                             },
-                            "setInstanceStatusTo": {
-                                "Complete": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": "Workflow Complete"
-                                    }
-                                }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "authoriseFormTransition",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "stop": {
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    "variables": [
-                        {
-                            "dataType": "",
-                            "default": "",
-                            "id": "",
-                            "sessionVar": "",
-                            "value": ""
-                        }
-                    ]
-                }
-            ]
+                            "transitionAction": {
+                                "stop": {}
+                            }
+                        }]
+                    }
+                ],
+                "variables": [{
+                    "dataType": "",
+                    "default": "",
+                    "id": "",
+                    "sessionVar": "",
+                    "value": ""
+                }]
+            }]
         },
         {
             "_id": "projectDetail",
@@ -1172,12 +1116,9 @@
                     "en": "Project Detail"
                 }
             },
-            "postActions": [
-            ],
-            "preActions": [
-            ],
-            "prerequisites": [
-                {
+            "postActions": [],
+            "preActions": [],
+            "prerequisites": [{
                     "_id": "regLockedIfComplete",
                     "_seq": 1,
                     "check": {
@@ -1216,528 +1157,504 @@
                     }
                 }
             ],
-            "subProcesses": [
-                {
-                    "_id": "spProjectDetail",
-                    "_seq": 1,
-                    "help": {
-                        "i18n": {
-                            "_id": "",
-                            "en": "Please enter the site information data"
-                        }
-                    },
-                    "indicators": [
-                        {
-                            "_id": "ProjectDetail",
-                            "initiateData": "history",
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Site Information"
-                                }
-                            }
-                        }
-                    ],
-                    "initiate": {
-                        "_type": "user",
-                        "action": {
-                            "_type": "button",
-                            "label": "Add new"
-                        },
-                        "name": {
-                            "i18n": {
-                                "_id": "en",
-                                "en": "Site Information Process"
-                            }
-                        },
-                        "user": {
-                            "create": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Add site information"
-                                }
-                            },
-                            "edit": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Edit site information"
-                                }
-                            },
-                            "editLabel": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Edit"
-                                }
-                            },
-                            "instanceTitle": {
-                                "_label": "Title",
-                                "_show": true,
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please enter the name for the site."
-                                    }
-                                }
-                            },
-                            "isEditable": true,
-                            "maxInstances": 1,
-                            "parallelInstances": false,
-                            "validDate": {
-                                "due": {
-                                    "_label": "Due date",
-                                    "_show": false,
-                                    "_type": "autoSelected",
-                                    "default": {
-                                        "_type": "calculated",
-                                        "calculated": {
-                                            "operator": "add",
-                                            "source": "valid",
-                                            "value": 10
-                                        },
-                                        "value": ""
-                                    },
-                                    "message": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-                                        }
-                                    }
-                                },
-                                "valid": {
-                                    "_label": "Valid date",
-                                    "_show": true,
-                                    "_type": "autoSelected",
-                                    "default": {
-                                        "_type": "today",
-                                        "value": ""
-                                    },
-                                    "message": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Please select the date on which you collected this data."
-                                        }
-                                    },
-                                    "vaidation": {
-                                        "isFuture": false
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "instanceLabel": {
-                        "calculated": {
-                            "subprocess": "SubprocessName"
-                        }
-                    },
-                    "instanceType": {
-                        "newSequence": {
-                        }
-                    },
+            "subProcesses": [{
+                "_id": "spProjectDetail",
+                "_seq": 1,
+                "help": {
+                    "i18n": {
+                        "_id": "",
+                        "en": "Please enter the site information data"
+                    }
+                },
+                "indicators": [{
+                    "_id": "ProjectDetail",
+                    "initiateData": "history",
                     "name": {
                         "i18n": {
                             "_id": "",
-                            "en": ""
+                            "en": "Site Information"
+                        }
+                    }
+                }],
+                "initiate": {
+                    "_type": "user",
+                    "action": {
+                        "_type": "button",
+                        "label": "Add new"
+                    },
+                    "name": {
+                        "i18n": {
+                            "_id": "en",
+                            "en": "Site Information Process"
                         }
                     },
-                    "periodType": {
-                        "adhoc": ""
-                    },
-                    "steps": [
-                        {
-                            "_id": "createForm",
-                            "_seq": 1,
-                            "description": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "function": {
-                                "actions": [
-                                    {
-                                        "_id": "form.create",
-                                        "_seq": 1,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "create": "fromDefinition"
-                                            }
-                                        }
-                                    }
-                                ]
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "setInstanceStatusTo": {
-                                "NotStarted": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": ""
-                                    }
-                                }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "captureForm",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "goToStep": {
-                                            "default": "1",
-                                            "type": ""
-                                        }
-                                    }
-                                }
-                            ]
+                    "user": {
+                        "create": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Add site information"
+                            }
                         },
-                        {
+                        "edit": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Edit site information"
+                            }
+                        },
+                        "editLabel": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Edit"
+                            }
+                        },
+                        "instanceTitle": {
+                            "_label": "Title",
+                            "_show": true,
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please enter the name for the site."
+                                }
+                            }
+                        },
+                        "isEditable": true,
+                        "maxInstances": 1,
+                        "parallelInstances": false,
+                        "validDate": {
+                            "due": {
+                                "_label": "Due date",
+                                "_show": false,
+                                "_type": "autoSelected",
+                                "default": {
+                                    "_type": "calculated",
+                                    "calculated": {
+                                        "operator": "add",
+                                        "source": "valid",
+                                        "value": 10
+                                    },
+                                    "value": ""
+                                },
+                                "message": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                    }
+                                }
+                            },
+                            "valid": {
+                                "_label": "Valid date",
+                                "_show": true,
+                                "_type": "autoSelected",
+                                "default": {
+                                    "_type": "today",
+                                    "value": ""
+                                },
+                                "message": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Please select the date on which you collected this data."
+                                    }
+                                },
+                                "vaidation": {
+                                    "isFuture": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "instanceLabel": {
+                    "calculated": {
+                        "subprocess": "SubprocessName"
+                    }
+                },
+                "instanceType": {
+                    "newSequence": {}
+                },
+                "name": {
+                    "i18n": {
+                        "_id": "",
+                        "en": ""
+                    }
+                },
+                "periodType": {
+                    "adhoc": ""
+                },
+                "steps": [{
+                        "_id": "createForm",
+                        "_seq": 1,
+                        "description": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "function": {
+                            "actions": [{
+                                "_id": "form.create",
+                                "_seq": 1,
+                                "description": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "test"
+                                    }
+                                },
+                                "method": {
+                                    "form": {
+                                        "create": "fromDefinition"
+                                    }
+                                }
+                            }]
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "NotStarted": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
                             "_id": "captureForm",
-                            "_seq": 2,
-                            "description": {
-                                "i18n": {
-                                    "_lang": "en",
-                                    "value": "Capture form details"
-                                }
-                            },
-                            "function": {
-                                "task": {
-                                    "assign": {
-                                        "assignment": {
-                                            "accept": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Accept"
-                                                    }
-                                                },
-                                                "show": true
-                                            },
-                                            "message": {
-                                                "i18n": {
-                                                    "_id": "en",
-                                                    "en": "This workflow sub process is ready for acceptance."
-                                                }
-                                            },
-                                            "reject": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Reject"
-                                                    }
-                                                },
-                                                "show": true
-                                            }
-                                        },
-                                        "default": {
-                                            "userId": ""
-                                        },
-                                        "role": {
-                                            "profile": "community",
-                                            "roleId": "CommunityCapturer"
-                                        }
-                                    },
-                                    "help": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "postActions": [
-                                    ],
-                                    "preActions": [
-                                    ],
-                                    "work": {
-                                        "capture": {
-                                            "form": "default"
-                                        }
-                                    }
-                                }
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
                             "name": {
                                 "i18n": {
                                     "_id": "",
-                                    "en": "Create the site information form."
+                                    "en": ""
                                 }
                             },
-                            "setInstanceStatusTo": {
-                                "InProgress": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": ""
-                                    }
+                            "transitionAction": {
+                                "goToStep": {
+                                    "default": "1",
+                                    "type": ""
                                 }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "captureFormSubmit",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Submit"
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "authoriseForm",
-                                            "type": ""
-                                        }
-                                    }
-                                }
-                            ]
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "captureForm",
+                        "_seq": 2,
+                        "description": {
+                            "i18n": {
+                                "_lang": "en",
+                                "value": "Capture form details"
+                            }
                         },
-                        {
-                            "_id": "authoriseForm",
-                            "_seq": 3,
-                            "description": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "function": {
-                                "task": {
-                                    "assign": {
-                                        "assignment": {
-                                            "accept": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Accept"
-                                                    }
-                                                },
-                                                "show": true
-                                            },
-                                            "message": {
+                        "function": {
+                            "task": {
+                                "assign": {
+                                    "assignment": {
+                                        "accept": {
+                                            "label": {
                                                 "i18n": {
                                                     "_id": "en",
-                                                    "en": "This workflow sub process is ready for acceptance."
+                                                    "en": "Accept"
                                                 }
                                             },
-                                            "reject": {
-                                                "label": {
-                                                    "i18n": {
-                                                        "_id": "en",
-                                                        "en": "Reject"
-                                                    }
-                                                },
-                                                "show": true
+                                            "show": true
+                                        },
+                                        "message": {
+                                            "i18n": {
+                                                "_id": "en",
+                                                "en": "This workflow sub process is ready for acceptance."
                                             }
                                         },
-                                        "default": {
-                                            "userId": ""
-                                        },
-                                        "role": {
-                                            "profile": "community",
-                                            "roleId": "CommunityAuthoriser"
+                                        "reject": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Reject"
+                                                }
+                                            },
+                                            "show": true
                                         }
                                     },
-                                    "help": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
+                                    "default": {
+                                        "userId": ""
                                     },
-                                    "postActions": [
-                                    ],
-                                    "preActions": [
-                                    ],
-                                    "work": {
-                                        "capture": {
-                                            "form": "default"
-                                        }
+                                    "role": {
+                                        "profile": "community",
+                                        "roleId": "CommunityCapturer"
                                     }
-                                }
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
-                            "name": {
-                                "i18n": {
-                                    "_id": "",
-                                    "en": "Create the site information form."
-                                }
-                            },
-                            "setInstanceStatusTo": {
-                                "InProgress": {
-                                    "label": {
+                                },
+                                "help": {
+                                    "i18n": {
                                         "_id": "",
                                         "en": ""
                                     }
+                                },
+                                "postActions": [],
+                                "preActions": [],
+                                "work": {
+                                    "capture": {
+                                        "form": "default"
+                                    }
+                                }
+                            }
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "InProgress": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
+                            "_id": "captureFormSubmit",
+                            "name": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Submit"
                                 }
                             },
-                            "transition": [
-                                {
-                                    "_id": "approve",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": "Approve"
+                            "transitionAction": {
+                                "goToStepId": {
+                                    "stepId": "authoriseForm",
+                                    "type": ""
+                                }
+                            }
+                        }]
+                    },
+                    {
+                        "_id": "authoriseForm",
+                        "_seq": 3,
+                        "description": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "function": {
+                            "task": {
+                                "assign": {
+                                    "assignment": {
+                                        "accept": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Accept"
+                                                }
+                                            },
+                                            "show": true
+                                        },
+                                        "message": {
+                                            "i18n": {
+                                                "_id": "en",
+                                                "en": "This workflow sub process is ready for acceptance."
+                                            }
+                                        },
+                                        "reject": {
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "en",
+                                                    "en": "Reject"
+                                                }
+                                            },
+                                            "show": true
                                         }
                                     },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "completion",
-                                            "type": ""
+                                    "default": {
+                                        "userId": ""
+                                    },
+                                    "role": {
+                                        "profile": "community",
+                                        "roleId": "CommunityAuthoriser"
+                                    }
+                                },
+                                "help": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": ""
+                                    }
+                                },
+                                "postActions": [],
+                                "preActions": [],
+                                "work": {
+                                    "capture": {
+                                        "form": "default"
+                                    }
+                                }
+                            }
+                        },
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "InProgress": {
+                                "label": {
+                                    "_id": "",
+                                    "en": ""
+                                }
+                            }
+                        },
+                        "transition": [{
+                                "_id": "approve",
+                                "name": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Approve"
+                                    }
+                                },
+                                "transitionAction": {
+                                    "goToStepId": {
+                                        "stepId": "completion",
+                                        "type": ""
+                                    }
+                                }
+                            },
+                            {
+                                "_id": "referback",
+                                "name": {
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Refer back"
+                                    }
+                                },
+                                "transitionAction": {
+                                    "goToStepId": {
+                                        "stepId": "captureForm",
+                                        "type": ""
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "_id": "completion",
+                        "_seq": 4,
+                        "description": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Completion"
+                            }
+                        },
+                        "function": {
+                            "actions": [{
+                                    "_id": "formAuthoriseAction",
+                                    "_seq": 1,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "test"
+                                        }
+                                    },
+                                    "method": {
+                                        "form": {
+                                            "authorise": ""
                                         }
                                     }
                                 },
                                 {
-                                    "_id": "referback",
-                                    "name": {
+                                    "_id": "formUnDraftAction",
+                                    "_seq": 2,
+                                    "description": {
                                         "i18n": {
                                             "_id": "",
-                                            "en": "Refer back"
+                                            "en": "test"
                                         }
                                     },
-                                    "transitionAction": {
-                                        "goToStepId": {
-                                            "stepId": "captureForm",
-                                            "type": ""
+                                    "method": {
+                                        "form": {
+                                            "undraft": ""
+                                        }
+                                    }
+                                },
+                                {
+                                    "_id": "formCloseAction",
+                                    "_seq": 3,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "test"
+                                        }
+                                    },
+                                    "method": {
+                                        "form": {
+                                            "close": ""
                                         }
                                     }
                                 }
                             ]
                         },
-                        {
-                            "_id": "completion",
-                            "_seq": 4,
-                            "description": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Completion"
+                        "help": {
+                            "i18n": {
+                                "_id": "en",
+                                "en": "Please open the form and capture data"
+                            }
+                        },
+                        "name": {
+                            "i18n": {
+                                "_id": "",
+                                "en": "Create the site information form."
+                            }
+                        },
+                        "setInstanceStatusTo": {
+                            "Complete": {
+                                "label": {
+                                    "_id": "",
+                                    "en": "Workflow Complete"
                                 }
-                            },
-                            "function": {
-                                "actions": [
-                                    {
-                                        "_id": "formAuthoriseAction",
-                                        "_seq": 1,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "authorise": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "_id": "formUnDraftAction",
-                                        "_seq": 2,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "undraft": ""
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "_id": "formCloseAction",
-                                        "_seq": 3,
-                                        "description": {
-                                            "i18n": {
-                                                "_id": "",
-                                                "en": "test"
-                                            }
-                                        },
-                                        "method": {
-                                            "form": {
-                                                "close": ""
-                                            }
-                                        }
-                                    }
-                                ]
-                            },
-                            "help": {
-                                "i18n": {
-                                    "_id": "en",
-                                    "en": "Please open the form and capture data"
-                                }
-                            },
+                            }
+                        },
+                        "transition": [{
+                            "_id": "authoriseFormTransition",
                             "name": {
                                 "i18n": {
                                     "_id": "",
-                                    "en": "Create the site information form."
+                                    "en": ""
                                 }
                             },
-                            "setInstanceStatusTo": {
-                                "Complete": {
-                                    "label": {
-                                        "_id": "",
-                                        "en": "Workflow Complete"
-                                    }
-                                }
-                            },
-                            "transition": [
-                                {
-                                    "_id": "authoriseFormTransition",
-                                    "name": {
-                                        "i18n": {
-                                            "_id": "",
-                                            "en": ""
-                                        }
-                                    },
-                                    "transitionAction": {
-                                        "stop": {
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    ],
-                    "variables": [
-                        {
-                            "dataType": "",
-                            "default": "",
-                            "id": "",
-                            "sessionVar": "",
-                            "value": ""
-                        }
-                    ]
-                }
-            ]
+                            "transitionAction": {
+                                "stop": {}
+                            }
+                        }]
+                    }
+                ],
+                "variables": [{
+                    "dataType": "",
+                    "default": "",
+                    "id": "",
+                    "sessionVar": "",
+                    "value": ""
+                }]
+            }]
         }
     ],
     "roles": {
         "defaultRoleVariable": "ABCD",
-        "roleDefinition": [
-            {
+        "roleDefinition": [{
                 "_id": "Guest",
                 "level": 0,
                 "name": {
