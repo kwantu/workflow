@@ -1,9 +1,10 @@
 {
     "$schema": "./workFlowDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "38-6b941a6b59698d37ee33a3b36a103051",
+    "_rev": "44-27b7d2f943bd586039a2d77b699748c6",
     "channels": [
-        "config_a_1004"
+        "kwantu",
+        "community_24000"
     ],
     "identification": {
         "documentation": {
@@ -76,11 +77,6 @@
                     }
                 }],
                 "initiate": {
-                    "_type": "user",
-                    "action": {
-                        "_type": "button",
-                        "label": "Add new"
-                    },
                     "name": {
                         "i18n": {
                             "_id": "en",
@@ -94,16 +90,30 @@
                                 "en": "Add site information"
                             }
                         },
+                        "dueDate": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                }
+                            }
+                        },
                         "edit": {
                             "i18n": {
                                 "_id": "",
                                 "en": "Edit site information"
-                            }
-                        },
-                        "editLabel": {
-                            "i18n": {
-                                "_id": "",
-                                "en": "Edit"
                             }
                         },
                         "instanceTitle": {
@@ -120,43 +130,21 @@
                         "maxInstances": 1,
                         "parallelInstances": false,
                         "validDate": {
-                            "due": {
-                                "_label": "Due date",
-                                "_show": false,
-                                "_type": "autoSelected",
-                                "default": {
-                                    "_type": "calculated",
-                                    "calculated": {
-                                        "operator": "add",
-                                        "source": "valid",
-                                        "value": 10
-                                    },
-                                    "value": ""
-                                },
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-                                    }
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please select the date on which you collected this data."
                                 }
                             },
-                            "valid": {
-                                "_label": "Valid date",
-                                "_show": true,
-                                "_type": "autoSelected",
-                                "default": {
-                                    "_type": "today",
-                                    "value": ""
-                                },
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please select the date on which you collected this data."
-                                    }
-                                },
-                                "vaidation": {
-                                    "isFuture": false
-                                }
+                            "vaidation": {
+                                "isFuture": false
                             }
                         }
                     }
@@ -173,7 +161,7 @@
                 "name": {
                     "i18n": {
                         "_id": "",
-                        "en": ""
+                        "en": "Project profile"
                     }
                 },
                 "periodType": {
@@ -626,11 +614,6 @@
                     }
                 }],
                 "initiate": {
-                    "_type": "user",
-                    "action": {
-                        "_type": "button",
-                        "label": "Add new"
-                    },
                     "name": {
                         "i18n": {
                             "_id": "en",
@@ -644,21 +627,35 @@
                                 "en": "Add site information"
                             }
                         },
+                        "dueDate": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                }
+                            }
+                        },
                         "edit": {
                             "i18n": {
                                 "_id": "",
                                 "en": "Edit site information"
                             }
                         },
-                        "editLabel": {
-                            "i18n": {
-                                "_id": "",
-                                "en": "Edit"
-                            }
-                        },
                         "instanceTitle": {
                             "_label": "Title",
-                            "_show": true,
+                            "_show": false,
                             "message": {
                                 "i18n": {
                                     "_id": "",
@@ -670,43 +667,21 @@
                         "maxInstances": -1,
                         "parallelInstances": false,
                         "validDate": {
-                            "due": {
-                                "_label": "Due date",
-                                "_show": false,
-                                "_type": "autoSelected",
-                                "default": {
-                                    "_type": "calculated",
-                                    "calculated": {
-                                        "operator": "add",
-                                        "source": "valid",
-                                        "value": 10
-                                    },
-                                    "value": ""
-                                },
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-                                    }
+                            "_label": "Valid date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please select the date on which you collected this data."
                                 }
                             },
-                            "valid": {
-                                "_label": "Valid date",
-                                "_show": true,
-                                "_type": "autoSelected",
-                                "default": {
-                                    "_type": "today",
-                                    "value": ""
-                                },
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please select the date on which you collected this data."
-                                    }
-                                },
-                                "vaidation": {
-                                    "isFuture": false
-                                }
+                            "vaidation": {
+                                "isFuture": false
                             }
                         }
                     }
@@ -722,7 +697,7 @@
                 "name": {
                     "i18n": {
                         "_id": "",
-                        "en": ""
+                        "en": "Project Location instance"
                     }
                 },
                 "periodType": {
@@ -1177,11 +1152,6 @@
                     }
                 }],
                 "initiate": {
-                    "_type": "user",
-                    "action": {
-                        "_type": "button",
-                        "label": "Add new"
-                    },
                     "name": {
                         "i18n": {
                             "_id": "en",
@@ -1195,16 +1165,30 @@
                                 "en": "Add site information"
                             }
                         },
+                        "dueDate": {
+                            "_label": "Due date",
+                            "_show": false,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "calculated",
+                                "calculated": {
+                                    "operator": "add",
+                                    "source": "valid",
+                                    "value": 10
+                                },
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
+                                }
+                            }
+                        },
                         "edit": {
                             "i18n": {
                                 "_id": "",
                                 "en": "Edit site information"
-                            }
-                        },
-                        "editLabel": {
-                            "i18n": {
-                                "_id": "",
-                                "en": "Edit"
                             }
                         },
                         "instanceTitle": {
@@ -1221,43 +1205,21 @@
                         "maxInstances": 1,
                         "parallelInstances": false,
                         "validDate": {
-                            "due": {
-                                "_label": "Due date",
-                                "_show": false,
-                                "_type": "autoSelected",
-                                "default": {
-                                    "_type": "calculated",
-                                    "calculated": {
-                                        "operator": "add",
-                                        "source": "valid",
-                                        "value": 10
-                                    },
-                                    "value": ""
-                                },
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please select a due date i.e. the actual date that the data needs to be captured and authorised by."
-                                    }
+                            "_label": "Valid date",
+                            "_show": true,
+                            "_type": "autoSelected",
+                            "default": {
+                                "_type": "today",
+                                "value": ""
+                            },
+                            "message": {
+                                "i18n": {
+                                    "_id": "",
+                                    "en": "Please select the date on which you collected this data."
                                 }
                             },
-                            "valid": {
-                                "_label": "Valid date",
-                                "_show": true,
-                                "_type": "autoSelected",
-                                "default": {
-                                    "_type": "today",
-                                    "value": ""
-                                },
-                                "message": {
-                                    "i18n": {
-                                        "_id": "",
-                                        "en": "Please select the date on which you collected this data."
-                                    }
-                                },
-                                "vaidation": {
-                                    "isFuture": false
-                                }
+                            "vaidation": {
+                                "isFuture": false
                             }
                         }
                     }
@@ -1273,7 +1235,7 @@
                 "name": {
                     "i18n": {
                         "_id": "",
-                        "en": ""
+                        "en": "Project Detail instance"
                     }
                 },
                 "periodType": {
