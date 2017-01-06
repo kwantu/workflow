@@ -163,8 +163,11 @@
                                                 "type": {
                                                     "type": "string",
                                                     "enum": [
-                                                        "Completed",
-                                                        "InProgress"
+                                                        "Complete",
+                                                        "InProgress",
+                                                        "NotStarted",
+                                                        "Created",
+                                                        "Submitted"
                                                     ]
                                                 }
                                             },
