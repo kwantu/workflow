@@ -1494,8 +1494,20 @@
             }
         },
         "setValue": {
-            "type": "string",
-            "description": "Still need to extend this"
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string",
+                    "description": "path in the property to be updated"
+                },
+                "data": {
+                    "$ref": "#/definitions/getNodeValue"
+                }
+            },
+            "required": [
+                "path",
+                "data"
+            ]
         },
         "transitionTypes": {
             "type": "array",
