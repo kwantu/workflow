@@ -853,30 +853,15 @@
                         "capture": {
                             "type": "object",
                             "description": "Present a list of indicators with edit / view view buttons",
-                            "anyOf": [{
-                                    "form": {
-                                        "type": "string",
+                            "anyOf": [
+                                {
+                                    "formView": {
+                                        "type": "object",
+                                        "description":"This oject refers",
                                         "enum": [
                                             "default",
                                             "someOtherViewOftheWork"
                                         ]
-                                    }
-                                },
-                                {
-                                    "indicators": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "object",
-                                            "properties": {
-                                                "indicatorId": {
-                                                    "type": "string"
-                                                },
-                                                "viewId": {
-                                                    "type": "string",
-                                                    "default": "default"
-                                                }
-                                            }
-                                        }
                                     }
                                 }
                             ]

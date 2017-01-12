@@ -1,7 +1,7 @@
 {
     "$schema": "./workFlowDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "44-27b7d2f943bd586039a2d77b699748c6",
+    "_rev": "45-c96054931f3b72b3aab263d0e6579c71",
     "channels": [
         "kwantu",
         "community_24000"
@@ -288,7 +288,17 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "form": "default"
+                                        "formView": [
+                                        {
+                                            "viewId": "edit",
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "",
+                                                    "en": "Edit",
+                                                    "pt": "Edit"
+                                                }
+                                            }
+                                        }]
                                     }
                                 }
                             }
@@ -385,7 +395,7 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "form": "default"
+                                        "formView": []
                                     }
                                 }
                             }
@@ -821,7 +831,16 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "form": "default"
+                                        "formView": [{
+                                            "viewId": "edit",
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "",
+                                                    "en": "Edit",
+                                                    "pt": "Edit"
+                                                }
+                                            }
+                                        }]
                                     }
                                 }
                             }
@@ -918,7 +937,7 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "form": "default"
+                                        "formView": []
                                     }
                                 }
                             }
@@ -1359,7 +1378,16 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "form": "default"
+                                        "formView": [{
+                                            "viewId": "edit",
+                                            "label": {
+                                                "i18n": {
+                                                    "_id": "",
+                                                    "en": "Edit",
+                                                    "pt": "Edit"
+                                                }
+                                            }
+                                        }]
                                     }
                                 }
                             }
@@ -1456,7 +1484,7 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "form": "default"
+                                        "formView": []
                                     }
                                 }
                             }
