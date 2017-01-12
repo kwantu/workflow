@@ -288,8 +288,7 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "formView": [
-                                        {
+                                        "formView": [{
                                             "viewId": "edit",
                                             "label": {
                                                 "i18n": {

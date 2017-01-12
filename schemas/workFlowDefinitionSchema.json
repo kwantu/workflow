@@ -853,18 +853,16 @@
                         "capture": {
                             "type": "object",
                             "description": "Present a list of indicators with edit / view view buttons",
-                            "anyOf": [
-                                {
-                                    "formView": {
-                                        "type": "object",
-                                        "description":"This oject refers",
-                                        "enum": [
-                                            "default",
-                                            "someOtherViewOftheWork"
-                                        ]
-                                    }
+                            "anyOf": [{
+                                "formView": {
+                                    "type": "object",
+                                    "description": "This oject refers to view that related back to ui View in indicator config file.",
+                                    "enum": [
+                                        "default",
+                                        "someOtherViewOftheWork"
+                                    ]
                                 }
-                            ]
+                            }]
                         },
                         "userInput": {
                             "type": "string"
