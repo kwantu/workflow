@@ -1,7 +1,7 @@
 {
     "$schema": "./workFlowDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "45-c96054931f3b72b3aab263d0e6579c71",
+    "_rev": "47-18e27332a413fb99a07fba17ce6e2aff",
     "channels": [
         "kwantu",
         "community_24000"
@@ -289,15 +289,54 @@
                                 "work": {
                                     "capture": {
                                         "formView": [{
-                                            "viewId": "edit",
-                                            "label": {
-                                                "i18n": {
-                                                    "_id": "",
-                                                    "en": "Edit",
-                                                    "pt": "Edit"
-                                                }
+                                                "setId": "appProfile",
+                                                "views": [{
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "Edit",
+                                                                "pt": "Edit"
+                                                            }
+                                                        },
+                                                        "viewId": "edit"
+                                                    },
+                                                    {
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "List",
+                                                                "pt": "List"
+                                                            }
+                                                        },
+                                                        "viewId": "list"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "setId": "ProjectDetail",
+                                                "views": [{
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "Edit",
+                                                                "pt": "Edit"
+                                                            }
+                                                        },
+                                                        "viewId": "edit"
+                                                    },
+                                                    {
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "List",
+                                                                "pt": "List"
+                                                            }
+                                                        },
+                                                        "viewId": "list"
+                                                    }
+                                                ]
                                             }
-                                        }]
+                                        ]
                                     }
                                 }
                             }
@@ -394,7 +433,55 @@
                                 "preActions": [],
                                 "work": {
                                     "capture": {
-                                        "formView": []
+                                        "formView": [{
+                                                "setId": "appProfile",
+                                                "views": [{
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "Edit",
+                                                                "pt": "Edit"
+                                                            }
+                                                        },
+                                                        "viewId": "edit"
+                                                    },
+                                                    {
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "List",
+                                                                "pt": "List"
+                                                            }
+                                                        },
+                                                        "viewId": "list"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "setId": "ProjectDetail",
+                                                "views": [{
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "Edit",
+                                                                "pt": "Edit"
+                                                            }
+                                                        },
+                                                        "viewId": "edit"
+                                                    },
+                                                    {
+                                                        "label": {
+                                                            "i18n": {
+                                                                "_id": "",
+                                                                "en": "List",
+                                                                "pt": "List"
+                                                            }
+                                                        },
+                                                        "viewId": "list"
+                                                    }
+                                                ]
+                                            }
+                                        ]
                                     }
                                 }
                             }
@@ -831,14 +918,14 @@
                                 "work": {
                                     "capture": {
                                         "formView": [{
-                                            "viewId": "edit",
                                             "label": {
                                                 "i18n": {
                                                     "_id": "",
                                                     "en": "Edit",
                                                     "pt": "Edit"
                                                 }
-                                            }
+                                            },
+                                            "viewId": "edit"
                                         }]
                                     }
                                 }
@@ -1378,14 +1465,14 @@
                                 "work": {
                                     "capture": {
                                         "formView": [{
-                                            "viewId": "edit",
                                             "label": {
                                                 "i18n": {
                                                     "_id": "",
                                                     "en": "Edit",
                                                     "pt": "Edit"
                                                 }
-                                            }
+                                            },
+                                            "viewId": "edit"
                                         }]
                                     }
                                 }
