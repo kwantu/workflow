@@ -1242,6 +1242,17 @@
                                 "sdo": {
                                     "type": "object",
                                     "oneOf": [{
+                                            "create": {
+                                                "description": "Creates the SDO via webhook",
+                                                "properies": {
+                                                    "dummy": {
+                                                        "type": "string",
+                                                        "description": ""
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
                                             "buildToTest": {
                                                 "description": "This reads the SDO settings from the pending and publish to the test bucket",
                                                 "properies": {
@@ -1264,6 +1275,22 @@
                                             }
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "taxonomy": {
+                                    "type": "object",
+                                    "oneOf": [{
+                                        "create": {
+                                            "description": "Creates the taxonomy via webhook",
+                                            "properies": {
+                                                "dummy": {
+                                                    "type": "string",
+                                                    "description": ""
+                                                }
+                                            }
+                                        }
+                                    }]
                                 }
                             }
                         ]
