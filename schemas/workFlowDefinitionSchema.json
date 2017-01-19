@@ -979,6 +979,17 @@
                                             "setValue": {
                                                 "$ref": "#/definitions/setValue"
                                             }
+                                        },
+                                        {
+                                            "updateStatus": {
+                                                "type": "string",
+                                                "enum": [
+                                                    "Updated",
+                                                    "Authorised",
+                                                    "Pending",
+                                                    "DataInitialised"
+                                                ]
+                                            }
                                         }
                                     ]
                                 }
