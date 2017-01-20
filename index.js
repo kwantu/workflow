@@ -371,7 +371,7 @@ Workflow.prototype.initialise = function(processId, data) {
             var processModel = {
                     id: '',
                     seq: '',
-                    subProcesses: [],
+                    subProcesses: []
                 }
                 // 1. Update the process id and seq
             processModel.id = processId;

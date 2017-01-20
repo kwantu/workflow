@@ -1,8 +1,9 @@
 {
     "$schema": "./workFlowDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "53-bc4ace6c160f2afa191c5d113184134e",
-    "channels": ["kwantu",
+    "_rev": "54-5229e6ad929faf85528434d1393c8227",
+    "channels": [
+        "kwantu",
         "community_24000"
     ],
     "identification": {
@@ -56,8 +57,7 @@
                     }
                 }
             }],
-            "subProcesses": [
-                {
+            "subProcesses": [{
                 "_id": "spProfileRegistration",
                 "_seq": 1,
                 "help": {
@@ -166,9 +166,7 @@
                     }
                 },
                 "instanceType": {
-                    "newSequence": {
-
-                    }
+                    "newSequence": {}
                 },
                 "isProfile": true,
                 "name": {
@@ -579,7 +577,8 @@
                             }
                         },
                         "function": {
-                            "actions": [{
+                            "actions": [
+                                {
                                     "_id": "appProfileUpdate",
                                     "_seq": 1,
                                     "description": {
@@ -662,6 +661,27 @@
                                             "close": ""
                                         }
                                     }
+                                },
+                                {
+                                    "_id": "updateSPTitle",
+                                    "_seq": 6,
+                                    "description": {
+                                        "i18n": {
+                                            "_id": "",
+                                            "en": "Update subprocess title"
+                                        }
+                                    },
+                                    "method": {
+                                        "subProcessInstance": {
+                                            "setTitle": {
+                                                "indicator": {
+                                                    "elementId": "projectName",
+                                                    "indicatorSetId": "ProjectDetail",
+                                                    "status": ""
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         },
@@ -694,9 +714,7 @@
                                 }
                             },
                             "transitionAction": {
-                                "stop": {
-
-                                }
+                                "stop": {}
                             }
                         }]
                     }
@@ -845,9 +863,7 @@
                     }
                 },
                 "instanceType": {
-                    "newInstance": {
-
-                    }
+                    "newInstance": {}
                 },
                 "name": {
                     "i18n": {
@@ -1240,9 +1256,7 @@
                                 }
                             },
                             "transitionAction": {
-                                "stop": {
-
-                                }
+                                "stop": {}
                             }
                         }]
                     }

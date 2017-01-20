@@ -1018,13 +1018,13 @@
                                                         "type": "string"
                                                     },
                                                     "name": {
-                                                        "$ref": "#/definitions/getNodeValue"
+                                                        "$ref": "#/definitions/i18n"
                                                     },
                                                     "reference": {
-                                                        "$ref": "#/definitions/getNodeValue"
+                                                        "$ref": "#/definitions/i18n"
                                                     },
                                                     "description": {
-                                                        "$ref": "#/definitions/getNodeValue"
+                                                        "$ref": "#/definitions/i18n"
                                                     }
                                                 }
                                             }
@@ -1073,6 +1073,11 @@
                                         {
                                             "setStatusMsgTo": {
                                                 "type": "string"
+                                            }
+                                        },
+                                        {
+                                            "setTitle": {
+                                                "$ref": "#/definitions/getNodeValue"
                                             }
                                         }
                                     ]
@@ -1275,6 +1280,22 @@
                                             }
                                         }
                                     ]
+                                }
+                            },
+                            {
+                                "performance": {
+                                    "type": "object",
+                                    "oneOf": [{
+                                        "create": {
+                                            "description": "Creates the performance plan indicator",
+                                            "properies": {
+                                                "dummy": {
+                                                    "type": "string",
+                                                    "description": ""
+                                                }
+                                            }
+                                        }
+                                    }]
                                 }
                             },
                             {
