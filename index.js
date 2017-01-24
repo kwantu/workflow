@@ -336,7 +336,7 @@ Workflow.prototype.create = function() {
  * @return ""
  *
  */
-Workflow.prototype.initialise = function(processId, data) {
+Workflow.prototype.initialise = function(processId, data, subprofileId) {
     var _this = this;
     return new Promise(function(resolve, reject) {
         try {
@@ -402,6 +402,7 @@ Workflow.prototype.initialise = function(processId, data) {
 
                 var subProcessRef = {
                         id: subProcessId,
+                        subprofileId: subprofileId,
                         seq: subProcessSeq,
                         uuid: uuid,
                         label: label
@@ -465,12 +466,12 @@ Workflow.prototype.initialise = function(processId, data) {
  * @return ""
  *
  */
-Workflow.prototype.transition = function(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data) {
+Workflow.prototype.transition = function(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, spuuid) {
     // Re-assign this
     var _this = this;
     return new Promise(function(resolve, reject) {
         try {
-            Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this).then(function(result) {
+            Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid).then(function(result) {
 
 
                 // Update the current sub-process step data

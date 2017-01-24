@@ -1,9 +1,8 @@
 {
-    "$schema": "./workFlowDefinitionSchema.json",
+    "$schema": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/processDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "54-5229e6ad929faf85528434d1393c8227",
-    "channels": [
-        "kwantu",
+    "_rev": "57-d36c5f3b09ce8ad8bba99f697dba6b0a",
+    "channels": ["kwantu",
         "community_24000"
     ],
     "identification": {
@@ -166,7 +165,9 @@
                     }
                 },
                 "instanceType": {
-                    "newSequence": {}
+                    "newSequence": {
+
+                    }
                 },
                 "isProfile": true,
                 "name": {
@@ -178,8 +179,7 @@
                 "periodType": {
                     "adhoc": ""
                 },
-                "steps": [
-                    {
+                "steps": [{
                         "_id": "createForm",
                         "_seq": 1,
                         "description": {
@@ -266,8 +266,8 @@
                         "_seq": 2,
                         "description": {
                             "i18n": {
-                                "_lang": "en",
-                                "value": "Capture form details"
+                                "_id": "",
+                                "en": "Capture form details"
                             }
                         },
                         "function": {
@@ -577,8 +577,7 @@
                             }
                         },
                         "function": {
-                            "actions": [
-                                {
+                            "actions": [{
                                     "_id": "appProfileUpdate",
                                     "_seq": 1,
                                     "description": {
@@ -714,7 +713,9 @@
                                 }
                             },
                             "transitionAction": {
-                                "stop": {}
+                                "stop": {
+
+                                }
                             }
                         }]
                     }
@@ -863,7 +864,9 @@
                     }
                 },
                 "instanceType": {
-                    "newInstance": {}
+                    "newInstance": {
+
+                    }
                 },
                 "name": {
                     "i18n": {
@@ -941,8 +944,8 @@
                         "_seq": 2,
                         "description": {
                             "i18n": {
-                                "_lang": "en",
-                                "value": "Capture form details"
+                                "_id": "",
+                                "en": "Capture form details"
                             }
                         },
                         "function": {
@@ -1256,7 +1259,9 @@
                                 }
                             },
                             "transitionAction": {
-                                "stop": {}
+                                "stop": {
+
+                                }
                             }
                         }]
                     }
