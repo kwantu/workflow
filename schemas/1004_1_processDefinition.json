@@ -1,7 +1,7 @@
 {
     "$schema": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/processDefinitionSchema.json",
     "_id": "1004:1:processDefinition",
-    "_rev": "57-d36c5f3b09ce8ad8bba99f697dba6b0a",
+    "_rev": "59-b6f4c78b6cd10c21486ca0d10dd853d8",
     "channels": ["kwantu",
         "community_24000"
     ],
@@ -240,8 +240,10 @@
                         "setInstanceStatusTo": {
                             "NotStarted": {
                                 "label": {
-                                    "_id": "",
-                                    "en": ""
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Not Started"
+                                    }
                                 }
                             }
                         },
@@ -385,8 +387,10 @@
                         "setInstanceStatusTo": {
                             "InProgress": {
                                 "label": {
-                                    "_id": "",
-                                    "en": ""
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "In Progress"
+                                    }
                                 }
                             }
                         },
@@ -530,8 +534,10 @@
                         "setInstanceStatusTo": {
                             "InProgress": {
                                 "label": {
-                                    "_id": "",
-                                    "en": ""
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "In Progress"
+                                    }
                                 }
                             }
                         },
@@ -699,8 +705,10 @@
                         "setInstanceStatusTo": {
                             "Complete": {
                                 "label": {
-                                    "_id": "",
-                                    "en": "Workflow Complete"
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Complete"
+                                    }
                                 }
                             }
                         },
@@ -801,7 +809,7 @@
                         },
                         "dueDate": {
                             "_label": "Due date",
-                            "_show": false,
+                            "_show": true,
                             "_type": "autoSelected",
                             "default": {
                                 "_type": "calculated",
@@ -918,8 +926,10 @@
                         "setInstanceStatusTo": {
                             "NotStarted": {
                                 "label": {
-                                    "_id": "",
-                                    "en": ""
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "NotStarted"
+                                    }
                                 }
                             }
                         },
@@ -1027,8 +1037,10 @@
                         "setInstanceStatusTo": {
                             "InProgress": {
                                 "label": {
-                                    "_id": "",
-                                    "en": ""
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "InProgress"
+                                    }
                                 }
                             }
                         },
@@ -1136,8 +1148,10 @@
                         "setInstanceStatusTo": {
                             "InProgress": {
                                 "label": {
-                                    "_id": "",
-                                    "en": ""
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "InProgress"
+                                    }
                                 }
                             }
                         },
@@ -1245,8 +1259,10 @@
                         "setInstanceStatusTo": {
                             "Complete": {
                                 "label": {
-                                    "_id": "",
-                                    "en": "Workflow Complete"
+                                    "i18n": {
+                                        "_id": "",
+                                        "en": "Complete"
+                                    }
                                 }
                             }
                         },
