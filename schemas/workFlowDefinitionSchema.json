@@ -1,62 +1,42 @@
 {
+    "id": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/processDefinitionSchema.json",
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Workflow Definition Object to define a full application workflow",
     "description": "This is the basic structure of the workflow definition",
-    "version": "Hasan 1.1",
+    "version": "Hasan 1.1.0",
     "type": "object",
     "properties": {
-        "$schema": {
-            "title": "schema to be used to validate this document",
-            "description": "schema to be used to validate this document",
-            "type": "string"
-        },
         "_id": {
-            "title": "Process Definition Identifier",
-            "description": "Should be in the format <appid>:processDefinition",
-            "type": "string"
+            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/_id"
         },
         "_rev": {
-            "title": "Process Definition Identifier",
-            "description": "Couchbase revision ID. Do not touch this",
-            "type": "string"
+            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/_id"
+        },
+        "$schema": {
+            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/$schema"
+        },
+        "applicationId": {
+            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/applicationId"
+        },
+        "channels": {
+            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/channels"
         },
         "type": {
-            "type": "string",
-            "enum": [
-                "workflowConfig"
-            ]
+            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/type"
         },
         "version": {
             "type": "string"
-        },
-        "applicationId": {
-            "type": "string",
-            "description": "value of the current applicaiton ID"
         },
         "title": {
             "type": "object",
             "properties": {
                 "description": {
-                    "type": "object",
-                    "properties": {
-                        "i18n": {
-                            "$ref": "#/definitions/i18n"
-                        }
-                    },
-                    "required": [
-                        "i18n"
-                    ]
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                 },
                 "name": {
-                    "type": "object",
-                    "properties": {
-                        "i18n": {
-                            "$ref": "#/definitions/i18n"
-                        }
-                    },
-                    "required": [
-                        "i18n"
-                    ]
+                    "title": "Name for multilanguage create profile tag",
+                    "description": "Name for multilanguage create profile tag",
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                 }
             },
             "required": [
@@ -70,10 +50,10 @@
             "type": "object",
             "properties": {
                 "documentation": {
-                    "$ref": "#/definitions/documentation"
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                 },
                 "upgradeInformation": {
-                    "$ref": "#/definitions/documentation"
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                 }
             },
             "required": [
@@ -83,14 +63,7 @@
             "additionalProperties": false
         },
         "variables": {
-            "$ref": "#/definitions/variables"
-        },
-        "channels": {
-            "description": "Array of replication channels defined in this workflow. Ie. Who should get it.",
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
+            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/variables"
         },
         "processes": {
             "description": "This tag holds a description of all the processes",
@@ -104,13 +77,17 @@
                         "type": "string"
                     },
                     "_seq": {
-                        "$ref": "#/definitions/_seq"
+                        "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/_seq"
                     },
                     "help": {
-                        "$ref": "#/definitions/help"
+                        "title": "Help text to display to users related to the process as a whole",
+                        "description": "Help text to display to users related to the process as a whole",
+                        "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                     },
                     "name": {
-                        "$ref": "#/definitions/name"
+                        "title": "Name for multilanguage create profile tag",
+                        "description": "Name for multilanguage create profile tag",
+                        "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                     },
                     "context": {
                         "enum": [
@@ -136,14 +113,14 @@
                                     "description": "Unique id with which to refer to this precondition to use for language resource array"
                                 },
                                 "_seq": {
-                                    "$ref": "#/definitions/_seq"
+                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/_seq"
                                 },
                                 "message": {
-                                    "$ref": "#/definitions/documentation"
+                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                 },
                                 "check": {
                                     "type": "object",
-                                    "anyOf": [{
+                                    "properties": {
                                         "numberProcessInstances": {
                                             "type": "object",
                                             "description": "Checks if the number of subProcessInstances for a given process has the number of instances as specified by the operator and value. The type specifies if the instance instantiation or completion is regarded",
@@ -159,6 +136,9 @@
                                                 },
                                                 "count": {
                                                     "type": "number"
+                                                },
+                                                "scope": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json/#definitions/processesScope"
                                                 },
                                                 "type": {
                                                     "type": "string",
@@ -193,7 +173,10 @@
                                             ],
                                             "additionalProperties": false
                                         }
-                                    }]
+                                    },
+                                    "maxProperties": 1,
+                                    "minProperties": 1,
+                                    "additionalProperties": false
                                 }
                             },
                             "required": [
@@ -224,122 +207,129 @@
                                     "type": "string"
                                 },
                                 "_seq": {
-                                    "$ref": "#/definitions/_seq"
+                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/_seq"
                                 },
                                 "instanceLabel": {
                                     "type": "object",
-                                    "anyOf": [{
-                                            "calculated": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "subprocess": {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "SubprocessName + seq",
-                                                            "SubprocessName"
-                                                        ]
-                                                    }
-                                                },
-                                                "required": [
-                                                    "subprocess"
-                                                ],
-                                                "additionalProperties": false
-                                            }
-                                        },
-                                        {
+                                    "title": "How the label of the instance is determined",
+                                    "description": "How the label of the instance is determined",
+                                    "properties": {
+                                        "calculated": {
                                             "type": "object",
                                             "properties": {
-                                                "user": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "message": {
-                                                            "$ref": "#/definitions/i18n"
-                                                        },
-                                                        "maxLength": {
-                                                            "type": "integer"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "message"
-                                                    ],
-                                                    "additionalProperties": false
+                                                "subprocess": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "SubprocessName + seq",
+                                                        "SubprocessName"
+                                                    ]
                                                 }
-                                            }
+                                            },
+                                            "required": [
+                                                "subprocess"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "message": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                                },
+                                                "maxLength": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "message"
+                                            ],
+                                            "additionalProperties": false
                                         }
-                                    ]
+                                    },
+                                    "maxProperties": 1,
+                                    "minProperties": 1,
+                                    "additionalProperties": false
                                 },
                                 "instanceType": {
                                     "type": "object",
                                     "description": "The instanceType defines if additional instances will be created, and their maximum as well as new sequences for edited data. Provision is also made to calculate the instance label.",
                                     "properties": {
-                                        "anyOf": {
-                                            "newInstance": {
-                                                "type": "object",
-                                                "description": "NewInstance means it is allowed to create multiple instances of a sub-process",
-                                                "properties": {
-                                                    "maxInstances": {
-                                                        "type": "integer"
-                                                    },
-                                                    "maxSequences": {
-                                                        "type": "integer"
-                                                    }
+                                        "newInstance": {
+                                            "type": "object",
+                                            "description": "NewInstance means it is allowed to create multiple instances of a sub-process",
+                                            "properties": {
+                                                "maxInstances": {
+                                                    "type": "integer",
+                                                    "default": -1
                                                 },
-                                                "required": [],
-                                                "additionalProperties": false
+                                                "maxSequences": {
+                                                    "type": "integer",
+                                                    "default": -1
+                                                }
                                             },
-                                            "newSequence": {
-                                                "type": "object",
-                                                "description": "newSequence means it is NOT allowed to create multiple instances of a sub-process. Only one may be created",
-                                                "properties": {
-                                                    "maxSequences": {
-                                                        "type": "integer"
-                                                    }
-                                                },
-                                                "required": [],
-                                                "additionalProperties": false
+                                            "additionalProperties": false
+                                        },
+                                        "newSequence": {
+                                            "type": "object",
+                                            "description": "newSequence means it is NOT allowed to create multiple instances of a sub-process. Only one may be created",
+                                            "properties": {
+                                                "maxSequences": {
+                                                    "type": "integer",
+                                                    "default": -1
+                                                }
                                             },
-                                            "stepSequence": {
-                                                "type": "object",
-                                                "description": "This instance type is always initiated once only, and each step initiates a new sequence until it is complete. Re-editing it means just adding new steps to the current instnace"
-                                            }
+                                            "required": [
+                                                "maxSequences"
+                                            ],
+                                            "additionalProperties": false
+                                        },
+                                        "stepSequence": {
+                                            "type": "object",
+                                            "description": "This instance type is always initiated once only, and each step initiates a new sequence until it is complete. Re-editing it means just adding new steps to the current instnace"
                                         }
-                                    }
+                                    },
+                                    "maxProperties": 1,
+                                    "minProperties": 1,
+                                    "additionalProperties": false
                                 },
                                 "isProfile": {
                                     "type": "boolean",
-                                    "description": "Refers that this process creates a profile at some stage hence indicator id is same as profile id of current context."
+                                    "description": "This manages the 'add new' button to create a new profile instance. This should be updated to manage different requirements. "
                                 },
                                 "periodType": {
                                     "type": "object",
                                     "description": "The periodType defines the rules for defining the sequences and valid dates for new sub-processes.",
                                     "properties": {
-                                        "oneOf": {
-                                            "adhoc": {
-                                                "type": "string",
-                                                "description": "Adhoc means that any new edit has a sequence and valid date that must only be larger than the previous valid date, and the sequence must be an increment of 1."
-                                            },
-                                            "periodic": {
-                                                "type": "object",
-                                                "description": "periodic means that each sequence increment represents a fixed period from the previoius sequence",
-                                                "properties": {
-                                                    "periodType": {
-                                                        "type": "string",
-                                                        "enum": [
-                                                            "month",
-                                                            "quarter",
-                                                            "year"
-                                                        ]
-                                                    },
-                                                    "firstDate": {
-                                                        "$ref": "#/definitions/dateSelector"
-                                                    }
+                                        "adhoc": {
+                                            "type": "string",
+                                            "description": "Adhoc means that any new edit has a sequence and valid date that must only be larger than the previous valid date, and the sequence must be an increment of 1."
+                                        },
+                                        "periodic": {
+                                            "type": "object",
+                                            "description": "periodic means that each sequence increment represents a fixed period from the previoius sequence",
+                                            "properties": {
+                                                "periodType": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "month",
+                                                        "quarter",
+                                                        "year"
+                                                    ]
+                                                },
+                                                "firstDate": {
+                                                    "$ref": "#/definitions/dateSelector"
                                                 }
                                             }
                                         }
-                                    }
+                                    },
+                                    "maxProperties": 1,
+                                    "minProperties": 1,
+                                    "additionalProperties": false
                                 },
                                 "help": {
-                                    "$ref": "#/definitions/help"
+                                    "title": "Help text to display to users related to the process as a whole",
+                                    "description": "Help text to display to users related to the process as a whole",
+                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                 },
                                 "indicators": {
                                     "type": "array",
@@ -357,7 +347,7 @@
                                                 ]
                                             },
                                             "preloadData": {
-                                                "anyOf": [{
+                                                "properties": {
                                                     "rest": {
                                                         "hostId": {
                                                             "type": "string"
@@ -369,9 +359,9 @@
                                                             "type": "array",
                                                             "items": {
                                                                 "_seq": {
-                                                                    "$ref": "#/definitions/_seq"
+                                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/_seq"
                                                                 },
-                                                                "anyOf": {
+                                                                "properties": {
                                                                     "systemValue": {
                                                                         "type": {
                                                                             "addmorehere": "xxxxx"
@@ -411,42 +401,41 @@
                                                         "properties": {
                                                             "source": {
                                                                 "type": "object",
-                                                                "oneOf": [{
-                                                                        "currentDate": {
-                                                                            "type": "date"
-                                                                        }
+                                                                "properties": {
+                                                                    "currentDate": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
                                                                     },
-                                                                    {
-                                                                        "currentTime": {
-                                                                            "type": "date"
-                                                                        }
+                                                                    "currentTime": {
+                                                                        "type": "string",
+                                                                        "format": "date-time"
                                                                     },
-                                                                    {
-                                                                        "currentGPS": {
-                                                                            "type": "string"
-                                                                        }
+                                                                    "currentGPS": {
+                                                                        "type": "string"
                                                                     },
-                                                                    {
-                                                                        "currentUser": {
-                                                                            "type": "string"
-                                                                        }
+                                                                    "currentUser": {
+                                                                        "type": "string"
                                                                     },
-                                                                    {
-                                                                        "currentInstance": {
-                                                                            "type": "string",
-                                                                            "enum": [
-                                                                                "instanceLabel"
-                                                                            ]
-                                                                        }
+                                                                    "currentInstance": {
+                                                                        "type": "string",
+                                                                        "enum": [
+                                                                            "instanceLabel"
+                                                                        ]
                                                                     }
-                                                                ]
+                                                                },
+                                                                "maxProperties": 1,
+                                                                "minProperties": 1,
+                                                                "additionalProperties": false
                                                             },
                                                             "target": {
                                                                 "type": "string"
                                                             }
                                                         }
                                                     }
-                                                }]
+                                                },
+                                                "maxProperties": 1,
+                                                "minProperties": 1,
+                                                "additionalProperties": false
                                             }
                                         },
                                         "required": [
@@ -457,124 +446,126 @@
                                 },
                                 "initiate": {
                                     "type": "object",
-                                    "anyOf": [{
-                                            "user": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "create": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "edit": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "isEditable": {
-                                                        "type": "boolean"
-                                                    },
-                                                    "maxInstances": {
-                                                        "type": "integer",
-                                                        "description": "Refers to maximum instances allowed. -1 is unlimited"
-                                                    },
-                                                    "parallelInstances": {
-                                                        "type": "boolean"
-                                                    },
-                                                    "validDate": {
-                                                        "$ref": "#/definitions/dateSelector"
-                                                    },
-                                                    "dueDate:": {
-                                                        "$ref": "#/definitions/dateSelector"
-                                                    },
-                                                    "instanceTitle": {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "_label": {
-                                                                "type": "string",
-                                                                "description": "Label for the title of sub process"
-                                                            },
-                                                            "_show": {
-                                                                "type": "boolean",
-                                                                "description": "To show the title capture field."
-                                                            },
-                                                            "message": {
-                                                                "$ref": "#/definitions/i18n"
-                                                            }
+                                    "title": "How the sub-process will be initiated",
+                                    "description": "How the sub-process will be initiated",
+                                    "properties": {
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "create": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                                },
+                                                "edit": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                                },
+                                                "isEditable": {
+                                                    "title": "This should be deprecated. ",
+                                                    "description": "If true then multiple sequences may be created - ie. manages if the edit button shows or not",
+                                                    "default": true,
+                                                    "type": "boolean"
+                                                },
+                                                "maxInstances": {
+                                                    "type": "integer",
+                                                    "default": -1,
+                                                    "description": "Refers to maximum instances allowed. -1 is unlimited"
+                                                },
+                                                "validDate": {
+                                                    "$ref": "#/definitions/dateSelectorUser"
+                                                },
+                                                "dueDate": {
+                                                    "$ref": "#/definitions/dueDateSelectorUser"
+                                                },
+                                                "instanceTitle": {
+                                                    "type": "object",
+                                                    "title": "review this - how does it relate to instanceLabel tag",
+                                                    "description": "review this - how does it relate to instanceLabel tag",
+                                                    "properties": {
+                                                        "_label": {
+                                                            "type": "string",
+                                                            "description": "Label for the title of sub process"
+                                                        },
+                                                        "_show": {
+                                                            "type": "boolean",
+                                                            "default": false,
+                                                            "description": "To show the title capture field."
+                                                        },
+                                                        "message": {
+                                                            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                                         }
                                                     }
-                                                },
-                                                "required": [
-                                                    "create",
-                                                    "edit",
-                                                    "validDate",
-                                                    "instanceTitle"
-                                                ],
-                                                "additionalProperties": false
-                                            }
+                                                }
+                                            },
+                                            "required": [
+                                                "create",
+                                                "edit",
+                                                "validDate",
+                                                "instanceTitle",
+                                                "maxInstances",
+                                                "dueDate"
+                                            ],
+                                            "additionalProperties": false
                                         },
-                                        {
-                                            "auto": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "create": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "edit": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "validDAte": {
-                                                        "$ref": "#/definitions/dateCalculated"
-                                                    },
-                                                    "dueDate:": {
-                                                        "$ref": "#/definitions/dateCalculated"
-                                                    }
+                                        "auto": {
+                                            "type": "object",
+                                            "properties": {
+                                                "create": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                                 },
-                                                "required": [
-                                                    "create",
-                                                    "edit",
-                                                    "validDate"
-                                                ],
-                                                "additionalProperties": false
-                                            }
+                                                "edit": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                                },
+                                                "validDate": {
+                                                    "$ref": "#/definitions/dateCalculated"
+                                                },
+                                                "dueDate": {
+                                                    "$ref": "#/definitions/dateCalculated"
+                                                }
+                                            },
+                                            "required": [
+                                                "create",
+                                                "edit",
+                                                "validDate",
+                                                "dueDate"
+                                            ],
+                                            "additionalProperties": false
                                         },
-                                        {
-                                            "scheduler": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "create": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "edit": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "validDAte": {
-                                                        "$ref": "#/definitions/dateCalculated"
-                                                    },
-                                                    "dueDate:": {
-                                                        "$ref": "#/definitions/dateCalculated"
-                                                    },
-                                                    "scheduledDate:": {
-                                                        "$ref": "#/definitions/dateCalculated"
-                                                    }
+                                        "scheduler": {
+                                            "type": "object",
+                                            "properties": {
+                                                "create": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                                 },
-                                                "required": [
-                                                    "create",
-                                                    "edit",
-                                                    "validDate",
-                                                    "scheduledDate"
-                                                ],
-                                                "additionalProperties": false
-                                            }
-                                        }
-                                    ]
-                                },
-                                "name": {
-                                    "type": "object",
-                                    "properties": {
-                                        "i18n": {
-                                            "$ref": "#/definitions/i18n"
+                                                "edit": {
+                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                                },
+                                                "validDate": {
+                                                    "$ref": "#/definitions/dateCalculated"
+                                                },
+                                                "dueDate": {
+                                                    "$ref": "#/definitions/dateCalculated"
+                                                },
+                                                "scheduledDate:": {
+                                                    "$ref": "#/definitions/dateCalculated"
+                                                }
+                                            },
+                                            "required": [
+                                                "create",
+                                                "edit",
+                                                "validDate",
+                                                "scheduledDate",
+                                                "dueDate"
+                                            ],
+                                            "additionalProperties": false
                                         }
                                     },
-                                    "required": [
-                                        "i18n"
-                                    ]
+                                    "maxProperties": 1,
+                                    "minProperties": 1,
+                                    "additionalProperties": false
+                                },
+                                "name": {
+                                    "title": "Name for multilanguage create profile tag",
+                                    "description": "Name for multilanguage create profile tag",
+                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                 },
                                 "steps": {
                                     "type": "array",
@@ -585,39 +576,37 @@
                                                 "type": "string"
                                             },
                                             "_seq": {
-                                                "$ref": "#/definitions/_seq"
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/_seq"
                                             },
                                             "setInstanceStatusTo": {
                                                 "$ref": "#/definitions/instanceStatus"
                                             },
                                             "name": {
-                                                "$ref": "#/definitions/i18n"
+                                                "title": "Name for multilanguage create profile tag",
+                                                "description": "Name for multilanguage create profile tag",
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            },
+                                            "description": {
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            },
+                                            "help": {
+                                                "title": "Help text to display to users related to the process as a whole",
+                                                "description": "Help text to display to users related to the process as a whole",
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                             },
                                             "function": {
                                                 "type": "object",
-                                                "oneOf": [{
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "actions": {
-                                                                "$ref": "#/definitions/actions"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "actions"
-                                                        ]
+                                                "properties": {
+                                                    "actions": {
+                                                        "$ref": "#/definitions/actions"
                                                     },
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "task": {
-                                                                "$ref": "#/definitions/task"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "task"
-                                                        ]
+                                                    "task": {
+                                                        "$ref": "#/definitions/task"
                                                     }
-                                                ]
+                                                },
+                                                "maxProperties": 1,
+                                                "minProperties": 1,
+                                                "additionalProperties": false
                                             },
                                             "transition": {
                                                 "type": "array",
@@ -628,7 +617,9 @@
                                                             "type": "string"
                                                         },
                                                         "name": {
-                                                            "$ref": "#/definitions/i18n"
+                                                            "title": "Name for multilanguage create profile tag",
+                                                            "description": "Name for multilanguage create profile tag",
+                                                            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                                         },
                                                         "transitionAction": {
                                                             "type": "object",
@@ -651,11 +642,23 @@
                                             "name",
                                             "function",
                                             "transition"
-                                        ]
+                                        ],
+                                        "additionalProperties": false
                                     }
                                 },
+                                "type": {
+                                    "type": "string",
+                                    "title": "Sub process type",
+                                    "description": "This reflect where the processes will display. Adoption means apex level, instance means profile level, or sub-profile means node sub-profile level",
+                                    "default": "instance",
+                                    "enum": [
+                                        "adoption",
+                                        "subprofile",
+                                        "instance"
+                                    ]
+                                },
                                 "variables": {
-                                    "$ref": "#/definitions/variables"
+                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/variables"
                                 }
                             },
                             "required": [
@@ -667,7 +670,8 @@
                                 "indicators",
                                 "initiate",
                                 "name",
-                                "periodType"
+                                "periodType",
+                                "type"
                             ],
                             "additionalProperties": false
                         }
@@ -681,25 +685,12 @@
                 ]
             }
         },
-        "roles": {
+        "workerAction": {
+            "title": "ToDo",
+            "description": "ToDo",
             "type": "object",
-            "properties": {
-                "roleDefinition": {
-                    "$ref": "#/definitions/rolesDef"
-                },
-                "defaultRoleVariable": {
-                    "type": "string",
-                    "description": "This is the community variable that holds the default user to be assigned in the case of no valid user found"
-                }
-            }
-        },
-        /*
-
-        Follow
-        
-        
-        */
-        "workerAction": {}
+            "properties": {}
+        }
     },
     "required": [
         "_id",
@@ -708,109 +699,106 @@
         "version",
         "identification",
         "channels",
-        "processes",
-        "roles"
+        "processes"
     ],
     "additionalProperties": false,
     "definitions": {
-        "_seq": {
-            "description": "Unique sequence of the object",
-            "type": "integer"
-        },
-        "name": {
-            "type": "object",
-            "properties": {
-                "i18n": {
-                    "$ref": "#/definitions/i18n"
-                }
-            },
-            "required": [
-                "i18n"
-            ],
-            "additionalProperties": false
-        },
-        "help": {
-            "description": "Help text to display to users related to the process as a whole",
-            "type": "object",
-            "properties": {
-                "i18n": {
-                    "$ref": "#/definitions/i18n"
-                }
-            },
-            "required": [
-                "i18n"
-            ],
-            "additionalProperties": false
-        },
-        "description": {
-            "type": "object",
-            "properties": {
-                "i18n": {
-                    "$ref": "#/definitions/i18n"
-                }
-            },
-            "required": [
-                "i18n"
-            ],
-            "additionalProperties": false
-        },
-        "i18n": {
-            "type": "object",
-            "properties": {
-                "_id": {
-                    "type": "string",
-                    "default": "uuid",
-                    "description": "This _id tag will become the pointer that is saved in all resource documents where data is saved as a alias to the language file ... to be resolved at display time. Use a 'uuid' to allow some tool to generate a uuid"
-                },
-                "en": {
-                    "type": "string"
-                },
-                "af": {
-                    "type": "string"
-                },
-                "pt": {
-                    "type": "string"
-                },
-                "hi": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "_id",
-                "en"
-            ],
-            "additionalProperties": false
-        },
         "task": {
             "type": "object",
             "properties": {
                 "help": {
-                    "$ref": "#/definitions/help"
+                    "title": "Help text to display to users related to the process as a whole",
+                    "description": "Help text to display to users related to the process as a whole",
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                 },
                 "assign": {
                     "type": "object",
-                    "oneOf": [{
-                        "user": {
+                    "properties": {
+                        "assignment": {
                             "type": "object",
+                            "title": "Manage the assignment box on the UI.",
+                            "description": "Manage the assignment box on the UII.",
                             "properties": {
-                                "$ref": "#/definitions/userSelector"
-                            }
+                                "accept": {
+                                    "type": "object",
+                                    "title": "Displays the assignment box on the UI.",
+                                    "description": "Displays the assignment box on the UI.",
+                                    "properties": {
+                                        "label": {
+                                            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                        },
+                                        "show": {
+                                            "type": "boolean",
+                                            "title": "Flag to determine if the assign box should be shown",
+                                            "description": "Flag to determine if the assign box should be shown.",
+                                            "id": "show"
+                                        }
+                                    },
+                                    "id": "acceptBoxUI",
+                                    "required": [
+                                        "label",
+                                        "show"
+                                    ],
+                                    "additionalProperties": false
+                                },
+                                "message": {
+                                    "title": "Message schema.",
+                                    "description": "Message to display if the user is prompted to accessp the assignment.",
+                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n",
+                                    "id": "message"
+                                },
+                                "reject": {
+                                    "type": "object",
+                                    "title": "Reject schema.",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "properties": {
+                                        "label": {
+                                            "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                        },
+                                        "show": {
+                                            "type": "boolean",
+                                            "title": "Show schema.",
+                                            "description": "An explanation about the purpose of this instance.",
+                                            "id": "show"
+                                        }
+                                    },
+                                    "id": "reject",
+                                    "required": [
+                                        "label",
+                                        "show"
+                                    ]
+                                }
+                            },
+                            "id": "assignment",
+                            "required": [
+                                "accept",
+                                "message",
+                                "reject"
+                            ]
                         },
                         "role": {
                             "type": "object",
-                            "description": "Select the role, and find the scope of the role in the roles definition. If community, then read the sommunity network object",
+                            "title": "select a role",
+                            "description": "Select the role, and find the scope of the role in the roles definition. If community, then read the community network object",
                             "properties": {
                                 "roleId": {
                                     "type": "string"
                                 },
                                 "profile": {
                                     "type": "string",
+                                    "title": "Select the role, and find the scope of the role in the roles definition. If community, then read the community network object",
+                                    "description": "Select the role, and find the scope of the role in the roles definition. If community, then read the community network object",
                                     "enum": [
                                         "community",
                                         "current"
                                     ]
                                 }
-                            }
+                            },
+                            "required": [
+                                "roleId",
+                                "profile"
+                            ],
+                            "additionalProperties": false
                         },
                         "profile": {
                             "type": "object",
@@ -822,7 +810,12 @@
                                 "profileSelector": {
                                     "$ref": "#/definitions/profileSelector"
                                 }
-                            }
+                            },
+                            "required": [
+                                "userSelector",
+                                "profileSelector"
+                            ],
+                            "additionalProperties": false
                         },
                         "swimlane": {
                             "type": "object",
@@ -837,23 +830,34 @@
                                         "last"
                                     ]
                                 }
-                            }
+                            },
+                            "required": [
+                                "stepId",
+                                "sequence"
+                            ],
+                            "additionalProperties": false
                         },
                         "variable": {
                             "$ref": "#/definitions/getNodeValue"
                         }
-                    }]
+                    },
+                    "required": [
+                        "assignment"
+                    ],
+                    "maxProperties": 2,
+                    "minProperties": 2,
+                    "additionalProperties": false
                 },
                 "preActions": {
                     "$ref": "#/definitions/actions"
                 },
                 "work": {
                     "type": "object",
-                    "oneOf": [{
+                    "properties": {
                         "capture": {
                             "type": "object",
                             "description": "Present a list of indicators with edit / view view buttons",
-                            "anyOf": [{
+                            "properties": {
                                 "formView": {
                                     "description": "This oject refers to view that related back to ui View in indicator config file.",
                                     "type": "array",
@@ -872,25 +876,28 @@
                                                             "type": "object",
                                                             "properties": {
                                                                 "i18n": {
-                                                                    "$ref": "#/definitions/i18n"
+                                                                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                                                                 }
                                                             }
-
                                                         }
                                                     }
                                                 }
-
                                             }
                                         }
-
                                     }
                                 }
-                            }]
+                            },
+                            "maxProperties": 1,
+                            "minProperties": 1,
+                            "additionalProperties": false
                         },
                         "userInput": {
                             "type": "string"
                         }
-                    }]
+                    },
+                    "maxProperties": 1,
+                    "minProperties": 1,
+                    "additionalProperties": false
                 },
                 "postActions": {
                     "$ref": "#/definitions/actions"
@@ -911,422 +918,422 @@
                         "type": "number"
                     },
                     "description": {
-                        "$ref": "#/definitions/description"
+                        "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                     },
                     "method": {
                         "type": "object",
-                        "anyOf": [{
-                                "form": {
-                                    "type": "object",
-                                    "anyOf": [{
-                                            "create": {
+                        "properties": {
+                            "form": {
+                                "type": "object",
+                                "description": "The form is the collection of each indicatorset defined in the sub-process...",
+                                "properties": {
+                                    "create": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fromDefinition",
+                                            "fromSomeOther..."
+                                        ]
+                                    },
+                                    "authorise": {
+                                        "description": "Authorises each indicatorset in the sub process definition...",
+                                        "type": "string"
+                                    },
+                                    "undraft": {
+                                        "description": "set each indicatorset in the sub process definition as draft=false...",
+                                        "type": "string"
+                                    },
+                                    "draft": {
+                                        "description": "set each indicatorset in the sub process definition as draft=true...",
+                                        "type": "string"
+                                    },
+                                    "instantiate": {
+                                        "type": "string",
+                                        "description": "Instantiates each indicatorset in the sub process definition...",
+                                        "enum": [
+                                            "fromDefinition",
+                                            "fromSomeOther..."
+                                        ]
+                                    },
+                                    "close": {
+                                        "type": "string",
+                                        "description": "Not sure what the purpose of this is yet..."
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "indicator": {
+                                "type": "object",
+                                "properties": {
+                                    "indicatorSetId": {
+                                        "title": "string",
+                                        "type": "string",
+                                        "description": "Select the SetId of the indicator - this should become the ID of the indicator in the current profile"
+                                    },
+                                    "create": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fromDefinition",
+                                            "fromSomeOther..."
+                                        ]
+                                    },
+                                    "instantiate": {
+                                        "type": "string",
+                                        "enum": [
+                                            "fromDefinition",
+                                            "fromSomeOther..."
+                                        ]
+                                    },
+                                    "setValue": {
+                                        "$ref": "#/definitions/setValue"
+                                    },
+                                    "updateStatus": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Updated",
+                                            "Authorised",
+                                            "Pending",
+                                            "DataInitialised"
+                                        ]
+                                    }
+                                },
+                                "required": [
+                                    "indicatorSetId"
+                                ],
+                                "maxProperties": 2,
+                                "minProperties": 2,
+                                "additionalProperties": false
+                            },
+                            "profile": {
+                                "type": "object",
+                                "properties": {
+                                    "setVariable": {
+                                        "$ref": "#/definitions/setVariable"
+                                    },
+                                    "setValue": {
+                                        "$ref": "#/definitions/setValue"
+                                    },
+                                    "create": {
+                                        "title": "Create a profile in the current context (app and community)",
+                                        "desccription": "Create a profile in the current context (app and community)",
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "title": "Default name for new profile name tag (Not implemented yet)",
+                                                "description": "Default name for new profile name tag (Not implemented yet)",
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            },
+                                            "reference": {
+                                                "title": "Default name for new profile reference tag (Not implemented yet)",
+                                                "description": "Default name for new profile referencetag (Not implemented yet)",
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            },
+                                            "description": {
+                                                "title": "Default name for new profile descriptiontag (Not implemented yet)",
+                                                "description": "Default name for new profile descriptiontag (Not implemented yet)",
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    },
+                                    "createOtherApp": {
+                                        "type": "object",
+                                        "properties": {
+                                            "communityId": {
+                                                "type": "string"
+                                            },
+                                            "applicationId": {
+                                                "type": "string"
+                                            },
+                                            "name": {
+                                                "title": "Name for multilanguage create profile tag",
+                                                "description": "Name for multilanguage create profile tag",
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            },
+                                            "reference": {
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            },
+                                            "description": {
+                                                "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                                            }
+                                        }
+                                    },
+                                    "setStatusTo": {
+                                        "type": "string"
+                                    },
+                                    "setStatusMsgTo": {
+                                        "type": "string"
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "subProcessInstance": {
+                                "type": "object",
+                                "properties": {
+                                    "instantiate": {
+                                        "type": "string"
+                                    },
+                                    "authorise": {
+                                        "type": "string"
+                                    },
+                                    "close": {
+                                        "type": "string"
+                                    },
+                                    "setVariable": {
+                                        "$ref": "#/definitions/setVariable"
+                                    },
+                                    "setStatusTo": {
+                                        "type": "string"
+                                    },
+                                    "setStatusMsgTo": {
+                                        "type": "string"
+                                    },
+                                    "setTitle": {
+                                        "$ref": "#/definitions/getNodeValue"
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "step": {
+                                "type": "object",
+                                "properties": {
+                                    "setVariable": {
+                                        "$ref": "#/definitions/setVariable"
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "community": {
+                                "type": "object",
+                                "properties": {
+                                    "createCommunity": {
+                                        "type": "object",
+                                        "description": "Action that is when community configurations needs to be created at server side",
+                                        "properties": {
+                                            "newCommunityId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            },
+                                            "communityIndicatorUUID": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            },
+                                            "creatorUserId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            },
+                                            "ownerUserId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            }
+                                        }
+                                    },
+                                    "userJoinCommunity": {
+                                        "type": "object",
+                                        "description": "Action that is called when a user joins a community after it has been approved",
+                                        "properties": {
+                                            "communityId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            },
+                                            "userId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            }
+                                        }
+                                    },
+                                    "releaseAdoptedApplication": {
+                                        "type": "object",
+                                        "description": "Action that is called when an adopted application needs to be released",
+                                        "properties": {
+                                            "communityId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            },
+                                            "releaseAdoptedApplicationIndicator": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            }
+                                        }
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "application": {
+                                "type": "object",
+                                "properties": {
+                                    "createAppDefinition": {
+                                        "type": "object",
+                                        "description": "Action that is called while creating application configurations",
+                                        "properties": {
+                                            "newApplicationId": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The UUID of the profile that will become the application defintion profile"
+                                            },
+                                            "applicationIndicatorUUID": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            },
+                                            "creatorUserId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            },
+                                            "ownerUserId": {
+                                                "$ref": "#/definitions/systemVariables"
+                                            }
+                                        }
+                                    },
+                                    "buildApplication": {
+                                        "type": "object",
+                                        "description": "Action is called for building applications",
+                                        "properties": {
+                                            "applicationId": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The UUID of the application profile"
+                                            },
+                                            "applicationIndicatorUUID": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The UUID of the application definition indicator set for the current application"
+                                            },
+                                            "rolesIndicatorUUID": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The UUID of the application roles definition indicator set for the current application"
+                                            },
+                                            "buildIndicatorUUID": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The UUID of the application build indicator set for the current application"
+                                            },
+                                            "buildUserId": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The userId that is building the application"
+                                            }
+                                        }
+                                    },
+                                    "applicationAdoption": {
+                                        "type": "object",
+                                        "description": "Action is called for adopting applications in communities",
+                                        "properties": {
+                                            "applicationId": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The UUID of the application profile"
+                                            },
+                                            "adoptionIndicatorUUID": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The UUID of the adoption indicator set"
+                                            },
+                                            "adoptionUserId": {
+                                                "$ref": "#/definitions/systemVariables",
+                                                "description": "The userId that is adopting the application"
+                                            }
+                                        }
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "user": {
+                                "type": "object",
+                                "properties": {
+                                    "setVariable": {
+                                        "$ref": "#/definitions/setVariable"
+                                    },
+                                    "createUserProfile": {
+                                        "specify": "here"
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "sdo": {
+                                "type": "object",
+                                "properties": {
+                                    "create": {
+                                        "description": "Creates the SDO via webhook",
+                                        "properies": {
+                                            "dummy": {
                                                 "type": "string",
-                                                "enum": [
-                                                    "fromDefinition",
-                                                    "fromSomeOther..."
-                                                ]
+                                                "description": ""
                                             }
-                                        },
-                                        {
-                                            "authorise": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "undraft": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "draft": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "instantiate": {
+                                        }
+                                    },
+                                    "buildToTest": {
+                                        "description": "This reads the SDO settings from the pending and publish to the test bucket",
+                                        "properies": {
+                                            "sdoIdVariable": {
                                                 "type": "string",
-                                                "enum": [
-                                                    "fromDefinition",
-                                                    "fromSomeOther..."
-                                                ]
+                                                "description": "specify Variable To retrieve the community Id"
                                             }
                                         }
-                                    ]
-                                }
-                            },
-                            {
-                                "indicator": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                            "create": {
+                                    },
+                                    "build": {
+                                        "description": "This reads the SDO settings from the approved and publish to the test bucket",
+                                        "properies": {
+                                            "sdoIdVariable": {
                                                 "type": "string",
-                                                "enum": [
-                                                    "fromDefinition",
-                                                    "fromSomeOther..."
-                                                ]
+                                                "description": "specify Variable To retrieve the community Id"
                                             }
-                                        },
-                                        {
-                                            "instantiate": {
+                                        }
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "performance": {
+                                "type": "object",
+                                "properties": {
+                                    "create": {
+                                        "description": "Creates the performance plan indicator",
+                                        "properies": {
+                                            "dummy": {
                                                 "type": "string",
-                                                "enum": [
-                                                    "fromDefinition",
-                                                    "fromSomeOther..."
-                                                ]
+                                                "description": ""
                                             }
-                                        },
-                                        {
-                                            "setValue": {
-                                                "$ref": "#/definitions/setValue"
-                                            }
-                                        },
-                                        {
-                                            "updateStatus": {
+                                        }
+                                    },
+                                    "configureNode": {
+                                        "type": "string",
+                                        "description": "Call the web service that processed the configure node. Confirm with Hasan"
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
+                            },
+                            "taxonomy": {
+                                "type": "object",
+                                "properties": {
+                                    "create": {
+                                        "description": "Creates the taxonomy via webhook",
+                                        "properies": {
+                                            "dummy": {
                                                 "type": "string",
-                                                "enum": [
-                                                    "Updated",
-                                                    "Authorised",
-                                                    "Pending",
-                                                    "DataInitialised"
-                                                ]
+                                                "description": ""
                                             }
                                         }
-                                    ]
-                                }
-                            },
-                            {
-                                "profile": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                            "setVariable": {
-                                                "$ref": "#/definitions/setVariable"
-                                            }
-                                        },
-                                        {
-                                            "setValue": {
-                                                "$ref": "#/definitions/setValue"
-                                            }
-                                        },
-                                        {
-                                            "create": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "communityId": {
-                                                        "type": "string"
-                                                    },
-                                                    "applicationId": {
-                                                        "type": "string"
-                                                    },
-                                                    "name": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "reference": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    },
-                                                    "description": {
-                                                        "$ref": "#/definitions/i18n"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "setStatusTo": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "setStatusMsgTo": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "subProcessInstance": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                            "instantiate": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "authorise": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "close": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "setVariable": {
-                                                "$ref": "#/definitions/setVariable"
-                                            }
-                                        },
-                                        {
-                                            "setStatusTo": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "setStatusMsgTo": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        {
-                                            "setTitle": {
-                                                "$ref": "#/definitions/getNodeValue"
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "step": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                        "setVariable": {
-                                            "$ref": "#/definitions/setVariable"
-                                        }
-                                    }]
-                                }
-                            },
-                            {
-                                "community": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                            "createCommunity": {
-                                                "type": "object",
-                                                "description": "Action that is when community configurations needs to be created at server side",
-                                                "properties": {
-                                                    "newCommunityId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    },
-                                                    "communityIndicatorUUID": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    },
-                                                    "creatorUserId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    },
-                                                    "ownerUserId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    }
-                                                }
-
-                                            }
-                                        },
-                                        {
-                                            "userJoinCommunity": {
-                                                "type": "object",
-                                                "description": "Action that is called when a user joins a community after it has been approved",
-                                                "properties": {
-                                                    "communityId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    },
-                                                    "userId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "releaseAdoptedApplication": {
-                                                "type": "object",
-                                                "description": "Action that is called when an adopted application needs to be released",
-                                                "properties": {
-                                                    "communityId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    },
-                                                    "releaseAdoptedApplicationIndicator": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "application": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                            "createAppDefinition": {
-                                                "type": "object",
-                                                "description": "Action that is called while creating application configurations",
-                                                "properties": {
-                                                    "newApplicationId": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The UUID of the profile that will become the application defintion profile"
-                                                    },
-                                                    "applicationIndicatorUUID": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    },
-                                                    "creatorUserId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    },
-                                                    "ownerUserId": {
-                                                        "$ref": "#/definitions/systemVariables"
-                                                    }
-                                                }
-
-                                            }
-                                        },
-                                        {
-                                            "buildApplication": {
-                                                "type": "object",
-                                                "description": "Action is called for building applications",
-                                                "properties": {
-                                                    "applicationId": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The UUID of the application profile"
-                                                    },
-                                                    "applicationIndicatorUUID": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The UUID of the application definition indicator set for the current application"
-                                                    },
-                                                    "rolesIndicatorUUID": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The UUID of the application roles definition indicator set for the current application"
-                                                    },
-                                                    "buildIndicatorUUID": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The UUID of the application build indicator set for the current application"
-                                                    },
-                                                    "buildUserId": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The userId that is building the application"
-                                                    }
-                                                }
-
-                                            }
-                                        },
-                                        {
-                                            "applicationAdoption": {
-                                                "type": "object",
-                                                "description": "Action is called for adopting applications in communities",
-                                                "properties": {
-                                                    "applicationId": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The UUID of the application profile"
-                                                    },
-                                                    "adoptionIndicatorUUID": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The UUID of the adoption indicator set"
-                                                    },
-                                                    "adoptionUserId": {
-                                                        "$ref": "#/definitions/systemVariables",
-                                                        "description": "The userId that is adopting the application"
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                    ]
-                                }
-
-                            },
-                            {
-                                "user": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                            "setVariable": {
-                                                "$ref": "#/definitions/setVariable"
-                                            }
-                                        },
-                                        {
-                                            "createUserProfile": {
-                                                "specify": "here"
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "sdo": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                            "create": {
-                                                "description": "Creates the SDO via webhook",
-                                                "properies": {
-                                                    "dummy": {
-                                                        "type": "string",
-                                                        "description": ""
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "buildToTest": {
-                                                "description": "This reads the SDO settings from the pending and publish to the test bucket",
-                                                "properies": {
-                                                    "sdoIdVariable": {
-                                                        "type": "string",
-                                                        "description": "specify Variable To retrieve the community Id"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        {
-                                            "build": {
-                                                "description": "This reads the SDO settings from the approved and publish to the test bucket",
-                                                "properies": {
-                                                    "sdoIdVariable": {
-                                                        "type": "string",
-                                                        "description": "specify Variable To retrieve the community Id"
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "performance": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                        "create": {
-                                            "description": "Creates the performance plan indicator",
-                                            "properies": {
-                                                "dummy": {
-                                                    "type": "string",
-                                                    "description": ""
-                                                }
-                                            }
-                                        }
-                                    }]
-                                }
-                            },
-                            {
-                                "taxonomy": {
-                                    "type": "object",
-                                    "oneOf": [{
-                                        "create": {
-                                            "description": "Creates the taxonomy via webhook",
-                                            "properies": {
-                                                "dummy": {
-                                                    "type": "string",
-                                                    "description": ""
-                                                }
-                                            }
-                                        }
-                                    }]
-                                }
+                                    }
+                                },
+                                "maxProperties": 1,
+                                "minProperties": 1,
+                                "additionalProperties": false
                             }
-                        ]
+                        },
+                        "maxProperties": 1,
+                        "minProperties": 1,
+                        "additionalProperties": false
                     },
                     "setDraft": {
                         "type": "boolean",
-                        "description": "Added to actions where profile are getting created like form create for appProfile indicator. Once these indicators are created they are added to draft state so that they are displayed in pending state"
+                        "description": "NB- Must be deprecated. Added to actions where profile are getting created like form create for appProfile indicator. Once these indicators are created they are added to draft state so that they are displayed in pending state"
                     },
                     "setWorkflowLabelInField": {
                         "type": "string",
-                        "description": "Refers to indicator+field where workflow label is assigned. Like for appProfile indicator 'appProfile.Name' as Name is field where workflow label is assigned to"
+                        "description": "NB- Must be deprecated. Refers to indicator+field where workflow label is assigned. Like for appProfile indicator 'appProfile.Name' as Name is field where workflow label is assigned to"
                     },
                     "setWorkflowLabelInTitle": {
                         "type": "boolean",
-                        "description": "Sets workflow label in json document title. Like workfloe label is added to appProfile document title so that in forms view a title is displayed in fornt of View and Edit buttons"
+                        "description": "NB- Must be deprecated. Sets workflow label in json document title. Like workfloe label is added to appProfile document title so that in forms view a title is displayed in fornt of View and Edit buttons"
                     }
                 },
                 "required": [
@@ -1364,178 +1371,156 @@
         },
         "systemVariables": {
             "type": "object",
-            "anyOf": [{
-                    "currentScope": {
-                        "type": "object",
-                        "anyof": [{
-                                "communityId": {
-                                    "type": "string"
-                                }
-                            },
-                            {
-                                "applicationId": {
-                                    "type": "string"
-                                }
-                            },
-                            {
-                                "profileId": {
-                                    "type": "string"
-                                }
-                            },
-                            {
-                                "subProcessUuid": {
-                                    "type": "string"
-                                }
-                            },
-                            {
-                                "subProcessId": {
-                                    "type": "string"
-                                }
-                            },
-                            {
-                                "subProcessIndicatorUUIDbyCategory": {
-                                    "type": "string",
-                                    "description": "Return the UUID of the single indicator of the category provided in the string in the current subproess. It should return an error if there is more than one"
-                                }
-                            },
-                            {
-                                "profileUUIDbyCategory": {
-                                    "type": "string",
-                                    "description": "Return the the UUID of the single indicator of the category provided in the string in the current subproess. It should return an error if there is more than one"
-                                }
-                            }
-                        ]
-                    }
+            "properties": {
+                "currentScope": {
+                    "type": "object",
+                    "properties": {
+                        "communityId": {
+                            "type": "string"
+                        },
+                        "applicationId": {
+                            "type": "string"
+                        },
+                        "profileId": {
+                            "type": "string"
+                        },
+                        "subProcessUuid": {
+                            "type": "string"
+                        },
+                        "subProcessId": {
+                            "type": "string"
+                        },
+                        "subProcessIndicatorUUIDbyCategory": {
+                            "type": "string",
+                            "description": "Return the UUID of the single indicator of the category provided in the string in the current subproess. It should return an error if there is more than one"
+                        },
+                        "profileUUIDbyCategory": {
+                            "type": "string",
+                            "description": "Return the the UUID of the single indicator of the category provided in the string in the current subproess. It should return an error if there is more than one"
+                        }
+                    },
+                    "maxProperties": 1,
+                    "minProperties": 1,
+                    "additionalProperties": false
                 },
-                {
-                    "subProcess": {
-                        "type": "string",
-                        "enum": [
-                            "communityId",
-                            "applicationId",
-                            "profileId"
-                        ]
-                    }
+                "subProcess": {
+                    "type": "string",
+                    "enum": [
+                        "communityId",
+                        "applicationId",
+                        "profileId"
+                    ]
                 }
-            ]
+            },
+            "maxProperties": 1,
+            "minProperties": 1,
+            "additionalProperties": false
         },
         "getNodeValue": {
             "type": "object",
-            "oneOf": [{
-                    "value": {
-                        "type": "object",
-                        "properties": {
-                            "datatype": {
-                                "$ref": "#/definitions/dataType"
-                            },
-                            "data": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                {
-                    "currentIndicator": {
-                        "type": "object",
-                        "properties": {
-                            "datatype": {
-                                "$ref": "#/definitions/dataType"
-                            },
-                            "xpath": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                },
-                {
-                    "indicator": {
-                        "type": "object",
-                        "properties": {
-                            "indicatorSetId": {
-                                "type": "string"
-                            },
-                            "xpath": {
-                                "type": "string",
-                                "description": "optional definition of an xpath statement that is generated and used"
-                            },
-                            "elementId": {
-                                "type": "string",
-                                "description": "elementId that is used as the reference to build up the xpath statement"
-                            },
-                            "status": {
-                                "type": "string",
-                                "description": "Defines which version should be read. History will require an additional value to determine the sequence or date",
-                                "enum": [
-                                    "pending",
-                                    "authorised",
-                                    "history"
-                                ]
-                            }
+            "properties": {
+                "value": {
+                    "type": "object",
+                    "properties": {
+                        "datatype": {
+                            "$ref": "#/definitions/dataType"
                         },
-                        "required": [
-                            "indicatorSetId",
-                            "elementId",
-                            "status"
-                        ]
+                        "data": {
+                            "type": "string"
+                        }
                     }
                 },
-                {
-                    "system": {
-                        "type": "object",
-                        "description": "Read the value from some system value",
-                        "oneOf": [{
-                                "profileId": {
-                                    "type": "string",
-                                    "description": "value of the current profileId"
-                                }
-                            },
-                            {
-                                "processId": {
-                                    "type": "string",
-                                    "description": "value of the current applicaiton ID"
-                                }
-                            },
-                            {
-                                "subProcessId": {
-                                    "type": "string",
-                                    "description": "value of the current applicaiton ID"
-                                }
-                            }
-                        ]
+                "currentIndicator": {
+                    "type": "object",
+                    "properties": {
+                        "datatype": {
+                            "$ref": "#/definitions/dataType"
+                        },
+                        "xpath": {
+                            "type": "string"
+                        }
                     }
                 },
-                {
-                    "variable": {
-                        "type": "object",
-                        "description": "Read the value from some variable",
-                        "oneOf": [{
-                                "profile": {
-                                    "type": "string",
-                                    "description": "value of the variable specified in the current profileId"
-                                }
-                            },
-                            {
-                                "subProcessInstance": {
-                                    "type": "string",
-                                    "description": "value of the variable subProcessInstance variable current subprocessInstance"
-                                }
-                            },
-                            {
-                                "step": {
-                                    "type": "string",
-                                    "description": "value of the variable in the current step"
-                                }
-                            },
-                            {
-                                "subProcessId": {
-                                    "type": "string",
-                                    "description": "value of the current applicaiton ID"
-                                }
-                            }
-                        ]
-                    }
+                "indicator": {
+                    "type": "object",
+                    "properties": {
+                        "indicatorSetId": {
+                            "type": "string"
+                        },
+                        "xpath": {
+                            "type": "string",
+                            "description": "optional definition of an xpath statement that is generated and used"
+                        },
+                        "elementId": {
+                            "type": "string",
+                            "description": "elementId that is used as the reference to build up the xpath statement"
+                        },
+                        "status": {
+                            "type": "string",
+                            "description": "Defines which version should be read. History will require an additional value to determine the sequence or date",
+                            "enum": [
+                                "pending",
+                                "authorised",
+                                "history"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "indicatorSetId",
+                        "elementId",
+                        "status"
+                    ]
+                },
+                "system": {
+                    "type": "object",
+                    "description": "Read the value from some system value",
+                    "properties": {
+                        "profileId": {
+                            "type": "string",
+                            "description": "value of the current profileId"
+                        },
+                        "processId": {
+                            "type": "string",
+                            "description": "value of the current applicaiton ID"
+                        },
+                        "subProcessId": {
+                            "type": "string",
+                            "description": "value of the current applicaiton ID"
+                        }
+                    },
+                    "maxProperties": 1,
+                    "minProperties": 1,
+                    "additionalProperties": false
+                },
+                "variable": {
+                    "type": "object",
+                    "description": "Read the value from some variable",
+                    "properties": {
+                        "profile": {
+                            "type": "string",
+                            "description": "value of the variable specified in the current profileId"
+                        },
+                        "subProcessInstance": {
+                            "type": "string",
+                            "description": "value of the variable subProcessInstance variable current subprocessInstance"
+                        },
+                        "step": {
+                            "type": "string",
+                            "description": "value of the variable in the current step"
+                        },
+                        "subProcessId": {
+                            "type": "string",
+                            "description": "value of the current applicaiton ID"
+                        }
+                    },
+                    "maxProperties": 1,
+                    "minProperties": 1,
+                    "additionalProperties": false
                 }
-            ]
+            },
+            "maxProperties": 1,
+            "minProperties": 1,
+            "additionalProperties": false
         },
         "setVariable": {
             "type": "object",
@@ -1556,7 +1541,8 @@
                 "data": {
                     "$ref": "#/definitions/getNodeValue"
                 }
-            }
+            },
+            "additionalProperties": false
         },
         "setValue": {
             "type": "object",
@@ -1572,221 +1558,101 @@
             "required": [
                 "path",
                 "data"
-            ]
+            ],
+            "additionalProperties": false
         },
         "transitionTypes": {
             "type": "array",
             "items": {
                 "type": "object",
-                "oneOf": [{
-                        "stop": {
-                            "type": "object",
-                            "properties": {
-                                "setInstanceStatus": {
-                                    "$ref": "#/definitions/instanceStatus"
-                                }
+                "properties": {
+                    "stop": {
+                        "type": "object",
+                        "description": "This means no new transition will be made after this step",
+                        "properties": {
+                            "setInstanceStatus": {
+                                "$ref": "#/definitions/instanceStatus"
                             }
                         }
                     },
-                    {
-                        "goToStepId": {
-                            "type": "object",
-                            "properties": {
-                                "stepId": {
-                                    "type": "string"
-                                }
+                    "goToStepId": {
+                        "type": "object",
+                        "description": "Finds the stepId in the work flow definition, and navigate to that step",
+                        "properties": {
+                            "stepId": {
+                                "type": "string",
+                                "description": "Hasan to add in these here",
+                                "enum": [
+                                    "Hasan to add in these here"
+                                ]
                             }
-                        }
+                        },
+                        "additionalProperties": false
                     },
-                    {
-                        "goToStep": {
-                            "type": "object",
-                            "description": "Use the definition file, and take the current stepId, and determine the next stepId by sequence and go to it. A negative number retreats",
-                            "properties": {
+                    "goToStep": {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Use the definition file, and take the current stepId, and determine the next stepId by sequence and go to it. A negative number retreats"
+                    },
+                    "goToPreviousStep": {
+                        "type": "object",
+                        "description": "This transition uses the instance history, and returns to the same instance details as the prior steps. A positive number counts from the beginning to the current, a negative number starts at the back and counts backwards.",
+                        "properties": {
+                            "number": {
                                 "type": "integer",
-                                "default": 1
-                            }
-                        }
-                    },
-                    {
-                        "goToPreviousStep": {
-                            "type": "object",
-                            "description": "This transition uses the instance history, and returns to the same instance details as the prior steps. A positive number counts from the beginning to the current, a negative number starts at the back and counts backwards.",
-                            "properties": {
-                                "number": {
-                                    "type": "integer",
-                                    "default": -1
-                                }
+                                "default": -1
                             }
                         }
                     }
-                ],
-                "minItems": 1,
-                "maxItems": 1
+                },
+                "maxProperties": 1,
+                "minProperties": 1,
+                "additionalProperties": false
             }
         },
         "documentation": {
             "type": "object",
             "properties": {
                 "i18n": {
-                    "$ref": "#/definitions/i18n"
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                 }
             },
             "required": [
                 "i18n"
             ]
         },
-        "variables": {
-            "description": "Variables that may be set at the process level",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string"
-                    },
-                    "dataType": {
-                        "type": "string"
-                    },
-                    "default": {
-                        "type": "string"
-                    },
-                    "sessionVar": {
-                        "type": "string"
-                    },
-                    "value": {
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id",
-                    "dataType",
-                    "default",
-                    "value"
-                ],
-                "additionalProperties": false
-            }
-        },
-        "rolesDef": {
-            "title": "Application role definitions",
-            "description": "Role definitions for this application",
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "_id": {
-                        "type": "string"
-                    },
-                    "level": {
-                        "type": "number"
-                    },
-                    "name": {
-                        "type": "object",
-                        "properties": {
-                            "i18n": {
-                                "$ref": "#/definitions/i18n"
-                            }
-                        },
-                        "required": [
-                            "i18n"
-                        ]
-                    },
-                    "requiredRoles": {
-                        "type": "object",
-                        "properties": {
-                            "requiredRole": {
-                                "type": "object",
-                                "properties": {
-                                    "applicationId": {
-                                        "type": "string"
-                                    },
-                                    "roleId": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "_applicationId",
-                                    "_roleId"
-                                ]
-                            }
-                        },
-                        "required": [
-                            "requiredRole"
-                        ]
-                    },
-                    "roleMappings": {
-                        "type": "object",
-                        "properties": {
-                            "roleMapping": {
-                                "type": "object",
-                                "properties": {
-                                    "applicationId": {
-                                        "type": "string"
-                                    },
-                                    "roleId": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "roleId"
-                                ]
-                            }
-                        },
-                        "required": [
-                            "roleMapping"
-                        ]
-                    }
-                },
-                "required": [
-                    "_id",
-                    "level",
-                    "name",
-                    "requiredRoles",
-                    "roleMappings"
-                ],
-                "additionalProperties": false
-            }
-        },
         "instanceStatus": {
             "type": "object",
             "description": "These are system used values, and need to be translated into different languages",
-            "anyOf": [{
-                    "NotStarted": {
-                        "$ref": "#/definitions/statusLabel"
-                    }
+            "properties": {
+                "NotStarted": {
+                    "$ref": "#/definitions/statusLabel"
                 },
-                {
-                    "Created": {
-                        "$ref": "#/definitions/statusLabel"
-                    }
+                "Created": {
+                    "$ref": "#/definitions/statusLabel"
                 },
-                {
-                    "InProgress": {
-                        "$ref": "#/definitions/statusLabel"
-                    }
+                "InProgress": {
+                    "$ref": "#/definitions/statusLabel"
                 },
-                {
-                    "Submitted": {
-                        "$ref": "#/definitions/statusLabel"
-                    }
+                "Submitted": {
+                    "$ref": "#/definitions/statusLabel"
                 },
-                {
-                    "Complete": {
-                        "$ref": "#/definitions/statusLabel"
-                    }
+                "Complete": {
+                    "$ref": "#/definitions/statusLabel"
                 },
-                {
-                    "Error": {
-                        "$ref": "#/definitions/statusLabel"
-                    }
+                "Error": {
+                    "$ref": "#/definitions/statusLabel"
                 }
-            ]
+            },
+            "maxProperties": 1,
+            "minProperties": 1,
+            "additionalProperties": false
         },
         "statusLabel": {
             "type": "object",
             "properties": {
                 "label": {
-                    "$ref": "#/definitions/i18n"
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
                 },
                 "colour": {
                     "type": "string",
@@ -1797,77 +1663,174 @@
                         "blue"
                     ]
                 }
+            }
+        },
+        "operator": {
+            "type": "string",
+            "enum": [
+                "greaterThan",
+                "equalTo",
+                "lessThan",
+                "greaterThanEqual",
+                "lessThanEqual",
+                "notEqualTo"
+            ]
+        },
+        "dateSelector": {
+            "type": "object",
+            "title": "How to select the date",
+            "description": "How to select the date",
+            "properties": {
+                "calculated": {
+                    "$ref": "#/definitions/dateCalculated"
+                }
             },
-            "operator": {
-                "type": "string",
-                "enum": [
-                    "greaterThan",
-                    "equalTo",
-                    "lessThan",
-                    "greaterThanEqual",
-                    "lessThanEqual",
-                    "notEqualTo"
-                ]
-            },
-            "dateSelector": {
-                "type": "object",
-                "oneOf": [{
-                        "user": {
-                            "type": "object",
-                            "properties": {
-                                "label": {
-                                    "$ref": "#/definitions/i18n"
-                                },
-                                "message": {
-                                    "$ref": "#/definitions/i18n"
-                                },
-                                "minDate": {
-                                    "type": "string",
-                                    "enum": [
-                                        "currentDate"
-                                    ]
-                                },
-                                "maxDate": {
-                                    "type": "string",
-                                    "items": [
-                                        "currentDate"
-                                    ]
-                                },
-                                "default": {
-                                    "$ref": "#/definitions/dateCalculated"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "calculated": {
-                            "$ref": "#/definitions/dateCalculated"
-                        }
-                    }
-                ]
-            },
-            "dateCalculator": {
-                "type": "object",
-                "description": "This defines a calculated date. It uses some constant or current selection of a date and allows for an offset, back (-) or forward (+) to be added to that specificaiton",
-                "oneOf": [{
-                        "constant": {
-                            "type": "date"
-                        }
-                    },
-                    {
-                        "current": {
+            "maxProperties": 1,
+            "minProperties": 1,
+            "additionalProperties": false
+        },
+        "dateSelectorUser": {
+            "type": "object",
+            "title": "Specify date selector options",
+            "description": "Specify date selector options",
+            "properties": {
+                "_label": {
+                    "type": "string"
+                },
+                "_show": {
+                    "type": "boolean"
+                },
+                "_type": {
+                    "type": "string",
+                    "enum": [
+                        "userSelected",
+                        "autoSelected"
+                    ]
+                },
+                "default": {
+                    "type": "object",
+                    "properties": {
+                        "_type": {
                             "type": "string",
                             "enum": [
-                                "currentDate",
-                                "startOfMonth",
-                                "endOfMonth",
-                                "startFY1April",
-                                "startFY1April",
-                                "validDate"
+                                "today"
                             ]
                         }
                     }
-                ],
+                },
+                "message": {
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                },
+                "vaidation": {
+                    "type": "object",
+                    "properties": {
+                        "isFuture": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                }
+            },
+            "required": [
+                "_label",
+                "_show",
+                "message"
+            ],
+            "additionalProperties": false
+        },
+        "dueDateSelectorUser": {
+            "type": "object",
+            "title": "Specify date selector options",
+            "description": "Specify date selector options",
+            "properties": {
+                "_label": {
+                    "type": "string",
+                    "default": "Due date"
+                },
+                "_show": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "_type": {
+                    "type": "string",
+                    "default": "autoSelected",
+                    "enum": [
+                        "userSelected",
+                        "autoSelected"
+                    ]
+                },
+                "default": {
+                    "type": "object",
+                    "properties": {
+                        "_type": {
+                            "type": "string",
+                            "enum": [
+                                "today",
+                                "calculated"
+                            ]
+                        },
+                        "calculated": {
+                            "type": "object",
+                            "properties": {
+                                "operator": {
+                                    "type": "string",
+                                    "enum": [
+                                        "add",
+                                        "constant",
+                                        "now"
+                                    ]
+                                },
+                                "source": {
+                                    "type": "string",
+                                    "enum": [
+                                        "valid"
+                                    ]
+                                },
+                                "value": {
+                                    "type": "integer",
+                                    "default": 0
+                                }
+                            }
+                        }
+                    }
+                },
+                "message": {
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/i18n"
+                },
+                "vaidation": {
+                    "type": "object",
+                    "properties": {
+                        "isFuture": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                }
+            },
+            "required": [
+                "_label",
+                "_show",
+                "message"
+            ],
+            "additionalProperties": false
+        },
+        "dateCalculated": {
+            "type": "object",
+            "description": "This defines a calculated date. It uses some constant or current selection of a date and allows for an offset, back (-) or forward (+) to be added to that specificaiton",
+            "properties": {
+                "constant": {
+                    "type": "string"
+                },
+                "current": {
+                    "type": "string",
+                    "enum": [
+                        "currentDate",
+                        "startOfMonth",
+                        "endOfMonth",
+                        "startFY1April",
+                        "validDate"
+                    ]
+                },
                 "offset": {
                     "type": "object",
                     "properties": {
@@ -1885,54 +1848,53 @@
                     }
                 }
             },
-            "userSelector": {
-                "type": "object",
-                "oneOf": [{
-                        "userId": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "roleId": {
-                            "type": "string"
-                        }
-                    },
-                    {
+            "maxProperties": 1,
+            "minProperties": 1,
+            "additionalProperties": false
+        },
+        "userSelector": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "roleId": {
+                    "type": "string"
+                },
+                "linkType": {
+                    "type": "string"
+                },
+                "member": {
+                    "type": "string",
+                    "enum": [
+                        "All",
+                        "Active",
+                        "SomeOtherStatus"
+                    ]
+                }
+            },
+            "maxProperties": 1,
+            "minProperties": 1,
+            "additionalProperties": false
+        },
+        "profileSelector": {
+            "type": "object",
+            "properties": {
+                "variable": {
+                    "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json#/definitions/variables"
+                },
+                "link": {
+                    "type": "object",
+                    "properties": {
                         "linkType": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "member": {
-                            "type": "string",
-                            "enum": [
-                                "All",
-                                "Active",
-                                "SomeOtherStatus"
-                            ]
-                        }
                     }
-                ]
+                }
             },
-            "profileSelector": {
-                "type": "object",
-                "oneOf": [{
-                        "variable": {
-                            "$ref": "#/definitions/variables"
-                        }
-                    },
-                    {
-                        "link": {
-                            "type": "object",
-                            "properties": {
-                                "linkType": {
-                                    "type": "string"
-                                }
-                            }
-                        }
-                    }
-                ]
-            }
+            "maxProperties": 1,
+            "minProperties": 1,
+            "additionalProperties": false
         }
     }
 }
