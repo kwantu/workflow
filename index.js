@@ -436,7 +436,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 var indicators = subProcess.data.indicators;
                 var step = subProcess.data.step;
                 Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
-                    var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
+                    var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
                     resolve(success);
                 }, function(err) {
                     reject(err);
