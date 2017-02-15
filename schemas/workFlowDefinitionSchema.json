@@ -135,7 +135,17 @@
                                                     "$ref": "#/definitions/operator"
                                                 },
                                                 "count": {
-                                                    "type": "number"
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "value": {
+                                                            "type": "number",
+                                                            "description": ""
+                                                        },
+                                                        "variable": {
+
+                                                        },
+                                                        "subProcessInstance":
+                                                    }
                                                 },
                                                 "scope": {
                                                     "$ref": "http://kwantu7.kwantu.net:8180/exist1-4/rest/db/json/definitions.json/#definitions/processesScope"
@@ -267,7 +277,11 @@
                                                     "default": -1
                                                 }
                                             },
-                                            "additionalProperties": false
+                                            "additionalProperties": false,
+                                            "required": [
+                                                "maxInstances",
+                                                "maxSequences"
+                                            ]
                                         },
                                         "newSequence": {
                                             "type": "object",
@@ -341,9 +355,10 @@
                                             },
                                             "initiateData": {
                                                 "type": "string",
+                                                "description": "What happens when each new sequence is initiated? History means no change to the previous authorises data. Definition.",
                                                 "enum": [
                                                     "history",
-                                                    "default"
+                                                    "definition"
                                                 ]
                                             },
                                             "preloadData": {
@@ -928,10 +943,11 @@
                                 "description": "The form is the collection of each indicatorset defined in the sub-process...",
                                 "properties": {
                                     "create": {
+                                        "description": "For each indicator do the following: 1. If you have dato object uuid, then it will not create a new object, but use the uuid. If you dont have a data object uuid. Then it wil look into the appConfig - cardinality. If cardinality = 1, then it will look into the registry for a data object of that type. If finds, it uses and returns to the subprocess. If not find then creates and returns the uuid and updates registry. Then it takes the sequence and increments the sequence, and returns the sequnce for storing in the subprocess instance where indicator period type=adhoc. It does one more check for adhoc, validDate must be greater than last. If the periodType = periodic, then it applies a further rule that the valid date must be exactly the same as the previous valid date plus the period type. If the type is cover-page--- then it will never increment the dequence, and will always create uuid. This will then call the default data initialisation function to access the definition file and instantiate the data itself.",
                                         "type": "string",
                                         "enum": [
-                                            "fromDefinition",
-                                            "fromSomeOther..."
+                                            "indicatorConfig",
+                                            "performanceKey"
                                         ]
                                     },
                                     "authorise": {
@@ -948,7 +964,7 @@
                                     },
                                     "instantiate": {
                                         "type": "string",
-                                        "description": "Instantiates each indicatorset in the sub process definition...",
+                                        "description": "Not yet implemented. Instantiates each indicatorset in the sub process definition...",
                                         "enum": [
                                             "fromDefinition",
                                             "fromSomeOther..."
@@ -1008,9 +1024,6 @@
                             "profile": {
                                 "type": "object",
                                 "properties": {
-                                    "setVariable": {
-                                        "$ref": "#/definitions/setVariable"
-                                    },
                                     "setValue": {
                                         "$ref": "#/definitions/setValue"
                                     },
@@ -1082,9 +1095,6 @@
                                     "close": {
                                         "type": "string"
                                     },
-                                    "setVariable": {
-                                        "$ref": "#/definitions/setVariable"
-                                    },
                                     "setStatusTo": {
                                         "type": "string"
                                     },
@@ -1093,13 +1103,16 @@
                                     },
                                     "setTitle": {
                                         "$ref": "#/definitions/getNodeValue"
+                                    },
+                                    "setValidDate": {
+                                        "$ref": "#/definitions/getNodeValue"
                                     }
                                 },
                                 "maxProperties": 1,
                                 "minProperties": 1,
                                 "additionalProperties": false
                             },
-                            "step": {
+                            "variables": {
                                 "type": "object",
                                 "properties": {
                                     "setVariable": {
@@ -1234,9 +1247,6 @@
                             "user": {
                                 "type": "object",
                                 "properties": {
-                                    "setVariable": {
-                                        "$ref": "#/definitions/setVariable"
-                                    },
                                     "createUserProfile": {
                                         "specify": "here"
                                     }
@@ -1295,6 +1305,14 @@
                                     "configureNode": {
                                         "type": "string",
                                         "description": "Call the web service that processed the configure node. Confirm with Hasan"
+                                    },
+                                    "unlockPeriod": {
+                                        "type": "object",
+                                        "description": "to unlock period model"
+                                    },
+                                    "lockPerformanceModel": {
+                                        "type": "object",
+                                        "description": "to lock performance model capturing"
                                     }
                                 },
                                 "maxProperties": 1,
@@ -1430,16 +1448,56 @@
                         }
                     }
                 },
-                "currentIndicator": {
+                "indicatorUUID": {
                     "type": "object",
                     "properties": {
-                        "datatype": {
-                            "$ref": "#/definitions/dataType"
-                        },
-                        "xpath": {
+                        "UUID": {
                             "type": "string"
+                        },
+                        "indicatorSetId": {
+                            "type": "string"
+                        },
+                        "elementId": {
+                            "type": "string",
+                            "description": "elementId that is used as the reference to build up the xpath statement"
+                        },
+                        "status": {
+                            "type": "object",
+                            "description": "Defines which version should be read. History will require an additional value to determine the sequence or date",
+                            "properties": {
+                                "dataObject": {
+                                    "type": "string",
+                                    "description": "Defines which version should be read. wrapper means the atom wrapper not the content section",
+                                    "enum": [
+                                        "pending",
+                                        "authorised",
+                                        "wrapper"
+                                    ]
+                                },
+                                "history": {
+                                    "type": "object",
+                                    "description": "To be implemented: read data from the history",
+                                    "properties": {}
+                                },
+                                "attachments": {
+                                    "type": "object",
+                                    "description": "To be implemented: read data from the attachments",
+                                    "properties": {}
+                                }
+                            },
+                            "maxProperties": 1,
+                            "minProperties": 1,
+                            "additionalProperties": false
                         }
-                    }
+                    },
+                    "context": {
+                        "$ref": "#/definitions/dataObjectContext"
+
+                    },
+                    "required": [
+                        "UUID",
+                        "status"
+                    ]
                 },
                 "indicator": {
                     "type": "object",
@@ -1447,28 +1505,48 @@
                         "indicatorSetId": {
                             "type": "string"
                         },
-                        "xpath": {
-                            "type": "string",
-                            "description": "optional definition of an xpath statement that is generated and used"
-                        },
                         "elementId": {
                             "type": "string",
                             "description": "elementId that is used as the reference to build up the xpath statement"
                         },
                         "status": {
-                            "type": "string",
+                            "type": "object",
                             "description": "Defines which version should be read. History will require an additional value to determine the sequence or date",
-                            "enum": [
-                                "pending",
-                                "authorised",
-                                "history"
-                            ]
+                            "properties": {
+                                "dataObject": {
+                                    "type": "string",
+                                    "description": "Defines which version should be read. wrapper means the atom wrapper not the content section",
+                                    "enum": [
+                                        "pending",
+                                        "authorised",
+                                        "wrapper"
+                                    ]
+                                },
+                                "history": {
+                                    "type": "object",
+                                    "description": "To be implemented: read data from the history",
+                                    "properties": {}
+                                },
+                                "attachments": {
+                                    "type": "object",
+                                    "description": "To be implemented: read data from the attachments",
+                                    "properties": {}
+                                }
+                            },
+                            "maxProperties": 1,
+                            "minProperties": 1,
+                            "additionalProperties": false,
+                            "default": "dataObject"
+                        },
+                        "context": {
+                            "$ref": "#/definitions/dataObjectContext"
                         }
                     },
                     "required": [
                         "indicatorSetId",
                         "elementId",
-                        "status"
+                        "status",
+                        "context"
                     ]
                 },
                 "system": {
@@ -1516,11 +1594,38 @@
                     "maxProperties": 1,
                     "minProperties": 1,
                     "additionalProperties": false
+                },
+                "calculate": {
+                    "type": "object",
+                    "description": "This calculates based configuration",
+                    "properties": {
+                        "count": {
+                            "type": "object",
+                            "properties": {
+                                "subProcessId": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
+                    "maxProperties": 1,
+                    "minProperties": 1,
+                    "additionalProperties": false
                 }
             },
             "maxProperties": 1,
             "minProperties": 1,
             "additionalProperties": false
+        },
+        "dataObjectContext": {
+            "type": "string",
+            "description": "Defines the context to be used to identify the uuid of the indicatorSet",
+            "enum": [
+                "currentSubProcessInstance",
+                "currentSubProfileNode",
+                "currentProfile"
+            ],
+            "default": "currentSubProcessInstance"
         },
         "setVariable": {
             "type": "object",
@@ -1531,7 +1636,8 @@
                     "enum": [
                         "profile",
                         "subProcessInstance",
-                        "step"
+                        "step",
+                        "subProfileSubProcessInstance"
                     ]
                 },
                 "name": {
@@ -1540,9 +1646,22 @@
                 },
                 "data": {
                     "$ref": "#/definitions/getNodeValue"
+                },
+                "variableType": {
+                    "type": "string",
+                    "description": "Used to identify that storage of variables will be plain or periodic",
+                    "enum": [
+                        "periodic",
+                        "plain"
+                    ]
                 }
             },
-            "additionalProperties": false
+            "additionalProperties": false,
+            "required": [
+                "scope",
+                "name",
+                "data"
+            ]
         },
         "setValue": {
             "type": "object",
