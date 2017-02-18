@@ -3,6 +3,8 @@
 var Process = require('./lib/process');
 var util = require('utility');
 var userInterface = require('./lib/interface');
+var helper = require('./lib/helper');
+
 
 /*globals */
 
@@ -605,5 +607,38 @@ Workflow.prototype.ui = function() {
     }
 
 };
+
+/**
+ * Workflow task, this method executes a specific task.
+ *
+ * @param {object} data - the process id to process
+ * @param {object} _WFInstance - the input data to process
+ * * @param {string} uuid - the input data to process
+ *
+ * @example
+ * Workflow.getNodeValue(data, _WFInstance, uuid);
+ *
+ * @return ""
+ *
+ */
+
+Workflow.prototype.getNodeValue = function(data, uuid) {
+    // Re-assign the Workflow constructor instance as _this
+    var _this = this;
+    return new Promise(function(resolve, reject) {
+        try {
+            helper.getNodeValue(data, _this, uuid).then(function(res) {
+                resolve(res);
+            }, function(err) {
+                reject(err);
+            });
+        } catch (err) {
+            reject(err);
+        }
+
+    })
+};
+
+
 
 module.exports = Workflow;
