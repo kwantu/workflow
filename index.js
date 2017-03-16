@@ -701,7 +701,15 @@ Workflow.prototype.takeAssignment = function (spuuid) {
 
         try {
 
-            // execute preWoekActions here or call from here
+            //Assignment are executing here
+            
+            var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
+            var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
+            assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
+            assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+
+
+
 
             //fetch preWorkActions here 
 
@@ -710,16 +718,10 @@ Workflow.prototype.takeAssignment = function (spuuid) {
             var stepId = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/id", _this, {})[0];
             var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
 
-
             if (stepObject.function.task.preWorkActions != undefined) {
 
                 var preWorkActions = stepObject.function.task.preWorkActions;
                 Process.preWorkActions(preWorkActions, _this).then(function (success) {
-
-                    var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
-                    var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
-                    assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
-                    assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
 
                     resolve(_this);
 
@@ -730,11 +732,9 @@ Workflow.prototype.takeAssignment = function (spuuid) {
                 });
 
             } else {
-                var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
-                var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
-                assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
-                assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+
                 resolve(_this);
+
             }
 
         } catch (err) {
