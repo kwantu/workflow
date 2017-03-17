@@ -569,10 +569,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
                     reject(err);
                 });
 
-
             }
-
-
 
         } catch (err) {
 
@@ -707,9 +704,6 @@ Workflow.prototype.takeAssignment = function (spuuid) {
             var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
             assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
             assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
-
-
-
 
             //fetch preWorkActions here 
 
