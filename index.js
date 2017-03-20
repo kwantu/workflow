@@ -89,8 +89,7 @@ function Workflow(profile, communityId, app, config) {
     _this.subprocesses = [];
     // Workflow indicators place holder
     _this.indicators = [];
-    // Workflow sub-process step history place holder
-    _this.history = [];
+    
 
 }
 
@@ -409,9 +408,8 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
                 var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
                 var label = data.label;
                 // Build the sub-process reference object
-
+                
                 //TODO: Change required to move isActive to subProcess file.Remove from here
-
                 var subProcessRef = {
                     id: subProcessId,
                     subprofileId: subprofileId,
@@ -442,7 +440,7 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
                     resolve(success);
                 }, function (err) {
                     reject(err);
-                })
+                });
 
             }, function (err) {
                 _this.instance.processes = _this.instance.processes.filter(function (obj) {
@@ -528,6 +526,12 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
 
                 var postActions = stepObject.function.task.postActions;
                 Process.postActions(postActions, _this).then(function (success) {
+                     
+                     
+                     
+             
+
+
 
                     Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
 
