@@ -317,7 +317,9 @@ Workflow.prototype.create = function () {
                     ]
                 };
 
-                model._id = _this.profile + ':processes';
+                model._id = "_local/"+_this.profile + ':processes:local';
+                //model._id = _this.profile + ':processes';
+                
                 model.version = _this.config.version;
                 _this.instance = model;
                 var success = util.success('Workflow processes instance created successfully.', _this);
@@ -402,19 +404,22 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
             })
             // Call the subprocess method
 
-            Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, data, _this).then(function (subProcess) {
+            Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function (subProcess) {
                 // Generate the uuid
 
                 var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
                
                 // Build the sub-process reference object
                 
+                var groupKey = subProcess.data.groupKey;
                 //TODO: Change required to move isActive to subProcess file.Remove from here
                 var subProcessRef = {
                     id: subProcessId,
                     subprofileId: subprofileId,
                     seq: subProcessSeq,
-                    uuid: uuid
+                    uuid: uuid,
+                    groupKey: groupKey
+
                 }
 
                 // Add the reference to the process model
