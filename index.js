@@ -3,6 +3,8 @@
 var Process = require('./lib/process');
 var util = require('utility');
 var userInterface = require('./lib/interface');
+var helper = require('./lib/helper');
+
 
 /*globals */
 
@@ -26,7 +28,9 @@ var userInterface = require('./lib/interface');
  *
  * @example
  * var config = { '_id': 'abc123' };
+
  * var instance = { '_id': 'instance_abc123' };
+
  * // If there isn't an existing instance
  * var workflow = new Workflow('1234', '5678', config);
  * // If there is an existing instance
@@ -46,7 +50,7 @@ function Workflow(profile, communityId, app, config) {
     // Community ID validation checks
     if (communityId == '' || communityId == undefined) {
         throw util.error('ParamRequired', 'A community id is required.');
-    } else if (typeof(communityId) !== 'string') {
+    } else if (typeof (communityId) !== 'string') {
         throw new Error('The community id must be a javascript string.');
     } else {
         _this.communityId = communityId || '';
@@ -55,35 +59,37 @@ function Workflow(profile, communityId, app, config) {
     // Profile ID validation checks
     if (profile == '' || profile == undefined) {
         throw util.error('ParamRequired', 'A profile id is required.');
-    } else if (typeof(profile) !== 'string') {
+    } else if (typeof (profile) !== 'string') {
         throw new Error('The profile id must be a javascript string.');
     } else {
         _this.profile = profile || '';
     }
+
     // App ID validation checks
     if (app == '' || app == undefined) {
         throw util.error('ParamRequired', 'An app id is required.');
-    } else if (typeof(app) !== 'string') {
+    } else if (typeof (app) !== 'string') {
         throw new Error('The app id must be a javascript string.');
     } else {
         _this.app = app || '';
     }
+
     // Workflow configuration validation checks
     if (config == '' || config == undefined) {
         throw util.error('ParamRequired', 'A workflow configuration is required.');
-    } else if (typeof(config) !== 'object') {
+    } else if (typeof (config) !== 'object') {
         _this.config = JSON.parse(config);
     } else {
         _this.config = config;
     }
+
     // Workflow instance validation checks
     _this.instance;
     // Workflow sub-processes validation checks
     _this.subprocesses = [];
     // Workflow indicators place holder
     _this.indicators = [];
-    // Workflow sub-process step history place holder
-    _this.history = [];
+    
 
 }
 
@@ -95,7 +101,7 @@ function Workflow(profile, communityId, app, config) {
  * @return ""
  *
  */
-Workflow.prototype.getProfile = function() {
+Workflow.prototype.getProfile = function () {
     return this.profile;
 };
 
@@ -107,7 +113,7 @@ Workflow.prototype.getProfile = function() {
  * @return ""
  *
  */
-Workflow.prototype.getApp = function() {
+Workflow.prototype.getApp = function () {
     return this.app;
 };
 
@@ -119,7 +125,7 @@ Workflow.prototype.getApp = function() {
  * @return ""
  *
  */
-Workflow.prototype.getConfig = function() {
+Workflow.prototype.getConfig = function () {
     return this.config;
 };
 
@@ -131,7 +137,8 @@ Workflow.prototype.getConfig = function() {
  * @return ""
  *
  */
-Workflow.prototype.getInstance = function() {
+
+Workflow.prototype.getInstance = function () {
     return this.instance;
 };
 
@@ -145,7 +152,7 @@ Workflow.prototype.getInstance = function() {
  * @return ""
  *
  */
-Workflow.prototype.setInstance = function(data) {
+Workflow.prototype.setInstance = function (data) {
     this.instance = data;
 };
 
@@ -157,7 +164,7 @@ Workflow.prototype.setInstance = function(data) {
  * @return ""
  *
  */
-Workflow.prototype.getSubProcesses = function() {
+Workflow.prototype.getSubProcesses = function () {
     return this.subprocesses;
 };
 
@@ -171,7 +178,7 @@ Workflow.prototype.getSubProcesses = function() {
  * @return ""
  *
  */
-Workflow.prototype.setSubProcesses = function(data) {
+Workflow.prototype.setSubProcesses = function (data) {
     this.subprocesses = data;
 };
 
@@ -183,7 +190,7 @@ Workflow.prototype.setSubProcesses = function(data) {
  * @return ""
  *
  */
-Workflow.prototype.getIndicators = function() {
+Workflow.prototype.getIndicators = function () {
     return this.indicators;
 };
 
@@ -197,7 +204,7 @@ Workflow.prototype.getIndicators = function() {
  * @return ""
  *
  */
-Workflow.prototype.setIndicators = function(data) {
+Workflow.prototype.setIndicators = function (data) {
     this.indicators = data;
 };
 
@@ -228,6 +235,7 @@ Workflow.prototype.setIndicators = function(data) {
 // 		} catch (err) {
 // 			reject(err);
 // 		}
+
 // 	});
 // };
 
@@ -258,6 +266,7 @@ Workflow.prototype.setIndicators = function(data) {
 // 		} catch (err) {
 // 			reject(err);
 // 		}
+
 // 	});
 // };
 
@@ -268,6 +277,7 @@ Workflow.prototype.setIndicators = function(data) {
  *
  * @example
  * var config = { '_id': 'abc123' };
+
  * var workflow = new Workflow('1234', '5678', config);
  * workflow.create().then(function(result){
  *	console.log(result.message);
@@ -284,9 +294,10 @@ Workflow.prototype.setIndicators = function(data) {
  * @return {Object} new Workflow instance with updated instance data.
  *
  */
-Workflow.prototype.create = function() {
+
+Workflow.prototype.create = function () {
     var _this = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
             if (_this.instance !== undefined) {
                 var warn = util.warn('Instance already exists.', _this)
@@ -305,16 +316,21 @@ Workflow.prototype.create = function() {
                         "community_" + app.SCOPE.getCommunityId() + "_application_" + app.SCOPE.applicationId
                     ]
                 };
-                model._id = _this.profile + ':processes';
+
+                model._id = "_local/"+_this.profile + ':processes:local';
+                //model._id = _this.profile + ':processes';
+                
                 model.version = _this.config.version;
                 _this.instance = model;
                 var success = util.success('Workflow processes instance created successfully.', _this);
                 resolve(success);
 
             }
+
         } catch (err) {
             reject(err);
         }
+
     });
 };
 
@@ -331,77 +347,82 @@ Workflow.prototype.create = function() {
  * @return ""
  *
  */
-Workflow.prototype.initialise = function(processId, data) {
+Workflow.prototype.initialise = function (processId, data, subprofileId) {
     var _this = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
             var configProcess = [];
             // Check the passed in parameters
             if (processId !== '' && processId !== undefined) {
                 // Get the current process config
-                configProcess = _this.config.processes.filter(function(objProcess) {
+                configProcess = _this.config.processes.filter(function (objProcess) {
                     if (objProcess._id == processId) {
                         return objProcess;
                     }
+
                 });
                 if (configProcess[0]._id == undefined) {
                     var error = util.error('WFConfigError', 'No valid process definition found with process id: ' + processId);
                     reject(error);
                 }
+
             } else {
                 configProcess.push(_this.config.processes[0]);
                 processId = _this.config.processes[0]._id;
             }
+
             // Get the current list of process instances
             // var processSeq = 1;
             var currentProcess = [];
-            _this.instance.processes.filter(function(processItem) {
+            _this.instance.processes.filter(function (processItem) {
                 if (processItem.id == processId) {
                     currentProcess.push(processItem);
                 }
+
             });
             var processSeq = currentProcess.length + 1;
             // var nextSeq = processSeq + 1;
             // Push the process object into the array
             var processModel = {
-                    id: '',
-                    seq: '',
-                    subProcesses: [],
-                }
-                // 1. Update the process id and seq
+                id: '',
+                seq: '',
+                subProcesses: []
+            }
+
+            // 1. Update the process id and seq
             processModel.id = processId;
             processModel.seq = processSeq;
             _this.instance.processes.push(processModel);
             // Parameters
             var subProcessId = configProcess[0].subProcesses[0]._id;
             var subProcessSeq = 1;
-            _this.instance.processes.filter(function(processItem) {
-                    if (processItem.id == processId && processItem.seq == processSeq) {
-                        subProcessSeq = processItem.subProcesses.length + 1
-                    }
-                })
-                // Call the subprocess method
+            _this.instance.processes.filter(function (processItem) {
+                if (processItem.id == processId && processItem.seq == processSeq) {
+                    subProcessSeq = processItem.subProcesses.length + 1
+                }
 
+            })
+            // Call the subprocess method
 
-
-            Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, data, _this).then(function(subProcess) {
+            Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function (subProcess) {
                 // Generate the uuid
 
-
-                var uuid = _this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
-                var label = data.label;
+                var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
+               
                 // Build the sub-process reference object
-
+                
+                var groupKey = subProcess.data.groupKey;
                 //TODO: Change required to move isActive to subProcess file.Remove from here
-
-
                 var subProcessRef = {
-                        id: subProcessId,
-                        seq: subProcessSeq,
-                        uuid: uuid,
-                        label: label
-                    }
-                    // Add the reference to the process model
+                    id: subProcessId,
+                    subprofileId: subprofileId,
+                    seq: subProcessSeq,
+                    uuid: uuid,
+                    groupKey: groupKey
+
+                }
+
+                // Add the reference to the process model
                 processModel.subProcesses.push(subProcessRef);
                 // Add the subProcess model to the subprocesses array
                 //_this.subprocesses.push(subProcess.data);
@@ -412,25 +433,21 @@ Workflow.prototype.initialise = function(processId, data) {
                         // Remove the current process from the array and add the updated processModel
                         _this.instance.processes.splice(index, 1, processModel)
                     }
+
                 }
+
                 // Process the indicator documents workflow processes updates
                 var indicators = subProcess.data.indicators;
                 var step = subProcess.data.step;
-                Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
-                    var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', _this);
+                Process.indicatorDocs(processId, indicators, step, _this).then(function (result) {
+                    var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
                     resolve(success);
-                }, function(err) {
+                }, function (err) {
                     reject(err);
-                })
+                });
 
-
-
-
-
-
-
-            }, function(err) {
-                _this.instance.processes = _this.instance.processes.filter(function(obj) {
+            }, function (err) {
+                _this.instance.processes = _this.instance.processes.filter(function (obj) {
                     return !(obj.id == processId && obj.seq == processSeq);
                 });
                 console.log(err);
@@ -439,6 +456,7 @@ Workflow.prototype.initialise = function(processId, data) {
         } catch (err) {
             reject(err);
         }
+
     });
 };
 
@@ -450,7 +468,7 @@ Workflow.prototype.initialise = function(processId, data) {
  * @param {number} processSeq - the Workflow instance process seq
  * @param {string} subProcessId - the Workflow config / definition sub-process id
  * @param {number} subProcessSeq - the Workflow instance sub-process seq
- * @param {string} stepId - the Workflow config / definition step id
+ * @param {string} stepId - the Workflow config / definition step id 
  * @param {string} transitionId - the Workflow config / definition transition id
  * @param {object} data - any additional data passed in as key value pairs
  *
@@ -460,63 +478,112 @@ Workflow.prototype.initialise = function(processId, data) {
  * @return ""
  *
  */
-Workflow.prototype.transition = function(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data) {
+Workflow.prototype.transition = function (processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, spuuid) {
     // Re-assign this
     var _this = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
-            Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this).then(function(result) {
+            var model = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/data", app.SCOPE.workflow, {})[0];
+            var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
 
 
-                // Update the current sub-process step data
-                var update = function(type) {
-                    _this.instance.processes.filter(function(processItem) {
-                        if (processItem.id == processId && processItem.seq == processSeq) {
+            // Update the current sub-process step data
+            var update = function (type, result) {
+                _this.instance.processes.filter(function (processItem) {
+                    if (processItem.id == processId && processItem.seq == processSeq) {
 
+                        processItem.subProcesses.filter(function (subProcessItem) {
+                            if (subProcessItem.id == subProcessId && subProcessItem.seq == subProcessSeq) {
 
-                            processItem.subProcesses.filter(function(subProcessItem) {
-                                if (subProcessItem.id == subProcessId && subProcessItem.seq == subProcessSeq) {
+                                _this.subprocesses.filter(function (subProcessObj) {
+                                    if (subProcessObj._id == subProcessItem.uuid) {
 
+                                        if (type == 'step') {
 
-                                    _this.subprocesses.filter(function(subProcessObj) {
-                                        if (subProcessObj._id == subProcessItem.uuid) {
+                                            subProcessObj.step = result.data.step;
+                                            var success = util.success(result.message, subProcessObj);
 
-                                            if (type == 'step') {
+                                            resolve(success);
+                                        } else if (type == 'stepComplete') {
 
-                                                subProcessObj.step = result.data;
-                                                var success = util.success(result.message, subProcessObj);
+                                            subProcessObj.step = result.data.step;
+                                            subProcessObj.complete = true
+                                            var success = util.success(result.message, subProcessObj.step);
 
-
-                                                resolve(success);
-                                            } else if (type == 'stepComplete') {
-                                                subProcessObj.step = result.data.step;
-                                                subProcessObj.complete = true
-                                                var success = util.success(result.message, subProcessObj);
-
-                                                resolve(success);
-                                            }
+                                            resolve(success);
                                         }
-                                    })
-                                }
-                            })
+
+                                    }
+
+                                })
+                            }
+
+                        })
+                    }
+
+                })
+            }
+
+
+            if (stepObject.function.task.postActions != undefined) {
+
+
+                var postActions = stepObject.function.task.postActions;
+                Process.postActions(postActions, _this).then(function (success) {
+                     
+                     
+                     
+             
+
+
+
+                    Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
+
+                        if (result.data.subProcessComplete) {
+
+                            update('stepComplete', result);
+                        } else {
+
+                            update('step', result);
                         }
-                    })
-                }
-                if (result.data.subProcessComplete) {
 
-                    update('stepComplete');
-                } else {
+                    }, function (err) {
 
-                    update('step');
-                }
-            }, function(err) {
+                        reject(err);
+                    });
 
-                reject(err);
-            });
+                }, function (err) {
+
+                    reject(err);
+
+                });
+
+
+            } else {
+
+
+                Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
+
+                    if (result.data.subProcessComplete) {
+
+                        update('stepComplete', result);
+                    } else {
+
+                        update('step', result);
+                    }
+
+                }, function (err) {
+
+                    reject(err);
+                });
+
+            }
+
         } catch (err) {
 
             reject(err);
         }
+
     });
 };
 
@@ -535,19 +602,20 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
  * @return ""
  *
  */
-Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, subProcessSeq, user) {
+Workflow.prototype.assignUser = function (processId, processSeq, subProcessId, subProcessSeq, user) {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         try {
-            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, _this).then(function(result) {
+            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, _this).then(function (result) {
                 resolve(result);
-            }, function(err) {
+            }, function (err) {
                 reject(err);
             })
         } catch (err) {
             reject(err);
         }
+
     })
 };
 
@@ -563,26 +631,122 @@ Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, su
  * @return ""
  *
  */
-Workflow.prototype.ui = function() {
+Workflow.prototype.ui = function () {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
     return {
-        getProcess: function(processId, lang) {
-            return new Promise(function(resolve, reject) {
+        getProcess: function (processId, lang) {
+            return new Promise(function (resolve, reject) {
                 try {
-                    userInterface.getProcess(processId, lang, _this).then(function(model) {
+                    userInterface.getProcess(processId, lang, _this).then(function (model) {
                         resolve(model);
-                    }, function(err) {
+                    }, function (err) {
                         reject(err);
                     })
                 } catch (err) {
                     reject(err);
                 }
+
             })
         }
+
     }
+
 };
 
+/**
+ * Workflow task, this method executes a specific task.
+ *
+ * @param {object} data - the process id to process
+ * @param {object} _WFInstance - the input data to process
+ * * @param {string} uuid - the input data to process
+ *
+ * @example
+ * Workflow.getNodeValue(data, _WFInstance, uuid);
+ *
+ * @return ""
+ *
+ */
+
+Workflow.prototype.getNodeValue = function (data, uuid) {
+    // Re-assign the Workflow constructor instance as _this
+    var _this = this;
+    return new Promise(function (resolve, reject) {
+        try {
+            helper.getNodeValue(data, _this, uuid).then(function (res) {
+                resolve(res);
+            }, function (err) {
+                reject(err);
+            });
+        } catch (err) {
+            reject(err);
+        }
+
+    })
+};
+
+/**
+ * Workflow task, this method executes a specific task.
+ *
+ * @param {object} data - the process id to process
+ * @param {object} _WFInstance - the input data to process
+ *
+ * @example
+ * Workflow.takeAssignment(spuuid, _WFInstance);
+ *
+ * @return ""
+ *
+ */
+
+Workflow.prototype.takeAssignment = function (spuuid) {
+    // Re-assign the Workflow constructor instance as _this
+    var _this = this;
+
+    return new Promise(function (resolve, reject) {
+
+        try {
+
+            //Assignment are executing here
+            
+            var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
+            var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
+            assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
+            assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+
+            //fetch preWorkActions here 
+
+            var processId = JSON.xpath("/instance/processes[subProcesses/uuid eq '" + spuuid + "']/id", _this, {})[0];
+            var subProcessId = JSON.xpath("/instance/processes/subProcesses[uuid eq '" + spuuid + "']/id", _this, {})[0];
+            var stepId = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/id", _this, {})[0];
+            var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
+
+            if (stepObject.function.task.preWorkActions != undefined) {
+
+                var preWorkActions = stepObject.function.task.preWorkActions;
+                Process.preWorkActions(preWorkActions, _this).then(function (success) {
+
+                    resolve(_this);
+
+                }, function (err) {
+
+                    reject(err);
+
+                });
+
+            } else {
+
+                resolve(_this);
+
+            }
+
+        } catch (err) {
+
+            reject(err);
+
+        }
+
+    });
+};
 
 
 
