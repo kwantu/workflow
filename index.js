@@ -418,7 +418,8 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
                     subprofileId: subprofileId,
                     seq: subProcessSeq,
                     uuid: uuid,
-                    groupKey: groupKey
+                    groupKey: groupKey,
+                    subProcessInsSeq: subProcess.data.meta-data.subProcessInsSeq
 
                 }
 

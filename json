@@ -1,0 +1,43 @@
+{
+    "_id": "27a4b993-a3cf-49c6-cbb2-b3d077c72d39:processes",
+    "_rev": "6-e199af242bf2bc2f01d91a333e8e8baf",
+    "channels": [
+        "community_051a4973-d2fa-475d-ef66-e80b27c576f0",
+        "profile_27a4b993-a3cf-49c6-cbb2-b3d077c72d39",
+        "application_89d4bc98-b678-456c-aef3-84ad394a3670",
+        "community_051a4973-d2fa-475d-ef66-e80b27c576f0_application_89d4bc98-b678-456c-aef3-84ad394a3670"
+    ],
+    "processes": [
+        { 
+      "id": "Nodes",
+      "subProcessid":"spNodes",
+      "groupKey": "b15bcc55-6811-4daf-cfb9-63b8365fd456",
+      "current":
+        { 
+          "id": "SPNodes",
+          "seq": 3,
+          "subprofileId": "8257bf8e-4daf-4116-a587-a48bb7e14a03",
+          "uuid": "4ae111c5-35ee-408b-d73b-d5441634bc9a",
+          "_rev" : "78-fdsafdsfds"
+        },
+        "history": [
+            { "groupKey": "b15bcc55-6811-4daf-cfb9-63b8365fd456",
+              "id": "SPNodes",
+              "seq": 1,
+              "uuid": "4ae111c5-35ee-408b-d73b-d5441634bc9a",
+              "_rev" : "78-fdsafdsfds"
+            },
+            { "subProcessid":"spNodes",
+                "groupKey": "b15bcc55-6811-4daf-cfb9-63b8365fd456",
+                "id": "SPNodes",
+                "seq": 2,
+                 "uuid": "4ae111c5-35ee-408b-d73b-d5441634bc9a",
+                "_rev" : "78-fdsafdsfds"
+              }
+      ]
+    }
+    
+    ],
+    "type": "workflowInstance",
+    "version": 1
+}
