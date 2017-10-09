@@ -413,6 +413,9 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
                 
                 var groupKey = subProcess.data.groupKey;
                 //TODO: Change required to move isActive to subProcess file.Remove from here
+                if(subprofileId == undefined){
+                    subprofileId = '';
+                }
                 var subProcessRef = {
                     id: subProcessId,
                     subprofileId: subprofileId,
