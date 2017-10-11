@@ -488,7 +488,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
         try {
             var model = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/data", app.SCOPE.workflow, {})[0];
             var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
-
+            var subProcessSeq = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/meta-data/subProcessInsSeq", app.SCOPE.workflow, {})[0];
 
             // Update the current sub-process step data
             var update = function (type, result) {
@@ -534,12 +534,6 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
                 var postActions = stepObject.function.task.postActions;
                 Process.postActions(postActions, _this).then(function (success) {
                      
-                     
-                     
-             
-
-
-
                     Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
 
                         if (result.data.subProcessComplete) {
@@ -605,12 +599,12 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
  * @return ""
  *
  */
-Workflow.prototype.assignUser = function (processId, processSeq, subProcessId, subProcessSeq, user) {
+Workflow.prototype.assignUser = function (processId, processSeq, subProcessId, subProcessSeq, user, uuid) {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
     return new Promise(function (resolve, reject) {
         try {
-            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, _this).then(function (result) {
+            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, uuid, _this).then(function (result) {
                 resolve(result);
             }, function (err) {
                 reject(err);
