@@ -707,8 +707,24 @@ Workflow.prototype.takeAssignment = function (spuuid) {
             
             var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
             var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
+            //Pushing older record in reAssign array
+            
+            if(spObject.step.assignmentHistory == undefined){
+                spObject.step.assignmentHistory = [];
+            }
+            if(assignee.userId != "" && assignee.name != ""){
+                spObject.step.assignmentHistory.push(JSON.parse(JSON.stringify(assignee)));
+            }
+            
+
+            
             assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
             assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+            assignee.dateTime = new Date();
+            assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
+            assignee.dueDateTime = '';
+            assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+           
 
             //fetch preWorkActions here 
 
