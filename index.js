@@ -532,7 +532,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
 
 
                 var postActions = stepObject.function.task.postActions;
-                Process.postActions(postActions, _this).then(function (success) {
+                Process.postActions(postActions, _this, spuuid).then(function (success) {
                      
                     Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
 
