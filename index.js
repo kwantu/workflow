@@ -496,7 +496,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
                     if (processItem.id == processId && processItem.seq == processSeq) {
 
                         processItem.subProcesses.filter(function (subProcessItem) {
-                            if (subProcessItem.id == subProcessId && subProcessItem.seq == subProcessSeq) {
+                            if (subProcessItem.id == subProcessId) {
 
                                 _this.subprocesses.filter(function (subProcessObj) {
                                     if (subProcessObj._id == subProcessItem.uuid) {
@@ -718,7 +718,7 @@ Workflow.prototype.takeAssignment = function (spuuid) {
             
 
             
-            assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
+            assignee.name = LOCAL_SETTINGS.SESSION.firstName + " "+ LOCAL_SETTINGS.SESSION.lastName;
             assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
             assignee.dateTime = new Date();
             assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
