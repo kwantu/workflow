@@ -528,7 +528,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
             }
 
 
-            if (stepObject.function.task.postActions != undefined) {
+            if (stepObject.function.task != undefined && stepObject.function.task.postActions != undefined) {
 
 
                 var postActions = stepObject.function.task.postActions;
