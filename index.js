@@ -499,7 +499,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
                             if (subProcessItem.id == subProcessId) {
 
                                 _this.subprocesses.filter(function (subProcessObj) {
-                                    if (subProcessObj._id == subProcessItem.uuid) {
+                                    if (subProcessObj._id == spuuid) {
 
                                         if (type == 'step') {
 
