@@ -720,7 +720,7 @@ Workflow.prototype.takeAssignment = function (spuuid) {
             
             assignee.name = LOCAL_SETTINGS.SESSION.firstName + " "+ LOCAL_SETTINGS.SESSION.lastName;
             assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
-            assignee.dateTime = new Date();
+            assignee.dateTime = moment().format();
             assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
             assignee.dueDateTime = '';
             assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
