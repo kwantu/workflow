@@ -413,6 +413,9 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
                 
                 var groupKey = subProcess.data.groupKey;
                 //TODO: Change required to move isActive to subProcess file.Remove from here
+                if(subprofileId == undefined){
+                    subprofileId = '';
+                }
                 var subProcessRef = {
                     id: subProcessId,
                     subprofileId: subprofileId,
@@ -483,9 +486,9 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
     var _this = this;
     return new Promise(function (resolve, reject) {
         try {
-            var model = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/data", app.SCOPE.workflow, {})[0];
+            var model = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step", app.SCOPE.workflow, {})[0];
             var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
-
+            var subProcessSeq = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/meta-data/subProcessInsSeq", app.SCOPE.workflow, {})[0];
 
             // Update the current sub-process step data
             var update = function (type, result) {
@@ -493,10 +496,10 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
                     if (processItem.id == processId && processItem.seq == processSeq) {
 
                         processItem.subProcesses.filter(function (subProcessItem) {
-                            if (subProcessItem.id == subProcessId && subProcessItem.seq == subProcessSeq) {
+                            if (subProcessItem.id == subProcessId) {
 
                                 _this.subprocesses.filter(function (subProcessObj) {
-                                    if (subProcessObj._id == subProcessItem.uuid) {
+                                    if (subProcessObj._id == spuuid) {
 
                                         if (type == 'step') {
 
@@ -525,18 +528,12 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
             }
 
 
-            if (stepObject.function.task.postActions != undefined) {
+            if (stepObject.function.task != undefined && stepObject.function.task.postActions != undefined) {
 
 
                 var postActions = stepObject.function.task.postActions;
-                Process.postActions(postActions, _this).then(function (success) {
+                Process.postActions(postActions, _this, spuuid).then(function (success) {
                      
-                     
-                     
-             
-
-
-
                     Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
 
                         if (result.data.subProcessComplete) {
@@ -602,12 +599,12 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
  * @return ""
  *
  */
-Workflow.prototype.assignUser = function (processId, processSeq, subProcessId, subProcessSeq, user) {
+Workflow.prototype.assignUser = function (processId, processSeq, subProcessId, subProcessSeq, user, uuid) {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
     return new Promise(function (resolve, reject) {
         try {
-            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, _this).then(function (result) {
+            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, uuid, _this).then(function (result) {
                 resolve(result);
             }, function (err) {
                 reject(err);
@@ -710,8 +707,24 @@ Workflow.prototype.takeAssignment = function (spuuid) {
             
             var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
             var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
-            assignee.name = LOCAL_SETTINGS.SUBSCRIPTIONS.username + "";
+            //Pushing older record in reAssign array
+            
+            if(spObject.step.assignmentHistory == undefined){
+                spObject.step.assignmentHistory = [];
+            }
+            if(assignee.userId != "" && assignee.name != ""){
+                spObject.step.assignmentHistory.push(JSON.parse(JSON.stringify(assignee)));
+            }
+            
+
+            
+            assignee.name = LOCAL_SETTINGS.SESSION.firstName + " "+ LOCAL_SETTINGS.SESSION.lastName;
             assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+            assignee.dateTime = new Date();
+            assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
+            assignee.dueDateTime = '';
+            assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+           
 
             //fetch preWorkActions here 
 
