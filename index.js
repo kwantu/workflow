@@ -762,5 +762,70 @@ Workflow.prototype.takeAssignment = function (spuuid) {
 };
 
 
+/**
+ * Workflow task, this method executes a specific task.
+ *
+ * @param {object} data - the process id to process
+ * @param {object} _WFInstance - the input data to process
+ *
+ * @example
+ * Workflow.condition(condition, spuuid);
+ *
+ * @return ""
+ *
+ */
+
+Workflow.prototype.condition = function (condition, spuuid) {
+    
+    var _this = this;
+    return new Promise(function (resolve, reject) {
+
+        try {
+            
+            var operator = condition.operator;
+            var dataBlock = condition.data;
+
+            if(condition.indicator != undefined){
+
+                var setId = condition.indicator.setId;
+                var modelScope = condition.indicator.modelScope;
+                var elementPath = condition.indicator.elementPath;
+                if(condition.indicator.context == 'subProcess'){
+
+                    var indicatorUUID = JSON.xpath("/subprocesses[_id eq '"+ spuuid +"']/indicators[id eq '"+ setId +"']/instances[1]/uuid", _this , {})[0];
+                    var indicatorModel = JSON.xpath("/indicators[_id eq '"+ indicatorUUID +"']", _this , {})[0];
+                    var dataElement = indicatorModel.model[modelScope].data[setId];
+                    var value = eval("dataElement."+ elementPath);
+                    
+                    helper.getNodeValue(dataBlock, _this, spuuid).then(function (res) {
+                        var result = helper.compare(value, operator , res);
+                        
+                        resolve(result);
+                    }, function (err) {
+                        reject(err);
+                    });
+
+
+
+                } else {
+                    reject('Not implemented')
+                }
+                
+
+            } else if(condition.indicatorWrapper != undefined){
+                reject('Not implemented')
+            }
+
+
+
+        } catch (err) {
+
+            reject(err);
+
+        }
+
+    });
+};
+
 
 module.exports = Workflow;
