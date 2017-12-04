@@ -783,14 +783,14 @@ Workflow.prototype.condition = function (condition, spuuid) {
         try {
             
             var operator = condition.operator;
-            var dataBlock = condition.data;
+            var dataBlock = condition.value.data;
 
-            if(condition.indicator != undefined){
+            if(condition.subject.indicator != undefined){
 
-                var setId = condition.indicator.setId;
-                var modelScope = condition.indicator.modelScope;
-                var elementPath = condition.indicator.elementPath;
-                if(condition.indicator.context == 'subProcess'){
+                var setId = condition.subject.indicator.setId;
+                var modelScope = condition.subject.indicator.modelScope;
+                var elementPath = condition.subject.indicator.elementPath;
+                if(condition.subject.indicator.context == 'subProcess'){
 
                     var indicatorUUID = JSON.xpath("/subprocesses[_id eq '"+ spuuid +"']/indicators[id eq '"+ setId +"']/instances[1]/uuid", _this , {})[0];
                     var indicatorModel = JSON.xpath("/indicators[_id eq '"+ indicatorUUID +"']", _this , {})[0];
@@ -812,9 +812,13 @@ Workflow.prototype.condition = function (condition, spuuid) {
                 }
                 
 
-            } else if(condition.indicatorWrapper != undefined){
+            } else if(condition.subject.indicatorWrapper != undefined){
                 reject('Not implemented')
-            }
+            } else if(condition.subject.variable != undefined){
+                reject('Not implemented')
+            } else if(condition.subject.subProcess != undefined){
+                reject('Not implemented')
+            } 
 
 
 
