@@ -831,5 +831,4 @@ Workflow.prototype.condition = function (condition, spuuid) {
     });
 };
 
-
 module.exports = Workflow;
