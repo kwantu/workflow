@@ -50,7 +50,7 @@ function Workflow(profile, communityId, app, config) {
     // Community ID validation checks
     if (communityId == '' || communityId == undefined) {
         throw util.error('ParamRequired', 'A community id is required.');
-    } else if (typeof (communityId) !== 'string') {
+    } else if (typeof(communityId) !== 'string') {
         throw new Error('The community id must be a javascript string.');
     } else {
         _this.communityId = communityId || '';
@@ -59,7 +59,7 @@ function Workflow(profile, communityId, app, config) {
     // Profile ID validation checks
     if (profile == '' || profile == undefined) {
         throw util.error('ParamRequired', 'A profile id is required.');
-    } else if (typeof (profile) !== 'string') {
+    } else if (typeof(profile) !== 'string') {
         throw new Error('The profile id must be a javascript string.');
     } else {
         _this.profile = profile || '';
@@ -68,7 +68,7 @@ function Workflow(profile, communityId, app, config) {
     // App ID validation checks
     if (app == '' || app == undefined) {
         throw util.error('ParamRequired', 'An app id is required.');
-    } else if (typeof (app) !== 'string') {
+    } else if (typeof(app) !== 'string') {
         throw new Error('The app id must be a javascript string.');
     } else {
         _this.app = app || '';
@@ -77,7 +77,7 @@ function Workflow(profile, communityId, app, config) {
     // Workflow configuration validation checks
     if (config == '' || config == undefined) {
         throw util.error('ParamRequired', 'A workflow configuration is required.');
-    } else if (typeof (config) !== 'object') {
+    } else if (typeof(config) !== 'object') {
         _this.config = JSON.parse(config);
     } else {
         _this.config = config;
@@ -89,7 +89,7 @@ function Workflow(profile, communityId, app, config) {
     _this.subprocesses = [];
     // Workflow indicators place holder
     _this.indicators = [];
-    
+
 
 }
 
@@ -101,7 +101,7 @@ function Workflow(profile, communityId, app, config) {
  * @return ""
  *
  */
-Workflow.prototype.getProfile = function () {
+Workflow.prototype.getProfile = function() {
     return this.profile;
 };
 
@@ -113,7 +113,7 @@ Workflow.prototype.getProfile = function () {
  * @return ""
  *
  */
-Workflow.prototype.getApp = function () {
+Workflow.prototype.getApp = function() {
     return this.app;
 };
 
@@ -125,7 +125,7 @@ Workflow.prototype.getApp = function () {
  * @return ""
  *
  */
-Workflow.prototype.getConfig = function () {
+Workflow.prototype.getConfig = function() {
     return this.config;
 };
 
@@ -138,7 +138,7 @@ Workflow.prototype.getConfig = function () {
  *
  */
 
-Workflow.prototype.getInstance = function () {
+Workflow.prototype.getInstance = function() {
     return this.instance;
 };
 
@@ -152,7 +152,7 @@ Workflow.prototype.getInstance = function () {
  * @return ""
  *
  */
-Workflow.prototype.setInstance = function (data) {
+Workflow.prototype.setInstance = function(data) {
     this.instance = data;
 };
 
@@ -164,7 +164,7 @@ Workflow.prototype.setInstance = function (data) {
  * @return ""
  *
  */
-Workflow.prototype.getSubProcesses = function () {
+Workflow.prototype.getSubProcesses = function() {
     return this.subprocesses;
 };
 
@@ -178,7 +178,7 @@ Workflow.prototype.getSubProcesses = function () {
  * @return ""
  *
  */
-Workflow.prototype.setSubProcesses = function (data) {
+Workflow.prototype.setSubProcesses = function(data) {
     this.subprocesses = data;
 };
 
@@ -190,7 +190,7 @@ Workflow.prototype.setSubProcesses = function (data) {
  * @return ""
  *
  */
-Workflow.prototype.getIndicators = function () {
+Workflow.prototype.getIndicators = function() {
     return this.indicators;
 };
 
@@ -204,7 +204,7 @@ Workflow.prototype.getIndicators = function () {
  * @return ""
  *
  */
-Workflow.prototype.setIndicators = function (data) {
+Workflow.prototype.setIndicators = function(data) {
     this.indicators = data;
 };
 
@@ -295,9 +295,9 @@ Workflow.prototype.setIndicators = function (data) {
  *
  */
 
-Workflow.prototype.create = function () {
+Workflow.prototype.create = function() {
     var _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         try {
             if (_this.instance !== undefined) {
                 var warn = util.warn('Instance already exists.', _this)
@@ -317,9 +317,9 @@ Workflow.prototype.create = function () {
                     ]
                 };
 
-                model._id = "_local/"+_this.profile + ':processes:local';
+                model._id = "_local/" + _this.profile + ':processes:local';
                 //model._id = _this.profile + ':processes';
-                
+
                 model.version = _this.config.version;
                 _this.instance = model;
                 var success = util.success('Workflow processes instance created successfully.', _this);
@@ -347,15 +347,15 @@ Workflow.prototype.create = function () {
  * @return ""
  *
  */
-Workflow.prototype.initialise = function (processId, data, subprofileId) {
+Workflow.prototype.initialise = function(processId, data, subprofileId) {
     var _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         try {
             var configProcess = [];
             // Check the passed in parameters
             if (processId !== '' && processId !== undefined) {
                 // Get the current process config
-                configProcess = _this.config.processes.filter(function (objProcess) {
+                configProcess = _this.config.processes.filter(function(objProcess) {
                     if (objProcess._id == processId) {
                         return objProcess;
                     }
@@ -374,7 +374,7 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
             // Get the current list of process instances
             // var processSeq = 1;
             var currentProcess = [];
-            _this.instance.processes.filter(function (processItem) {
+            _this.instance.processes.filter(function(processItem) {
                 if (processItem.id == processId) {
                     currentProcess.push(processItem);
                 }
@@ -396,24 +396,24 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
             // Parameters
             var subProcessId = configProcess[0].subProcesses[0]._id;
             var subProcessSeq = 1;
-            _this.instance.processes.filter(function (processItem) {
-                if (processItem.id == processId && processItem.seq == processSeq) {
-                    subProcessSeq = processItem.subProcesses.length + 1
-                }
+            _this.instance.processes.filter(function(processItem) {
+                    if (processItem.id == processId && processItem.seq == processSeq) {
+                        subProcessSeq = processItem.subProcesses.length + 1
+                    }
 
-            })
-            // Call the subprocess method
+                })
+                // Call the subprocess method
 
-            Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function (subProcess) {
+            Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function(subProcess) {
                 // Generate the uuid
 
                 var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
-               
+
                 // Build the sub-process reference object
-                
+
                 var groupKey = subProcess.data.groupKey;
                 //TODO: Change required to move isActive to subProcess file.Remove from here
-                if(subprofileId == undefined){
+                if (subprofileId == undefined) {
                     subprofileId = '';
                 }
                 var subProcessRef = {
@@ -442,15 +442,15 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
                 // Process the indicator documents workflow processes updates
                 var indicators = subProcess.data.indicators;
                 var step = subProcess.data.step;
-                Process.indicatorDocs(processId, indicators, step, _this).then(function (result) {
+                Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
                     var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
                     resolve(success);
-                }, function (err) {
+                }, function(err) {
                     reject(err);
                 });
 
-            }, function (err) {
-                _this.instance.processes = _this.instance.processes.filter(function (obj) {
+            }, function(err) {
+                _this.instance.processes = _this.instance.processes.filter(function(obj) {
                     return !(obj.id == processId && obj.seq == processSeq);
                 });
                 console.log(err);
@@ -481,24 +481,24 @@ Workflow.prototype.initialise = function (processId, data, subprofileId) {
  * @return ""
  *
  */
-Workflow.prototype.transition = function (processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, spuuid) {
+Workflow.prototype.transition = function(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, spuuid) {
     // Re-assign this
     var _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         try {
             var model = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step", app.SCOPE.workflow, {})[0];
             var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
             var subProcessSeq = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/meta-data/subProcessInsSeq", app.SCOPE.workflow, {})[0];
 
             // Update the current sub-process step data
-            var update = function (type, result) {
-                _this.instance.processes.filter(function (processItem) {
+            var update = function(type, result) {
+                _this.instance.processes.filter(function(processItem) {
                     if (processItem.id == processId && processItem.seq == processSeq) {
 
-                        processItem.subProcesses.filter(function (subProcessItem) {
+                        processItem.subProcesses.filter(function(subProcessItem) {
                             if (subProcessItem.id == subProcessId) {
 
-                                _this.subprocesses.filter(function (subProcessObj) {
+                                _this.subprocesses.filter(function(subProcessObj) {
                                     if (subProcessObj._id == spuuid) {
 
                                         if (type == 'step') {
@@ -532,9 +532,9 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
 
 
                 var postActions = stepObject.function.task.postActions;
-                Process.postActions(postActions, _this, spuuid).then(function (success) {
-                     
-                    Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
+                Process.postActions(postActions, _this, spuuid).then(function(success) {
+
+                    Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
 
                         if (result.data.subProcessComplete) {
 
@@ -544,12 +544,12 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
                             update('step', result);
                         }
 
-                    }, function (err) {
+                    }, function(err) {
 
                         reject(err);
                     });
 
-                }, function (err) {
+                }, function(err) {
 
                     reject(err);
 
@@ -559,7 +559,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
             } else {
 
 
-                Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function (result) {
+                Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
 
                     if (result.data.subProcessComplete) {
 
@@ -569,7 +569,7 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
                         update('step', result);
                     }
 
-                }, function (err) {
+                }, function(err) {
 
                     reject(err);
                 });
@@ -599,14 +599,14 @@ Workflow.prototype.transition = function (processId, processSeq, subProcessId, s
  * @return ""
  *
  */
-Workflow.prototype.assignUser = function (processId, processSeq, subProcessId, subProcessSeq, user, uuid) {
+Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, subProcessSeq, user, uuid) {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         try {
-            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, uuid, _this).then(function (result) {
+            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, uuid, _this).then(function(result) {
                 resolve(result);
-            }, function (err) {
+            }, function(err) {
                 reject(err);
             })
         } catch (err) {
@@ -628,16 +628,16 @@ Workflow.prototype.assignUser = function (processId, processSeq, subProcessId, s
  * @return ""
  *
  */
-Workflow.prototype.ui = function () {
+Workflow.prototype.ui = function() {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
     return {
-        getProcess: function (processId, lang) {
-            return new Promise(function (resolve, reject) {
+        getProcess: function(processId, lang) {
+            return new Promise(function(resolve, reject) {
                 try {
-                    userInterface.getProcess(processId, lang, _this).then(function (model) {
+                    userInterface.getProcess(processId, lang, _this).then(function(model) {
                         resolve(model);
-                    }, function (err) {
+                    }, function(err) {
                         reject(err);
                     })
                 } catch (err) {
@@ -665,14 +665,14 @@ Workflow.prototype.ui = function () {
  *
  */
 
-Workflow.prototype.getNodeValue = function (data, uuid) {
+Workflow.prototype.getNodeValue = function(data, uuid) {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         try {
-            helper.getNodeValue(data, _this, uuid).then(function (res) {
+            helper.getNodeValue(data, _this, uuid).then(function(res) {
                 resolve(res);
-            }, function (err) {
+            }, function(err) {
                 reject(err);
             });
         } catch (err) {
@@ -695,36 +695,36 @@ Workflow.prototype.getNodeValue = function (data, uuid) {
  *
  */
 
-Workflow.prototype.takeAssignment = function (spuuid) {
+Workflow.prototype.takeAssignment = function(spuuid) {
     // Re-assign the Workflow constructor instance as _this
     var _this = this;
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
 
         try {
 
             //Assignment are executing here
-            
+
             var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
             var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
             //Pushing older record in reAssign array
-            
-            if(spObject.step.assignmentHistory == undefined){
+
+            if (spObject.step.assignmentHistory == undefined) {
                 spObject.step.assignmentHistory = [];
             }
-            if(assignee.userId != "" && assignee.name != ""){
+            if (assignee.userId != "" && assignee.name != "") {
                 spObject.step.assignmentHistory.push(JSON.parse(JSON.stringify(assignee)));
             }
-            
 
-            
-            assignee.name = LOCAL_SETTINGS.SESSION.firstName + " "+ LOCAL_SETTINGS.SESSION.lastName;
+
+
+            assignee.name = LOCAL_SETTINGS.SESSION.firstName + " " + LOCAL_SETTINGS.SESSION.lastName;
             assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
             assignee.dateTime = moment().format();
             assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
             assignee.dueDateTime = '';
             assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
-           
+
 
             //fetch preWorkActions here 
 
@@ -736,11 +736,11 @@ Workflow.prototype.takeAssignment = function (spuuid) {
             if (stepObject.function.task.preWorkActions != undefined) {
 
                 var preWorkActions = stepObject.function.task.preWorkActions;
-                Process.preWorkActions(preWorkActions, _this).then(function (success) {
+                Process.preWorkActions(preWorkActions, _this).then(function(success) {
 
                     resolve(_this);
 
-                }, function (err) {
+                }, function(err) {
 
                     reject(err);
 
@@ -775,33 +775,33 @@ Workflow.prototype.takeAssignment = function (spuuid) {
  *
  */
 
-Workflow.prototype.condition = function (condition, spuuid) {
-    
+Workflow.prototype.condition = function(condition, spuuid) {
+
     var _this = this;
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
 
         try {
-            
+
             var operator = condition.operator;
             var dataBlock = condition.value.data;
 
-            if(condition.subject.indicator != undefined){
+            if (condition.subject.indicator != undefined) {
 
                 var setId = condition.subject.indicator.setId;
                 var modelScope = condition.subject.indicator.modelScope;
                 var elementPath = condition.subject.indicator.elementPath;
-                if(condition.subject.indicator.context == 'subProcess'){
+                if (condition.subject.indicator.context == 'subProcess') {
 
-                    var indicatorUUID = JSON.xpath("/subprocesses[_id eq '"+ spuuid +"']/indicators[id eq '"+ setId +"']/instances[1]/uuid", _this , {})[0];
-                    var indicatorModel = JSON.xpath("/indicators[_id eq '"+ indicatorUUID +"']", _this , {})[0];
+                    var indicatorUUID = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/indicators[id eq '" + setId + "']/instances[1]/uuid", _this, {})[0];
+                    var indicatorModel = JSON.xpath("/indicators[_id eq '" + indicatorUUID + "']", _this, {})[0];
                     var dataElement = indicatorModel.model[modelScope].data[setId];
-                    var value = eval("dataElement."+ elementPath);
-                    
-                    helper.getNodeValue(dataBlock, _this, spuuid).then(function (res) {
-                        var result = helper.compare(value, operator , res);
-                        
+                    var value = eval("dataElement." + elementPath);
+
+                    helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
+                        var result = helper.compare(value, operator, res);
+
                         resolve(result);
-                    }, function (err) {
+                    }, function(err) {
                         reject(err);
                     });
 
@@ -810,15 +810,25 @@ Workflow.prototype.condition = function (condition, spuuid) {
                 } else {
                     reject('Not implemented')
                 }
-                
 
-            } else if(condition.subject.indicatorWrapper != undefined){
+
+            } else if (condition.subject.indicatorWrapper != undefined) {
                 reject('Not implemented')
-            } else if(condition.subject.variable != undefined){
+            } else if (condition.subject.variable != undefined) {
                 reject('Not implemented')
-            } else if(condition.subject.subProcess != undefined){
-                reject('Not implemented')
-            } 
+            } else if (condition.subject.subProcess != undefined) {
+
+                var elementPath = condition.subject.subProcess.elementPath;
+                var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
+                var value = eval("spObject." + elementPath);
+                helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
+                    var result = helper.compare(value, operator, res);
+
+                    resolve(result);
+                }, function(err) {
+                    reject(err);
+                });
+            }
 
 
 
