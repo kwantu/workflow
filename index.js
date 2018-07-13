@@ -371,91 +371,132 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 processId = _this.config.processes[0]._id;
             }
 
-            // Get the current list of process instances
-            // var processSeq = 1;
-            var currentProcess = [];
-            _this.instance.processes.filter(function(processItem) {
-                if (processItem.id == processId) {
-                    currentProcess.push(processItem);
-                }
+            var buildParam = function(array) {
 
-            });
-            var processSeq = currentProcess.length + 1;
-            // var nextSeq = processSeq + 1;
-            // Push the process object into the array
-            var processModel = {
-                id: '',
-                seq: '',
-                subProcesses: []
+                var indName = "";
+                for (var l = 0; l < array.length - 1; l++) {
+                    indName = indName + "'" + array[l] + "',";
+                }
+                return '(' + indName + "'" + array[array.length - 1] + "')"
+
+            };
+            var toCheckArray = [];
+            var processIndicators = JSON.xpath("indicators/_id", configProcess[0].subProcesses[0], {});
+
+            var instanceType = configProcess[0].subProcesses[0].instanceType;
+            if (instanceType.newSequence != undefined) {
+                toCheckArray = processIndicators;
+            } else if (instanceType.newInstance != undefined) {
+                toCheckArray = JSON.xpath("/indicators[setId = " + buildParam(processIndicators) + " and cardinality eq 'single' ]/setId", app.SCOPE.APP_CONFIG, {});
+            } else {
+                toCheckArray = processIndicators;
             }
 
-            // 1. Update the process id and seq
-            processModel.id = processId;
-            processModel.seq = processSeq;
-            _this.instance.processes.push(processModel);
-            // Parameters
-            var subProcessId = configProcess[0].subProcesses[0]._id;
-            var subProcessSeq = 1;
-            _this.instance.processes.filter(function(processItem) {
+            var canCreateProcess = function(array) {
+
+                var count = JSON.xpath("count(/subprocesses[indicators/id = " + buildParam(array) + " and complete eq 'false'])", _this, {})[0];
+                return count == 0;
+
+            };
+
+            if (canCreateProcess(toCheckArray)) {
+
+                // var processSeq = 1;
+                var currentProcess = [];
+                _this.instance.processes.filter(function(processItem) {
+                    if (processItem.id == processId) {
+                        currentProcess.push(processItem);
+                    }
+
+                });
+                var processSeq = currentProcess.length + 1;
+                // var nextSeq = processSeq + 1;
+                // Push the process object into the array
+                var processModel = {
+                    id: '',
+                    seq: '',
+                    subProcesses: []
+                }
+
+                // 1. Update the process id and seq
+                processModel.id = processId;
+                processModel.seq = processSeq;
+                _this.instance.processes.push(processModel);
+                // Parameters
+                var subProcessId = configProcess[0].subProcesses[0]._id;
+                var subProcessSeq = 1;
+                _this.instance.processes.filter(function(processItem) {
                     if (processItem.id == processId && processItem.seq == processSeq) {
                         subProcessSeq = processItem.subProcesses.length + 1
                     }
 
-                })
+                });
                 // Call the subprocess method
 
-            Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function(subProcess) {
-                // Generate the uuid
+                Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function(subProcess) {
+                    // Generate the uuid
 
-                var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
+                    var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
 
-                // Build the sub-process reference object
+                    // Build the sub-process reference object
 
-                var groupKey = subProcess.data.groupKey;
-                //TODO: Change required to move isActive to subProcess file.Remove from here
-                if (subprofileId == undefined) {
-                    subprofileId = '';
-                }
-                var subProcessRef = {
-                    id: subProcessId,
-                    subprofileId: subprofileId,
-                    seq: subProcess.data["meta-data"].subProcessInsSeq,
-                    uuid: uuid,
-                    groupKey: groupKey
+                    var groupKey = subProcess.data.groupKey;
+                    //TODO: Change required to move isActive to subProcess file.Remove from here
+                    if (subprofileId == undefined) {
+                        subprofileId = '';
+                    }
+                    var subProcessRef = {
+                        id: subProcessId,
+                        subprofileId: subprofileId,
+                        seq: subProcess.data["meta-data"].subProcessInsSeq,
+                        uuid: uuid,
+                        groupKey: groupKey
 
-                }
-
-                // Add the reference to the process model
-                processModel.subProcesses.push(subProcessRef);
-                // Add the subProcess model to the subprocesses array
-                //_this.subprocesses.push(subProcess.data);
-                // _this.instance.processes.push(processModel);
-                for (var index = 0; index < _this.instance.processes.length; index++) {
-                    var processItem = _this.instance.processes[index];
-                    if (processItem.id == processId && processItem.seq == processSeq) {
-                        // Remove the current process from the array and add the updated processModel
-                        _this.instance.processes.splice(index, 1, processModel)
                     }
 
-                }
+                    // Add the reference to the process model
+                    processModel.subProcesses.push(subProcessRef);
+                    // Add the subProcess model to the subprocesses array
+                    //_this.subprocesses.push(subProcess.data);
+                    // _this.instance.processes.push(processModel);
+                    for (var index = 0; index < _this.instance.processes.length; index++) {
+                        var processItem = _this.instance.processes[index];
+                        if (processItem.id == processId && processItem.seq == processSeq) {
+                            // Remove the current process from the array and add the updated processModel
+                            _this.instance.processes.splice(index, 1, processModel)
+                        }
 
-                // Process the indicator documents workflow processes updates
-                var indicators = subProcess.data.indicators;
-                var step = subProcess.data.step;
-                Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
-                    var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
-                    resolve(success);
+                    }
+
+                    // Process the indicator documents workflow processes updates
+                    var indicators = subProcess.data.indicators;
+                    var step = subProcess.data.step;
+                    Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
+                        var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
+                        resolve(success);
+                    }, function(err) {
+                        reject(err);
+                    });
+
                 }, function(err) {
+                    _this.instance.processes = _this.instance.processes.filter(function(obj) {
+                        return !(obj.id == processId && obj.seq == processSeq);
+                    });
+                    console.log(err);
                     reject(err);
                 });
 
-            }, function(err) {
-                _this.instance.processes = _this.instance.processes.filter(function(obj) {
-                    return !(obj.id == processId && obj.seq == processSeq);
-                });
-                console.log(err);
-                reject(err);
-            });
+            } else {
+                reject("Cannot create workflow as other process using same SDO is not complete")
+            }
+
+
+
+
+
+
+
+
         } catch (err) {
             reject(err);
         }
