@@ -380,26 +380,40 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 return '(' + indName + "'" + array[array.length - 1] + "')"
 
             };
-            var toCheckArray = [];
-            var processIndicators = JSON.xpath("indicators/_id", configProcess[0].subProcesses[0], {});
 
+            var spId = configProcess[0].subProcesses[0]._id;
+            var toCheckArray = [];
             var instanceType = configProcess[0].subProcesses[0].instanceType;
-            if (instanceType.newSequence != undefined) {
-                toCheckArray = processIndicators;
-            } else if (instanceType.newInstance != undefined) {
-                toCheckArray = JSON.xpath("/indicators[setId = " + buildParam(processIndicators) + " and cardinality eq 'single' ]/setId", app.SCOPE.APP_CONFIG, {});
-            } else {
-                toCheckArray = processIndicators;
-            }
+            var processIndicators = JSON.xpath("indicators/_id", configProcess[0].subProcesses[0], {});
 
             var canCreateProcess = function(array) {
 
-                var count = JSON.xpath("count(/subprocesses[indicators/id = " + buildParam(array) + " and complete eq 'false'])", _this, {})[0];
-                return count == 0;
+                var countSingle = JSON.xpath("count(/indicators[setId = " + buildParam(array) + " and cardinality eq 'single' ]/setId)", app.SCOPE.APP_CONFIG, {});
+
+                if (countSingle > 0) {
+
+                    var count = JSON.xpath("count(/subprocesses[indicators/id = " + buildParam(array) + " and complete eq 'false'])", _this, {})[0];
+                    return (count == 0)
+
+                } else {
+
+
+                    if (instanceType.newSequence != undefined) {
+                        var count = JSON.xpath("count(/subprocesses[id eq " + spId + " and indicators/id = " + buildParam(array) + " and complete eq 'false'])", _this, {})[0];
+                        return (count == 0)
+                    } else if (instanceType.newInstance != undefined) {
+                        return true;
+                    } else {
+                        return true;
+                    }
+
+
+
+                }
 
             };
 
-            if (canCreateProcess(toCheckArray)) {
+            if (canCreateProcess(processIndicators)) {
 
                 // var processSeq = 1;
                 var currentProcess = [];
