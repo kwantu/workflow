@@ -317,7 +317,7 @@ Workflow.prototype.create = function() {
                     ]
                 };
 
-                model._id = _this.profile + ':processes:local';
+                model._id = "_local/" + _this.profile + ':processes:local';
                 //model._id = _this.profile + ':processes';
 
                 model.version = _this.config.version;
