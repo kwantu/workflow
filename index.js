@@ -446,8 +446,8 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
 
                 });
                 // Call the subprocess method
-
-                Process.subProcess(processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function(subProcess) {
+                var inputUUID = generateUUID();
+                Process.subProcess(inputUUID, processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function(subProcess) {
                     // Generate the uuid
 
                     var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
