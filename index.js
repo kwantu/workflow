@@ -447,58 +447,77 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 });
                 // Call the subprocess method
                 var inputUUID = generateUUID();
-                Process.subProcess(inputUUID, processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function(subProcess) {
-                    // Generate the uuid
+                //create txn
+                var txnPacket = {
+                    "communityId": app.SCOPE.communityId,
+                    "uuid": inputUUID,
+                    "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
+                    "transactionType": "subProcess",
+                    "documents": []
+                };
 
-                    var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
+                dao.startTransaction(txnPacket).then(function(succ) {
 
-                    // Build the sub-process reference object
+                    Process.subProcess(inputUUID, processId, processSeq, subProcessId, subProcessSeq, subprofileId, data, _this).then(function(subProcess) {
+                        // Generate the uuid
 
-                    var groupKey = subProcess.data.groupKey;
-                    //TODO: Change required to move isActive to subProcess file.Remove from here
-                    if (subprofileId == undefined) {
-                        subprofileId = '';
-                    }
-                    var subProcessRef = {
-                        id: subProcessId,
-                        subprofileId: subprofileId,
-                        seq: subProcess.data["meta-data"].subProcessInsSeq,
-                        uuid: uuid,
-                        groupKey: groupKey
+                        var uuid = subProcess.data._id; //_this.profile + ':' + _this.app + ':' + processId + ':' + processSeq + ':' + subProcessId + ':' + subProcessSeq;
 
-                    }
+                        // Build the sub-process reference object
 
-                    // Add the reference to the process model
-                    processModel.subProcesses.push(subProcessRef);
-                    // Add the subProcess model to the subprocesses array
-                    //_this.subprocesses.push(subProcess.data);
-                    // _this.instance.processes.push(processModel);
-                    for (var index = 0; index < _this.instance.processes.length; index++) {
-                        var processItem = _this.instance.processes[index];
-                        if (processItem.id == processId && processItem.seq == processSeq) {
-                            // Remove the current process from the array and add the updated processModel
-                            _this.instance.processes.splice(index, 1, processModel)
+                        var groupKey = subProcess.data.groupKey;
+                        //TODO: Change required to move isActive to subProcess file.Remove from here
+                        if (subprofileId == undefined) {
+                            subprofileId = '';
+                        }
+                        var subProcessRef = {
+                            id: subProcessId,
+                            subprofileId: subprofileId,
+                            seq: subProcess.data["meta-data"].subProcessInsSeq,
+                            uuid: uuid,
+                            groupKey: groupKey
+
                         }
 
-                    }
+                        // Add the reference to the process model
+                        processModel.subProcesses.push(subProcessRef);
+                        // Add the subProcess model to the subprocesses array
+                        //_this.subprocesses.push(subProcess.data);
+                        // _this.instance.processes.push(processModel);
+                        for (var index = 0; index < _this.instance.processes.length; index++) {
+                            var processItem = _this.instance.processes[index];
+                            if (processItem.id == processId && processItem.seq == processSeq) {
+                                // Remove the current process from the array and add the updated processModel
+                                _this.instance.processes.splice(index, 1, processModel)
+                            }
 
-                    // Process the indicator documents workflow processes updates
-                    var indicators = subProcess.data.indicators;
-                    var step = subProcess.data.step;
-                    Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
-                        var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
-                        resolve(success);
+                        }
+
+                        // Process the indicator documents workflow processes updates
+                        var indicators = subProcess.data.indicators;
+                        var step = subProcess.data.step;
+                        Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
+                            var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
+                            // commit call
+                            resolve(success);
+                        }, function(err) {
+                            reject(err);
+                        });
+
                     }, function(err) {
+                        _this.instance.processes = _this.instance.processes.filter(function(obj) {
+                            return !(obj.id == processId && obj.seq == processSeq);
+                        });
+                        console.log(err);
                         reject(err);
                     });
 
-                }, function(err) {
-                    _this.instance.processes = _this.instance.processes.filter(function(obj) {
-                        return !(obj.id == processId && obj.seq == processSeq);
-                    });
+                }).catch(function(err) {
                     console.log(err);
                     reject(err);
                 });
+
+
 
             } else {
                 reject("Cannot create workflow as other process using same SDO is not complete")
@@ -659,11 +678,42 @@ Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, su
     var _this = this;
     return new Promise(function(resolve, reject) {
         try {
-            Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, uuid, _this).then(function(result) {
-                resolve(result);
-            }, function(err) {
+            var spObject = JSON.xpath("/subprocesses[_id eq '" + uuid + "']", app.SCOPE.workflow, {})[0];
+            var spRev = spObject._rev;
+            var txnPacket = {
+                "communityId": app.SCOPE.communityId,
+                "uuid": uuid,
+                "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
+                "transactionType": "subProcess",
+                "documents": [{
+                    "document": uuid,
+                    "rev": spRev
+                }]
+            };
+
+            dao.startTransaction(txnPacket).then(function(succ) {
+                Process.assignUser(processId, processSeq, subProcessId, subProcessSeq, user, uuid, _this).then(function(result) {
+
+                    var txnPacket = app.SCOPE.txn;
+                    dao.commitTransaction(txnPacket).then(function(succ) {
+
+                        resolve(result);
+
+                    }).catch(function(err) {
+                        reject(err);
+                    });
+
+
+                }, function(err) {
+                    reject(err);
+                })
+
+            }).catch(function(err) {
                 reject(err);
-            })
+            });
+
+
+
         } catch (err) {
             reject(err);
         }
@@ -757,55 +807,92 @@ Workflow.prototype.takeAssignment = function(spuuid) {
     return new Promise(function(resolve, reject) {
 
         try {
+            var commitPacket = function(obj) {
+                var txnPacket = app.SCOPE.txn;
+                dao.commitTransaction(txnPacket).then(function(succ) {
 
-            //Assignment are executing here
+                    resolve(obj);
 
-            var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
-            var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
-            //Pushing older record in reAssign array
-
-            if (spObject.step.assignmentHistory == undefined) {
-                spObject.step.assignmentHistory = [];
-            }
-            if (assignee.userId != "" && assignee.name != "") {
-                spObject.step.assignmentHistory.push(JSON.parse(JSON.stringify(assignee)));
-            }
-
-
-
-            assignee.name = LOCAL_SETTINGS.SESSION.firstName + " " + LOCAL_SETTINGS.SESSION.lastName;
-            assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
-            assignee.dateTime = moment().format();
-            assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
-            assignee.dueDateTime = '';
-            assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
-
-
-            //fetch preWorkActions here 
-
-            var processId = JSON.xpath("/instance/processes[subProcesses/uuid eq '" + spuuid + "']/id", _this, {})[0];
-            var subProcessId = JSON.xpath("/instance/processes/subProcesses[uuid eq '" + spuuid + "']/id", _this, {})[0];
-            var stepId = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/id", _this, {})[0];
-            var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
-
-            if (stepObject.function.task.preWorkActions != undefined) {
-
-                var preWorkActions = stepObject.function.task.preWorkActions;
-                Process.preWorkActions(preWorkActions, _this).then(function(success) {
-
-                    resolve(_this);
-
-                }, function(err) {
-
+                }).catch(function(err) {
                     reject(err);
-
                 });
+            };
+            var localProcess = function() {
+                //Assignment are executing here
 
-            } else {
+                var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
+                var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
+                //Pushing older record in reAssign array
 
-                resolve(_this);
+                if (spObject.step.assignmentHistory == undefined) {
+                    spObject.step.assignmentHistory = [];
+                }
+                if (assignee.userId != "" && assignee.name != "") {
+                    spObject.step.assignmentHistory.push(JSON.parse(JSON.stringify(assignee)));
+                }
 
+
+
+                assignee.name = LOCAL_SETTINGS.SESSION.firstName + " " + LOCAL_SETTINGS.SESSION.lastName;
+                assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+                assignee.dateTime = moment().format();
+                assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
+                assignee.dueDateTime = '';
+                assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+
+
+                //fetch preWorkActions here 
+
+                var processId = JSON.xpath("/instance/processes[subProcesses/uuid eq '" + spuuid + "']/id", _this, {})[0];
+                var subProcessId = JSON.xpath("/instance/processes/subProcesses[uuid eq '" + spuuid + "']/id", _this, {})[0];
+                var stepId = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/id", _this, {})[0];
+                var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
+
+                if (stepObject.function.task.preWorkActions != undefined) {
+
+                    var preWorkActions = stepObject.function.task.preWorkActions;
+                    Process.preWorkActions(preWorkActions, _this).then(function(success) {
+
+                        commitPacket(_this);
+
+                    }, function(err) {
+
+                        reject(err);
+
+                    });
+
+                } else {
+
+                    commitPacket(_this);
+
+                }
             }
+
+            var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {})[0];
+            var spRev = spObject._rev;
+            var txnPacket = {
+                "communityId": app.SCOPE.communityId,
+                "uuid": spuuid,
+                "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
+                "transactionType": "subProcess",
+                "documents": [{
+                    "document": spuuid,
+                    "rev": spRev
+                }]
+            };
+
+            dao.startTransaction(txnPacket).then(function(succ) {
+
+                localProcess();
+
+            }).catch(function(err) {
+                reject(err);
+            });
+
+
+
+
+
 
         } catch (err) {
 
