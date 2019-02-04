@@ -514,7 +514,15 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
 
                 }).catch(function(err) {
                     console.log(err);
-                    reject(err);
+                    if(err.responseJSON != undefined && err.responseJSON.message != undefined){
+                        reject(err.responseJSON.message);
+                    } else if(err.responseText != undefined) {
+                        reject(err.responseText);
+                    } else {
+                        reject(err);
+                    }
+                    
+                    
                 });
 
 
