@@ -453,7 +453,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                     "uuid": inputUUID,
                     "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
                     "transactionType": "subProcess",
-                    "documents": []
+                    "documents": [{"document": inputUUID, "rev": "0"}]
                 };
 
                 dao.startTransaction(txnPacket).then(function(succ) {
