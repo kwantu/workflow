@@ -916,15 +916,43 @@ Workflow.prototype.condition = function(condition, spuuid) {
 
 
 
+                } else if (condition.subject.indicator.context == 'subProfile') {
+
+                    
+                    var indicatorModel = JSON.xpath("/indicators[category/term eq '" + setId + "']", _this, {})[0];
+                    
+                    var dataElement = indicatorModel.model[modelScope].data[setId];
+                    var value = eval("dataElement." + elementPath);
+
+                    helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
+                        var result = helper.compare(value, operator, res);
+
+                        resolve(result);
+                    }, function(err) {
+                        reject(err);
+                    });
+
+
+
                 } else {
                     reject('Not implemented')
                 }
 
 
             } else if (condition.subject.indicatorWrapper != undefined) {
-                reject('Not implemented')
+
+                reject('Not implemented');
+
             } else if (condition.subject.variable != undefined) {
-                reject('Not implemented')
+                var value = dataBlock.value.data;
+                helper.getNodeValue(condition.subject, _this, spuuid).then(function(res) {
+                    var result = helper.compare(value, operator, res);
+                    resolve(result);
+                }, function(err) {
+                    reject(err);
+                });
+
+               // reject('Not implemented')
             } else if (condition.subject.subProcess != undefined) {
 
                 var elementPath = condition.subject.subProcess.elementPath;
