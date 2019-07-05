@@ -578,7 +578,7 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
             var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
             var subProcessSeq = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/meta-data/subProcessInsSeq", app.SCOPE.workflow, {})[0];
             if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
+                //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
             }
             // Update the current sub-process step data
             var update = function(type, result) {
@@ -701,7 +701,7 @@ Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, su
         try {
             var spObject = JSON.xpath("/subprocesses[_id eq '" + uuid + "']", app.SCOPE.workflow, {})[0];
             if(JSON.xpath("/subprocesses[_id eq '" + uuid + "']", app.SCOPE.workflow, {}).length == 0){
-                alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
+                //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
             }
             var spRev = spObject._rev;
             var txnPacket = {
@@ -828,7 +828,7 @@ Workflow.prototype.takeAssignment = function(spuuid) {
 
            var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
             if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
+                //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
             }
            var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
            //Pushing older record in reAssign array
@@ -857,7 +857,7 @@ Workflow.prototype.takeAssignment = function(spuuid) {
            
            var stepId = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/id", _this, {})[0];
            if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-            alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
+            //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
         }
            var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
 
@@ -926,7 +926,7 @@ Workflow.prototype.condition = function(condition, spuuid) {
 
                     var indicatorUUID = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/indicators[id eq '" + setId + "']/instances[1]/uuid", _this, {})[0];
                     if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                        alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
+                        //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
                     }
                     //SP:TODO DONE
                     var indicatorModel = JSON.xpath("/indicators[_id eq '" + indicatorUUID + "']", _this, {})[0];
@@ -985,7 +985,7 @@ Workflow.prototype.condition = function(condition, spuuid) {
                 var elementPath = condition.subject.subProcess.elementPath;
                 var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
                 if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                    alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
+                    //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
                 }
                 var value = eval("spObject." + elementPath);
                 helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
