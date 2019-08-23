@@ -577,10 +577,7 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
             var model = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step", app.SCOPE.workflow, {})[0];
             var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
             var subProcessSeq = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/meta-data/subProcessInsSeq", app.SCOPE.workflow, {})[0];
-            if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
-            }
-            // Update the current sub-process step data
+            
             var update = function(type, result) {
                 _this.instance.processes.filter(function(processItem) {
                     if (processItem.id == processId && processItem.seq == processSeq) {
@@ -700,9 +697,7 @@ Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, su
     return new Promise(function(resolve, reject) {
         try {
             var spObject = JSON.xpath("/subprocesses[_id eq '" + uuid + "']", app.SCOPE.workflow, {})[0];
-            if(JSON.xpath("/subprocesses[_id eq '" + uuid + "']", app.SCOPE.workflow, {}).length == 0){
-                //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
-            }
+            
             var spRev = spObject._rev;
             var txnPacket = {
                 "communityId": app.SCOPE.communityId,
@@ -827,9 +822,7 @@ Workflow.prototype.takeAssignment = function(spuuid) {
            //Assignment are executing here
 
            var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
-            if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
-            }
+            
            var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
            //Pushing older record in reAssign array
 
@@ -856,9 +849,7 @@ Workflow.prototype.takeAssignment = function(spuuid) {
            var subProcessId = JSON.xpath("/instance/processes/subProcesses[uuid eq '" + spuuid + "']/id", _this, {})[0];
            
            var stepId = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/id", _this, {})[0];
-           if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-            //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
-        }
+         
            var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
 
            if (stepObject.function.task.preWorkActions != undefined) {
@@ -925,10 +916,7 @@ Workflow.prototype.condition = function(condition, spuuid) {
                 if (condition.subject.indicator.context == 'subProcess') {
 
                     var indicatorUUID = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/indicators[id eq '" + setId + "']/instances[1]/uuid", _this, {})[0];
-                    if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                        //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
-                    }
-                    //SP:TODO DONE
+                   
                     var indicatorModel = JSON.xpath("/indicators[_id eq '" + indicatorUUID + "']", _this, {})[0];
                     var dataElement = indicatorModel.model[modelScope].data[setId];
                     var value = eval("dataElement." + elementPath);
@@ -984,9 +972,7 @@ Workflow.prototype.condition = function(condition, spuuid) {
 
                 var elementPath = condition.subject.subProcess.elementPath;
                 var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
-                if(JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", app.SCOPE.workflow, {}).length == 0){
-                    //alert("Please contact support. ERROR SP CHANGES");throw Error("SP WORK"); 
-                }
+               
                 var value = eval("spObject." + elementPath);
                 helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
                     var result = helper.compare(value, operator, res);
