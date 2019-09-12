@@ -481,7 +481,8 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                             subprofileId: subprofileId,
                             seq: subProcess.data["meta-data"].subProcessInsSeq,
                             uuid: uuid,
-                            groupKey: groupKey
+                            groupKey: groupKey,
+                            label: subProcess.data.label
 
                         }
 
