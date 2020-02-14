@@ -503,7 +503,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                         // Process the indicator documents workflow processes updates
                         var indicators = subProcess.data.indicators;
                         var step = subProcess.data.step;
-                        Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
+                        Process.indicatorDocs(processId, indicators, step, _this, uuid).then(function(result) {
                             var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
                             // commit call
                             resolve(success);
