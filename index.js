@@ -453,6 +453,9 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 });
                 // Call the subprocess method
                 var inputUUID = generateUUID();
+                if(data.subprocessUUID != undefined && data.subprocessUUID.length > 0){
+                    inputUUID = data.subprocessUUID;
+                }
                 //create txn
                 var txnPacket = {
                     "communityId": app.SCOPE.communityId,
