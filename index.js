@@ -623,11 +623,12 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
                 })
             }
 
+            var postActions = {}
 
-            if (stepObject.function.task != undefined && stepObject.function.task.postActions != undefined) {
-
-
-                var postActions = stepObject.function.task.postActions;
+            if(stepObject.function.task != undefined && stepObject.function.task.postActions != undefined){
+            
+                postActions = stepObject.function.task.postActions;
+                
                 Process.postActions(postActions, _this, spuuid).then(function(success) {
 
                     Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
@@ -651,10 +652,32 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 
                 });
 
+            } else if(stepObject.function.server != undefined && stepObject.function.server.postActions != undefined){
+            
+                postActions = stepObject.function.server.postActions;
+                Process.postActions(postActions, _this, spuuid).then(function(success) {
 
+                    Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
+
+                        if (result.data.subProcessComplete) {
+
+                            update('stepComplete', result);
+                        } else {
+
+                            update('step', result);
+                        }
+
+                    }, function(err) {
+
+                        reject(err);
+                    });
+
+                }, function(err) {
+
+                    reject(err);
+
+                });
             } else {
-
-
                 Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
 
                     if (result.data.subProcessComplete) {
@@ -669,8 +692,8 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 
                     reject(err);
                 });
-
             }
+            
 
         } catch (err) {
 
