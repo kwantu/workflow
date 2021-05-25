@@ -986,9 +986,9 @@ Workflow.prototype.condition = function(condition, spuuid) {
                 reject('Not implemented');
 
             } else if (condition.subject.variable != undefined) {
-                var value = dataBlock.value.data;
+               // var value = dataBlock.value.data;
 
-                helper.getNodeValue(value, _this, spuuid).then(function(rhs) {
+                helper.getNodeValue(dataBlock , _this, spuuid).then(function(rhs) {
                    
                     helper.getNodeValue(condition.subject, _this, spuuid).then(function(lhs) {
                         var result = helper.compare(lhs, operator, rhs);
