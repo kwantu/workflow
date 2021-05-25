@@ -987,12 +987,22 @@ Workflow.prototype.condition = function(condition, spuuid) {
 
             } else if (condition.subject.variable != undefined) {
                 var value = dataBlock.value.data;
-                helper.getNodeValue(condition.subject, _this, spuuid).then(function(res) {
-                    var result = helper.compare(value, operator, res);
-                    resolve(result);
+
+                helper.getNodeValue(value, _this, spuuid).then(function(rhs) {
+                   
+                    helper.getNodeValue(condition.subject, _this, spuuid).then(function(lhs) {
+                        var result = helper.compare(lhs, operator, rhs);
+                        resolve(result);
+                    }, function(err) {
+                        reject(err);
+                    });
+
+
                 }, function(err) {
                     reject(err);
                 });
+
+               
 
                // reject('Not implemented')
             } else if (condition.subject.subProcess != undefined) {
