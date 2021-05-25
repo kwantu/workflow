@@ -12,7 +12,7 @@ echo "*                                                  *"
 echo "*                                                  *"
 echo "*                                                  *"
 npm run browserify
-cp dist/workflow.js dist/workflow.min.js /Users/satinders/Development/mobile1.8/app/scripts/
+cp dist/workflow.js dist/workflow.min.js /Users/hasan/kwantu/mobile1.8/app/scripts/
 echo "*                                                  *"
 echo "*                                                  *"
 echo "*                                                  *"
