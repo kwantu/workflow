@@ -946,7 +946,15 @@ Workflow.prototype.condition = function(condition, spuuid) {
                    
                     var indicatorModel = JSON.xpath("/indicators[_id eq '" + indicatorUUID + "']", _this, {})[0];
                     var dataElement = indicatorModel.model[modelScope].data[setId];
-                    var value = eval("dataElement." + elementPath);
+                    
+                    var finalValue = dataElement;
+                    var pathToElement = elementPath == "" ? [] : elementPath.split(/['"\[\].]+/);
+
+                    for (var k = 0; k < pathToElement.length; k++) {
+                        if(pathToElement[k] == "") continue;
+                        finalValue = finalValue[pathToElement[k]];
+                    }
+                    var value = finalValue; 
 
                     helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
                         var result = helper.compare(value, operator, res);
@@ -964,7 +972,15 @@ Workflow.prototype.condition = function(condition, spuuid) {
                     var indicatorModel = JSON.xpath("/indicators[category/term eq '" + setId + "']", _this, {})[0];
                     
                     var dataElement = indicatorModel.model[modelScope].data[setId];
-                    var value = eval("dataElement." + elementPath);
+                    
+                    var finalValue = dataElement;
+                    var pathToElement = elementPath == "" ? [] : elementPath.split(/['"\[\].]+/);
+
+                    for (var k = 0; k < pathToElement.length; k++) {
+                        if(pathToElement[k] == "") continue;
+                        finalValue = finalValue[pathToElement[k]];
+                    }
+                    var value = finalValue; 
 
                     helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
                         var result = helper.compare(value, operator, res);
@@ -1010,7 +1026,15 @@ Workflow.prototype.condition = function(condition, spuuid) {
                 var elementPath = condition.subject.subProcess.elementPath;
                 var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
                
-                var value = eval("spObject." + elementPath);
+                var finalValue = spObject;
+                var pathToElement = elementPath == "" ? [] : elementPath.split(/['"\[\].]+/);
+
+                for (var k = 0; k < pathToElement.length; k++) {
+                    if(pathToElement[k] == "") continue;
+                    finalValue = finalValue[pathToElement[k]];
+                }
+                var value = finalValue; 
+                
                 helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
                     var result = helper.compare(value, operator, res);
 
