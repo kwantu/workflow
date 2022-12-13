@@ -460,7 +460,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 var txnPacket = {
                     "communityId": app.SCOPE.communityId,
                     "uuid": inputUUID,
-                    "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
+                    "userId": _lclx.SUBSCRIPTIONS.userId,
                     "transactionType": "subProcess",
                     "documents": [{"document": inputUUID, "rev": "0"}]
                 };
@@ -729,7 +729,7 @@ Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, su
             var txnPacket = {
                 "communityId": app.SCOPE.communityId,
                 "uuid": uuid,
-                "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
+                "userId": _lclx.SUBSCRIPTIONS.userId,
                 "transactionType": "subProcess",
                 "documents": [{
                     "document": uuid,
@@ -862,12 +862,12 @@ Workflow.prototype.takeAssignment = function(spuuid) {
 
 
 
-           assignee.name = LOCAL_SETTINGS.SESSION.firstName + " " + LOCAL_SETTINGS.SESSION.lastName;
-           assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+           assignee.name = _lclx.SESSION.firstName + " " + _lclx.SESSION.lastName;
+           assignee.userId = _lclx.SUBSCRIPTIONS.userId + "";
            assignee.dateTime = moment().format();
            assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
            assignee.dueDateTime = '';
-           assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+           assignee.by = _lclx.SUBSCRIPTIONS.userId + "";
 
 
            //fetch preWorkActions here 
