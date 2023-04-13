@@ -317,7 +317,7 @@ Workflow.prototype.create = function() {
                     ]
                 };
 
-                model._id = _this.profile + ':processes:local';
+                model._id = "_local/" + _this.profile + ':processes';
                 //model._id = _this.profile + ':processes';
 
                 model.version = _this.config.version;
@@ -387,20 +387,26 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
             var processIndicators = JSON.xpath("indicators/_id", configProcess[0].subProcesses[0], {});
 
             var canCreateProcess = function(array) {
-
-                var countSingle = JSON.xpath("count(/indicators[setId = " + buildParam(array) + " and cardinality eq 'single' ]/setId)", app.SCOPE.APP_CONFIG, {});
+                
+                
+                //SP:TODO DONE
+                var countSingleList = JSON.xpath("/indicators[setId = " + buildParam(array) + " and cardinality eq 'single' ]/setId", app.SCOPE.APP_CONFIG, {});
+                var countSingle = countSingleList.length;
 
                 if (countSingle > 0) {
 
-                    var count = JSON.xpath("count(/subprocesses[indicators/id = " + buildParam(array) + " and complete eq 'false'])", _this, {})[0];
+                    var involvedprocesses = JSON.xpath("/processes/subProcesses[indicators/_id = "+ buildParam(countSingleList) +"]/_id", _this.config,{});
+                    var count = JSON.xpath("count(/instance/processes/subProcesses[id = "+ buildParam(involvedprocesses) +" and complete = false()])", _this,{})[0];
                     return (count == 0)
 
                 } else {
 
 
                     if (instanceType.newSequence != undefined) {
-                        var count = JSON.xpath("count(/subprocesses[id eq " + spId + " and indicators/id = " + buildParam(array) + " and complete eq 'false'])", _this, {})[0];
+                        
+                        var count = JSON.xpath("count(/instance/processes/subProcesses[id eq '"+ spId +"' and complete eq 'false'])", _this , {})[0];
                         return (count == 0)
+                    
                     } else if (instanceType.newInstance != undefined) {
                         return true;
                     } else {
@@ -447,11 +453,14 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 });
                 // Call the subprocess method
                 var inputUUID = generateUUID();
+                if(data.subprocessUUID != undefined && data.subprocessUUID.length > 0){
+                    inputUUID = data.subprocessUUID;
+                }
                 //create txn
                 var txnPacket = {
                     "communityId": app.SCOPE.communityId,
                     "uuid": inputUUID,
-                    "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
+                    "userId": _lclx.SUBSCRIPTIONS.userId,
                     "transactionType": "subProcess",
                     "documents": [{"document": inputUUID, "rev": "0"}]
                 };
@@ -475,7 +484,8 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                             subprofileId: subprofileId,
                             seq: subProcess.data["meta-data"].subProcessInsSeq,
                             uuid: uuid,
-                            groupKey: groupKey
+                            groupKey: groupKey,
+                            label: subProcess.data.label
 
                         }
 
@@ -496,7 +506,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                         // Process the indicator documents workflow processes updates
                         var indicators = subProcess.data.indicators;
                         var step = subProcess.data.step;
-                        Process.indicatorDocs(processId, indicators, step, _this).then(function(result) {
+                        Process.indicatorDocs(processId, indicators, step, _this, uuid).then(function(result) {
                             var success = util.success('Process: ' + _this.config.processes[0]._id + ' initialized successfully.', subProcessRef);
                             // commit call
                             resolve(success);
@@ -571,8 +581,7 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
             var model = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step", app.SCOPE.workflow, {})[0];
             var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
             var subProcessSeq = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/meta-data/subProcessInsSeq", app.SCOPE.workflow, {})[0];
-
-            // Update the current sub-process step data
+            
             var update = function(type, result) {
                 _this.instance.processes.filter(function(processItem) {
                     if (processItem.id == processId && processItem.seq == processSeq) {
@@ -593,6 +602,11 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 
                                             subProcessObj.step = result.data.step;
                                             subProcessObj.complete = true
+
+                                            var insObject = JSON.xpath("/instance/processes/subProcesses[uuid eq '"+ subProcessObj._id +"']",app.SCOPE.workflow,{})[0];
+                                            insObject.complete = true;
+
+
                                             var success = util.success(result.message, subProcessObj.step);
 
                                             resolve(success);
@@ -609,11 +623,12 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
                 })
             }
 
+            var postActions = {}
 
-            if (stepObject.function.task != undefined && stepObject.function.task.postActions != undefined) {
-
-
-                var postActions = stepObject.function.task.postActions;
+            if(stepObject.function.task != undefined && stepObject.function.task.postActions != undefined){
+            
+                postActions = stepObject.function.task.postActions;
+                
                 Process.postActions(postActions, _this, spuuid).then(function(success) {
 
                     Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
@@ -637,10 +652,32 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 
                 });
 
+            } else if(stepObject.function.server != undefined && stepObject.function.server.postActions != undefined){
+            
+                postActions = stepObject.function.server.postActions;
+                Process.postActions(postActions, _this, spuuid).then(function(success) {
 
+                    Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
+
+                        if (result.data.subProcessComplete) {
+
+                            update('stepComplete', result);
+                        } else {
+
+                            update('step', result);
+                        }
+
+                    }, function(err) {
+
+                        reject(err);
+                    });
+
+                }, function(err) {
+
+                    reject(err);
+
+                });
             } else {
-
-
                 Process.transition(processId, processSeq, subProcessId, subProcessSeq, stepId, transitionId, data, _this, spuuid, model).then(function(result) {
 
                     if (result.data.subProcessComplete) {
@@ -655,8 +692,8 @@ Workflow.prototype.transition = function(processId, processSeq, subProcessId, su
 
                     reject(err);
                 });
-
             }
+            
 
         } catch (err) {
 
@@ -687,11 +724,12 @@ Workflow.prototype.assignUser = function(processId, processSeq, subProcessId, su
     return new Promise(function(resolve, reject) {
         try {
             var spObject = JSON.xpath("/subprocesses[_id eq '" + uuid + "']", app.SCOPE.workflow, {})[0];
+            
             var spRev = spObject._rev;
             var txnPacket = {
                 "communityId": app.SCOPE.communityId,
                 "uuid": uuid,
-                "userId": LOCAL_SETTINGS.SUBSCRIPTIONS.userId,
+                "userId": _lclx.SUBSCRIPTIONS.userId,
                 "transactionType": "subProcess",
                 "documents": [{
                     "document": uuid,
@@ -811,6 +849,7 @@ Workflow.prototype.takeAssignment = function(spuuid) {
            //Assignment are executing here
 
            var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
+            
            var assignee = JSON.xpath("/step/assignedTo", spObject, {})[0];
            //Pushing older record in reAssign array
 
@@ -823,19 +862,21 @@ Workflow.prototype.takeAssignment = function(spuuid) {
 
 
 
-           assignee.name = LOCAL_SETTINGS.SESSION.firstName + " " + LOCAL_SETTINGS.SESSION.lastName;
-           assignee.userId = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+           assignee.name = _lclx.SESSION.firstName + " " + _lclx.SESSION.lastName;
+           assignee.userId = _lclx.SUBSCRIPTIONS.userId + "";
            assignee.dateTime = moment().format();
            assignee.type = ASSIGNMENT_TYPE_ACCEPTANCE;
            assignee.dueDateTime = '';
-           assignee.by = LOCAL_SETTINGS.SUBSCRIPTIONS.userId + "";
+           assignee.by = _lclx.SUBSCRIPTIONS.userId + "";
 
 
            //fetch preWorkActions here 
 
            var processId = JSON.xpath("/instance/processes[subProcesses/uuid eq '" + spuuid + "']/id", _this, {})[0];
            var subProcessId = JSON.xpath("/instance/processes/subProcesses[uuid eq '" + spuuid + "']/id", _this, {})[0];
+           
            var stepId = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/step/id", _this, {})[0];
+         
            var stepObject = JSON.xpath("/processes[_id eq '" + processId + "']/subProcesses[_id eq '" + subProcessId + "']/steps[_id eq '" + stepId + "']", _this.config, {})[0];
 
            if (stepObject.function.task.preWorkActions != undefined) {
@@ -902,9 +943,18 @@ Workflow.prototype.condition = function(condition, spuuid) {
                 if (condition.subject.indicator.context == 'subProcess') {
 
                     var indicatorUUID = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']/indicators[id eq '" + setId + "']/instances[1]/uuid", _this, {})[0];
+                   
                     var indicatorModel = JSON.xpath("/indicators[_id eq '" + indicatorUUID + "']", _this, {})[0];
                     var dataElement = indicatorModel.model[modelScope].data[setId];
-                    var value = eval("dataElement." + elementPath);
+                    
+                    var finalValue = dataElement;
+                    var pathToElement = elementPath == "" ? [] : elementPath.split(/['"\[\].]+/);
+
+                    for (var k = 0; k < pathToElement.length; k++) {
+                        if(pathToElement[k] == "") continue;
+                        finalValue = finalValue[pathToElement[k]];
+                    }
+                    var value = finalValue; 
 
                     helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
                         var result = helper.compare(value, operator, res);
@@ -918,11 +968,19 @@ Workflow.prototype.condition = function(condition, spuuid) {
 
                 } else if (condition.subject.indicator.context == 'subProfile') {
 
-                    
+                    //SP:TODO DONE
                     var indicatorModel = JSON.xpath("/indicators[category/term eq '" + setId + "']", _this, {})[0];
                     
                     var dataElement = indicatorModel.model[modelScope].data[setId];
-                    var value = eval("dataElement." + elementPath);
+                    
+                    var finalValue = dataElement;
+                    var pathToElement = elementPath == "" ? [] : elementPath.split(/['"\[\].]+/);
+
+                    for (var k = 0; k < pathToElement.length; k++) {
+                        if(pathToElement[k] == "") continue;
+                        finalValue = finalValue[pathToElement[k]];
+                    }
+                    var value = finalValue; 
 
                     helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
                         var result = helper.compare(value, operator, res);
@@ -944,20 +1002,39 @@ Workflow.prototype.condition = function(condition, spuuid) {
                 reject('Not implemented');
 
             } else if (condition.subject.variable != undefined) {
-                var value = dataBlock.value.data;
-                helper.getNodeValue(condition.subject, _this, spuuid).then(function(res) {
-                    var result = helper.compare(value, operator, res);
-                    resolve(result);
+               // var value = dataBlock.value.data;
+
+                helper.getNodeValue(dataBlock , _this, spuuid).then(function(rhs) {
+                   
+                    helper.getNodeValue(condition.subject, _this, spuuid).then(function(lhs) {
+                        var result = helper.compare(lhs, operator, rhs);
+                        resolve(result);
+                    }, function(err) {
+                        reject(err);
+                    });
+
+
                 }, function(err) {
                     reject(err);
                 });
+
+               
 
                // reject('Not implemented')
             } else if (condition.subject.subProcess != undefined) {
 
                 var elementPath = condition.subject.subProcess.elementPath;
                 var spObject = JSON.xpath("/subprocesses[_id eq '" + spuuid + "']", _this, {})[0];
-                var value = eval("spObject." + elementPath);
+               
+                var finalValue = spObject;
+                var pathToElement = elementPath == "" ? [] : elementPath.split(/['"\[\].]+/);
+
+                for (var k = 0; k < pathToElement.length; k++) {
+                    if(pathToElement[k] == "") continue;
+                    finalValue = finalValue[pathToElement[k]];
+                }
+                var value = finalValue; 
+                
                 helper.getNodeValue(dataBlock, _this, spuuid).then(function(res) {
                     var result = helper.compare(value, operator, res);
 
