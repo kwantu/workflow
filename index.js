@@ -370,7 +370,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
                 configProcess.push(_this.config.processes[0]);
                 processId = _this.config.processes[0]._id;
             }
-            var scopeProcesses = JSON.xpath("/processes[subProcesses/type " + (subprofileId != undefined && subProcessId.length > 0 ? "eq" : "ne") + " 'subprofile']/_id", _this.config, {});
+            var scopeProcesses = JSON.xpath("/processes[subProcesses/type " + (subprofileId != undefined && subprofileId.length > 0 ? "eq" : "ne") + " 'subprofile']/_id", _this.config, {});
             if(scopeProcesses.indexOf(processId) == -1){
                 var error = util.error('WFConfigError', 'Unable to load process configuration. Kindly refresh the page and try again.');
                 reject(error);
