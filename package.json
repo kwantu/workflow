@@ -40,8 +40,6 @@
   "dependencies": {
     "es6-promise": "^3.2.1",
     "moment": "^2.13.0",
-    "q": "^1.4.1",
-    "utility": "git+https://github.com/kwantu/utility.git#0.1.0",
-    "gatekeeper":"git+https://github.com/kwantu/gatekeeper.git#0.1.0"
+    "q": "^1.4.1"
   }
 }

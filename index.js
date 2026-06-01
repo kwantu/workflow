@@ -1,7 +1,7 @@
 'use strict';
 
 var Process = require('./lib/process');
-var util = require('utility');
+var util = require('./lib/utility');
 var userInterface = require('./lib/interface');
 var helper = require('./lib/helper');
 
@@ -49,7 +49,7 @@ function Workflow(profile, communityId, app, config) {
 
     // Community ID validation checks
     if (communityId == '' || communityId == undefined) {
-        throw util.error('ParamRequired', 'A community id is required.');
+        throw ('ParamRequired', 'A community id is required.');
     } else if (typeof(communityId) !== 'string') {
         throw new Error('The community id must be a javascript string.');
     } else {
@@ -58,7 +58,7 @@ function Workflow(profile, communityId, app, config) {
 
     // Profile ID validation checks
     if (profile == '' || profile == undefined) {
-        throw util.error('ParamRequired', 'A profile id is required.');
+        throw ('ParamRequired', 'A profile id is required.');
     } else if (typeof(profile) !== 'string') {
         throw new Error('The profile id must be a javascript string.');
     } else {
@@ -67,7 +67,7 @@ function Workflow(profile, communityId, app, config) {
 
     // App ID validation checks
     if (app == '' || app == undefined) {
-        throw util.error('ParamRequired', 'An app id is required.');
+        throw ('ParamRequired', 'An app id is required.');
     } else if (typeof(app) !== 'string') {
         throw new Error('The app id must be a javascript string.');
     } else {
@@ -76,7 +76,7 @@ function Workflow(profile, communityId, app, config) {
 
     // Workflow configuration validation checks
     if (config == '' || config == undefined) {
-        throw util.error('ParamRequired', 'A workflow configuration is required.');
+        throw ('ParamRequired', 'A workflow configuration is required.');
     } else if (typeof(config) !== 'object') {
         _this.config = JSON.parse(config);
     } else {
@@ -362,7 +362,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
 
                 });
                 if (configProcess[0]._id == undefined) {
-                    var error = util.error('WFConfigError', 'No valid process definition found with process id: ' + processId);
+                    var error = ('WFConfigError', 'No valid process definition found with process id: ' + processId);
                     reject(error);
                 }
 
@@ -372,7 +372,7 @@ Workflow.prototype.initialise = function(processId, data, subprofileId) {
             }
             var scopeProcesses = JSON.xpath("/processes[subProcesses/type " + (subprofileId != undefined && subprofileId.length > 0 ? "eq" : "ne") + " 'subprofile']/_id", _this.config, {});
             if(scopeProcesses.indexOf(processId) == -1){
-                var error = util.error('WFConfigError', 'Unable to load process configuration. Kindly refresh the page and try again.');
+                var error = ('WFConfigError', 'Unable to load process configuration. Kindly refresh the page and try again.');
                 reject(error);
                 return;
 
